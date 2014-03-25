@@ -1,0 +1,79 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    filters:
+        cssrewrite:
+            apply_to: "\.css$"
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: GJA\GameJam\UserBundle\Entity\User
+    from_email:
+        address: contacto@gamejamua.com
+        sender_name: GameJam Alicante
+
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+swiftmailer:
+    spool:     { type: memory }
+
+services:
+ twig.extension.text:
+     class: Twig_Extensions_Extension_Text
+     tags:
+         - { name: twig.extension }
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+
+mz_mail_chimp:
+    ssl: true
+
+google:
+    analytics:
+        trackers:
+            default:
+                name:      default
+                accountId: %ga_tracker%
+                domain:    .%domain%
+                trackPageLoadTime: true

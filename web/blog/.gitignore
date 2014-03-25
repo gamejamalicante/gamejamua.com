@@ -1,0 +1,20 @@
+# WordPress
+wp
+
+# WP-CLI
+db-sync
+sql-dump-*.sql
+
+# Dotenv
+.env
+
+# Application
+app/uploads
+app/upgrade
+app/plugins/*
+app/mu-plugins/*
+!app/mu-plugins/register-theme-directory.php
+
+# Vendor (e.g. Composer)
+vendor/*
+!vendor/.gitkeep

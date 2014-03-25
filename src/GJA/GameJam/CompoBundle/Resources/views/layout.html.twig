@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GameJam Alicante | ¡Participa en nuestras Game Jams de Alicante!</title>
+
+    {% block styles %}
+    {% stylesheets
+        '//fonts.googleapis.com/css?family=Open+Sans'
+        'components/bootstrap/css/bootstrap.css'
+        'components/font-awesome/css/font-awesome.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+{% block javascripts %}
+{% javascripts
+    'components/jquery/jquery.js'
+    'components/bootstrap/js/bootstrap.js'
+%}
+<script src="{{ asset_url }}" type="text/javascript"></script>
+{% endjavascripts %}
+{% endblock %}
+
+{% include "GoogleBundle:Analytics:async.html.twig" %}
+
+</body>
+
+</html>
