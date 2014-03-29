@@ -20,4 +20,60 @@ class Game
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-} 
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Diversifier")
+     * @ORM\JoinTable(name="gamejam_games_diversifiers")
+     */
+    protected $diversifiers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="game")
+     */
+    protected $media;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Download", mappedBy="game")
+     */
+    protected $downloads;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Compo", inversedBy="games")
+     */
+    protected $compo;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $likes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", mappedBy="games")
+     */
+    protected $users;
+}

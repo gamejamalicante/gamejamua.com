@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="gamejam_themes")
+ * @ORM\Table(name="gamejam_compos_themes")
  */
 class Theme
 {
@@ -20,4 +20,14 @@ class Theme
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Compo")
+     */
+    protected $compo;
 } 

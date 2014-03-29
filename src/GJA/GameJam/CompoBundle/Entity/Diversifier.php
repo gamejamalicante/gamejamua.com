@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="gamejam_diversifiers")
+ * @ORM\Table(name="gamejam_compos_diversifiers")
  */
 class Diversifier
 {
@@ -20,4 +20,9 @@ class Diversifier
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $name;
 } 

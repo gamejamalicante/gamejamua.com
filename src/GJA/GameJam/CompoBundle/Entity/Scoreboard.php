@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="gamejam_scoreboards")
+ * @ORM\Table(name="gamejam_compos_scoreboards")
  */
 class Scoreboard
 {
@@ -21,15 +21,33 @@ class Scoreboard
      */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game")
+     */
     protected $game;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
     protected $graphics;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
     protected $audio;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
     protected $originality;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
     protected $fun;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
     protected $theme;
 }

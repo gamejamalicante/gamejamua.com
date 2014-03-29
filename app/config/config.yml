@@ -23,6 +23,18 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        site:
+            main_email: %main_email%
+            irc:
+                server: 'irc.quakenet.org'
+                channel: '#gamejamalicante'
+            name: GameJam Alicante
+            twitter:
+                url: ~
+                hashtags: ['#GJA', '#GameJamAlicante', '#GameJamUA', '#GJUA']
+            facebook:
+                url: ~
 
 assetic:
     debug:          "%kernel.debug%"

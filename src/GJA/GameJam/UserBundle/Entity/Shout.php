@@ -20,4 +20,19 @@ class Shout
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="shouts")
+     */
+    protected $user;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $content;
 } 
