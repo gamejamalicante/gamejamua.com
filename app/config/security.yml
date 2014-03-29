@@ -1,8 +1,9 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
+        ROLE_USER: []
         ROLE_JANITOR: ROLE_USER
         ROLE_JURY: ROLE_USER
         ROLE_ADMIN: [ROLE_USER, ROLE_JANITOR]
@@ -25,7 +26,7 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                default_target_path: ~
+                default_target_path: gamejam_compo_frontend
                 always_use_default_target_path: false
                 login_path: fos_user_security_login
             logout:       true

@@ -11,9 +11,10 @@
 
     {% block styles %}
     {% stylesheets
-        '//fonts.googleapis.com/css?family=Open+Sans'
+        '//fonts.googleapis.com/css?family=Open+Sans:400,600'
         'components/bootstrap/css/bootstrap.css'
         'components/font-awesome/css/font-awesome.css'
+        '@GameJamCompoBundle/Resources/public/css/main.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
     {% endstylesheets %}
@@ -22,6 +23,70 @@
 </head>
 
 <body>
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-left">
+                <a href="{{ path('gamejam_compo_frontend_rules') }}" class="btn btn-gamejam"><i class="fa fa-book"></i> Normas</a>
+                <a href="" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+                <a href="" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+            </div>
+            {% if app.user and is_granted("ROLE_USER") %}
+            <div class="navbar-right logged">
+                ¡Bienvenido <strong>{{ app.user }}</strong>!
+                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-logout"><i class="fa fa-power-off"></i> Desconectar</a>
+            </div>
+            {% else %}
+            {% render(controller("GameJamCompoBundle:Frontend:partialLogin")) %}
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container layout wrapper">
+        <header>
+            <div class="pull-left">
+                <a href="{{ path('gamejam_compo_frontend') }}"><img src="{{ asset('bundles/gamejamcompo/images/logo.png') }}" alt="GameJam Alicante"></a>
+            </div>
+            <div class="pull-right header-right">
+                <ul class="menu">
+                    <li class="active"><a href="{{ path('gamejam_compo_frontend') }}"><i class="fa fa-home"></i> Portada</a></li>
+                    <li><a href=""><i class="fa fa-ticket"></i> Edición actual</a></li>
+                    <li><a href=""><i class="fa fa-gamepad"></i> Juegos</a></li>
+                    <li><a href=""><i class="fa fa-question"></i> ¿Qué es?</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="content">
+        {% block content %}{% endblock %}
+        </div>
+
+        <div class="social-media">
+            Social media
+        </div>
+    </div>
+
+    <footer>
+        <div class="container layout">
+        </div>
+        <div class="wood">
+            <div class="container layout">
+                <div class="menu">
+                    <a href="">Contacto</a> - <a href="">Normas</a> - <a href="">¿Qué es?</a> - <a href="">¿Quienes somos?</a> - <a href="">Jurados</a> - <a href="">Registrarse</a> - <a href="">Recuperar contraseña</a>
+                </div>
+                <div class="sponsors">
+                    <h3>Colaboradores destacados</h3>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="copyright">
+                    Todos los contenidos de la web se encuentran bajo una licencia <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_CO">Creative Commons Atribución-NoComercial-SinDerivadas 3.0 Unported.</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 {% block javascripts %}
 {% javascripts

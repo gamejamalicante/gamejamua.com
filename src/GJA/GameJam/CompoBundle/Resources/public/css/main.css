@@ -1,0 +1,423 @@
+html
+{
+    height: 100%;
+}
+
+body
+{
+    font-family:"Open Sans", sans-serif;
+    color: #000;
+    background: url(/bundles/gamejamcompo/images/bg.jpg);
+    height: 100%;
+    min-height: 100%;
+}
+
+.navbar-default
+{
+    background-color: #222;
+    box-shadow: 0 5px 10px rgba(0,0,0,1);
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    border-top: 1px solid black;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    margin-bottom: 0;
+}
+
+.navbar-default .container
+{
+    width: 900px;
+}
+
+.navbar-left
+{
+    margin-top: 10px;
+}
+
+.navbar .logged
+{
+    color: #FFF;
+    margin-top: 10px;
+}
+
+.btn
+{
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    padding: 2px 7px 0 7px;
+    width: auto;
+    background-color: #ccc;
+    text-decoration: none;
+    color: #666;
+    border-radius: 10px;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.4),
+    0 4px 0 #aaa,
+    0 4px 3px rgba(0,0,0,0.7);
+}
+
+.btn:hover
+{
+    color: #111;
+}
+
+.btn:active
+{
+    background-color: #aaa;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1),
+    0 1px 0 #888,
+    0 1px 3px rgba(0,0,0,0.7);
+}
+
+.btn.btn-green
+{
+    background-color: #c5e5be;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.2),
+    0 4px 0 #93ac8f,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+}
+
+.btn.btn-green:hover
+{
+    background-color: #93ac8f;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1),
+    0 1px 0 #73866f,
+    0 1px 3px rgba(0,0,0,0.7);
+}
+
+.btn.btn-facebook
+{
+    background-color: #434be5;
+    box-shadow: inset 0 -1px 0 rgba(36, 57, 255, 0.20),
+    0 4px 0 #103c64,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+    color: #FFF;
+}
+
+.btn.btn-facebook:hover
+{
+    background-color: #3038ae;
+    box-shadow: inset 0 -1px 0 rgba(36, 57, 255, 0.20),
+    0 4px 0 #134776,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+    color: #FFF;
+}
+
+.btn.btn-twitter
+{
+    background-color: #a781e5;
+    box-shadow: inset 0 -1px 0 rgba(36, 57, 255, 0.20),
+    0 4px 0 #1868ac,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+    color: #FFF;
+}
+
+.btn.btn-twitter:hover
+{
+    background-color: #3038ae;
+    box-shadow: inset 0 -1px 0 rgba(36, 57, 255, 0.20),
+    0 4px 0 #134776,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+    color: #FFF;
+}
+
+.btn.btn-logout
+{
+    background-color: #e56d4d;
+    box-shadow: inset 0 -1px 0 rgba(180, 39, 31, 0.69),
+    0 4px 0 #ac2c1f,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+    color: #FFF;
+}
+
+.btn.btn-logout:hover
+{
+    background-color: #ad5639;
+    box-shadow: inset 0 -1px 0 rgba(114, 27, 21, 0.69),
+    0 4px 0 #611811,
+    0 4px 3px rgba(0,0,0,0.7);
+    padding: 2px 7px 0 7px;
+    color: #FFF;
+}
+
+.navbar input
+{
+    background: rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 5px;
+    padding:4px;
+    color: white;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,1),
+    0 1px 0 rgba(255,255,255,0.1);
+    height: 30px;
+}
+
+.navbar .login-form i
+{
+    color: #4b4b4b;
+}
+
+.navbar .form-group .btn
+{
+    margin-bottom: 5px;
+}
+
+.container.layout
+{
+    width: 900px;
+    margin-top: 0;
+}
+
+.wrapper {
+    height: auto !important;
+}
+
+.layout header
+{
+    height: 120px;
+}
+
+.layout header .header-right
+{
+    position: relative;
+    width: 465px;
+    height: 100%;
+}
+
+.layout header .menu
+{
+    list-style: none outside none;
+    position: absolute;
+    bottom: -1px;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.layout header .menu li
+{
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+
+.layout header .menu li a
+{
+    font-size: 13px;
+    text-decoration: none;
+    color: #444;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.layout header .menu li.active a{
+    border-radius: 10px 10px 0 0;
+    color: #eee;
+    background-color: rgba(50,50,50,0.7);
+    z-index: 20;
+    position: relative;
+}
+
+
+.pest li:not(.active) a:hover{
+    color: #aaa;
+}
+
+.content
+{
+    padding: 5px 20px 50px;
+    height: auto;
+    background-color: rgba(50,50,50,0.7);
+    box-shadow: 0 10px 10px rgba(0,0,0,0.4);
+    margin-bottom: 0px;
+    border-radius: 3px;
+}
+
+.content .section
+{
+    background-color: #eef;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    padding: 15px;
+    color: #202830;
+}
+
+.content .section h1, .content .section h2
+{
+    color: #153353;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    text-decoration: none;
+    font-size: 2em;
+    margin: 0;
+}
+
+.content .section h2
+{
+    font-size: 1.5em;
+}
+
+.content .section.rules h2
+{
+    margin-top: 30px;
+}
+
+.content .section p
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.content .section.rules p:not(.norule)
+{
+    background-color: #e1e1f2;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.content .section.rules p span
+{
+    color: #b41c17;
+    font-weight: bold;
+}
+.content .section.rules p span:after
+{
+    content: " - ";
+}
+
+.content .featured
+{
+    background-color: rgba(0,0,0,0.3);
+    padding: 5px;
+}
+
+.featured .col-md-4
+{
+    padding: 4px;
+}
+
+.featured .box
+{
+    display: inline-block;
+    height: 140px;
+    border-radius: 10px;
+    background: white center center;
+    background-size: 100% 100%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    width: 100%;
+}
+
+.featured .box.what
+{
+    background-image: url(/bundles/gamejamcompo/images/featured1.png);
+}
+
+.featured .box.register
+{
+    background-image: url(/bundles/gamejamcompo/images/featured2.png);
+}
+
+.featured .box.games
+{
+    background-image: url(/bundles/gamejamcompo/images/featured3.png);
+}
+
+.box:hover
+{
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.featured .box h2
+{
+    float:left;
+    background-color: rgba(0,0,0,0.7);
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px 10px 0;
+    color: #FFF;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.featured .box .description
+{
+    float: left;
+    text-align: left;
+    margin-left: 15px;
+    margin-top: 5px;
+    text-shadow:0 0 3px rgba(0, 0, 0, 0.70);
+    color: black;
+}
+
+.container .social-media
+{
+    padding: 15px;
+    text-align: center;
+    color: #FFF;
+}
+
+footer
+{
+    min-height: 300px;
+    clear: both;
+}
+
+footer .menu
+{
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.48);
+    margin-bottom: 10px;
+    border-radius: 0 0 10px 10px;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+}
+
+footer .menu a
+{
+    color: #FFF;
+    text-shadow:0 0 3px rgba(86, 86, 86, 0.70);
+}
+
+footer .wood
+{
+    width: 100%;
+    min-height: 300px;
+    background: white url(/bundles/gamejamcompo/images/footer.jpg);
+    box-shadow: inset 0 7px 10px rgba(0,0,0,0.6);
+    border-top: solid #333;
+}
+
+footer .sponsors
+{
+    margin: 10px;
+    text-align: center;
+}
+
+footer .sponsors h3
+{
+    color: #000;
+    font-size: 20px;
+    text-shadow:0 0 3px rgba(86, 86, 86, 0.70);
+}
+
+footer .copyright
+{
+    text-align: center;
+    color: #000;
+}
+
+footer .copyright a
+{
+    color: #3d3d3d;
+}
