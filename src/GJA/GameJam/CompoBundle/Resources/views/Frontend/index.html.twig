@@ -1,9 +1,11 @@
 {% extends 'GameJamCompoBundle::layout.html.twig' %}
 
+{% block active_index %} class="active"{% endblock %}
+
 {% block content %}
     <div class="section featured">
         <div class="col-md-4">
-            <a href="">
+            <a href="{{ path('gamejam_compo_frontend_about') }}">
                 <div class="box what">
                     <h2>¿Que es GameJamUA?</h2>
                 </div>
@@ -29,6 +31,11 @@
     <div class="clearfix"></div>
 
     <div class="section">
-        Hola contenido
+        <h2><i class="fa fa-bullhorn"></i> Noticias y novedades</h2>
+        <div class="news">
+            {% for new in news %}
+                {{ time_diff(new.date) }} - {{ new }}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

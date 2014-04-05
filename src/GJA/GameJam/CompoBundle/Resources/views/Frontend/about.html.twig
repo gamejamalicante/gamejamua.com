@@ -1,0 +1,36 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block active_about %} class="active"{% endblock %}
+
+{% block content %}
+    <div class="section text">
+        <h1>¿Qué es GameJam Alicante?</h1>
+
+        <p>Descripción de la asociación</p>
+
+        <h2>¿Qué es exactamente una Game Jam?</h2>
+
+        <p>Una Game Jam no es más que un evento donde un grupo de gente se junta con el objetivo de crear videojuegos. Pero el reto reside en que el juego ha de desarrollarse en grupos pequeños y en un tiempo limitado (para el caso, 2 días o 48 horas o 2880 minutos, lo que tú prefieras).</p>
+
+        <h2>¿Cuáles son los objetivos?</h2>
+
+        <p>Esta pregunta es fácil: Crear un juego (original a ser posible) en 48 horas y divertirse haciéndolo.</p>
+
+        <h2>Me interesa pero... ¿Cuáles son las normas?</h2>
+
+        <p>Puedes ver las normas AQUI aunque tambien puedes acceder siempre que quieras haciendo click en el boton de la izquierda de la barra superior (si, donde pone Normas<<<).</p>
+
+        <h2>¿Pero hacer un juego en 48h no es físicamente imposible?</h2>
+
+        <p>Pues no... ¿Quién lo diría eh? ¡Pero eventos como este se hacen frecuentemente en internet, ejemplos de ello son el Ludum Dare o el Global Game Jam, e incluso las 2 pasadas ediciones de GameJamUA donde tanto profesionales como novatos participaron por diversión! No dejes de apuntarte pensando que eres incapaz de ganar nada, apúntate pensando en lo divertido que puede ser intentarlo. Aquí dejo un video recopilatorio de los juegos hechos en las dos primeras ediciones:</p>
+
+        <p><iframe width="560" height="315" src="//www.youtube.com/embed/jnqgL1I85-I?rel=0" frameborder="0" allowfullscreen class="youtube"></iframe></p>
+
+        <p>Para los que todavia no lo tengan claro, os dejo tambien un gracioso vídeo hecho para la Global Game Jam, espero que os convenza:</p>
+
+        <p><iframe src="//player.vimeo.com/video/34729381" width="560" height="315" webkitallowfullscreen mozallowfullscreen allowfullscreen class="vimeo"></iframe></p>
+
+        <p>Para mas información teneis la pagina de contacto o podeis escribir directamente a:</p>
+        <a href="mailto:{{ site.main_email }}">{{ site.main_email }}</a>
+    </div>
+{% endblock %}

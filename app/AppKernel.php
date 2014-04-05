@@ -28,7 +28,8 @@ class AppKernel extends Kernel
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new GJA\GameJam\CompoBundle\GameJamCompoBundle(),
             new \GJA\GameJam\GameBundle\GameJamGameBundle(),
-            new \GJA\GameJam\UserBundle\GameJamUserBundle()
+            new \GJA\GameJam\UserBundle\GameJamUserBundle(),
+            new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

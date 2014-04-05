@@ -10,4 +10,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class GameJamCompoBundle extends Bundle
 {
-} 
+}

@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
 
 framework:
+    translator:      { fallback: es }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -89,3 +90,5 @@ google:
                 accountId: %ga_tracker%
                 domain:    .%domain%
                 trackPageLoadTime: true
+
+ornicar_gravatar: ~

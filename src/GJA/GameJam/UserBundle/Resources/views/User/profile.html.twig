@@ -1,0 +1,62 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section profile">
+        <div class="pull-left">
+            <img class="avatar" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 200) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.png') }}{% endif %}" />
+        </div>
+        <div class="info">
+            {% if user == app.user %}<button class="btn pull-right action" data-toggle="modal" data-target="#shout"><i class="fa fa-pencil"></i> Actualizar estado</button>{% endif %}
+            <h2>
+                <i class="fa fa-user"></i> {{ user.nickname }}
+                <img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" class="asset"> {{ user.coins }}
+                <img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" class="asset game"> {{ user.games|length }}
+            </h2>
+            <p>
+                {{ user.username }}
+                {% if user.twitter %}
+                     - <a rel="nofollow" href="http://twitter.com/{{ user.twitter }}"><i class="fa fa-twitter"></i> {{ user.twitter }}</a>
+                {% endif %}
+                {% if user.siteUrl %}
+                     - <a rel="nofollow" href="{{ user.siteUrl }}" target="_blank"><i class="fa fa-globe"></i> {{ user.siteUrl }}</a>
+                {% endif %}
+            </p>
+            <p>Registrado: <strong>{{ time_diff(user.registeredAt) }}</strong> - Última vez visto: <strong>{{ time_diff(user.lastLogin) }}</strong></p>
+            {% if user.presentation %}<p class="presentation">{{ user.presentation }}</p>{% endif %}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {% if user.shouts|length %}
+        <div class="section description">
+            <span class="date">{{ time_diff(user.shouts.first.date) }}</span>
+            {{ user.shouts.first }}
+        </div>
+    {% endif %}
+    <div class="clearfix"></div>
+    <div class="section achievements">
+        {% for achievement in user.achievements %}
+            <a href="">
+                <div class="achievement">
+                    <p class="title">{{ achievement }}</p>
+                    <img title="{{ achievement }}" src="{{ asset('bundles/gamejamcompo/images/achievement/' ~ achievement.achievement.nameSlug) }}.png">
+                </div>
+            </a>
+        {% else %}
+            <div class="none">Este usuario aún no tiene logros :(</div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-6 nopadding">
+            <h2><i class="fa fa-comment"></i> Actividad</h2>
+            <div class="activity">
+                {% for activity in user.mixedActivity %}
+                    {% include 'GameJamUserBundle:User:_activity_' ~activity.type~'.html.twig' %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6 nopadding">
+            <h2><i class="fa fa-rocket"></i> Juegos publicados</h2>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

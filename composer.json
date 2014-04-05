@@ -5,7 +5,14 @@
     "autoload": {
         "psr-0": { "": "src/" }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://server-staging-1.certadia.net:2635"
+        }
+    ],
     "require": {
+        "certadia/library": "@dev",
         "php": ">=5.3.3",
         "symfony/symfony": "~2.4",
         "doctrine/orm": "~2.2,>=2.2.3",
@@ -30,7 +37,8 @@
         "doctrine/doctrine-migrations-bundle": "@dev",
         "stof/doctrine-extensions-bundle": "@dev",
         "avalanche123/imagine-bundle": "@dev",
-        "antimattr/google-bundle": "@dev"
+        "antimattr/google-bundle": "@dev",
+        "ornicar/gravatar-bundle" : "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

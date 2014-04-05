@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    
+</script>
+
+<div class="modal fade" id="shout" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Actualizar mi estado</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <p>También puedes actualizar tu estado desde Twitter conectado tu cuenta y escribiendo usando cualquier de estos hashtags:</p>
+                    <p>
+                        {% for hashtag in site.twitter.hashtags %}
+                            <strong>{{ hashtag }}</strong>
+                        {% endfor %}
+                    </p>
+                </div>
+                <form action="{{ path('gamejam_user_shout') }}" method="post">
+                {{ form_widget(form.content, {'attr':{'class':'shout form-control', 'placeholder':'Escribe aquí lo que se te pase por la mente...'}}) }}
+                {{ form_rest(form) }}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-twitter">¡Actualizar!</button>
+                <button type="button" class="btn btn-logout" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

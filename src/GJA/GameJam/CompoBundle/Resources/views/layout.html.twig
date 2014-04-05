@@ -23,10 +23,12 @@
 </head>
 
 <body>
+    {% if app.user and is_granted("ROLE_USER") %}
+    {% render(controller("GameJamUserBundle:User:shoutPartial")) %}
+    {% endif %}
 
     <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="container layout">
             <div class="navbar-left">
                 <a href="{{ path('gamejam_compo_frontend_rules') }}" class="btn btn-gamejam"><i class="fa fa-book"></i> Normas</a>
                 <a href="" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
@@ -34,11 +36,16 @@
             </div>
             {% if app.user and is_granted("ROLE_USER") %}
             <div class="navbar-right logged">
-                ¡Bienvenido <strong>{{ app.user }}</strong>!
-                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-logout"><i class="fa fa-power-off"></i> Desconectar</a>
+                <ul>
+                    <li><img class="avatar" src="{% if gravatar_exists(app.user.email) %}{{ gravatar(app.user.email, 40) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.png') }}{% endif %}" /></li>
+                    <li>¡Bienvenido <strong>{{ app.user }}</strong>!</li>
+                    <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" height="25"> {{ app.user.coins }}</li>
+                    <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" height="25"> {{ app.user.games|length }}</li>
+                    <li><a href="{{ path('fos_user_security_logout') }}" class="btn btn-logout"><i class="fa fa-power-off"></i> Desconectar</a></li>
+                </ul>
             </div>
             {% else %}
-            {% render(controller("GameJamCompoBundle:Frontend:partialLogin")) %}
+                {% render(controller("GameJamCompoBundle:Frontend:partialLogin")) %}
             {% endif %}
         </div>
     </nav>
@@ -50,10 +57,10 @@
             </div>
             <div class="pull-right header-right">
                 <ul class="menu">
-                    <li class="active"><a href="{{ path('gamejam_compo_frontend') }}"><i class="fa fa-home"></i> Portada</a></li>
-                    <li><a href=""><i class="fa fa-ticket"></i> Edición actual</a></li>
-                    <li><a href=""><i class="fa fa-gamepad"></i> Juegos</a></li>
-                    <li><a href=""><i class="fa fa-question"></i> ¿Qué es?</a></li>
+                    <li{% block active_index %}{% endblock %}><a href="{{ path('gamejam_compo_frontend') }}"><i class="fa fa-home"></i> Portada</a></li>
+                    <li{% block active_current %}{% endblock %}><a href=""><i class="fa fa-ticket"></i> Edición actual</a></li>
+                    <li{% block active_games %}{% endblock %}><a href=""><i class="fa fa-gamepad"></i> Juegos</a></li>
+                    <li{% block active_about %}{% endblock %}><a href="{{ path('gamejam_compo_frontend_about') }}"><i class="fa fa-question"></i> ¿Qué es?</a></li>
                 </ul>
             </div>
         </header>
