@@ -20,6 +20,7 @@ class Activity implements ActivityInterface
     const TYPE_INFO = 4;
     const TYPE_CREATION = 5;
     const TYPE_ACHIEVEMENT = 6;
+    const TYPE_SHOUT = 7;
 
     /**
      * @ORM\Id
@@ -39,7 +40,7 @@ class Activity implements ActivityInterface
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Game")
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="activity")
      */
     protected $game;
 
@@ -54,9 +55,9 @@ class Activity implements ActivityInterface
     protected $type;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string")
      */
-    protected $data;
+    protected $content;
 
     /**
      * @param mixed $achievement
@@ -168,5 +169,55 @@ class Activity implements ActivityInterface
     public function getUser()
     {
         return $this->user;
+    }
+    
+    public function getTypeName()
+    {
+        switch($this->type)
+        {
+            case self::TYPE_MEDIA:
+                return 'media';
+            break;
+
+            case self::TYPE_COINS:
+                return 'coins';
+            break;
+
+            case self::TYPE_LIKES:
+                return 'likes';
+            break;
+
+            case self::TYPE_INFO:
+                return 'info';
+            break;
+
+            case self::TYPE_CREATION:
+                return 'creation';
+            break;
+
+            case self::TYPE_ACHIEVEMENT:
+                return 'achievement';
+            break;
+
+            case self::TYPE_SHOUT:
+                return 'shout';
+            break;
+        }
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

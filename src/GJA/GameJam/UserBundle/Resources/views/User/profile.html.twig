@@ -29,7 +29,7 @@
     {% if user.shouts|length %}
         <div class="section description">
             <span class="date">{{ time_diff(user.shouts.first.date) }}</span>
-            {{ user.shouts.first }}
+            {{ user.shouts.first.content }}
         </div>
     {% endif %}
     <div class="clearfix"></div>
@@ -49,8 +49,8 @@
         <div class="col-md-6 nopadding">
             <h2><i class="fa fa-comment"></i> Actividad</h2>
             <div class="activity">
-                {% for activity in user.mixedActivity %}
-                    {% include 'GameJamUserBundle:User:_activity_' ~activity.type~'.html.twig' %}
+                {% for activity in user.activity %}
+                    {% include 'GameJamUserBundle:User:_activity_' ~activity.typeName~'.html.twig' %}
                 {% endfor %}
             </div>
         </div>

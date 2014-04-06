@@ -78,6 +78,7 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+            timestampable: true
 
 mz_mail_chimp:
     ssl: true

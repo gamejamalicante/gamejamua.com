@@ -27,7 +27,60 @@ class Theme
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Compo")
+     * @ORM\OneToOne(targetEntity="Compo", inversedBy="theme")
      */
     protected $compo;
+
+    /**
+     * @param mixed $compo
+     */
+    public function setCompo($compo)
+    {
+        $this->compo = $compo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompo()
+    {
+        return $this->compo;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    function __toString()
+    {
+        return $this->name;
+    }
 } 

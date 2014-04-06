@@ -9,5 +9,5 @@ namespace GJA\GameJam\GameBundle\Entity;
 
 interface ActivityInterface
 {
-    public function getType();
+    public function getTypeName();
 } 

@@ -10,6 +10,10 @@ gamejam_user:
     resource: "@GameJamUserBundle/Controller/"
     type: annotation
 
+gamejam_game:
+    resource: "@GameJamGameBundle/Controller/"
+    type: annotation
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

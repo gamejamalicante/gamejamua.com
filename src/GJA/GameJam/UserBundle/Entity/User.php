@@ -8,7 +8,9 @@
 namespace GJA\GameJam\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
+use GJA\GameJam\GameBundle\Entity\Activity;
 
 /**
  * @ORM\Entity
@@ -25,11 +27,12 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     protected $registeredAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", inversedBy="users")
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="user")
      * @ORM\JoinTable(name="gamejam_users_games")
      */
     protected $games;
@@ -46,13 +49,8 @@ class User extends BaseUser
     protected $compos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Shout", mappedBy="user")
-     * @ORM\OrderBy({"date"="ASC"})
-     */
-    protected $shouts;
-
-    /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Activity", mappedBy="user")
+     * @ORM\OrderBy({"date"="ASC"})
      */
     protected $activity;
 
@@ -383,22 +381,6 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $shouts
-     */
-    public function setShouts($shouts)
-    {
-        $this->shouts = $shouts;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getShouts()
-    {
-        return $this->shouts;
-    }
-
-    /**
      * @param mixed $siteUrl
      */
     public function setSiteUrl($siteUrl)
@@ -462,8 +444,16 @@ class User extends BaseUser
         return $this->registeredAt;
     }
 
-    public function getMixedActivity()
+    public function __toString()
     {
-        return $this->getShouts();
+        return $this->getNickname();
+    }
+
+    public function getShouts()
+    {
+        return $this->getActivity()->filter(function(Activity $activity)
+        {
+            return $activity->getType() == Activity::TYPE_SHOUT;
+        });
     }
 }
