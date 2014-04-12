@@ -48,6 +48,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: GJA\GameJam\UserBundle\Entity\User
+    registration:
+        form:
+            type: gamejam_user_register
     from_email:
         address: contacto@gamejamua.com
         sender_name: GameJam Alicante

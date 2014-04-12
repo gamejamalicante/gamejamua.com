@@ -53,6 +53,11 @@ class Team
     protected $users;
 
     /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="team")
+     */
+    protected $games;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Compo", mappedBy="teams")
      */
     protected $compos;
@@ -183,5 +188,21 @@ class Team
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @param mixed $games
+     */
+    public function setGames($games)
+    {
+        $this->games = $games;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGames()
+    {
+        return $this->games;
     }
 } 

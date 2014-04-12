@@ -80,7 +80,7 @@
         <div class="wood">
             <div class="container layout">
                 <div class="menu">
-                    <a href="">Contacto</a> - <a href="">Normas</a> - <a href="">¿Qué es?</a> - <a href="">¿Quienes somos?</a> - <a href="">Jurados</a> - <a href="">Registrarse</a> - <a href="">Recuperar contraseña</a>
+                    <a href="">Contacto</a> - <a href="">Normas</a> - <a href="">¿Qué es?</a> - <a href="{{ path('gamejam_compo_frontend_staff') }}">¿Quienes somos?</a> - <a href="">Jurados</a>{% if not app.user and not is_granted("ROLE_USER") %} - <a href="{{ path('fos_user_registration_register') }}">Registrarse</a> - <a href="">Recuperar contraseña</a>{% endif %}
                 </div>
                 <div class="sponsors">
                     <h3>Colaboradores destacados</h3>

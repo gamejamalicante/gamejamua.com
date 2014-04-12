@@ -47,6 +47,17 @@ class FrontendController extends AbstractController
     }
 
     /**
+     * @Route("/quienes-somos", name="gamejam_compo_frontend_staff")
+     * @Template()
+     */
+    public function staffAction()
+    {
+        $staff = $this->getRepository("GameJamUserBundle:User")->findStaff();
+
+        return ['staff' => $staff];
+    }
+
+    /**
      * @Route("/_partial/login", name="gamejam_compo_frontend_partial_login")
      * @Template("GameJamCompoBundle:Frontend:_login.html.twig")
      */

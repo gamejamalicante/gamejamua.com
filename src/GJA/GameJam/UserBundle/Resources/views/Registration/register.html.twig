@@ -1,0 +1,44 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section register">
+        <h1>Registrarse</h1>
+        <p><strong>¡Muchas gracias por tu interés en registrarte en la Game Jam UA! </strong></p>
+        <p class="alert alert-info">
+            <strong>¡IMPORTANTE!</strong>
+            Si ya tenías cuenta en la anterior edición de GameJamUA no es necesario que te registres de nuevo, logueate en la barra superior.
+        </p>
+        <p>Al registrarte, a parte de poder inscribirte en el concurso (no es obligatorio), obtendrás montones de ventajas, como la capacidad de votar a los juegos que se presenten, acceso a contenido y noticias exclusivas, y te convertirás en un jugador más con todo lo que ello implica: ¡Posibilidad de obtener logros, ganar puntos y subir de nivel para convertirte en el mejor!
+            ¿A qué esperas? Sólo tienes que rellenar el siguiente formulario: </p>
+        <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-inline">
+            <p>
+                <strong>Nombre de usuario</strong><br>
+                {{ form_widget(form.username, {'attr':{'class':'form-control'}}) }}
+            </p>
+            <p>
+                <strong>Nickname</strong><br>
+                {{ form_widget(form.nickname, {'attr':{'class':'form-control'}}) }}
+            </p>
+            <p>
+                <strong>Email</strong><br>
+                {{ form_widget(form.email, {'attr':{'class':'form-control'}}) }}
+            </p>
+            <p>
+                <strong>Contraseña</strong><br>
+                {{ form_widget(form.plainPassword.first, {'attr':{'class':'form-control'}}) }}
+            </p>
+            <p>
+                <strong>Repetir contraseña</strong><br>
+                {{ form_widget(form.plainPassword.second, {'attr':{'class':'form-control'}}) }}
+            </p>
+            <p>
+                He leído y acepto las normas {{ form_widget(form.termsAccepted, {'attr':{'class':'form-control'}}) }}
+            </p>
+            <p>
+                Recuerda que al registrarte <strong>no te te estas inscribiendo en el concurso</strong>, para inscribirte accede a la sección correspondiente una vez te registres.
+            </p>
+            <div style="text-align: center"><button class="btn btn-green submit">¡Registrarse!</button></div>
+            {{ form_rest(form) }}
+        </form>
+    </div>
+{% endblock %}

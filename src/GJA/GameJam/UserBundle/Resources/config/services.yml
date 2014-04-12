@@ -1,0 +1,6 @@
+services:
+    gamejam.user.form_type.register:
+        class: GJA\GameJam\UserBundle\Form\Type\RegisterType
+        arguments: ["%fos_user.model.user.class%"]
+        tags:
+            - { name: form.type, alias: gamejam_user_register  }

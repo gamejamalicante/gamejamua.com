@@ -1,0 +1,12 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section register">
+        <h1>¡Enhorabuena: ya estás registrado!</h1>
+        <p><strong>¡Gracias por registrarte en GameJam Alicante!</strong> A partir de ahora puedes acceder a todas las ventajas de ser socio además de, por supuesto, participar en nuestras GameJams. Hecha un vistazo por el sitio para descubrir todo lo que tiene que ofrecer, y si tienes problemas no dudes en consultar con nosotros!</p>
+        <div class="bottom">
+            <a href="{{ path('gamejam_compo_frontend') }}" class="btn"><i class="fa fa-chevron-left"></i> Volver a la página principal</a>
+            <a class="btn btn-twitter">Inscribirme en la GameJam <i class="fa fa-chevron-right"></i></a>
+        </div>
+    </div>
+{% endblock %}

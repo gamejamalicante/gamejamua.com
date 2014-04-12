@@ -7,13 +7,15 @@
 
 namespace GJA\GameJam\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
 use GJA\GameJam\GameBundle\Entity\Activity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="gamejam_users")
  */
 class User extends BaseUser
@@ -33,7 +35,6 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="user")
-     * @ORM\JoinTable(name="gamejam_users_games")
      */
     protected $games;
 
@@ -50,7 +51,7 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Activity", mappedBy="user")
-     * @ORM\OrderBy({"date"="ASC"})
+     * @ORM\OrderBy({"date"="DESC"})
      */
     protected $activity;
 
@@ -123,6 +124,12 @@ class User extends BaseUser
      * @ORM\Column(type="array")
      */
     protected $readNotifications;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\True
+     */
+    protected $termsAccepted;
 
     /**
      * @param mixed $achievements
@@ -249,7 +256,16 @@ class User extends BaseUser
      */
     public function getGames()
     {
-        return $this->games;
+        $games = [];
+
+        foreach($this->getTeams() as $team)
+        {
+            $games[] = array_merge($team->getGames()->toArray(), $games);
+        }
+
+        $games = new ArrayCollection(array_merge($this->games->toArray(), $games));
+
+        return $games;
     }
 
     /**
@@ -455,5 +471,21 @@ class User extends BaseUser
         {
             return $activity->getType() == Activity::TYPE_SHOUT;
         });
+    }
+
+    /**
+     * @param mixed $termsAccepted
+     */
+    public function setTermsAccepted($termsAccepted)
+    {
+        $this->termsAccepted = $termsAccepted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTermsAccepted()
+    {
+        return $this->termsAccepted;
     }
 }

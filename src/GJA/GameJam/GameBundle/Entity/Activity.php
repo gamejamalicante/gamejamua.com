@@ -21,6 +21,7 @@ class Activity implements ActivityInterface
     const TYPE_CREATION = 5;
     const TYPE_ACHIEVEMENT = 6;
     const TYPE_SHOUT = 7;
+    const TYPE_TWITTER = 8;
 
     /**
      * @ORM\Id
@@ -201,6 +202,10 @@ class Activity implements ActivityInterface
 
             case self::TYPE_SHOUT:
                 return 'shout';
+            break;
+
+            case self::TYPE_TWITTER:
+                return 'twitter';
             break;
         }
     }

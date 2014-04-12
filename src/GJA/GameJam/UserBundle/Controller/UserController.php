@@ -8,6 +8,7 @@
 namespace GJA\GameJam\UserBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
+use GJA\GameJam\GameBundle\Entity\Activity;
 use GJA\GameJam\UserBundle\Entity\Shout;
 use GJA\GameJam\UserBundle\Entity\User;
 use GJA\GameJam\UserBundle\Form\Type\ShoutType;
@@ -38,8 +39,10 @@ class UserController extends AbstractController
      */
     public function shoutPartialAction(Request $request)
     {
-        $shout = new Shout();
-        $form = $this->createForm(new ShoutType(), $shout);
+        $activity = new Activity();
+        $activity->setType(Activity::TYPE_SHOUT);
+
+        $form = $this->createForm(new ShoutType(), $activity);
 
         if($request->isMethod("POST"))
         {
@@ -47,8 +50,8 @@ class UserController extends AbstractController
 
             if($form->isValid())
             {
-                $shout->setUser($this->getUser());
-                $this->persistAndFlush($shout);
+                $activity->setUser($this->getUser());
+                $this->persistAndFlush($activity);
 
                 return new JsonResponse(['success' => true]);
             }

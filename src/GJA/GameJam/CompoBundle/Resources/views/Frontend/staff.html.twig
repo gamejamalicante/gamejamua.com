@@ -1,0 +1,18 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section text">
+        <h1>¿Quienes somos?</h1>
+        <p>Somos un grupo de estudiantes de Ingeniería Multimedia en la Universidad de Alicante, amantes de los videojuegos que al entrar en el primer curso de la carrera decidimos llevar a cabo el evento de la Game Jam UA. Unimos nuestras fuerzas y logramos inagurar nuestra primera edición con el apoyo de la universidad de Alicante, algunas empresas del sector y de la concejalía de juventud. Gracias a su éxito pudimos organizar una segunda edición unos pocos meses después en el Claustro de Alicante (podéis probar los juegos resultantes en sus respectivas páginas WEB). Ésta es la tercera vez que la organizamos y esperamos que sea de agrado para todo aquel que participe. No olvidéis que si os interesa colaborar en la organización siempre podéis contactar con nosotros por aquí.</p>
+        <h2>Este es el equipo que hace posible GameJam Alicante</h2>
+        <div class="staff">
+            {% for user in staff %}
+                <div class="col-md-2 nopadding">
+                    <img src="{{ gravatar(user.email, 100) }}" class="avatar" /><br>
+                    {{ user }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}
