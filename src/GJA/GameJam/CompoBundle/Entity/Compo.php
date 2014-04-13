@@ -27,6 +27,16 @@ class Compo
     protected $name;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $nameSlug;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $open = false;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $startAt;
@@ -43,7 +53,7 @@ class Compo
 
     /**
      * @ORM\ManyToMany(targetEntity="Contributor", inversedBy="composJudged")
-     * @ORM\JoinTable(name="gamejam_compos_compos_contributors")
+     * @ORM\JoinTable(name="gamejam_compos_compos_juries")
      */
     protected $juries;
 
@@ -69,6 +79,11 @@ class Compo
      * @ORM\JoinTable(name="gamejam_compos_solousers")
      */
     protected $soloUsers;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $maxPeople;
 
     /**
      * @param mixed $games
@@ -233,5 +248,58 @@ class Compo
     function __toString()
     {
         return $this->name;
+    }
+
+    public function isOpen()
+    {
+        return $this->open;
+    }
+
+    /**
+     * @param mixed $nameSlug
+     */
+    public function setNameSlug($nameSlug)
+    {
+        $this->nameSlug = $nameSlug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNameSlug()
+    {
+        return $this->nameSlug;
+    }
+
+    /**
+     * @param mixed $open
+     */
+    public function setOpen($open)
+    {
+        $this->open = $open;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOpen()
+    {
+        return $this->open;
+    }
+
+    /**
+     * @param mixed $maxPeople
+     */
+    public function setMaxPeople($maxPeople)
+    {
+        $this->maxPeople = $maxPeople;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxPeople()
+    {
+        return $this->maxPeople;
     }
 }

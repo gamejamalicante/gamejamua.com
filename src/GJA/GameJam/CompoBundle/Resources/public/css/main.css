@@ -396,6 +396,35 @@ body
     color: #FFF;
 }
 
+.section .news
+{
+    padding: 15px 10px 10px;
+}
+
+.section .news .item
+{
+    padding: 5px;
+}
+
+.section .news .item span.date
+{
+    color: #221b37;
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 2px 7px;
+    background-color: #f5bbff;
+}
+
+.section .news .item h3
+{
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #265488;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    margin: 0 0 5px;
+}
+
 footer
 {
     min-height: 300px;
@@ -430,8 +459,14 @@ footer .wood
 
 footer .sponsors
 {
-    margin: 10px;
     text-align: center;
+    margin: 10px 10px 45px;
+}
+
+footer .sponsors img.sponsor
+{
+    max-height: 80px;
+    margin-right: 10px;
 }
 
 footer .sponsors h3
@@ -439,6 +474,7 @@ footer .sponsors h3
     color: #000;
     font-size: 20px;
     text-shadow:0 0 3px rgba(86, 86, 86, 0.70);
+    margin-bottom: 25px;
 }
 
 footer .copyright
@@ -670,7 +706,7 @@ textarea.shout
     margin-right: 20px;
 }
 
-.section.register .submit
+.bottom .submit
 {
     margin: 20px;
     background-color: #60f493;
@@ -705,4 +741,79 @@ textarea.shout
 {
     color: #919191;
     text-align: center;
+}
+
+.section.index.activity .item
+{
+
+}
+
+.section.index.activity .item .avatar
+{
+    float: left;
+    margin-right: 10px;
+}
+
+.section.index.activity .item span.type
+{
+    float: right;
+}
+
+.section.index.activity .item p
+{
+    margin-top: 10px;
+}
+
+.section.index.activity .item h3
+{
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.section.index.activity .item p img
+{
+    width: 100px;
+    float: right;
+    margin-left: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(53, 111, 182, 0.67);
+}
+
+.section .contributor
+{
+    background-color: #e1e1f2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.section .contributor h2
+{
+    margin: 5px 0 0;
+}
+
+.section .contributor img.logo
+{
+    float: right;
+    margin-right: 15px;
+    width: 100px;
+}
+
+.section.active-compo
+{
+    background-color: #fff6c8;
+    text-align: center;
+    border: 2px solid #000;
+}
+
+.section.active-compo h2
+{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.section.active-compo p
+{
+    font-size: 16px;
 }

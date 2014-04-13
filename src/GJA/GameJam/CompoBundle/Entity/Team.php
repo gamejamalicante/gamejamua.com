@@ -8,6 +8,7 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use GJA\GameJam\GameBundle\Entity\Game;
 
 /**
  * @ORM\Entity
@@ -41,11 +42,6 @@ class Team
      * @ORM\Column(type="string")
      */
     protected $nameSlug;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $creationDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", mappedBy="teams")
@@ -199,7 +195,7 @@ class Team
     }
 
     /**
-     * @return mixed
+     * @return Game[]
      */
     public function getGames()
     {

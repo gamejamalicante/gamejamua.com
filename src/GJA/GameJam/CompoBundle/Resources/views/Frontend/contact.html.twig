@@ -1,0 +1,25 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section text">
+        <h1>Contactar con nosotros</h1>
+        {% if success %}
+            <p class="alert alert-success"><strong>¡Tu mensaje ha sido enviado!</strong> Muy pronto te contestaremos a la dirección de email facilitada :)</p>
+            <div class="bottom">
+                <a class="btn btn-twitter" href="{{ path('gamejam_compo_frontend') }}">Volver a la página principal</a>
+            </div>
+        {% else %}
+        <p>Para contactar con nosotros enviad un e-mail al siguiente correo electrónico: <strong>{{ site.main_email }}</strong></p>
+        <div>
+            Los que seais muy vagos podéis usar el siguiente formulario:<br><br>
+            <form action="{{ path('gamejam_compo_frontend_contact') }}" method="post">
+                <strong>Email para contestarte: </strong> {% if user %}{{ user.email }}{% else %}{{ form_widget(form.email, {'attr':{'class':'form-control', 'placeholder':'tuemail@tudominio.com'}}) }}{% endif %}<br>
+                <strong>Escribe tu mensaje:</strong><br>
+                {{ form_widget(form.message, {'attr':{'class':'form-control', 'rows':'5'}}) }}<br>
+                <button class="btn btn-twitter">Enviar mensaje</button>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

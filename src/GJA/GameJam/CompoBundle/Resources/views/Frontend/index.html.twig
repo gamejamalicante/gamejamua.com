@@ -29,13 +29,24 @@
         <div class="clearfix"></div>
     </div>
     <div class="clearfix"></div>
-
     <div class="section">
         <h2><i class="fa fa-bullhorn"></i> Noticias y novedades</h2>
-        <div class="news">
-            {% for new in news %}
-                {{ time_diff(new.date) }} - {{ new }}
+        <div class="news row">
+            {% for new in news|slice(0,2) %}
+                <div class="col-md-6 nopadding last">
+                    <div class="item">
+                        <h3>{{ new.title }} <span class="date">{{ time_diff(new.date) }}</span></h3>
+                        {{ new.content|truncate(200) }}
+
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
+    <h2><i class="fa fa-comment-o"></i> Actividad de la comunidad</h2>
+    {% for item in activity %}
+        <div class="section index activity">
+            {% include 'GameJamCompoBundle:Frontend:_activity_' ~item.typeName~'.html.twig' %}
+        </div>
+    {% endfor %}
 {% endblock %}

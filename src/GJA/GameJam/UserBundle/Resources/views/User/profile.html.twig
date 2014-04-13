@@ -60,7 +60,7 @@
         </div>
         <div class="col-md-6 nopadding last">
             <h2><i class="fa fa-rocket"></i> Juegos publicados</h2>
-            {% for game in user.games %}
+            {% for game in user.allGames %}
                 {% include 'GameJamUserBundle:User:_game.html.twig' %}
             {% else %}
                 <p class="item shout">

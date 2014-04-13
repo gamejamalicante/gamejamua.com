@@ -56,7 +56,7 @@ class Activity implements ActivityInterface
     protected $type;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="json_array")
      */
     protected $content;
 

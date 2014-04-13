@@ -11,6 +11,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
+use GJA\GameJam\CompoBundle\Entity\Compo;
+use GJA\GameJam\CompoBundle\Entity\CompoApplication;
+use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\GameBundle\Entity\Activity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -39,7 +42,7 @@ class User extends BaseUser
     protected $games;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Team", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Team", inversedBy="users", fetch="EAGER")
      * @ORM\JoinTable(name="gamejam_users_teams")
      */
     protected $teams;
@@ -48,6 +51,11 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Compo", mappedBy="soloUsers")
      */
     protected $compos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\CompoApplication", mappedBy="user")
+     */
+    protected $applications;
 
     /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Activity", mappedBy="user")
@@ -251,19 +259,30 @@ class User extends BaseUser
         $this->games = $games;
     }
 
+    public function getGames()
+    {
+        return $this->games;
+    }
+
     /**
      * @return mixed
      */
-    public function getGames()
+    public function getAllGames()
     {
-        $games = [];
+        $games = new ArrayCollection();
 
         foreach($this->getTeams() as $team)
         {
-            $games[] = array_merge($team->getGames()->toArray(), $games);
+            foreach($team->getGames() as $game)
+            {
+                $games->add($game);
+            }
         }
 
-        $games = new ArrayCollection(array_merge($this->games->toArray(), $games));
+        foreach($this->getGames() as $game)
+        {
+            $games->add($game);
+        }
 
         return $games;
     }
@@ -421,7 +440,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return Team[]
      */
     public function getTeams()
     {
@@ -487,5 +506,32 @@ class User extends BaseUser
     public function getTermsAccepted()
     {
         return $this->termsAccepted;
+    }
+
+    /**
+     * @param CompoApplication[] $applications
+     */
+    public function setApplications($applications)
+    {
+        $this->applications = $applications;
+    }
+
+    /**
+     * @return CompoApplication[]
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    public function hasAppliedTo(Compo $compo)
+    {
+        foreach($this->getApplications() as $application)
+        {
+            if($compo === $application->getCompo())
+                return true;
+        }
+
+        return false;
     }
 }

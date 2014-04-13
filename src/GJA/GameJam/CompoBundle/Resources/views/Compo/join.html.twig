@@ -1,0 +1,21 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1>Inscribirse en la <strong>{{ compo }}</strong></h1>
+        <p>¡Ya estás casi dentro! Antes de completar tu inscripción indicanos en que modalidad deseas inscribirte (En la modalidad <strong>fuera de concurso</strong> los juegos serán votados igualmente por el jurado, pero no optarás a recibir premio ni aparecerás como ganador en caso de ganar, mientras que en la modalidad <strong>participar de forma libre</strong> el jurado no tendrá que evaluar tu juego, simplemente aparecerá entre los juegos presentados, esta última modalidad es individual, no presencial y se participará subiendo el juego directamente a la web antes de las 48 horas).</p>
+        <p>También nos gustaria que nos indicases solo a titulo informativo, si deseas pasar una o las dos noches en el recinto durante el evento.</p>
+        <div>
+            <form action="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}" method="post">
+                <p><strong>Tipo de inscripción: </strong> {{ form_widget(form.modality) }}</p>
+                <p><strong>Quiero quedarme a dormir en el recinto al menos una de las noches: </strong>{{ form_widget(form.nightStay) }}</p>
+                {{ form_rest(form) }}
+                <div class="bottom">
+                    <button class="btn btn-green submit">¡Inscribirme!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

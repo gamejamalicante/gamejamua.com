@@ -86,7 +86,7 @@ class Game
     protected $coins;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team", inversedBy="games")
      */
     protected $team;
 
@@ -360,4 +360,6 @@ class Game
     {
         return $this->activity;
     }
+
+
 }
