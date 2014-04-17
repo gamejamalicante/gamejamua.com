@@ -1,0 +1,81 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block content %}
+    <div class="modal fade" id="twitter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body"><div class="te"></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="section compo">
+        <h1><strong>{{ compo }}</strong></h1>
+        <div class="row description">
+            <div class="col-md-6">
+                <p>{{ compo.description|raw }}</p>
+            </div>
+            <div class="col-md-6">
+                <h2><i class="fa fa-rocket"></i> Tema elegido: <strong>{% if compo.theme %}{{ compo.theme }}{% else %}¡Aún no hay tema!{% endif %}</strong></h2>
+                <p><strong>Fecha de inicio:</strong> {{ compo.startAt|date("d/m/Y H:i:s") }}</p>
+                <p><strong>Fecha final:</strong> {{ compo.endAt|date("d/m/Y H:i:s") }}</p>
+                <p><strong>Número de participantes:</strong> {{ compo.applications|length }} participantes en {{ compo.teams|length }} equipos</p>
+                <p>
+                    Patrocinadores y colaboradores, ¡mil gracias!:<br>
+                    {% for sponsor in compo.sponsors %}
+                        <a href="{{ sponsor.url }}" target="_blank" rel="nofollow">
+                            <img src="{{ asset(sponsor.imageWebPath|apply_filter("sponsor_compo_mini")) }}" class="sponsor">
+                        </a>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="row compo-content">
+            <div class="col-sm-6">
+                <h2><i class="fa fa-comment-o"></i> Actividad de los participantes</h2>
+                <div class="activity">
+                    {{ render(controller("GameJamCompoBundle:Compo:partialActivity", {compo: compo})) }}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                {% if user %}
+                <h2><i class="fa fa-comment"></i> ¡Escribe algo en el muro!</h2>
+                <div class="shoutbox">
+                    <div class="twitter alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Si prefieres twittear, menciona a <strong><a href="https://twitter.com/intent/tweet?screen_name=GameJamUA" data-lang="es" data-related="GameJamUA">@GameJamUA</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></strong> o usa cualquiera de estos hashtags:
+                        {% for hashtag in site.twitter.hashtags %}
+                            <a href="https://twitter.com/intent/tweet?button_hashtag={{ hashtag }}" data-lang="es" data-related="GameJamUA">#{{ hashtag }}</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                        {% endfor %}
+                    </div>
+                    {{ render(controller("GameJamUserBundle:User:shoutPartial")) }}
+                </div>
+                {% endif %}
+                <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>
+                <div class="application">
+                    {% if user_application %}
+                        <img class="avatar pull-right" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 50) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
+                        <p>
+                        {% if user_application.team %}
+                            <strong>Equipo:</strong> {{ user_application.team }}
+                        {% else %}
+                            <strong>Estás participando en solitario :(</strong>
+                        {% endif %}
+                        </p>
+                        <p>
+                            <strong>Modalidad:</strong> {{ user_application.modalityAsString }}
+                        </p>
+                        <p>
+                            <strong>¿Te quedas a dormir?:</strong> {% if user_application.nightStay %}¡Sí!{% else %}No, mejor duermo en casa{% endif %}
+                        </p>
+                    {% else %}
+                        ¡Aun no estás inscrito! Pulsa aquí para registrarte.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

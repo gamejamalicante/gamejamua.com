@@ -24,7 +24,7 @@
 
 <body>
     {% if app.user and is_granted("ROLE_USER") %}
-    {% render(controller("GameJamUserBundle:User:shoutPartial")) %}
+        {% include 'GameJamCompoBundle:Frontend:_shout.html.twig' %}
     {% endif %}
 
     <nav class="navbar navbar-default" role="navigation">

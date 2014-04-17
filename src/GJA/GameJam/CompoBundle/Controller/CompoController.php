@@ -30,6 +30,10 @@ class CompoController extends AbstractController
      */
     public function indexAction(Compo $compo)
     {
+        $user = $this->getUser();
+        $userApplication = $user ? $compo->getApplicationForUser($this->getUser()) : null;
+
+        return ['user' => $user, 'user_application' => $userApplication, 'compo' => $compo];
     }
 
     /**
@@ -65,5 +69,13 @@ class CompoController extends AbstractController
         }
 
         return ['compo' => $compo, 'form' => $form->createView()];
+    }
+
+    /**
+     * @Template("GameJamCompoBundle:Compo:_activity.html.twig")
+     */
+    public function partialActivityAction(Compo $compo)
+    {
+        return ['activity' => $compo->getActivity()];
     }
 } 

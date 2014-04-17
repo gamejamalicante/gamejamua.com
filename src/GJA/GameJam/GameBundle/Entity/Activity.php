@@ -36,6 +36,11 @@ class Activity implements ActivityInterface
     protected $date;
 
     /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Compo", inversedBy="activity")
+     */
+    protected $compo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="activity")
      */
     protected $user;

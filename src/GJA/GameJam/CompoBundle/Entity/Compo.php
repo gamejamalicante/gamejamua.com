@@ -6,7 +6,9 @@
 
 namespace GJA\GameJam\CompoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use GJA\GameJam\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -32,6 +34,11 @@ class Compo
     protected $nameSlug;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $open = false;
@@ -45,6 +52,16 @@ class Compo
      * @ORM\Column(type="string")
      */
     protected $period;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $applicationStartAt;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $applicationPeriod;
 
     /**
      * @ORM\OneToOne(targetEntity="Theme")
@@ -64,26 +81,25 @@ class Compo
     protected $sponsors;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Team", inversedBy="compos")
-     * @ORM\JoinTable(name="gamejam_compos_compos_teams")
-     */
-    protected $teams;
-
-    /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="compo")
      */
     protected $games;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="compos")
-     * @ORM\JoinTable(name="gamejam_compos_solousers")
+     * @ORM\OneToMany(targetEntity="CompoApplication", mappedBy="compo")
      */
-    protected $soloUsers;
+    protected $applications;
 
     /**
      * @ORM\Column(type="smallint")
      */
     protected $maxPeople;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Activity", mappedBy="compo")
+     * @ORM\OrderBy({"date"="DESC"})
+     */
+    protected $activity;
 
     /**
      * @param mixed $games
@@ -166,22 +182,6 @@ class Compo
     }
 
     /**
-     * @param mixed $soloUsers
-     */
-    public function setSoloUsers($soloUsers)
-    {
-        $this->soloUsers = $soloUsers;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSoloUsers()
-    {
-        return $this->soloUsers;
-    }
-
-    /**
      * @param mixed $sponsors
      */
     public function setSponsors($sponsors)
@@ -206,27 +206,11 @@ class Compo
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getStartAt()
     {
         return $this->startAt;
-    }
-
-    /**
-     * @param mixed $teams
-     */
-    public function setTeams($teams)
-    {
-        $this->teams = $teams;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTeams()
-    {
-        return $this->teams;
     }
 
     /**
@@ -301,5 +285,139 @@ class Compo
     public function getMaxPeople()
     {
         return $this->maxPeople;
+    }
+
+    public function hasStarted()
+    {
+        if($this->getStartAt() >= new \DateTime("now"))
+            return true;
+
+        return false;
+    }
+
+    public function getTimeToStart()
+    {
+        if($this->hasStarted())
+        {
+            return false;
+        }
+
+        return $this->getStartAt()->diff(new \DateTime("now"));
+    }
+
+    public function endAt()
+    {
+        $period = new \DateInterval($this->period);
+
+        return $this->getStartAt()->add($period);
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param CompoApplication[] $applications
+     */
+    public function setApplications($applications)
+    {
+        $this->applications = $applications;
+    }
+
+    /**
+     * @return CompoApplication[]
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    public function getApplicationForUser(User $user)
+    {
+        foreach($this->getApplications() as $application)
+        {
+            if($application->getUser() === $user)
+                return $application;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param mixed $applicationPeriod
+     */
+    public function setApplicationPeriod($applicationPeriod)
+    {
+        $this->applicationPeriod = $applicationPeriod;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicationPeriod()
+    {
+        return $this->applicationPeriod;
+    }
+
+    /**
+     * @param mixed $applicationStartAt
+     */
+    public function setApplicationStartAt($applicationStartAt)
+    {
+        $this->applicationStartAt = $applicationStartAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicationStartAt()
+    {
+        return $this->applicationStartAt;
+    }
+
+    public function getTeams()
+    {
+        $teams = new ArrayCollection();
+
+        foreach($this->getApplications() as $application)
+        {
+            if($team = $application->getTeam())
+            {
+                if(!$teams->exists($team))
+                {
+                    $teams->add($team);
+                }
+            }
+        }
+
+        return $teams;
+    }
+
+    /**
+     * @param mixed $activity
+     */
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }

@@ -1,5 +1,15 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
 
-{% block fos_user_content %}
-{% include "FOSUserBundle:Profile:show_content.html.twig" %}
-{% endblock fos_user_content %}
+{% block content %}
+<div class="section profile">
+    <h1>Tu perfil de usuario</h1>
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <p>Este es tu perfil de usuario</p>
+</div>
+{% endblock %}

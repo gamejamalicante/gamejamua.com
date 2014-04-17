@@ -137,7 +137,7 @@ class User extends BaseUser
      * @Assert\NotBlank
      * @Assert\True
      */
-    protected $termsAccepted;
+    protected $termsAccepted = true;
 
     /**
      * @param mixed $achievements

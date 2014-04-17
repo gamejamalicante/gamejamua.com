@@ -4,3 +4,9 @@ services:
         arguments: ["%fos_user.model.user.class%"]
         tags:
             - { name: form.type, alias: gamejam_user_register  }
+
+#    gamejam.user.user_action_listener:
+#        class: GJA\GameJam\UserBundle\EventListener\UserActionListener
+#        arguments: [@service_container]
+#        tags:
+#            - { name: 'kernel.event_listener', event: 'fos_user.resetting.reset.success', method: 'onResetPasswordSuccess', priority: 255}

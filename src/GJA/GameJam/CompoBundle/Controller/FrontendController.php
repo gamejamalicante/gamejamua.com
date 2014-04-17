@@ -126,6 +126,11 @@ class FrontendController extends AbstractController
     {
         $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
 
-        return ['compo' => $compo];
+        return ['compo' => $compo, 'user' => $this->getUser()];
+    }
+
+    public function partialShoutAction()
+    {
+
     }
 }

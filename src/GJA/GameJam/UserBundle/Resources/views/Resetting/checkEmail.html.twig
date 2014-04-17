@@ -1,9 +1,10 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
 
-{% trans_default_domain 'FOSUserBundle' %}
+{% block content %}
+    <div class="section profile">
+        <h1>Recuperar contraseña</h1>
 
-{% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+        <p>Acabamos de enviar un email a la dirección con la que te registraste con instrucciones para resetear tu contraseña.</p>
+        <div class="clearfix"></div>
+    </div>
 {% endblock %}

@@ -27,6 +27,11 @@ class CompoApplication
     protected $id;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $date;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Compo")
      */
     protected $compo;
@@ -35,6 +40,11 @@ class CompoApplication
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
      */
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Team")
+     */
+    protected $team;
 
     /**
      * @ORM\Column(type="smallint")
@@ -131,7 +141,44 @@ class CompoApplication
         return [
             self::MODALITY_NORMAL => "Participar en el concurso",
             self::MODALITY_OUT_OF_COMPO => "Participar fuera de concurso",
-            self::MODALITY_FREE => "Participar de formar libre"
+            self::MODALITY_FREE => "Participar de forma libre"
         ];
     }
-} 
+
+    public function getModalityAsString()
+    {
+        return self::getAvailableModalitites()[$this->modality];
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $team
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+}

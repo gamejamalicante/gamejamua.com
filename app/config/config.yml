@@ -32,8 +32,9 @@ twig:
                 channel: '#gamejamalicante'
             name: GameJam Alicante
             twitter:
+                name: @gamejamua
                 url: ~
-                hashtags: ['#GJA', '#GameJamAlicante', '#GameJamUA', '#GJUA']
+                hashtags: ['GJA', 'GameJamAlicante', 'GameJamUA', 'GJUA']
             facebook:
                 url: ~
 
@@ -96,3 +97,9 @@ google:
                 trackPageLoadTime: true
 
 ornicar_gravatar: ~
+
+avalanche_imagine:
+    filters:
+        sponsor_compo_mini:
+            type:    relative_resize
+            options: { heighten: 60 }

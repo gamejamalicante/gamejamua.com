@@ -1,7 +1,3 @@
-<script type="text/javascript">
-
-</script>
-
 <div class="modal fade" id="shout" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -14,14 +10,11 @@
                     <p>También puedes actualizar tu estado desde Twitter conectado tu cuenta y escribiendo usando cualquier de estos hashtags:</p>
                     <p>
                         {% for hashtag in site.twitter.hashtags %}
-                            <strong>{{ hashtag }}</strong>
+                            <strong>#{{ hashtag }}</strong>
                         {% endfor %}
                     </p>
                 </div>
-                <form action="{{ path('gamejam_user_shout') }}" method="post">
-                {{ form_widget(form.content, {'attr':{'class':'shout form-control', 'placeholder':'Escribe aquí lo que se te pase por la mente...'}}) }}
-                {{ form_rest(form) }}
-                </form>
+                {{ render(controller('GameJamUserBundle:User:shoutPartial')) }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-twitter">¡Actualizar!</button>

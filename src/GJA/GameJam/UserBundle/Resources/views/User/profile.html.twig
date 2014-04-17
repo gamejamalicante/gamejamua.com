@@ -29,7 +29,7 @@
     {% if user.shouts|length %}
         <div class="section description">
             <span class="date">{{ time_diff(user.shouts.first.date) }}</span>
-            {{ user.shouts.first.content }}
+            {{ user.shouts.first.content.content }}
         </div>
     {% endif %}
     <div class="clearfix"></div>

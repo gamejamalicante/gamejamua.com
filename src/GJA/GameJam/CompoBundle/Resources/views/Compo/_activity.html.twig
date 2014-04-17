@@ -1,0 +1,3 @@
+{% for item in activity %}
+    {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
+{% endfor %}

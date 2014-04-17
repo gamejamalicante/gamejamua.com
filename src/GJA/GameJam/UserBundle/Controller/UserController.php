@@ -35,7 +35,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/_shout", name="gamejam_user_shout")
-     * @Template("GameJamUserBundle:User:_partial_shout.html.twig")
+     * @Template("GameJamUserBundle:User:_shout.html.twig")
      */
     public function shoutPartialAction(Request $request)
     {

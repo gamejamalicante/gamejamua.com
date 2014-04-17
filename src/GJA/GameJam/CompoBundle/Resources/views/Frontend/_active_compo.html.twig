@@ -1,6 +1,13 @@
 {% if compo %}
-<div class="section active-compo">
-    <h2><i class="fa fa-rocket"></i> ¡Ya están abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-    <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a></p>
-</div>
+    {% if user and user.hasAppliedTo(compo) %}
+        <div class="section active-compo">
+            <h2><i class="fa fa-rocket"></i> ¡Estás en plena competición para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
+            <p><a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ir a la página de la competición con noticias, actividad de los participantes, etc...</a></p>
+        </div>
+    {% else %}
+    <div class="section active-compo">
+        <h2><i class="fa fa-rocket"></i> ¡Ya están abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
+        <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a></p>
+    </div>
+    {% endif %}
 {% endif %}
