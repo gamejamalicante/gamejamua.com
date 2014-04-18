@@ -8,6 +8,7 @@
 namespace GJA\GameJam\CompoBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
+use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Form\Type\ContactType;
 use GJA\GameJam\GameBundle\Entity\Activity;
 use GJA\GameJam\UserBundle\Entity\User;
@@ -104,6 +105,20 @@ class FrontendController extends AbstractController
         $staff = $this->getRepository("GameJamUserBundle:User")->findStaff();
 
         return ['staff' => $staff];
+    }
+
+    /**
+     * @Route("/edicion-actual", name="gamejam_compo_frontend_current")
+     */
+    public function currentCompoAction()
+    {
+        /** @var Compo $compo */
+        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy([], ['id' => 'ASC']);
+
+        $response = $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+        $response->setStatusCode(302);
+
+        return $response;
     }
 
     /**

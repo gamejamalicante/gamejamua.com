@@ -1,18 +1,59 @@
 {% extends 'GameJamCompoBundle::layout.html.twig' %}
 
+{% block styles %}
+    {{ parent() }}
+    {% stylesheets
+        '@GameJamCompoBundle/Resources/public/css/carousel.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@GameJamCompoBundle/Resources/public/js/jquery.jcarousel.min.js'
+        '@GameJamCompoBundle/Resources/public/js/carousel.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+
 {% block content %}
     <div class="section game">
     <h1>{{ game }}</h1>
         <div class="content info">
             <div class="row">
                 <div class="col-md-7" style="padding-right: 0;">
-                    <iframe width="100%" height="400" src="//www.youtube.com/embed/4wnUpTWTZl4?rel=0" frameborder="0" allowfullscreen class="youtube"></iframe>
+                    <div class="connected-carousels">
+                        <div class="stage">
+                            <div class="carousel carousel-stage">
+                                <ul>
+                                    {% for media in game.media %}
+                                        <li><img src="{{ asset(media.webPath) }}" alt="" width="500"></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <a href="#" class="prev prev-stage"><span>&lsaquo;</span></a>
+                            <a href="#" class="next next-stage"><span>&rsaquo;</span></a>
+                        </div>
+
+                        <div class="navigation">
+                            <div class="carousel carousel-navigation">
+                                <ul>
+                                    {% for media in game.media %}
+                                        <li><img src="{{ asset(media.webPath) }}" width="50" height="50" alt=""></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-5">
                     <img src="http://placehold.it/300x125" width="100%" />
                     <p class="description">{{ game.description }}</p>
                     {% if game.compo %}
-                        <p><i class="fa fa-rocket"></i> {{ game.compo }}</p>
+                        <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>
                         <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>
                         {% if game.diversifiers|length %}
                             <p><i class="fa fa-gear"></i> <strong>Diversificadores: </strong>

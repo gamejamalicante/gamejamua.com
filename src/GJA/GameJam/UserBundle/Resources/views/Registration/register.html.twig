@@ -1,7 +1,75 @@
 {% extends 'GameJamCompoBundle::layout.html.twig' %}
 
+{% import "GameJamCompoBundle::error_macro.html.twig" as display_form_errors %}
+
 {% block content %}
     <div class="section register">
+        <div id="loginbox" class="mainbox col-md-6 col-sm-8 pull-right">
+            <div class="panel panel-primary" >
+                <div class="panel-heading">
+                    <div class="panel-title">Introduce los datos para registrarte</div>
+                </div>
+
+                <div style="padding-top:30px" class="panel-body">
+                    {% if not form.vars.valid %}
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Hemos encontrado errores en el formulario:</strong>
+                            {{ display_form_errors.display_error(form) }}
+                        </div>
+                    {% endif %}
+
+                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                    <form id="loginform" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post">
+                        <strong>Nombre de usuario</strong>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            {{ form_widget(form.username, {'attr':{'class':'form-control'}}) }}
+                        </div>
+
+                        <strong>Nickname (opcional)</strong>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            {{ form_widget(form.nickname, {'attr':{'class':'form-control'}}) }}
+                        </div>
+
+                        <strong>Email</strong>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            {{ form_widget(form.email, {'attr':{'class':'form-control'}}) }}
+                        </div>
+
+                        <strong>Contraseña</strong>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            {{ form_widget(form.plainPassword.first, {'attr':{'class':'form-control'}}) }}
+                        </div>
+
+                        <strong>Repetir contraseña</strong>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            {{ form_widget(form.plainPassword.second, {'attr':{'class':'form-control'}}) }}
+                        </div>
+
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    {{ form_widget(form.termsAccepted, {'attr':{'class':'form-control'}}) }} He leído y acepto las normas
+                                </label>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px" class="form-group bottom">
+                            <div class="col-sm-12 controls">
+                                <button type="submit" id="btn-login" class="btn btn-green submit">¡Registrarse!</button>
+                            </div>
+                        </div>
+                        {{ form_rest(form) }}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
         <h1>Registrarse</h1>
         <p><strong>¡Muchas gracias por tu interés en registrarte en la Game Jam UA! </strong></p>
         <p class="alert alert-info">
@@ -9,36 +77,7 @@
             Si ya tenías cuenta en la anterior edición de GameJamUA no es necesario que te registres de nuevo, logueate en la barra superior.
         </p>
         <p>Al registrarte, a parte de poder inscribirte en el concurso (no es obligatorio), obtendrás montones de ventajas, como la capacidad de votar a los juegos que se presenten, acceso a contenido y noticias exclusivas, y te convertirás en un jugador más con todo lo que ello implica: ¡Posibilidad de obtener logros, ganar puntos y subir de nivel para convertirte en el mejor!
-            ¿A qué esperas? Sólo tienes que rellenar el siguiente formulario: </p>
-        <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-inline">
-            <p>
-                <strong>Nombre de usuario</strong><br>
-                {{ form_widget(form.username, {'attr':{'class':'form-control'}}) }}
-            </p>
-            <p>
-                <strong>Nickname</strong><br>
-                {{ form_widget(form.nickname, {'attr':{'class':'form-control'}}) }}
-            </p>
-            <p>
-                <strong>Email</strong><br>
-                {{ form_widget(form.email, {'attr':{'class':'form-control'}}) }}
-            </p>
-            <p>
-                <strong>Contraseña</strong><br>
-                {{ form_widget(form.plainPassword.first, {'attr':{'class':'form-control'}}) }}
-            </p>
-            <p>
-                <strong>Repetir contraseña</strong><br>
-                {{ form_widget(form.plainPassword.second, {'attr':{'class':'form-control'}}) }}
-            </p>
-            <p>
-                He leído y acepto las normas {{ form_widget(form.termsAccepted, {'attr':{'class':'form-control'}}) }}
-            </p>
-            <p>
-                Recuerda que al registrarte <strong>no te te estas inscribiendo en el concurso</strong>, para inscribirte accede a la sección correspondiente una vez te registres.
-            </p>
-            <div style="text-align: center"><button class="btn btn-green submit">¡Registrarse!</button></div>
-            {{ form_rest(form) }}
-        </form>
+            ¿A qué esperas? Sólo tienes que rellenar el formulario que tienes a la derecha: </p>
+        <div class="clearfix"></div>
     </div>
 {% endblock %}

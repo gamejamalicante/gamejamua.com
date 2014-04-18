@@ -58,7 +58,7 @@
             <div class="pull-right header-right">
                 <ul class="menu">
                     <li{% block active_index %}{% endblock %}><a href="{{ path('gamejam_compo_frontend') }}"><i class="fa fa-home"></i> Portada</a></li>
-                    <li{% block active_current %}{% endblock %}><a href=""><i class="fa fa-ticket"></i> Edición actual</a></li>
+                    <li{% block active_current %}{% endblock %}><a href="{{ path('gamejam_compo_frontend_current') }}"><i class="fa fa-ticket"></i> Edición actual</a></li>
                     <li{% block active_games %}{% endblock %}><a href=""><i class="fa fa-gamepad"></i> Juegos</a></li>
                     <li{% block active_about %}{% endblock %}><a href="{{ path('gamejam_compo_frontend_about') }}"><i class="fa fa-question"></i> ¿Qué es?</a></li>
                 </ul>

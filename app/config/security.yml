@@ -4,7 +4,9 @@ security:
 
     role_hierarchy:
         ROLE_USER: []
-        ROLE_OLD_STAFF: ROLE _USER
+        ROLE_MEMBER: ROLE_USER
+        ROLE_SUPER_MEMBER: ROLE_MEMBER
+        ROLE_OLD_STAFF: ROLE_USER
         ROLE_JANITOR: [ROLE_USER, ROLE_STAFF]
         ROLE_JURY: ROLE_USER
         ROLE_COORDINATOR: [ROLE_USER, ROLE_STAFF]
