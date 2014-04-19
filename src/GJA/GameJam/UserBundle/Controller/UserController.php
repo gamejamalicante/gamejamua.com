@@ -8,8 +8,7 @@
 namespace GJA\GameJam\UserBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
-use GJA\GameJam\GameBundle\Entity\Activity;
-use GJA\GameJam\UserBundle\Entity\Shout;
+use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\UserBundle\Entity\User;
 use GJA\GameJam\UserBundle\Form\Type\ShoutType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -31,34 +30,5 @@ class UserController extends AbstractController
     public function profileAction(User $user)
     {
         return ['user' => $user];
-    }
-
-    /**
-     * @Route("/_shout", name="gamejam_user_shout")
-     * @Template("GameJamUserBundle:User:_shout.html.twig")
-     */
-    public function shoutPartialAction(Request $request)
-    {
-        $activity = new Activity();
-        $activity->setType(Activity::TYPE_SHOUT);
-
-        $form = $this->createForm(new ShoutType(), $activity);
-
-        if($request->isMethod("POST"))
-        {
-            $form->handleRequest($request);
-
-            if($form->isValid())
-            {
-                $activity->setUser($this->getUser());
-                $this->persistAndFlush($activity);
-
-                return new JsonResponse(['success' => true]);
-            }
-
-            return new JsonResponse(['success' => false]);
-        }
-
-        return ['form' => $form->createView()];
     }
 } 

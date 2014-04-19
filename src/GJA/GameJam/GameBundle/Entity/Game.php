@@ -96,7 +96,7 @@ class Game
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Activity", mappedBy="game")
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Activity", mappedBy="game")
      */
     protected $activity;
 

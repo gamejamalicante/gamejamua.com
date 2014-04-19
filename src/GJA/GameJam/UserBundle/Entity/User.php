@@ -11,10 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
+use GJA\GameJam\CompoBundle\Entity\Achievement;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Entity\Team;
-use GJA\GameJam\GameBundle\Entity\Activity;
+use GJA\GameJam\CompoBundle\Entity\Activity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -58,7 +59,7 @@ class User extends BaseUser
     protected $applications;
 
     /**
-     * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Activity", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Activity", mappedBy="user")
      * @ORM\OrderBy({"date"="DESC"})
      */
     protected $activity;
@@ -148,7 +149,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return AchievementGranted[]
      */
     public function getAchievements()
     {
@@ -529,6 +530,17 @@ class User extends BaseUser
         foreach($this->getApplications() as $application)
         {
             if($compo === $application->getCompo())
+                return true;
+        }
+
+        return false;
+    }
+
+    public function hasAchievement(Achievement $achievement)
+    {
+        foreach($this->getAchievements() as $achievementGranted)
+        {
+            if($achievementGranted->getAchievement() === $achievement)
                 return true;
         }
 

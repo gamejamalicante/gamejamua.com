@@ -637,6 +637,11 @@ footer .copyright a
     border-radius: 5px;
 }
 
+.activity .item.achievement h3
+{
+    font-size: 14px;
+}
+
 textarea.shout
 {
     width: 100%;
@@ -862,6 +867,13 @@ textarea.shout
     background-color: rgba(159, 170, 190, 0.48);
 }
 
+.section.compo .activity .item.achievement
+{
+    font-size: 14px;
+    background-color: rgba(175, 190, 89, 0.48);
+}
+
+
 .section.compo .activity .item span
 {
     color: #f5bbff;
@@ -883,4 +895,14 @@ textarea.shout
 {
     margin-top: 10px;
     margin-right: 10px;
+}
+
+.loading
+{
+    display: none;
+}
+
+.loading.show
+{
+    display: block;
 }

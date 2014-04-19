@@ -8,9 +8,11 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use GJA\GameJam\CompoBundle\Achievement\ConstraintCheckerInterface;
+use GJA\GameJam\CompoBundle\Achievement\GranterInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\AchievementRepository")
  * @ORM\Table(name="gamejam_compos_achievements")
  */
 class Achievement
@@ -49,6 +51,11 @@ class Achievement
      * @ORM\Column(type="text")
      */
     protected $description;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $granter;
 
     /**
      * @param mixed $description
@@ -149,5 +156,32 @@ class Achievement
     function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @param mixed $granter
+     */
+    public function setGranter($granter)
+    {
+        $this->granter = $granter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGranter()
+    {
+        return $this->granter;
+    }
+
+    public function grant(Activity $activity)
+    {
+        /** @var GranterInterface $class */
+        if($class = $this->getGranter())
+        {
+            return $class::grant($activity);
+        }
+
+        return false;
     }
 } 

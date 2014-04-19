@@ -42,6 +42,11 @@ class AchievementGranted
      */
     protected $game;
 
+    function __construct()
+    {
+        $this->grantedAt = new \DateTime("now");
+    }
+
     /**
      * @param mixed $achievement
      */

@@ -96,7 +96,7 @@ class Compo
     protected $maxPeople;
 
     /**
-     * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Activity", mappedBy="compo")
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Activity", mappedBy="compo")
      * @ORM\OrderBy({"date"="DESC"})
      */
     protected $activity;
@@ -290,6 +290,19 @@ class Compo
     public function hasStarted()
     {
         if($this->getStartAt() >= new \DateTime("now"))
+            return true;
+
+        return false;
+    }
+
+    public function isRunning()
+    {
+        $now = new \DateTime("now");
+        $finish = clone $now;
+
+        $finish->add(new \DateInterval($this->period));
+
+        if($this->getStartAt() >= $now && $finish <= $now)
             return true;
 
         return false;

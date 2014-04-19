@@ -1,0 +1,24 @@
+services:
+    gamejam.compo.listener.game_activity:
+        class: GJA\GameJam\CompoBundle\EventListener\GameActivityListener
+        arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
+        tags:
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.media', method: 'onMedia' }
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.coins', method: 'onCoins' }
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.likes', method: 'onLike' }
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.creation', method: 'onCreation' }
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.info_update', method: 'onInfoUpdate' }
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.achievement', method: 'onAchievementGranted' }
+
+    gamejam.compo.listener.user_activity:
+        class: GJA\GameJam\CompoBundle\EventListener\UserActivityListener
+        arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
+        tags:
+            - { name: 'kernel.event_listener', event: 'gamejam.user.activity.shout', method: 'onShout' }
+            - { name: 'kernel.event_listener', event: 'gamejam.user.activity.achievement', method: 'onAchievementGranted' }
+
+    gamejam.compo.listener.achievement_activity:
+        class: GJA\GameJam\CompoBundle\EventListener\AchievementListener
+        arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
+        tags:
+            - { name: 'kernel.event_listener', event: 'gamejam.compo.activity', method: 'onActivity' }

@@ -4,6 +4,79 @@
 
 {% block compo_announcement %}{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        var lastUpdate = Math.round(+new Date()/1000)-86400;
+
+        function reloadActivity(target, showEffect)
+        {
+            $('.loading').fadeIn();
+
+            var targetUrl = '{{ path('gamejam_compo_compo_activity', {compo: compo.nameSlug, since: '__since'}) }}'
+                    .replace('__since', "@" + lastUpdate);
+
+            $.get(targetUrl, function(content)
+            {
+                if(!showEffect)
+                {
+                    $(target).prepend(content);
+                }
+                else
+                {
+                    var newElement = $('<div style="display: none;">' + content+ '</div>');
+
+                    $(target).prepend(newElement);
+
+                    newElement.show('slow');
+                }
+
+                $('.loading').fadeOut();
+
+                lastUpdate = Math.round(+new Date()/1000);
+            });
+        }
+
+        var shoutRequest;
+
+        $(document).ready(function()
+        {
+            $('.shoutbox .shout-form').submit(function(e)
+            {
+                e.preventDefault();
+
+                if(shoutRequest)
+                {
+                    shoutRequest.abort();
+                }
+
+                var data = $(this).serialize();
+
+                shoutRequest = $.ajax({
+                    url: '{{ path('gamejam_user_shout') }}',
+                    type: 'post',
+                    data: data
+                });
+
+                shoutRequest.done(function(response, status, xhr)
+                {
+                    reloadActivity('.activity', true);
+                });
+
+            }).bind("keydown", function(e)
+            {
+                if(e.keyCode == 13 && e.ctrlKey)
+                {
+                    $(this).submit();
+                }
+            });
+
+            reloadActivity('.activity');
+        })
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="modal fade" id="twitter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -35,10 +108,9 @@
         </div>
         <div class="row compo-content">
             <div class="col-sm-6">
+                <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
                 <h2><i class="fa fa-comment-o"></i> Actividad de los participantes</h2>
-                <div class="activity">
-                    {{ render(controller("GameJamCompoBundle:Compo:partialActivity", {compo: compo})) }}
-                </div>
+                <div class="activity"></div>
             </div>
             <div class="col-sm-6">
                 {% if user %}
@@ -53,7 +125,7 @@
                             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                         {% endfor %}
                     </div>
-                    {{ render(controller("GameJamUserBundle:User:shoutPartial")) }}
+                    {{ render(controller("GameJamUserBundle:Panel:shoutPartial")) }}
                 </div>
                 {% endif %}
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>

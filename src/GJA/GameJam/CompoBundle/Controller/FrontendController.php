@@ -10,7 +10,7 @@ namespace GJA\GameJam\CompoBundle\Controller;
 use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Form\Type\ContactType;
-use GJA\GameJam\GameBundle\Entity\Activity;
+use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,7 +29,7 @@ class FrontendController extends AbstractController
     public function indexAction()
     {
         $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1, 'announce' => false]);
-        $activity = $this->getRepository("GameJamGameBundle:Activity")->findBy([], ['date' => 'DESC']);
+        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy([], ['date' => 'DESC']);
 
         return ['news' => $news, 'activity' => $activity];
     }

@@ -1,4 +1,4 @@
-<form action="{{ path('gamejam_user_shout') }}" method="post">
+<form action="{{ path('gamejam_user_shout') }}" method="post" class="shout-form">
     {{ form_widget(form.content, {'attr':{'class':'shout form-control', 'placeholder':'Escribe aquí lo que se te pase por la mente...'}}) }}
     {{ form_rest(form) }}
 </form>

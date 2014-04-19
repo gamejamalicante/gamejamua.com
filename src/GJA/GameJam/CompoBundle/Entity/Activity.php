@@ -4,20 +4,20 @@
  * Copyright 2014 (c) Alberto Fernández
  */
 
-namespace GJA\GameJam\GameBundle\Entity;
+namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="gamejam_games_activity")
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\ActivityRepository")
+ * @ORM\Table(name="gamejam_compos_activity")
  */
-class Activity implements ActivityInterface
+class Activity
 {
     const TYPE_MEDIA = 1;
     const TYPE_COINS = 2;
     const TYPE_LIKES = 3;
-    const TYPE_INFO = 4;
+    const TYPE_INFO_UPDATE = 4;
     const TYPE_CREATION = 5;
     const TYPE_ACHIEVEMENT = 6;
     const TYPE_SHOUT = 7;
@@ -36,7 +36,7 @@ class Activity implements ActivityInterface
     protected $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Compo", inversedBy="activity")
+     * @ORM\ManyToOne(targetEntity="Compo", inversedBy="activity")
      */
     protected $compo;
 
@@ -46,14 +46,19 @@ class Activity implements ActivityInterface
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Game", inversedBy="activity")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game", inversedBy="activity")
      */
     protected $game;
 
     /**
-     * @ORM\OneToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Achievement")
+     * @ORM\ManyToOne(targetEntity="Achievement")
      */
     protected $achievement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Media")
+     */
+    protected $media;
 
     /**
      * @ORM\Column(type="smallint")
@@ -61,9 +66,14 @@ class Activity implements ActivityInterface
     protected $type;
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json_array", nullable=true)
      */
     protected $content;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime("now");
+    }
 
     /**
      * @param mixed $achievement
@@ -82,22 +92,6 @@ class Activity implements ActivityInterface
     }
 
     /**
-     * @param mixed $data
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
      * @param mixed $date
      */
     public function setDate($date)
@@ -106,7 +100,7 @@ class Activity implements ActivityInterface
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -193,7 +187,7 @@ class Activity implements ActivityInterface
                 return 'likes';
             break;
 
-            case self::TYPE_INFO:
+            case self::TYPE_INFO_UPDATE:
                 return 'info';
             break;
 
@@ -229,5 +223,37 @@ class Activity implements ActivityInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @param mixed $compo
+     */
+    public function setCompo($compo)
+    {
+        $this->compo = $compo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompo()
+    {
+        return $this->compo;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }
