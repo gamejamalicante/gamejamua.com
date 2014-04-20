@@ -24,6 +24,16 @@ class Compo
     protected $id;
 
     /**
+     * @ORM\Column(type="decimal", precision=2)
+     */
+    protected $memberFee;
+
+    /**
+     * @ORM\Column(type="decimal", precision=2)
+     */
+    protected $normalFee;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -432,5 +442,37 @@ class Compo
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * @param mixed $membershipFee
+     */
+    public function setMemberFee($membershipFee)
+    {
+        $this->memberFee = $membershipFee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMemberFee()
+    {
+        return $this->memberFee;
+    }
+
+    /**
+     * @param mixed $normalFee
+     */
+    public function setNormalFee($normalFee)
+    {
+        $this->normalFee = $normalFee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNormalFee()
+    {
+        return $this->normalFee;
     }
 }

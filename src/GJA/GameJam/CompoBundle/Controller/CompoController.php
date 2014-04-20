@@ -12,6 +12,8 @@ use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Form\Type\CompoApplicationType;
+use GJA\GameJam\CompoBundle\Order\CompoInscriptionItem;
+use GJA\GameJam\UserBundle\Entity\Order;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -53,6 +55,7 @@ class CompoController extends AbstractController
         $application = new CompoApplication();
         $application->setCompo($compo);
         $application->setUser($user);
+        $application->setCompleted(false);
 
         $form = $this->createForm(new CompoApplicationType(), $application);
 
@@ -64,7 +67,7 @@ class CompoController extends AbstractController
             {
                 $this->persistAndFlush($application);
 
-                return $this->redirectToPath('gamejam_compo_compo_application', array('compo' => $compo->getNameSlug(), 'first' => true));
+                return $this->redirectToPath('gamejam_compo_payment_details', array('compo' => $compo->getNameSlug()));
             }
         }
 

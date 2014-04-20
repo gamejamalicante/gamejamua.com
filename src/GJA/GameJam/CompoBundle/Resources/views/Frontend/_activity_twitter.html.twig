@@ -1,8 +1,0 @@
-<div class="item">
-    <img class="avatar" src="{% if gravatar_exists(item.user.email) %}{{ gravatar(item.user.email, 50) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
-    <span class="type"><i class="fa fa-twitter"></i> @{{ item.user.twitter }}</span>
-    <h3>{{ item.user }}</h3>
-    <span class="date"><i class="fa fa-clock-o"></i> enviado desde Twitter {{ time_diff(item.date) }}</span>
-    <p>{{ item.content.content|raw }}</p>
-    <div class="clearfix"></div>
-</div>

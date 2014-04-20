@@ -530,7 +530,12 @@ class User extends BaseUser
         foreach($this->getApplications() as $application)
         {
             if($compo === $application->getCompo())
-                return true;
+            {
+                if($application->isCompleted())
+                    return true;
+                else
+                    return false;
+            }
         }
 
         return false;
@@ -542,6 +547,16 @@ class User extends BaseUser
         {
             if($achievementGranted->getAchievement() === $achievement)
                 return true;
+        }
+
+        return false;
+    }
+
+    public function isMember()
+    {
+        if($this->hasRole("ROLE_MEMBER"))
+        {
+            return true;
         }
 
         return false;

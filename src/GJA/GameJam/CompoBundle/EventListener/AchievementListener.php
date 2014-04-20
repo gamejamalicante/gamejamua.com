@@ -74,9 +74,10 @@ class AchievementListener extends AbstractActivityListener
             $eventName = GameJamGameEvents::ACTIVITY_ACHIEVEMENT;
         }
 
-        $event->setAchievement($achievementGranted->getAchievement());
-
         if($event && !empty($eventName))
+        {
+            $event->setAchievement($achievementGranted->getAchievement());
             $this->eventDispatcher->dispatch($eventName, $event);
+        }
     }
 } 

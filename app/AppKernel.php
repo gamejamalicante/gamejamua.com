@@ -30,6 +30,8 @@ class AppKernel extends Kernel
             new \GJA\GameJam\GameBundle\GameJamGameBundle(),
             new \GJA\GameJam\UserBundle\GameJamUserBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
+            new JMS\Payment\CoreBundle\JMSPaymentCoreBundle(),
+            new \JMS\Payment\PaypalBundle\JMSPaymentPaypalBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

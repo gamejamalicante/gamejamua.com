@@ -17,7 +17,7 @@ class CompoApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('modality', 'choice', ['choices' => CompoApplication::getAvailableModalitites()])
-            ->add('nightStay');
+            ->add('nightStay', null, ['required' => false]);
     }
 
     /**

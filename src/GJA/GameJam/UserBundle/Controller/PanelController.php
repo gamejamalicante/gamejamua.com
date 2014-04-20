@@ -25,7 +25,15 @@ use Symfony\Component\HttpFoundation\Request;
 class PanelController extends AbstractController
 {
     /**
-     * @Route("/_shout", name="gamejam_user_shout")
+     * @Route("/", name="gamejam_user_panel")
+     */
+    public function indexAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/_shout", name="gamejam_user_panel_shout")
      * @Template("GameJamUserBundle:User:_shout.html.twig")
      */
     public function shoutPartialAction(Request $request)

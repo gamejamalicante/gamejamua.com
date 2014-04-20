@@ -906,3 +906,14 @@ textarea.shout
 {
     display: block;
 }
+
+.section.inscription .prices
+{
+    margin-bottom: 25px;
+}
+
+.section.inscription .prices span
+{
+    font-size: 40px;
+    display: block;
+}

@@ -103,3 +103,12 @@ avalanche_imagine:
         sponsor_compo_mini:
             type:    relative_resize
             options: { heighten: 60 }
+
+jms_payment_core:
+    secret: %secret%
+
+jms_payment_paypal:
+    username: %paypal_username%
+    password: %paypal_password%
+    signature: %paypal_signature%
+    debug: %paypal_debug%

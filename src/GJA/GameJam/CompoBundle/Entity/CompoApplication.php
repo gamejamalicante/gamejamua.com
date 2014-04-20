@@ -57,6 +57,21 @@ class CompoApplication
     protected $nightStay;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $completed = false;
+
+    /**
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"})
+     */
+    protected $order;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime("now");
+    }
+
+    /**
      * @param mixed $compo
      */
     public function setCompo($compo)
@@ -180,5 +195,42 @@ class CompoApplication
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * @param mixed $completed
+     */
+    public function setCompleted($completed)
+    {
+        $this->completed = $completed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompleted()
+    {
+        return $this->completed;
+    }
+
+    public function isCompleted()
+    {
+        return $this->completed;
+    }
+
+    /**
+     * @param mixed $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

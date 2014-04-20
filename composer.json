@@ -38,7 +38,9 @@
         "stof/doctrine-extensions-bundle": "@dev",
         "avalanche123/imagine-bundle": "@dev",
         "antimattr/google-bundle": "@dev",
-        "ornicar/gravatar-bundle" : "dev-master"
+        "ornicar/gravatar-bundle" : "dev-master",
+        "jms/payment-core-bundle": "dev-master",
+        "jms/payment-paypal-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

@@ -46,7 +46,7 @@
     <h2><i class="fa fa-comment-o"></i> Actividad de la comunidad</h2>
     {% for item in activity %}
         <div class="section index activity">
-            {% include 'GameJamCompoBundle:Frontend:_activity_' ~item.typeName~'.html.twig' %}
+            {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
         </div>
     {% endfor %}
 {% endblock %}
