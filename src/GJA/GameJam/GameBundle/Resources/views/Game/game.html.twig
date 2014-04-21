@@ -3,6 +3,7 @@
 {% block styles %}
     {{ parent() }}
     {% stylesheets
+        '@GameJamCompoBundle/Resources/public/css/elastislide.css'
         '@GameJamCompoBundle/Resources/public/css/carousel.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
@@ -12,46 +13,70 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        '@GameJamCompoBundle/Resources/public/js/jquery.jcarousel.min.js'
-        '@GameJamCompoBundle/Resources/public/js/carousel.js'
+        'components/modernizr/modernizr.js'
+        '@GameJamCompoBundle/Resources/public/js/jquery.elastislide.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
+
+    <script type="text/javascript">
+
+        // example how to integrate with a previewer
+
+        var current = 0,
+                $preview = $( '#preview' ),
+                $carouselEl = $( '#carousel' ),
+                $carouselItems = $carouselEl.children(),
+                carousel = $carouselEl.elastislide( {
+                    current : current,
+                    minItems : 4,
+                    onClick : function( el, pos, evt ) {
+
+                        changeImage( el, pos );
+                        evt.preventDefault();
+
+                    },
+                    onReady : function() {
+
+                        changeImage( $carouselItems.eq( current ), current );
+
+                    }
+                } );
+
+        function changeImage( el, pos ) {
+
+            $preview.attr( 'src', el.data( 'preview' ) );
+            $carouselItems.removeClass( 'current-img' );
+            el.addClass( 'current-img' );
+            carousel.setCurrent( pos );
+
+        }
+
+    </script>
 {% endblock %}
 
 {% block content %}
     <div class="section game">
     <h1>{{ game }}</h1>
-        <div class="content info">
+        <div class="content info showcase">
             <div class="row">
                 <div class="col-md-7" style="padding-right: 0;">
-                    <div class="connected-carousels">
-                        <div class="stage">
-                            <div class="carousel carousel-stage">
-                                <ul>
-                                    {% for media in game.media %}
-                                        <li><img src="{{ asset(media.webPath) }}" alt="" width="500"></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <a href="#" class="prev prev-stage"><span>&lsaquo;</span></a>
-                            <a href="#" class="next next-stage"><span>&rsaquo;</span></a>
+                    <div class="gallery">
+                        <div class="image-preview">
+                            <img id="preview" />
                         </div>
-
-                        <div class="navigation">
-                            <div class="carousel carousel-navigation">
-                                <ul>
-                                    {% for media in game.media %}
-                                        <li><img src="{{ asset(media.webPath) }}" width="50" height="50" alt=""></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
+                        <!-- Elastislide Carousel -->
+                        <ul id="carousel" class="elastislide-list">
+                            {% for media in game.media %}
+                                <li data-preview="{{ asset(media.webPath|apply_filter('game_gallery_preview')) }}"><a href="#"><img src="{{ asset(media.webPath|apply_filter('game_gallery_mini')) }}"></a></li>
+                            {% endfor %}
+                        </ul>
+                        <!-- End Elastislide Carousel -->
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <img src="http://placehold.it/300x125" width="100%" />
-                    <p class="description">{{ game.description }}</p>
+                    <img src="http://placehold.it/300x90" width="100%" />
+                    <p class="description scrollable">{{ game.description }}</p>
                     {% if game.compo %}
                         <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>
                         <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>
@@ -76,11 +101,33 @@
             </div>
         </div>
         <div class="content info">
-            <h2><i class="fa fa-comment"></i> Actividad</h2>
-            <div class="activity">
-                {% for activity in game.activity %}
-                    {% include 'GameJamGameBundle:Game:_activity_' ~activity.typeName~'.html.twig' %}
-                {% endfor %}
+            <div class="row">
+                <div class="col-md-6">
+                    <h2><i class="fa fa-comment"></i> Actividad</h2>
+                    <div class="activity">
+                        {% for activity in game.activity %}
+                            {% include 'GameJamGameBundle:Game:_activity_' ~activity.typeName~'.html.twig' %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2><i class="fa fa-file"></i> Descargas</h2>
+                    <div class="downloads">
+                        {% if game.downloads|length %}
+                            {% if game.gamejamdownload %}
+                            <div class="download gamejam-version">
+                                <a class="btn btn-green pull-right"><i class="fa fa-download"></i> Descargar</a>
+                                <h4>Versión GameJam</h4>
+                                <p class="description">Esta es la versión original subida durante la GameJam</p>
+                                <p><strong>Tamaño: </strong></p>
+                                <p><strong>Plataformas: </strong></p>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            No hay descargas aún :(
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

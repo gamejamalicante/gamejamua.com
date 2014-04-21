@@ -173,7 +173,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Download[]
      */
     public function getDownloads()
     {
@@ -361,5 +361,14 @@ class Game
         return $this->activity;
     }
 
+    public function getGamejamDownload()
+    {
+        foreach($this->getDownloads() as $download)
+        {
+            if($download->isGamejam())
+                return $download;
+        }
 
+        return null;
+    }
 }

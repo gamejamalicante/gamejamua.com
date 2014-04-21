@@ -29,6 +29,11 @@ class Download
     protected $id;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $gamejam;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -44,7 +49,7 @@ class Download
     protected $version;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json_array")
      */
     protected $platforms;
 
@@ -57,4 +62,176 @@ class Download
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="downloads")
      */
     protected $game;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $size;
+
+    /**
+     * @param mixed $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $game
+     */
+    public function setGame($game)
+    {
+        $this->game = $game;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $platforms
+     */
+    public function setPlatforms($platforms)
+    {
+        $this->platforms = $platforms;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlatforms()
+    {
+        return $this->platforms;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param mixed $gamejam
+     */
+    public function setGamejam($gamejam)
+    {
+        $this->gamejam = $gamejam;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGamejam()
+    {
+        return $this->gamejam;
+    }
+
+    public function isGamejam()
+    {
+        return $this->gamejam;
+    }
+
+    /**
+     * @param mixed $size
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    public static function getAvailablePlatforms()
+    {
+        return [
+            self::PLATFORM_WINDOWS => 'Windows',
+            self::PLATFORM_MAC => 'Mac',
+            self::PLATFORM_LINUX => 'GNU/Linux',
+            self::PLATFORM_ANDROID => 'Android',
+            self::PLATFORM_WEB => 'HTML5'
+        ];
+    }
+
+    public function getPlatformString($platform)
+    {
+        $platforms = self::getAvailablePlatforms();
+
+        return $platforms[$platform];
+    }
 } 

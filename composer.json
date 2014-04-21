@@ -27,6 +27,7 @@
         "components/jquery": "1.*",
         "components/bootstrap": "3.*",
         "components/font-awesome": "4.*",
+        "components/modernizr": "2.*",
         "sensio/buzz-bundle": "@dev",
         "mlpz/mailchimp-bundle": "@dev",
         "friendsofsymfony/user-bundle": "@dev",

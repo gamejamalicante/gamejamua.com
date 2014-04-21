@@ -103,6 +103,12 @@ avalanche_imagine:
         sponsor_compo_mini:
             type:    relative_resize
             options: { heighten: 60 }
+        game_gallery_mini:
+            type: relative_resize
+            options: { heighten: 65 }
+        game_gallery_preview:
+            type: relative_resize
+            options: { heighten: 300 }
 
 jms_payment_core:
     secret: %secret%

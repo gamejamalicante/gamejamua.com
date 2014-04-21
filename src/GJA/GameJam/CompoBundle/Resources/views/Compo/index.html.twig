@@ -32,6 +32,8 @@
                     newElement.show('slow');
                 }
 
+                $('.shoutbox .shout-form textarea').val("");
+
                 $('.loading').fadeOut();
 
                 lastUpdate = Math.round(+new Date()/1000);
@@ -54,7 +56,7 @@
                 var data = $(this).serialize();
 
                 shoutRequest = $.ajax({
-                    url: '{{ path('gamejam_user_shout') }}',
+                    url: '{{ path('gamejam_user_panel_shout') }}',
                     type: 'post',
                     data: data
                 });

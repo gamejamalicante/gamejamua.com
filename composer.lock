@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "504649be8d5674b9e089dc6ea3378e07",
+    "hash": "1e6788a97676dfdeed26a3b25393de19",
     "packages": [
         {
             "name": "amnl/router-unslash",
@@ -320,17 +320,86 @@
             "time": "2014-01-24 21:17:36"
         },
         {
+            "name": "components/modernizr",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/modernizr.git",
+                "reference": "c470050f9906b1197ddaa7aace41f73eba5f4ecf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/modernizr/zipball/c470050f9906b1197ddaa7aace41f73eba5f4ecf",
+                "reference": "c470050f9906b1197ddaa7aace41f73eba5f4ecf",
+                "shasum": ""
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "modernizr.js"
+                    ],
+                    "shim": {
+                        "exports": "window.Modernizr"
+                    }
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Modernizr",
+                    "homepage": "http://modernizr.com"
+                },
+                {
+                    "name": "Faruk Ates"
+                },
+                {
+                    "name": "Paul Irish"
+                },
+                {
+                    "name": "Alex Sexton"
+                },
+                {
+                    "name": "Ryan Seddon"
+                },
+                {
+                    "name": "Alexander Farkas"
+                },
+                {
+                    "name": "Ben Alman"
+                },
+                {
+                    "name": "Stu Cox"
+                }
+            ],
+            "description": "Modernizr is a JavaScript library that detects HTML5 and CSS3 features in the user's browser.",
+            "homepage": "http://modernizr.com",
+            "keywords": [
+                "CSS3",
+                "HTML5",
+                "browser",
+                "feature detection"
+            ],
+            "time": "2013-03-31 12:34:31"
+        },
+        {
             "name": "doctrine/annotations",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "ce2b5dae7b996bd231a9f178750aec536aba7e14"
+                "reference": "2c717e80c4f3ba589592933218f66bb366eac057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/ce2b5dae7b996bd231a9f178750aec536aba7e14",
-                "reference": "ce2b5dae7b996bd231a9f178750aec536aba7e14",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/2c717e80c4f3ba589592933218f66bb366eac057",
+                "reference": "2c717e80c4f3ba589592933218f66bb366eac057",
                 "shasum": ""
             },
             "require": {
@@ -357,7 +426,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -376,9 +445,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -389,7 +458,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-04-16 13:36:10"
+            "time": "2014-04-21 04:41:33"
         },
         {
             "name": "doctrine/cache",
@@ -539,12 +608,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "9a7e20e779360f3b8a02c27a89d47d5a6fdce8d1"
+                "reference": "b1a31ae3df2c18c24bec42e2cc32e3e4bedc07c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/9a7e20e779360f3b8a02c27a89d47d5a6fdce8d1",
-                "reference": "9a7e20e779360f3b8a02c27a89d47d5a6fdce8d1",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/b1a31ae3df2c18c24bec42e2cc32e3e4bedc07c7",
+                "reference": "b1a31ae3df2c18c24bec42e2cc32e3e4bedc07c7",
                 "shasum": ""
             },
             "require": {
@@ -606,7 +675,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2014-02-03 23:31:47"
+            "time": "2014-04-21 05:00:49"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -1214,12 +1283,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "38b683838648b549aad0e38ce88c70b6393755b3"
+                "reference": "63d21ca4b28cb0e9192dadf6ff9d9dd17f0c2e4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/38b683838648b549aad0e38ce88c70b6393755b3",
-                "reference": "38b683838648b549aad0e38ce88c70b6393755b3",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/63d21ca4b28cb0e9192dadf6ff9d9dd17f0c2e4c",
+                "reference": "63d21ca4b28cb0e9192dadf6ff9d9dd17f0c2e4c",
                 "shasum": ""
             },
             "require": {
@@ -1283,7 +1352,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-04-18 05:21:27"
+            "time": "2014-04-21 04:01:32"
         },
         {
             "name": "egeloen/google-map",
@@ -1520,12 +1589,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "f2cd33516faa4a773d576ad58d02e283467acdd0"
+                "reference": "47ed3e44d7e9b464c0d3d606a91a4651f8002a2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/f2cd33516faa4a773d576ad58d02e283467acdd0",
-                "reference": "f2cd33516faa4a773d576ad58d02e283467acdd0",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/47ed3e44d7e9b464c0d3d606a91a4651f8002a2b",
+                "reference": "47ed3e44d7e9b464c0d3d606a91a4651f8002a2b",
                 "shasum": ""
             },
             "require": {
@@ -1592,7 +1661,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2014-04-12 08:05:29"
+            "time": "2014-04-21 07:57:57"
         },
         {
             "name": "imagine/imagine",
@@ -2096,12 +2165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "7c002e9d555b9706e1d8a84aa017766db56e0c82"
+                "reference": "1afc39690e7414412face1f8cbf67b73db34485c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/7c002e9d555b9706e1d8a84aa017766db56e0c82",
-                "reference": "7c002e9d555b9706e1d8a84aa017766db56e0c82",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1afc39690e7414412face1f8cbf67b73db34485c",
+                "reference": "1afc39690e7414412face1f8cbf67b73db34485c",
                 "shasum": ""
             },
             "require": {
@@ -2129,7 +2198,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8.x-dev"
+                    "dev-master": "1.9.x-dev"
                 }
             },
             "autoload": {
@@ -2156,7 +2225,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-04-17 11:19:47"
+            "time": "2014-04-20 16:41:26"
         },
         {
             "name": "ornicar/gravatar-bundle",
@@ -2473,12 +2542,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "1c41858d49a8df36eef884e845a0472eb55499bd"
+                "reference": "8cb2651cef0b8a61eb209ee69ffd93e7f40ee297"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/1c41858d49a8df36eef884e845a0472eb55499bd",
-                "reference": "1c41858d49a8df36eef884e845a0472eb55499bd",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/8cb2651cef0b8a61eb209ee69ffd93e7f40ee297",
+                "reference": "8cb2651cef0b8a61eb209ee69ffd93e7f40ee297",
                 "shasum": ""
             },
             "require": {
@@ -2521,7 +2590,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2014-04-10 21:57:26"
+            "time": "2014-04-21 12:36:05"
         },
         {
             "name": "sensio/generator-bundle",

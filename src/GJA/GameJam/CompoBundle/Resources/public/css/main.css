@@ -684,6 +684,37 @@ textarea.shout
     color: #aeaeae;
 }
 
+.section.game .content.info.showcase p.description
+{
+    height: 120px;
+    overflow-y: scroll;
+    font-size: 12px;
+    overflow-x: hidden;
+    padding-right: 15px;
+}
+
+.section.game .downloads .download
+{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    box-shadow: 0 0 10px #000000;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.section.game .downloads .download h4
+{
+    margin-top: 0;
+    color: #FFF;
+    margin-bottom: 15px;
+}
+
+.section.game .downloads .download p.description
+{
+    color: #807878;
+    font-size: 13px;
+}
+
 .section.register p
 {
     background-color: #e1e1f2;
@@ -916,4 +947,20 @@ textarea.shout
 {
     font-size: 40px;
     display: block;
+}
+
+.btn-download
+{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #669438;
+    border-radius: 2px;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2),
+    inset -1px 1px 0 rgba(255,255,255,0.2),
+    inset 0 20px 20px rgba(255,255,255,0.1);
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+    border: solid 3px #3d3d3d;
+    display: inline-block;
+    width: 100%;
 }
