@@ -1,0 +1,24 @@
+parameters:
+    database_driver: ~
+    database_host: ~
+    database_port: ~
+    database_name: ~
+    database_user: ~
+    database_password: ~
+
+    locale: es
+    secret: NotSoSecret
+
+    domain: yourdomain.com
+
+    ga_tracker: ~ # Analytics tracker id
+
+    main_email: ~ # Main email
+
+    paypal_username: ~ # PayPal API username
+    paypal_password: ~ # PayPal API password
+    paypal_signature: ~ # PayPal API signature
+    paypal_debug: true
+
+    mailchimp_api_key: ~
+    mailchimp_list_id: ~
