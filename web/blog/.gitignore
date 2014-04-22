@@ -6,7 +6,7 @@ db-sync
 sql-dump-*.sql
 
 # Dotenv
-.env
+.env*
 
 # Application
 app/uploads

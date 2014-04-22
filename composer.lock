@@ -394,12 +394,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "2c717e80c4f3ba589592933218f66bb366eac057"
+                "reference": "1ac675c80dfdf8164ca7d435770adf5bda7b2a68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/2c717e80c4f3ba589592933218f66bb366eac057",
-                "reference": "2c717e80c4f3ba589592933218f66bb366eac057",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/1ac675c80dfdf8164ca7d435770adf5bda7b2a68",
+                "reference": "1ac675c80dfdf8164ca7d435770adf5bda7b2a68",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +407,8 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "doctrine/cache": "1.*"
+                "doctrine/cache": "1.*",
+                "phpunit/phpunit": "4.*"
             },
             "type": "library",
             "extra": {
@@ -426,7 +427,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -445,7 +446,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -458,7 +459,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-04-21 04:41:33"
+            "time": "2014-04-21 20:00:17"
         },
         {
             "name": "doctrine/cache",
@@ -1097,16 +1098,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "a81c334f2764b09e2f13a55cfd8fe3233946f728"
+                "reference": "dc02e4f73eb0938c35ddd60fa37825a98195a33f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/a81c334f2764b09e2f13a55cfd8fe3233946f728",
-                "reference": "a81c334f2764b09e2f13a55cfd8fe3233946f728",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/dc02e4f73eb0938c35ddd60fa37825a98195a33f",
+                "reference": "dc02e4f73eb0938c35ddd60fa37825a98195a33f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
             },
             "type": "library",
             "extra": {
@@ -1158,7 +1162,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2013-12-21 19:19:50"
+            "time": "2014-04-22 02:37:36"
         },
         {
             "name": "doctrine/lexer",
@@ -2165,12 +2169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1afc39690e7414412face1f8cbf67b73db34485c"
+                "reference": "97f79f7ed37c9253712eaa9c9a967199456a2f16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1afc39690e7414412face1f8cbf67b73db34485c",
-                "reference": "1afc39690e7414412face1f8cbf67b73db34485c",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/97f79f7ed37c9253712eaa9c9a967199456a2f16",
+                "reference": "97f79f7ed37c9253712eaa9c9a967199456a2f16",
                 "shasum": ""
             },
             "require": {
@@ -2225,7 +2229,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-04-20 16:41:26"
+            "time": "2014-04-21 18:22:17"
         },
         {
             "name": "ornicar/gravatar-bundle",
@@ -2489,26 +2493,29 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v2.3.4",
+            "version": "dev-master",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "66df91b4bd637a83299d8072aed3658bfd3b3021"
+                "reference": "e50dfb32776bb0cd51dfb3989d5a9c77989b4bb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/66df91b4bd637a83299d8072aed3658bfd3b3021",
-                "reference": "66df91b4bd637a83299d8072aed3658bfd3b3021",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/e50dfb32776bb0cd51dfb3989d5a9c77989b4bb2",
+                "reference": "e50dfb32776bb0cd51dfb3989d5a9c77989b4bb2",
                 "shasum": ""
             },
             "require": {
-                "symfony/framework-bundle": "~2.2"
+                "php": ">=5.3.3",
+                "symfony/class-loader": "~2.3",
+                "symfony/filesystem": "~2.3",
+                "symfony/framework-bundle": "~2.3"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -2533,7 +2540,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2013-08-22 05:04:53"
+            "time": "2014-04-21 12:21:39"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2710,12 +2717,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "d5d580ca7ced89955ce7200f41fb0f97b8f74c60"
+                "reference": "19a15a44b21d13f6c19beefc8e4b6c849558ec50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d5d580ca7ced89955ce7200f41fb0f97b8f74c60",
-                "reference": "d5d580ca7ced89955ce7200f41fb0f97b8f74c60",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/19a15a44b21d13f6c19beefc8e4b6c849558ec50",
+                "reference": "19a15a44b21d13f6c19beefc8e4b6c849558ec50",
                 "shasum": ""
             },
             "require": {
@@ -2727,7 +2734,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -2756,7 +2763,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-04-13 13:06:08"
+            "time": "2014-04-22 07:28:24"
         },
         {
             "name": "symfony/assetic-bundle",
