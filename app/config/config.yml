@@ -85,6 +85,8 @@ stof_doctrine_extensions:
             timestampable: true
 
 mz_mail_chimp:
+    api_key: %mailchimp_api_key%
+    default_list: %mailchimp_list_id%
     ssl: true
 
 google:
