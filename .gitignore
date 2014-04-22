@@ -1,7 +1,7 @@
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
-/app/config/parameters_*.yml
+/app/config/parameters*
 /app/logs/*
 /build/
 /vendor/
