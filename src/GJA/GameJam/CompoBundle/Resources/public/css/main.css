@@ -964,3 +964,15 @@ textarea.shout
     display: inline-block;
     width: 100%;
 }
+
+label
+{
+    margin-bottom: 10px;
+}
+
+.prices .price
+{
+    padding: 10px;
+    background-color: #EFEFEF;
+    text-align: center;
+}

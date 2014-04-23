@@ -475,4 +475,17 @@ class Compo
     {
         return $this->normalFee;
     }
+
+    public function getOpenPlaces()
+    {
+        $validApplications = 0;
+
+        foreach($this->getApplications() as $application)
+        {
+            if($application->isCompleted())
+                $validApplications++;
+        }
+
+        return $this->maxPeople - $validApplications;
+    }
 }

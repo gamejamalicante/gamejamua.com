@@ -61,7 +61,6 @@ class Order
     protected $user;
 
     /**
-     * @ORM\Column(type="json_array")
      * @var ItemInterface[]
      */
     protected $items;

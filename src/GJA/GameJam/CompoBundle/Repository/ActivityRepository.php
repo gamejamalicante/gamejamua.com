@@ -12,6 +12,7 @@
 namespace GJA\GameJam\CompoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 
 class ActivityRepository extends EntityRepository
@@ -27,6 +28,49 @@ class ActivityRepository extends EntityRepository
         if($compo)
             $query->andWhere("a.compo = :compo")
                 ->setParameter('compo', $compo);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findOnlyActivity($limit = 10)
+    {
+        $query = $this->createQueryBuilder("a")
+            ->andWhere("a.type IN (:types)")
+            ->setParameter('types', [
+                Activity::TYPE_ACHIEVEMENT,
+                Activity::TYPE_COINS,
+                Activity::TYPE_CREATION,
+                Activity::TYPE_INFO_UPDATE,
+                Activity::TYPE_LIKES,
+                Activity::TYPE_LIKES,
+                Activity::TYPE_MEDIA
+            ])
+        ->setMaxResults($limit);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findOnlyMessages($limit = 10)
+    {
+        $query = $this->createQueryBuilder("a")
+            ->andWhere("a.type IN (:types)")
+            ->andWhere("a.user IS NOT NULL")
+            ->setParameter('types', [
+                Activity::TYPE_SHOUT,
+                Activity::TYPE_TWITTER
+            ])
+            ->setMaxResults($limit);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findTwitterMentions($limit = 10)
+    {
+        $query = $this->createQueryBuilder("a")
+            ->andWhere("a.type = :type")
+            ->andWhere("a.user IS NULL")
+            ->setParameter('type', Activity::TYPE_TWITTER)
+            ->setMaxResults($limit);
 
         return $query->getQuery()->getResult();
     }

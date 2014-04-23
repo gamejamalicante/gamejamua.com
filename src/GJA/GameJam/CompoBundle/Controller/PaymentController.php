@@ -34,10 +34,7 @@ class PaymentController extends AbstractPaymentController
      */
     public function detailsAction(Compo $compo, Order $order = null)
     {
-        if(!$order)
-        {
-            $order = $this->createNewOrder($compo);
-        }
+        $order = $this->processOrderDetails($compo, $order);
 
         $routes = [
             'already_paid' => $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]),
@@ -75,7 +72,7 @@ class PaymentController extends AbstractPaymentController
         {
             $this->addSuccessMessage("Ha habido un error procesando este pago. Por favor, vuelve a intentarlo");
 
-            return $this->redirectToPath("gamejam_user_panel_payment_details", array('order' => $order->getId()));
+            return $this->redirectToPath("gamejam_compo_payment_details", array('order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => 1));
         }
 
         if($result == true)
@@ -90,12 +87,12 @@ class PaymentController extends AbstractPaymentController
         return $this->redirectToPath("gamejam_user_panel");
     }
 
-    private function createNewOrder($compo)
+    private function processOrderDetails(Compo $compo, Order $order = null)
     {
-        $order = new Order($this->getUser());
+        if(!$order)
+            $order = new Order($this->getUser());
 
         $item = new CompoInscriptionItem($compo, $this->getUser());
-
         $order->addItem($item);
 
         return $order;

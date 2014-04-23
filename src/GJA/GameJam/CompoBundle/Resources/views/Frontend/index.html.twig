@@ -37,16 +37,43 @@
                     <div class="item">
                         <h3>{{ new.title }} <span class="date">{{ time_diff(new.date) }}</span></h3>
                         {{ new.content|truncate(200) }}
-
                     </div>
                 </div>
+            {% else %}
+                <p>No hay ninguna noticia reciente... seriously?</p>
             {% endfor %}
         </div>
     </div>
-    <h2><i class="fa fa-comment-o"></i> Actividad de la comunidad</h2>
-    {% for item in activity %}
+    <div class="section">
+        <h2><i class="fa fa-cloud"></i> Última actividad de los miembros</h2>
+        <div class="news row">
+            {% for item in activity %}
+                <div class="section index activity">
+                    {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
+                </div>
+            {% else %}
+                Parece que está parada la cosa...
+            {% endfor %}
+        </div>
+    </div>
+    <h2><i class="fa fa-comment-o"></i> Últimos mensajes</h2>
+    {% for item in messages %}
         <div class="section index activity">
             {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
+        </div>
+    {% else %}
+        <div class="section index">
+            Hay muchos gatos comiendo muchas lenguas últimamente...
+        </div>
+    {% endfor %}
+    <h2><i class="fa fa-twitter"></i> Menciones en Twitter</h2>
+    {% for item in twitter_mentions %}
+        <div class="section index activity">
+            {% include 'GameJamCompoBundle:Compo:_activity_twitter.html.twig' %}
+        </div>
+    {% else %}
+        <div class="section index">
+            Nada en Twitter, that's a first...
         </div>
     {% endfor %}
 {% endblock %}

@@ -11,11 +11,14 @@ use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Form\Type\ContactType;
 use GJA\GameJam\CompoBundle\Entity\Activity;
+use GJA\GameJam\CompoBundle\Repository\ActivityRepository;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/")
@@ -28,10 +31,15 @@ class FrontendController extends AbstractController
      */
     public function indexAction()
     {
-        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1, 'announce' => false]);
-        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy([], ['date' => 'DESC']);
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->getRepository("GameJamCompoBundle:Activity");
 
-        return ['news' => $news, 'activity' => $activity];
+        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1, 'announce' => false]);
+        $activity = $activityRepository->findOnlyActivity(5);
+        $messages = $activityRepository->findOnlyMessages(10);
+        $twitterMentions = $activityRepository->findTwitterMentions(5);
+
+        return ['news' => $news, 'activity' => $activity, 'messages' => $messages, 'twitter_mentions' => $twitterMentions];
     }
 
     /**
@@ -115,6 +123,9 @@ class FrontendController extends AbstractController
         /** @var Compo $compo */
         $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy([], ['id' => 'ASC']);
 
+        if(!$compo)
+            throw new NotFoundHttpException("No compos found!");
+
         $response = $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
         $response->setStatusCode(302);
 
@@ -142,10 +153,5 @@ class FrontendController extends AbstractController
         $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
 
         return ['compo' => $compo, 'user' => $this->getUser()];
-    }
-
-    public function partialShoutAction()
-    {
-
     }
 }
