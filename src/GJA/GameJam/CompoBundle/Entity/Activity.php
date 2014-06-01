@@ -22,6 +22,7 @@ class Activity
     const TYPE_ACHIEVEMENT = 6;
     const TYPE_SHOUT = 7;
     const TYPE_TWITTER = 8;
+    const TYPE_DOWNLOAD = 9;
 
     /**
      * @ORM\Id
@@ -59,6 +60,11 @@ class Activity
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Media")
      */
     protected $media;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Download")
+     */
+    protected $download;
 
     /**
      * @ORM\Column(type="smallint")
@@ -255,5 +261,21 @@ class Activity
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * @param mixed $download
+     */
+    public function setDownload($download)
+    {
+        $this->download = $download;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDownload()
+    {
+        return $this->download;
     }
 }

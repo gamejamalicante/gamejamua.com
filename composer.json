@@ -28,6 +28,7 @@
         "components/bootstrap": "3.*",
         "components/font-awesome": "4.*",
         "components/modernizr": "2.*",
+        "ivaynberg/select2": "3.*",
         "sensio/buzz-bundle": "@dev",
         "mlpz/mailchimp-bundle": "@dev",
         "friendsofsymfony/user-bundle": "@dev",
@@ -42,7 +43,8 @@
         "ornicar/gravatar-bundle" : "@dev",
         "jms/payment-core-bundle": "@dev",
         "jms/payment-paypal-bundle": "@dev",
-        "hwi/oauth-bundle": "@dev"
+        "hwi/oauth-bundle": "@dev",
+        "endroid/twitter-bundle": "@dev"
     },
     "scripts": {
         "post-install-cmd": [

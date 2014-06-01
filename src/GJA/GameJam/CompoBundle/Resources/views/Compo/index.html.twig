@@ -130,6 +130,30 @@
                     {{ render(controller("GameJamUserBundle:Panel:shoutPartial")) }}
                 </div>
                 {% endif %}
+                {% if user_application %}
+                <h2><i class="fa fa-users"></i> Tu equipo</h2>
+                <div class="application">
+                    {% if user_application.team %}
+                        Formas parte del equipo <strong>{{ user_application.team }}</strong>. Miembros:
+                        <ul>
+                        {% for member in user_application.team %}
+                            <li>{{ member }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        Estás participando en solitario.
+                        {% if compo.teamFormationOpen %}
+                            <h4>Buscar un equipo</h4>
+                            Selecciona el equipo al que quieras enviar la solicitud de ingreso
+
+                            <h4>Crear un equipo</h4>
+                            Escribe el nombre de tu equipo y podrás invitar a otros miembros a formar parte de él:
+                        {% else %}
+                            El periodo de formación de equipos ha terminado
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% endif %}
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>
                 <div class="application">
                     {% if user_application %}

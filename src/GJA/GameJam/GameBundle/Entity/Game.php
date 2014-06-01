@@ -6,7 +6,9 @@
 
 namespace GJA\GameJam\GameBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -14,9 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
-    const PLATFORM_PC = 1;
-    const PLATFORM_MOBILE = 2;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -26,11 +25,13 @@ class Game
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -41,6 +42,7 @@ class Game
 
     /**
      * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
      */
     protected $nameSlug;
 
@@ -50,7 +52,7 @@ class Game
     protected $description;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $image;
 
@@ -61,12 +63,14 @@ class Game
     protected $diversifiers;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="game")
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="game", cascade={"persist", "remove"})
+     * @var ArrayCollection
      */
     protected $media;
 
     /**
-     * @ORM\OneToMany(targetEntity="Download", mappedBy="game")
+     * @ORM\OneToMany(targetEntity="Download", mappedBy="game", cascade={"persist", "remove"})
+     * @var ArrayCollection
      */
     protected $downloads;
 
@@ -78,12 +82,12 @@ class Game
     /**
      * @ORM\Column(type="integer")
      */
-    protected $likes;
+    protected $likes = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $coins;
+    protected $coins = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team", inversedBy="games")
@@ -99,6 +103,17 @@ class Game
      * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Activity", mappedBy="game")
      */
     protected $activity;
+
+    /**
+     * @var bool
+     */
+    protected $isNew = false;
+
+    public function __construct()
+    {
+        $this->media = new ArrayCollection();
+        $this->downloads = new ArrayCollection();
+    }
 
     /**
      * @param mixed $compo
@@ -178,6 +193,30 @@ class Game
     public function getDownloads()
     {
         return $this->downloads;
+    }
+
+    public function addDownload(Download $download)
+    {
+        $download->setGame($this);
+
+        $this->downloads->add($download);
+    }
+
+    public function removeDownload(Download $download)
+    {
+        $this->downloads->remove($download);
+    }
+
+    public function addMedia(Media $media)
+    {
+        $media->setGame($this);
+
+        $this->media->add($media);
+    }
+
+    public function removeMedia(Media $media)
+    {
+        $this->media->remove($media);
     }
 
     /**
@@ -370,5 +409,26 @@ class Game
         }
 
         return null;
+    }
+
+    public function isNew()
+    {
+        return $this->isNew;
+    }
+
+    /**
+     * @param boolean $isNew
+     */
+    public function setIsNew($isNew)
+    {
+        $this->isNew = $isNew;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsNew()
+    {
+        return $this->isNew;
     }
 }

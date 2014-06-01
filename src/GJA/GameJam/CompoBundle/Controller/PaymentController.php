@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -32,7 +33,7 @@ class PaymentController extends AbstractPaymentController
      * @ParamConverter("order", options={"mapping":{"order":"orderNumber"}})
      * @Template
      */
-    public function detailsAction(Compo $compo, Order $order = null)
+    public function detailsAction(Request $request, Compo $compo, Order $order)
     {
         $order = $this->processOrderDetails($compo, $order);
 
@@ -48,7 +49,7 @@ class PaymentController extends AbstractPaymentController
         if($form instanceof RedirectResponse)
             return $form;
 
-        return ['form' => $form->createView(), 'order' => $order, 'compo' => $compo];
+        return ['form' => $form->createView(), 'order' => $order, 'compo' => $compo, 'error' => $request->get('error')];
     }
 
     /**
@@ -66,33 +67,24 @@ class PaymentController extends AbstractPaymentController
         }
         elseif($result == true)
         {
-            $this->addSuccessMessage("Hemos recibido el pago del pedido. En breve te avisaremos para que puedas recogerlo en tu tienda.");
-        }
-        else
-        {
-            $this->addSuccessMessage("Ha habido un error procesando este pago. Por favor, vuelve a intentarlo");
+            $order->getCompoApplication()->setCompleted(true);
 
-            return $this->redirectToPath("gamejam_compo_payment_details", array('order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => 1));
-        }
+            $this->persistAndFlush($order->getCompoApplication());
 
-        if($result == true)
-        {
-            $this->get('panel_mailer')->sendPaymentConfirmedEmail($this->getUser(), $order->getOrderNumber());
-            $this->get('panel_mailer')->sendShopPaymentConfirmed($order);
+            $this->addSuccessMessage("¡Pago realizado! Ya estás inscrito en la GameJam, ¡a disfrutar!");
+
+            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
         }
 
-        if($redirectSession = $this->getSession()->get('_payment_redirect'))
-            return $redirectSession;
+        $this->addSuccessMessage("Ha habido un error procesando este pago. Por favor, vuelve a intentarlo");
 
-        return $this->redirectToPath("gamejam_user_panel");
+        return $this->redirectToPath("gamejam_compo_payment_details", array('order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => 1));
     }
 
-    private function processOrderDetails(Compo $compo, Order $order = null)
+    private function processOrderDetails(Compo $compo, Order $order)
     {
-        if(!$order)
-            $order = new Order($this->getUser());
-
         $item = new CompoInscriptionItem($compo, $this->getUser());
+
         $order->addItem($item);
 
         return $order;

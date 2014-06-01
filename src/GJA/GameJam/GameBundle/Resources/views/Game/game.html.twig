@@ -79,7 +79,7 @@
                     <p class="description scrollable">{{ game.description }}</p>
                     {% if game.compo %}
                         <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>
-                        <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>
+                        <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>@Gedmo\Slug(fields={"title", "code"})
                         {% if game.diversifiers|length %}
                             <p><i class="fa fa-gear"></i> <strong>Diversificadores: </strong>
                                 {% for diversifier in game.diversifiers %}
@@ -94,8 +94,8 @@
                             <a href="{{ path('gamejam_user_profile', {user: user.username}) }}">{{ user }}</a>{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </p>
-                    {% elseif game.users %}
-                    <p><i class="fa fa-group"></i><strong>Creador: </strong> {{ game.user }}</p>
+                    {% elseif game.user %}
+                    <p><i class="fa fa-group"></i> <strong>Creador: </strong> {{ game.user }}</p>
                     {% endif %}
                 </div>
             </div>

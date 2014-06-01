@@ -27,7 +27,7 @@ class Theme
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Compo", inversedBy="theme")
+     * @ORM\OneToOne(targetEntity="Compo", mappedBy="theme")
      */
     protected $compo;
 

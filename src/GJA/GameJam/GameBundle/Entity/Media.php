@@ -7,6 +7,7 @@
 namespace GJA\GameJam\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -28,11 +29,13 @@ class Media
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -60,6 +63,11 @@ class Media
      * @ORM\Column(type="smallint")
      */
     protected $type;
+
+    /**
+     * @var
+     */
+    protected $url;
 
     /**
      * @param mixed $comment
@@ -134,7 +142,7 @@ class Media
     }
 
     /**
-     * @return mixed
+     * @return Game
      */
     public function getGame()
     {
@@ -215,5 +223,21 @@ class Media
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 } 

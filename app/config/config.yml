@@ -2,6 +2,10 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+parameters:
+    twitter.hashtags: ['GameJamAlicante', 'GameJamUA', 'GJUA']
+    twitter.username: gamejamua
+
 framework:
     translator:      { fallback: es }
     secret:          "%secret%"
@@ -32,9 +36,9 @@ twig:
                 channel: '#gamejamalicante'
             name: GameJam Alicante
             twitter:
-                name: @gamejamua
-                url: ~
-                hashtags: ['GJA', 'GameJamAlicante', 'GameJamUA', 'GJUA']
+                name: %twitter.username%
+                url: http://twitter.com/GameJamUA
+                hashtags: %twitter.hashtags%
             facebook:
                 url: ~
 
@@ -138,3 +142,9 @@ hwi_oauth:
 game_jam_user:
     oauth_tokens: %oauth%
     oauth_services: ['twitter']
+
+endroid_twitter:
+    consumer_key: %oauth.twitter_client_id%
+    consumer_secret: %oauth.twitter_client_secret%
+    access_token: %twitter_access_token%
+    access_token_secret: %twitter_access_token_secret%

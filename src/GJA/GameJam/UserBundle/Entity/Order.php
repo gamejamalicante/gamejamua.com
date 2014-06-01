@@ -23,7 +23,7 @@ use JMS\Payment\CoreBundle\Model\PaymentInstructionInterface;
  */
 class Order
 {
-    const PAYPAL_COMMISSION = 0.34;
+    const PAYPAL_COMMISSION = 0.034;
     const PAYPAL_BASE = 0.35;
 
     /**
@@ -65,6 +65,11 @@ class Order
      */
     protected $items;
 
+    /**
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\CompoApplication", mappedBy="order")
+     */
+    protected $compoApplication;
+
     public function __construct(User $user, $orderNumber = null)
     {
         $this->createdAt = new \DateTime("now");
@@ -82,7 +87,7 @@ class Order
         if(is_null($this->amount))
         {
             if(is_null($this->items))
-                throw new \InvalidArgumentException("This order has no amount!");
+                throw new \InvalidArgumentException("This order has no items!");
 
             $this->amount = 0;
 
@@ -202,5 +207,21 @@ class Order
     private function generateRandomOrderNumber()
     {
         return substr(strtoupper(sha1($this->getUser()->getId() . uniqid())), 1, 8);
+    }
+
+    /**
+     * @param mixed $compoApplication
+     */
+    public function setCompoApplication($compoApplication)
+    {
+        $this->compoApplication = $compoApplication;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoApplication()
+    {
+        return $this->compoApplication;
     }
 } 

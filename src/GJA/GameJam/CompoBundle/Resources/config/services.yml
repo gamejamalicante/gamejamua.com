@@ -4,11 +4,17 @@ services:
         arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
         tags:
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.media', method: 'onMedia' }
+            - { name: 'kernel.event_listener', event: 'gamejam.game.activity.download', method: 'onDownload' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.coins', method: 'onCoins' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.likes', method: 'onLike' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.creation', method: 'onCreation' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.info_update', method: 'onInfoUpdate' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.achievement', method: 'onAchievementGranted' }
+    gamejam.compo.listener.game_persist:
+        class: GJA\GameJam\CompoBundle\EventListener\GamePersistListener
+        arguments: [@event_dispatcher]
+        tags:
+            - { name: 'doctrine.event_listener', event: postPersist }
 
     gamejam.compo.listener.user_activity:
         class: GJA\GameJam\CompoBundle\EventListener\UserActivityListener

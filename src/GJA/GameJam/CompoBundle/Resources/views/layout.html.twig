@@ -14,6 +14,7 @@
         '//fonts.googleapis.com/css?family=Open+Sans:400,600'
         'components/bootstrap/css/bootstrap.css'
         'components/font-awesome/css/font-awesome.css'
+        '@GameJamCompoBundle/Resources/public/css/flipclock.css'
         '@GameJamCompoBundle/Resources/public/css/main.css'
         output='css/main.css'
     %}
@@ -57,6 +58,7 @@
                 <a href="{{ path('gamejam_compo_frontend') }}"><img src="{{ asset('bundles/gamejamcompo/images/logo.png') }}" alt="GameJam Alicante"></a>
             </div>
             <div class="pull-right header-right">
+                <div class="countdown"></div>
                 <ul class="menu">
                     <li{% block active_index %}{% endblock %}><a href="{{ path('gamejam_compo_frontend') }}"><i class="fa fa-home"></i> Portada</a></li>
                     <li{% block active_current %}{% endblock %}><a href="{{ path('gamejam_compo_frontend_current') }}"><i class="fa fa-ticket"></i> Edición actual</a></li>
@@ -89,7 +91,7 @@
                     {% render(controller('GameJamCompoBundle:Contributor:partialContributors')) %}
                 </div>
                 <div class="copyright">
-                    Todos los contenidos de la web se encuentran bajo una licencia <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_CO">Creative Commons Atribución-NoComercial-SinDerivadas 3.0 Unported.</a>
+                    Todos los contenidos de la web se encuentran bajo una licencia <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_CO">Creative Commons Atribución-NoComercial-SinDerivadas 3.0 Unported</a>. El código fuente de esta página está disponible en <i class="fa fa-github"></i> <a href="https://github.com/gamejamalicante/gamejamua.com" target="_blank">GitHub</a>
                 </div>
             </div>
         </div>
@@ -99,8 +101,27 @@
 {% javascripts
     'components/jquery/jquery.js'
     'components/bootstrap/js/bootstrap.js'
+    '@GameJamCompoBundle/Resources/public/js/flipclock.min.js'
 %}
 <script src="{{ asset_url }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $.get('{{ path('gamejam_compo_frontend_timetonext') }}', function(result)
+        {
+            if(result.result)
+            {
+                if(result.seconds > 0)
+                {
+                    $('.countdown').FlipClock(result.seconds, {
+                        countdown: true,
+                        clockFace: 'DailyCounter'
+                    });
+                }
+            }
+        });
+    });
+</script>
 {% endjavascripts %}
 {% endblock %}
 

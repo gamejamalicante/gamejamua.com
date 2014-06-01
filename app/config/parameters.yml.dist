@@ -23,6 +23,11 @@ parameters:
     mailchimp_api_key: ~
     mailchimp_list_id: ~
 
+    # to allow oauth login
     oauth:
         twitter_client_id: XX
         twitter_client_secret: XX
+
+    # to do api calls
+    twitter_access_token: XX
+    twitter_access_token_secret: XX

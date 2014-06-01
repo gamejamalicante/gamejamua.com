@@ -12,6 +12,7 @@
 namespace GJA\GameJam\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -39,11 +40,13 @@ class Download
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -51,6 +54,11 @@ class Download
      * @ORM\Column(type="string")
      */
     protected $version;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $fileUrl;
 
     /**
      * @ORM\Column(type="json_array")
@@ -113,7 +121,7 @@ class Download
     }
 
     /**
-     * @return mixed
+     * @return Game
      */
     public function getGame()
     {
@@ -237,5 +245,21 @@ class Download
         $platforms = self::getAvailablePlatforms();
 
         return $platforms[$platform];
+    }
+
+    /**
+     * @param mixed $fileUrl
+     */
+    public function setFileUrl($fileUrl)
+    {
+        $this->fileUrl = $fileUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileUrl()
+    {
+        return $this->fileUrl;
     }
 } 

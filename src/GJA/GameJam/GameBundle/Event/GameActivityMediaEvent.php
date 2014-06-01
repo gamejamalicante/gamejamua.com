@@ -11,6 +11,7 @@
 
 namespace GJA\GameJam\GameBundle\Event;
 
+use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\GameBundle\Entity\Media;
 
 class GameActivityMediaEvent extends GameActivityEvent
@@ -19,6 +20,13 @@ class GameActivityMediaEvent extends GameActivityEvent
      * @var Media
      */
     protected $media;
+
+    public function __construct(Game $game = null, Media $media = null)
+    {
+        parent::__construct($game);
+
+        $this->media = $media;
+    }
 
     /**
      * @param \GJA\GameJam\GameBundle\Entity\Media $media

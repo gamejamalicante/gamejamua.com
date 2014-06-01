@@ -16,6 +16,7 @@ use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -153,5 +154,25 @@ class FrontendController extends AbstractController
         $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
 
         return ['compo' => $compo, 'user' => $this->getUser()];
+    }
+
+    /**
+     * @Route("/time-to-next", name="gamejam_compo_frontend_timetonext")
+     */
+    public function timeToNextCompoAction()
+    {
+        /** @var Compo $compo */
+        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
+
+        if($compo)
+        {
+           $result = array('result' => true, 'seconds' => $compo->getSecondsToStartTime());
+        }
+        else
+        {
+            $result = array('result' => false);
+        }
+
+        return new JsonResponse($result);
     }
 }

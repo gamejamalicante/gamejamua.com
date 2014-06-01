@@ -37,7 +37,7 @@ abstract class AbstractActivityListener
 
     protected function persistActivity(Activity $activity, $currentCompo = true)
     {
-        if($currentCompo)
+        if(!$currentCompo)
             $activity->setCompo($this->getCurrentCompo());
 
         $this->entityManager->persist($activity);
@@ -57,6 +57,6 @@ abstract class AbstractActivityListener
 
     protected function getCurrentCompo()
     {
-        return $this->entityManager->getRepository("GameJamCompoBundle:Compo")->findOneBy([], ['id' => 'ASC']);
+        return $this->entityManager->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true], ['id' => 'ASC']);
     }
 } 

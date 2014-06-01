@@ -1,0 +1,91 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block styles %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+    'components/select2/select2.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'components/select2/select2.js'
+    '@GameJamGameBundle/Resources/public/js/game.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <div class="section profile">
+        <h1>Crear juego nuevo</h1>
+        <div class="form-result">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% if not form.vars.valid %}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Hemos encontrado errores en el formulario:</strong>
+                    {{ display_form_errors.display_error(form) }}
+                </div>
+            {% endif %}
+        </div>
+        <p>¡Edita los datos de tu juego, añade enlaces, imagenes y videos!</p>
+        <div class="info">
+        </div>
+        <form id="loginform" action="{{ path('gamejam_game_panel_create') }}" {{ form_enctype(form) }} method="post">
+            <strong>Nombre del juego</strong>
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <strong>Imagen del juego (300x90)</strong>
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <strong>Diversificadores</strong>
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-adjust"></i></span>
+                {{ form_widget(form.diversifiers, {'attr':{'class':'form-control select2'}}) }}
+            </div>
+            <strong>Descripción</strong>
+            <div style="margin-bottom: 25px" class="input-group select2">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                {{ form_widget(form.description, {'attr':{'class':'form-control', 'placeholder': 'Escribe una breve descripción del juego, historia, motivaciones, controles, ...'}}) }}
+            </div>
+            <h1 style="margin-bottom: 10px;">Imágenes y vídeos</h1>
+            <div class="alert alert-info">¡Tu juego tendrá más <strong>visibilidad</strong> si subes muchas imágenes y vídeos!</div>
+            <ul class="media" data-prototype="{% filter escape %}{% include 'GameJamGameBundle:GamePanel/Form:_media-prototype.html.twig' with { 'item': form.media.vars.prototype } %}{% endfilter %}">
+                {% for media in form.media %}
+                    <li class="element">{% include 'GameJamGameBundle:GamePanel/Form:_media-prototype.html.twig' with { 'item': media } %}</li>
+                {% endfor %}
+            </ul>
+            <h1 style="margin-bottom: 10px">Descargas</h1>
+            <div class="alert alert-info">Añade aquí distintas versiones de juego según versión, plataforma, etc.</div>
+            <ul class="downloads" data-prototype="{% filter escape %}{% include 'GameJamGameBundle:GamePanel/Form:_downloads-prototype.html.twig' with { 'item': form.downloads.vars.prototype } %}{% endfilter %}">
+                {% for download in form.downloads %}
+                    <li class="element">{% include 'GameJamGameBundle:GamePanel/Form:_downloads-prototype.html.twig' with { 'item': download } %}</li>
+                {% endfor %}
+            </ul>
+            <div style="margin-top:10px" class="form-group bottom">
+                <div class="col-sm-12 controls">
+                    <button type="submit" id="btn-login" class="btn btn-green submit">¡Añadir juego!</button>
+                </div>
+            </div>
+            <div style="display: none">
+            {{ form_rest(form) }}
+            </div>
+        </form>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

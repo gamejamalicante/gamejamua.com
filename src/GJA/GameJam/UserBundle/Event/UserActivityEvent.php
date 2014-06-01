@@ -21,6 +21,11 @@ abstract class UserActivityEvent extends Event
      */
     protected $user;
 
+    public function __construct(User $user = null)
+    {
+        $this->user = $user;
+    }
+
     /**
      * @param \GJA\GameJam\UserBundle\Entity\User $user
      */

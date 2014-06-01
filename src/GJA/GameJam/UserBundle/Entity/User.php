@@ -153,6 +153,11 @@ class User extends BaseUser
     protected $oauthTokens = array();
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $twitter;
+
+    /**
      * @param mixed $achievements
      */
     public function setAchievements($achievements)
@@ -537,6 +542,20 @@ class User extends BaseUser
         return false;
     }
 
+    public function getOpenApplicationTo(Compo $compo)
+    {
+        foreach($this->getApplications() as $application)
+        {
+            if($compo === $application->getCompo())
+            {
+                if(!$application->isCompleted())
+                    return $application;
+            }
+        }
+
+        return null;
+    }
+
     public function hasAchievement(Achievement $achievement)
     {
         foreach($this->getAchievements() as $achievementGranted)
@@ -621,8 +640,19 @@ class User extends BaseUser
         return null;
     }
 
+    /**
+     * @param mixed $twitter
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getTwitter()
     {
-        return $this->getOauthTwitterUsername() ?: null;
+        return $this->twitter;
     }
 }

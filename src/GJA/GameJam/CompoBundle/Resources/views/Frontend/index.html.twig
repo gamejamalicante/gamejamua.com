@@ -46,7 +46,7 @@
     </div>
     <div class="section">
         <h2><i class="fa fa-cloud"></i> Última actividad de los miembros</h2>
-        <div class="news row">
+        <div class="row">
             {% for item in activity %}
                 <div class="section index activity">
                     {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}

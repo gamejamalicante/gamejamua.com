@@ -15,6 +15,8 @@ final class GameJamGameEvents
 {
     const ACTIVITY_MEDIA = "gamejam.game.activity.media";
 
+    const ACTIVITY_DOWNLOAD = "gamejam.game.activity.download";
+
     const ACTIVITY_COINS = "gamejam.game.activity.coins";
 
     const ACTIVITY_LIKES = "gamejam.game.activity.likes";

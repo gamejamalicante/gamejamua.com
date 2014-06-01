@@ -18,6 +18,12 @@
                             {{ display_form_errors.display_error(form) }}
                         </div>
                     {% endif %}
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Ha ocurrido un error procesando el pago. Por favor, vuelve a intentarlo.
+                        </div>
+                    {% endif %}
 
                     <div class="prices-box">
                         <label>Precio de inscripción</label>

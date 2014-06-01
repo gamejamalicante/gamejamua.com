@@ -10,11 +10,21 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')
-            ->add('image')
-            ->add('diversifiers')
+            ->add('image', null, ['required' => false])
+            ->add('diversifiers', null, ['required' => false, 'multiple' => true, 'expanded' => false])
             ->add('description')
-            ->add('media', 'gamejam_game_media')
-            ->add('downloads', 'gamejam_game_download');
+            ->add('media', 'collection', [
+                'type' => 'gamejam_game_media',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false
+            ])
+            ->add('downloads', 'collection', [
+                'type' => 'gamejam_game_download',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false
+            ]);
     }
 
     /**

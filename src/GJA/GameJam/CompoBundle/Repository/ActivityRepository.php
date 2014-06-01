@@ -12,6 +12,7 @@
 namespace GJA\GameJam\CompoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 
@@ -73,5 +74,10 @@ class ActivityRepository extends EntityRepository
             ->setMaxResults($limit);
 
         return $query->getQuery()->getResult();
+    }
+
+    public function findLastTwitterInteraction()
+    {
+        return $this->findOneBy(['type' => Activity::TYPE_TWITTER], ['date' => "ASC"]);
     }
 } 

@@ -1,0 +1,29 @@
+<strong>Versión</strong> (procura usar <a href="http://semver.org/" target="_blank">Semantic Versioning</a>)
+<div style="margin-bottom: 25px" class="input-group datetime">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+    {{ form_widget(item.version, {'attr':{'class':'form-control', 'placeholder':'1.0.0-beta'}}) }}
+</div>
+
+<strong>Tamaño</strong> (por ejemplo: 100MB, 500KB, etc.)
+<div style="margin-bottom: 25px" class="input-group datetime">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+    {{ form_widget(item.size, {'attr':{'class':'form-control'}}) }}
+</div>
+
+<strong>Plataformas</strong>
+<div style="margin-bottom: 25px" class="input-group datetime">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+    {{ form_widget(item.platforms, {'attr':{'class':'form-control select2'}}) }}
+</div>
+
+<strong>URL de la imagen / vídeo</strong>
+<div style="margin-bottom: 25px" class="input-group select2">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+    {{ form_widget(item.fileUrl, {'attr':{'class':'form-control', 'placeholder': 'http://'}}) }}
+</div>
+
+<strong>Descripción</strong>
+<div style="margin-bottom: 25px" class="input-group select2">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+    {{ form_widget(item.comment, {'attr':{'class':'form-control', 'placeholder': 'Introduce una pequeña descripción de esta descarga'}}) }}
+</div>

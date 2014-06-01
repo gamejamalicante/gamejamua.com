@@ -50,7 +50,7 @@ abstract class AbstractPaymentController extends AbstractController
         {
             $form->handleRequest($this->getRequest());
 
-            if ($form->isValid())
+            if($form->isValid())
             {
                 $pluginController->createPaymentInstruction($instruction = $form->getData());
 
@@ -113,15 +113,12 @@ abstract class AbstractPaymentController extends AbstractController
 
         foreach($order->getItems() as $number => $item)
         {
-            // index1
-            $number++;
-
             $paypalConfig['L_PAYMENTREQUEST_0_NAME' . $number] = $item->getDescription();
             $paypalConfig['L_PAYMENTREQUEST_0_QTY' . $number] = $item->getQuantity();
             $paypalConfig['L_PAYMENTREQUEST_0_AMT' . $number] = (string) $item->getAmount();
-        }
 
-        $number++;
+            $number++;
+        }
 
         $paypalConfig['L_PAYMENTREQUEST_0_NAME' . $number] = "Cargo servicio PayPal";
         $paypalConfig['L_PAYMENTREQUEST_0_QTY' . $number] = 1;

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f227758d60426b37aff11f6bc7104ba",
+    "hash": "1cf0f03e4d4f53d458c5d57bdc50bde8",
     "packages": [
         {
             "name": "amnl/router-unslash",
@@ -1529,6 +1529,105 @@
             "time": "2014-05-28 20:10:05"
         },
         {
+            "name": "endroid/twitter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/Twitter.git",
+                "reference": "d01f45d9740787125ad73ec554c0aad8ae49d898"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/Twitter/zipball/d01f45d9740787125ad73ec554c0aad8ae49d898",
+                "reference": "d01f45d9740787125ad73ec554c0aad8ae49d898",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": "~0.3",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Endroid": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl",
+                    "homepage": "http://endroid.nl/"
+                }
+            ],
+            "description": "Endroid Twitter",
+            "homepage": "https://github.com/endroid/Twitter",
+            "keywords": [
+                "endroid",
+                "twitter"
+            ],
+            "time": "2013-12-18 23:56:18"
+        },
+        {
+            "name": "endroid/twitter-bundle",
+            "version": "dev-master",
+            "target-dir": "Endroid/Bundle/TwitterBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/EndroidTwitterBundle.git",
+                "reference": "4f6ab5d9c7d3f5ff016d3978d466b379dd360c18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/EndroidTwitterBundle/zipball/4f6ab5d9c7d3f5ff016d3978d466b379dd360c18",
+                "reference": "4f6ab5d9c7d3f5ff016d3978d466b379dd360c18",
+                "shasum": ""
+            },
+            "require": {
+                "endroid/twitter": "~1.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Endroid\\Bundle\\TwitterBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl",
+                    "homepage": "http://endroid.nl/"
+                }
+            ],
+            "description": "Endroid Twitter Bundle for Symfony",
+            "homepage": "https://github.com/endroid/EndroidTwitterBundle",
+            "keywords": [
+                "bundle",
+                "endroid",
+                "symfony",
+                "twitter"
+            ],
+            "time": "2013-12-18 23:56:46"
+        },
+        {
             "name": "friendsofsymfony/user-bundle",
             "version": "dev-master",
             "target-dir": "FOS/UserBundle",
@@ -1838,6 +1937,49 @@
                 "image processing"
             ],
             "time": "2012-12-13 18:31:18"
+        },
+        {
+            "name": "ivaynberg/select2",
+            "version": "3.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivaynberg/select2.git",
+                "reference": "b5f3b2839c48c53f9641d6bb1bccafc5260c7620"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/b5f3b2839c48c53f9641d6bb1bccafc5260c7620",
+                "reference": "b5f3b2839c48c53f9641d6bb1bccafc5260c7620",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.7.1",
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "select2.js"
+                    ],
+                    "files": [
+                        "select2.js",
+                        "select2_locale_*.js",
+                        "select2.css",
+                        "select2-bootstrap.css",
+                        "select2-spinner.gif",
+                        "select2.png",
+                        "select2x2.png"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Select2 is a jQuery based replacement for select boxes.",
+            "homepage": "http://ivaynberg.github.io/select2/",
+            "time": "2014-05-01 13:50:38"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -3364,7 +3506,8 @@
         "ornicar/gravatar-bundle": 20,
         "jms/payment-core-bundle": 20,
         "jms/payment-paypal-bundle": 20,
-        "hwi/oauth-bundle": 20
+        "hwi/oauth-bundle": 20,
+        "endroid/twitter-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

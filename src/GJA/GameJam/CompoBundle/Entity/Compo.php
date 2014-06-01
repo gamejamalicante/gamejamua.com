@@ -16,6 +16,8 @@ use GJA\GameJam\UserBundle\Entity\User;
  */
 class Compo
 {
+    const TEAM_FORMATION_PERIOD = "PT4H";
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -299,7 +301,7 @@ class Compo
 
     public function hasStarted()
     {
-        if($this->getStartAt() >= new \DateTime("now"))
+        if($this->getStartAt() <= new \DateTime("now"))
             return true;
 
         return false;
@@ -482,10 +484,30 @@ class Compo
 
         foreach($this->getApplications() as $application)
         {
-            if($application->isCompleted())
+            if($application->isCompleted() && $application->getModality() != CompoApplication::MODALITY_FREE)
                 $validApplications++;
         }
 
         return $this->maxPeople - $validApplications;
+    }
+
+    public function isTeamFormationOpen()
+    {
+        $now = new \DateTime("now");
+
+        $startDate = $this->getStartAt();
+
+        if($now > $startDate->add(new \DateInterval(self::TEAM_FORMATION_PERIOD)))
+            return false;
+
+        return true;
+    }
+
+    public function getSecondsToStartTime()
+    {
+        if($this->hasStarted())
+            return 0;
+
+        return $this->startAt->getTimestamp()-(new \DateTime("now"))->getTimestamp();
     }
 }

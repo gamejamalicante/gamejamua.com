@@ -12,6 +12,7 @@
 namespace GJA\GameJam\GameBundle\Event;
 
 use GJA\GameJam\GameBundle\Entity\Game;
+use GJA\GameJam\UserBundle\Entity\User;
 use GJA\GameJam\UserBundle\Event\UserActivityEvent;
 
 class GameActivityEvent extends UserActivityEvent
@@ -20,6 +21,13 @@ class GameActivityEvent extends UserActivityEvent
      * @var Game
      */
     protected $game;
+
+    public function __construct(User $user, Game $game = null)
+    {
+        parent::__construct($user);
+
+        $this->game = $game;
+    }
 
     /**
      * @param \GJA\GameJam\GameBundle\Entity\Game $game

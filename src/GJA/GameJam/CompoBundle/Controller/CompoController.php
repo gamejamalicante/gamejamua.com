@@ -56,6 +56,11 @@ class CompoController extends AbstractController
             return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
         }
 
+        if($application = $user->getOpenApplicationTo($compo))
+        {
+            return $this->redirectToPath("gamejam_compo_payment_details", ['compo' => $compo->getNameSlug(), 'order' => $application->getOrder()->getOrderNumber()]);
+        }
+
         $application = new CompoApplication();
         $application->setCompo($compo);
         $application->setUser($user);
@@ -69,9 +74,21 @@ class CompoController extends AbstractController
 
             if($form->isValid())
             {
+                if($application->getModality() == CompoApplication::MODALITY_FREE)
+                {
+                    $application->setCompleted(true);
+
+                    $this->persistAndFlush($application);
+
+                    return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+                }
+
+                $order = new Order($user);
+                $application->setOrder($order);
+
                 $this->persistAndFlush($application);
 
-                return $this->redirectToPath('gamejam_compo_payment_details', array('compo' => $compo->getNameSlug()));
+                return $this->redirectToPath('gamejam_compo_payment_details', array('compo' => $compo->getNameSlug(), 'order' => $order->getOrderNumber()));
             }
         }
 
