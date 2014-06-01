@@ -1,0 +1,13 @@
+services:
+    gamejam.game.form_type.game:
+        class: GJA\GameJam\GameBundle\Form\Type\GameType
+        tags:
+            - { name: form.type, alias: gamejam_game_game }
+    gamejam.game.form_type.download:
+        class: GJA\GameJam\GameBundle\Form\Type\DownloadType
+        tags:
+            - { name: form.type, alias: gamejam_game_download }
+    gamejam.game.form_type.media:
+        class: GJA\GameJam\GameBundle\Form\Type\MediaType
+        tags:
+            - { name: form.type, alias: gamejam_game_media }

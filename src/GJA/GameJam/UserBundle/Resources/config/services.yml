@@ -3,7 +3,12 @@ services:
         class: GJA\GameJam\UserBundle\Form\Type\RegisterType
         arguments: ["%fos_user.model.user.class%"]
         tags:
-            - { name: form.type, alias: gamejam_user_register  }
+            - { name: form.type, alias: gamejam_user_register }
+
+    gamejam.user.security.user_provider:
+        class: "GJA\GameJam\UserBundle\Security\OAuthUserProvider"
+        arguments: [@fos_user.user_manager, %oauth%, @doctrine.orm.entity_manager ]
+
 
 #    gamejam.user.user_action_listener:
 #        class: GJA\GameJam\UserBundle\EventListener\UserActionListener

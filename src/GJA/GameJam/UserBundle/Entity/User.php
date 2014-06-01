@@ -28,6 +28,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BaseUser
 {
+    const SEX_MALE = 0;
+    const SEX_FEMALE = 1;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -121,17 +124,12 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $publicProfile = 1;
+    protected $publicProfile = true;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $publicEmail = 1;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $twitter;
+    protected $publicEmail = false;
 
     /**
      * @ORM\Column(type="array")
@@ -143,6 +141,16 @@ class User extends BaseUser
      * @Assert\True
      */
     protected $termsAccepted = true;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $allowCommunications = true;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    protected $oauthTokens = array();
 
     /**
      * @param mixed $achievements
@@ -453,22 +461,6 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $twitter
-     */
-    public function setTwitter($twitter)
-    {
-        $this->twitter = $twitter;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTwitter()
-    {
-        return $this->twitter;
-    }
-
-    /**
      * @param mixed $registeredAt
      */
     public function setRegisteredAt($registeredAt)
@@ -564,5 +556,73 @@ class User extends BaseUser
         }
 
         return false;
+    }
+
+    /**
+     * @param mixed $allowCommunications
+     */
+    public function setAllowCommunications($allowCommunications)
+    {
+        $this->allowCommunications = $allowCommunications;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllowCommunications()
+    {
+        return $this->allowCommunications;
+    }
+
+    public static function getAvailableSexes()
+    {
+        return [
+            self::SEX_MALE => 'Hombre',
+            self::SEX_FEMALE => 'Mujer'
+        ];
+    }
+
+    /**
+     * @param mixed $oauthTokens
+     */
+    public function setOauthTokens($oauthTokens)
+    {
+        $this->oauthTokens = $oauthTokens;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOauthTokens()
+    {
+        return $this->oauthTokens;
+    }
+
+    public function setOAuthAccountUserId($service, $username)
+    {
+        $this->oauthTokens[$service]['username'] = $username;
+    }
+
+    public function setOauthAccountAccessToken($service, $token)
+    {
+        $this->oauthTokens[$service]['token'] = $token;
+    }
+
+    public function hasOauthServiceConnected($service)
+    {
+        return isset($this->oauthTokens[$service]);
+    }
+
+    public function getOauthTwitterUsername()
+    {
+        if(isset($this->oauthTokens['twitter']['username']))
+            return $this->oauthTokens['twitter']['username'];
+
+        return null;
+    }
+
+    public function getTwitter()
+    {
+        return $this->getOauthTwitterUsername() ?: null;
     }
 }

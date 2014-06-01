@@ -501,6 +501,12 @@ footer .copyright a
     margin-right: 20px;
 }
 
+.section.profile .pull-right .avatar
+{
+    margin-right: 0;
+    margin-left: 20px;
+}
+
 .section.profile .info
 {
     width: auto;
@@ -975,4 +981,14 @@ label
     padding: 10px;
     background-color: #EFEFEF;
     text-align: center;
+}
+
+.form-result
+{
+    margin-top: 15px;
+}
+
+.input-group.datetime select
+{
+    width: auto;
 }

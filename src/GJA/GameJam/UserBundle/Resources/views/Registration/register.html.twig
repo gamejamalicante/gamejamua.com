@@ -50,13 +50,15 @@
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             {{ form_widget(form.plainPassword.second, {'attr':{'class':'form-control'}}) }}
                         </div>
-
-                        <div class="input-group">
-                            <div class="checkbox">
-                                <label>
-                                    {{ form_widget(form.termsAccepted, {'attr':{'class':'form-control'}}) }} He leído y acepto las normas
-                                </label>
-                            </div>
+                        <div class="checkbox">
+                            <label>
+                                {{ form_widget(form.termsAccepted) }} He leído y acepto las normas
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                {{ form_widget(form.allowCommunications) }} Permitir comunicaciones por email (para ofertas de trabajo y cosas relacionadas con el sector)
+                            </label>
                         </div>
                         <div style="margin-top:10px" class="form-group bottom">
                             <div class="col-sm-12 controls">

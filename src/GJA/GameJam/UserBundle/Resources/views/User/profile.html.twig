@@ -6,7 +6,12 @@
             <img class="avatar" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 200) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
         </div>
         <div class="info">
-            {% if user == app.user %}<button class="btn pull-right action" data-toggle="modal" data-target="#shout"><i class="fa fa-pencil"></i> Actualizar estado</button>{% endif %}
+            {% if user == app.user %}
+                <div class="pull-right">
+                    <button class="btn btn-green action" data-toggle="modal" data-target="#shout"><i class="fa fa-globe"></i> Actualizar estado</button>
+                    <a class="btn action" href="{{ path('gamejam_user_panel_edit') }}"><i class="fa fa-pencil"></i> Editar perfil</a>
+                </div>
+            {% endif %}
             <h2>
                 <i class="fa fa-user"></i> {{ user.nickname }}
                 <img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" class="asset"> {{ user.coins }}
@@ -15,7 +20,7 @@
             <p>
                 {{ user.username }}
                 {% if user.twitter %}
-                     - <a rel="nofollow" href="http://twitter.com/{{ user.twitter }}"><i class="fa fa-twitter"></i> {{ user.twitter }}</a>
+                     - <i class="fa fa-twitter" style="color: #0088d0"></i> <a rel="nofollow" href="http://twitter.com/{{ user.twitter }}">{{ user.twitter }}</a>
                 {% endif %}
                 {% if user.siteUrl %}
                      - <a rel="nofollow" href="{{ user.siteUrl }}" target="_blank"><i class="fa fa-globe"></i> {{ user.siteUrl }}</a>
@@ -60,6 +65,9 @@
         </div>
         <div class="col-md-6 nopadding last">
             <h2><i class="fa fa-rocket"></i> Juegos publicados</h2>
+            {% if user == app.user %}
+                <span class="pull-right"><a class="btn action btn-green" href="{{ path('gamejam_game_panel_create') }}"><i class="fa fa-plus"></i> Añadir juego</a></span>
+            {% endif %}
             {% for game in user.allGames %}
                 {% include 'GameJamUserBundle:User:_game.html.twig' %}
             {% else %}

@@ -1,3 +1,18 @@
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /panel/connect-oauth
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /panel/connect-oauth
+
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /oauth/login
+
+twitter_login:
+    pattern: /oauth/login/check-twitter
+
 _sitemap:
     resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
     prefix:   /

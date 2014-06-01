@@ -15,6 +15,7 @@ use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\UserBundle\Entity\User;
 use GJA\GameJam\UserBundle\Event\UserActivityShoutEvent;
+use GJA\GameJam\UserBundle\Form\Type\ProfileType;
 use GJA\GameJam\UserBundle\Form\Type\ShoutType;
 use GJA\GameJam\UserBundle\GameJamUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -34,6 +35,34 @@ class PanelController extends AbstractController
     public function indexAction()
     {
         return [];
+    }
+
+    /**
+     * @Route("/editar-perfil", name="gamejam_user_panel_edit")
+     * @Template()
+     */
+    public function editAction(Request $request)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(new ProfileType(), $user);
+
+        if($request->isMethod("POST"))
+        {
+            $form->handleRequest($request);
+
+            if($form->isValid())
+            {
+                $this->persistAndFlush($user);
+
+                $this->addSuccessMessage("¡Perfil actualizado!");
+
+                $this->redirectToPath("gamejam_user_panel_edit", ['success' => true]);
+            }
+        }
+
+        return ['form' => $form->createView(), 'user' => $user];
     }
 
     /**

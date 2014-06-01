@@ -22,7 +22,8 @@ class RegisterType extends RegistrationFormType
         parent::buildForm($builder, $options);
 
         $builder->add('nickname')
-            ->add('termsAccepted', 'checkbox');
+            ->add('termsAccepted', 'checkbox')
+            ->add('allowCommunications', 'checkbox', ['required' => false, 'attr' => ['checked' => 'checked']]);
     }
 
     /**

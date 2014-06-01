@@ -120,3 +120,21 @@ jms_payment_paypal:
     password: %paypal_password%
     signature: %paypal_signature%
     debug: %paypal_debug%
+
+hwi_oauth:
+    connect:
+        account_connector: gamejam.user.security.user_provider
+    firewall_name: main
+    connect:
+        confirmation: false
+    resource_owners:
+        twitter:
+            type:                twitter
+            client_id:           %oauth.twitter_client_id%
+            client_secret:       %oauth.twitter_client_secret%
+            paths:
+                profilepicture: profile_image_url_https
+
+game_jam_user:
+    oauth_tokens: %oauth%
+    oauth_services: ['twitter']

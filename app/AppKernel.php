@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
             new JMS\Payment\CoreBundle\JMSPaymentCoreBundle(),
             new \JMS\Payment\PaypalBundle\JMSPaymentPaypalBundle(),
+            new \HWI\Bundle\OAuthBundle\HWIOAuthBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
