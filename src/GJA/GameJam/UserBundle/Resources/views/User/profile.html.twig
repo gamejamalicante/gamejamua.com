@@ -55,7 +55,7 @@
             <h2><i class="fa fa-comment"></i> Actividad</h2>
             <div class="activity">
                 {% for activity in user.activity %}
-                    {% include 'GameJamUserBundle:User:_activity_' ~activity.typeName~'.html.twig' %}
+                    {% include ['GameJamUserBundle:User:_activity_' ~activity.typeName~'.html.twig', 'GameJamGameBundle:Game:_activity_' ~activity.typeName~'.html.twig'] %}
                 {% else %}
                     <p class="item shout">
                         Este usuario aún no ha publicado nada :(

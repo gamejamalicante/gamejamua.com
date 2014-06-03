@@ -75,6 +75,8 @@
             });
 
             reloadActivity('.activity');
+
+            setInterval('reloadActivity(".activity")', 10000);
         })
     </script>
 {% endblock %}
@@ -112,7 +114,7 @@
             <div class="col-sm-6">
                 <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
                 <h2><i class="fa fa-comment-o"></i> Actividad de los participantes</h2>
-                <div class="activity"></div>
+                <div class="activity">{{ render(controller('GameJamCompoBundle:Compo:partialLastActivity', {compo: compo.nameSlug})) }}</div>
             </div>
             <div class="col-sm-6">
                 {% if user %}

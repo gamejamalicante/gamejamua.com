@@ -28,3 +28,7 @@ services:
         arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
         tags:
             - { name: 'kernel.event_listener', event: 'gamejam.compo.activity', method: 'onActivity' }
+
+    gamejam.compo.mailer:
+        class: GJA\GameJam\CompoBundle\Service\Mailer
+        arguments: [@mailer]

@@ -28,21 +28,21 @@ security:
                 lifetime: 604800
                 path: /
             pattern: ^/
-            oauth:
-                resource_owners:
-                    twitter: "/oauth/login/check-twitter"
-                login_path:        /oauth/login
-                failure_path:      /oauth/login
-                oauth_user_provider:
-                    service: gamejam.user.security.user_provider
-                always_use_default_target_path: true
-                default_target_path: /
-                use_referer: true
             form_login:
                 provider: fos_userbundle
                 default_target_path: gamejam_compo_frontend
                 always_use_default_target_path: false
                 login_path: fos_user_security_login
+            oauth:
+                resource_owners:
+                    twitter: "/oauth/login/check-twitter"
+                login_path: fos_user_security_login
+                failure_path: fos_user_security_login
+                oauth_user_provider:
+                    service: gamejam.user.security.user_provider
+                always_use_default_target_path: true
+                default_target_path: /
+                use_referer: true
             logout:       true
             anonymous:    true
 

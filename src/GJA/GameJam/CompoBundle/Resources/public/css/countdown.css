@@ -1,0 +1,15 @@
+#countdown span { display: block; float: left; width: 34px; height: 50px;
+    background: url(/bundles/gamejamcompo/images/countdownGlowing.gif) no-repeat 0px 0px; }
+#countdown span.image0 { background-position: -0px 0px; }
+#countdown span.image1 { background-position: -34px 0px; }
+#countdown span.image2 { background-position: -68px 0px; }
+#countdown span.image3 { background-position: -102px 0px; }
+#countdown span.image4 { background-position: -136px 0px; }
+#countdown span.image5 { background-position: -170px 0px; }
+#countdown span.image6 { background-position: -204px 0px; }
+#countdown span.image7 { background-position: -238px 0px; }
+#countdown span.image8 { background-position: -272px 0px; }
+#countdown span.image9 { background-position: -306px 0px; }
+#countdown span.imageDay { background-position: -340px 0px; }
+#countdown span.imageSep { background-position: -374px 0px; }
+#countdown span.imageSpace { background-position: -408px 0px; } 

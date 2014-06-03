@@ -13,6 +13,7 @@ namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\GameBundle\Entity\Game;
+use GJA\GameJam\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -48,6 +49,11 @@ class Team
     protected $nameSlug;
 
     /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     */
+    protected $leader;
+
+    /**
      * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", mappedBy="teams")
      */
     protected $users;
@@ -58,24 +64,24 @@ class Team
     protected $games;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Compo", mappedBy="teams")
+     * @ORM\ManyToOne(targetEntity="Compo", inversedBy="teams")
      */
-    protected $compos;
+    protected $compo;
 
     /**
      * @param mixed $compos
      */
-    public function setCompos($compos)
+    public function setCompo($compos)
     {
-        $this->compos = $compos;
+        $this->compo = $compos;
     }
 
     /**
      * @return mixed
      */
-    public function getCompos()
+    public function getCompo()
     {
-        return $this->compos;
+        return $this->compo;
     }
 
     /**
@@ -92,22 +98,6 @@ class Team
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $creationDate
-     */
-    public function setCreationDate($creationDate)
-    {
-        $this->creationDate = $creationDate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
     }
 
     /**
@@ -204,5 +194,34 @@ class Team
     public function getGames()
     {
         return $this->games;
+    }
+
+    /**
+     * @param mixed $leader
+     */
+    public function setLeader($leader)
+    {
+        $this->leader = $leader;
+    }
+
+    /**
+     * @return User
+     */
+    public function getLeader()
+    {
+        return $this->leader;
+    }
+
+    public function isFull()
+    {
+        if(count($this->users) >= $this->compo->getMaxTeamMembers())
+            return true;
+
+        return false;
+    }
+
+    public function addMember(User $user)
+    {
+        $this->users[] = $user;
     }
 } 

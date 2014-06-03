@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
  * @ORM\Table(name="gamejam_games")
  */
 class Game

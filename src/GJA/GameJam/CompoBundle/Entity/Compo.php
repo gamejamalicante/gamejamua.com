@@ -108,6 +108,11 @@ class Compo
     protected $maxPeople;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $maxTeamMembers = 3;
+
+    /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Activity", mappedBy="compo")
      * @ORM\OrderBy({"date"="DESC"})
      */
@@ -509,5 +514,21 @@ class Compo
             return 0;
 
         return $this->startAt->getTimestamp()-(new \DateTime("now"))->getTimestamp();
+    }
+
+    /**
+     * @param mixed $maxTeamMembers
+     */
+    public function setMaxTeamMembers($maxTeamMembers)
+    {
+        $this->maxTeamMembers = $maxTeamMembers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxTeamMembers()
+    {
+        return $this->maxTeamMembers;
     }
 }

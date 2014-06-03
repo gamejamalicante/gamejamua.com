@@ -1031,3 +1031,10 @@ ul.media li.element, ul.downloads li.element
     border-radius: 5px;
     margin: 0 0 10px;
 }
+
+#countdown
+{
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}

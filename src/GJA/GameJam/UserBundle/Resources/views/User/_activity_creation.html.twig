@@ -1,0 +1,5 @@
+<div class="item creation">
+    <img class="avatar" src="{% if gravatar_exists(activity.user.email) %}{{ gravatar(activity.user.email, 20) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
+    <h3>{{ activity.user }} ha creado el juego <strong>{{ activity.game }}</strong></h3>
+    <div class="clearfix"></div>
+</div>

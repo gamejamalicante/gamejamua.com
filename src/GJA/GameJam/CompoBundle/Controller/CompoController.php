@@ -96,11 +96,27 @@ class CompoController extends AbstractController
     }
 
     /**
+     * @Route("/_activity", name="gamejam_compo_compo_activity")
+     * @Template("GameJamCompoBundle:Compo:_activity.html.twig")
+     */
+    public function partialLastActivityAction(Compo $compo)
+    {
+        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy(['compo' => $compo], ['id' => 'DESC'], 30, 0);
+
+        return array('activity' => $activity);
+    }
+
+    /**
      * @Route("/_activity/{since}", name="gamejam_compo_compo_activity")
      * @Template("GameJamCompoBundle:Compo:_activity.html.twig")
      */
     public function partialActivityAction(Compo $compo, \DateTime $since)
     {
+        if(is_null($since))
+        {
+
+        }
+
         $since->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $activity = $this->getRepository("GameJamCompoBundle:Activity")->findAllSince($since, $compo);

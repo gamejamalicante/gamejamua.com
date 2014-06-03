@@ -14,7 +14,7 @@
         '//fonts.googleapis.com/css?family=Open+Sans:400,600'
         'components/bootstrap/css/bootstrap.css'
         'components/font-awesome/css/font-awesome.css'
-        '@GameJamCompoBundle/Resources/public/css/flipclock.css'
+        '@GameJamCompoBundle/Resources/public/css/countdown.css'
         '@GameJamCompoBundle/Resources/public/css/main.css'
         output='css/main.css'
     %}
@@ -58,11 +58,11 @@
                 <a href="{{ path('gamejam_compo_frontend') }}"><img src="{{ asset('bundles/gamejamcompo/images/logo.png') }}" alt="GameJam Alicante"></a>
             </div>
             <div class="pull-right header-right">
-                <div class="countdown"></div>
+                <div id="countdown"></div>
                 <ul class="menu">
                     <li{% block active_index %}{% endblock %}><a href="{{ path('gamejam_compo_frontend') }}"><i class="fa fa-home"></i> Portada</a></li>
                     <li{% block active_current %}{% endblock %}><a href="{{ path('gamejam_compo_frontend_current') }}"><i class="fa fa-ticket"></i> Edición actual</a></li>
-                    <li{% block active_games %}{% endblock %}><a href=""><i class="fa fa-gamepad"></i> Juegos</a></li>
+                    <li{% block active_games %}{% endblock %}><a href="{{ path('gamejam_compo_games') }}"><i class="fa fa-gamepad"></i> Juegos</a></li>
                     <li{% block active_about %}{% endblock %}><a href="{{ path('gamejam_compo_frontend_about') }}"><i class="fa fa-question"></i> ¿Qué es?</a></li>
                 </ul>
             </div>
@@ -101,28 +101,34 @@
 {% javascripts
     'components/jquery/jquery.js'
     'components/bootstrap/js/bootstrap.js'
-    '@GameJamCompoBundle/Resources/public/js/flipclock.min.js'
+    '@GameJamCompoBundle/Resources/public/js/jquery.plugin.min.js'
+    '@GameJamCompoBundle/Resources/public/js/jquery.countdown.js'
+    '@GameJamCompoBundle/Resources/public/js/jquery.countdown-es.js'
 %}
 <script src="{{ asset_url }}" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $.get('{{ path('gamejam_compo_frontend_timetonext') }}', function(result)
-        {
-            if(result.result)
-            {
-                if(result.seconds > 0)
-                {
-                    $('.countdown').FlipClock(result.seconds, {
-                        countdown: true,
-                        clockFace: 'DailyCounter'
-                    });
-                }
-            }
-        });
-    });
-</script>
 {% endjavascripts %}
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $.get('{{ path('gamejam_compo_frontend_timetonext') }}', function(result)
+            {
+                if(result.result)
+                {
+                    if(result.seconds > 0)
+                    {
+                        $('#countdown').countdown({until: result.seconds, compact: true,
+                            layout: '<span class="image{d10}"></span><span class="image{d1}"></span>' +
+                                    '<span class="imageDay"></span><span class="imageSpace"></span>' +
+                                    '<span class="image{h10}"></span><span class="image{h1}"></span>' +
+                                    '<span class="imageSep"></span>' +
+                                    '<span class="image{m10}"></span><span class="image{m1}"></span>' +
+                                    '<span class="imageSep"></span>' +
+                                    '<span class="image{s10}"></span><span class="image{s1}"></span>'});
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}
 
 {% include "GoogleBundle:Analytics:async.html.twig" %}
