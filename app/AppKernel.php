@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new AMNL\RouterUnslashBundle\AMNLRouterUnslashBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new MZ\MailChimpBundle\MZMailChimpBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new GJA\GameJam\CompoBundle\GameJamCompoBundle(),
@@ -39,7 +40,6 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle();
         }
 
         return $bundles;

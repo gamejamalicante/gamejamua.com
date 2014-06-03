@@ -72,7 +72,7 @@ desc 'Update blog'
     capifony_puts_ok
 end
 
-before 'deploy:create_symlink', 'update_blog'
+# before 'deploy:create_symlink', 'update_blog'
 after 'deploy:create_symlink', 'update_sitemap'
 after 'deploy:setup', 'upload_parameters'
 before 'deploy:share_childs', 'upload_parameters'
