@@ -4,7 +4,7 @@ set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
 set :application, "gamejamua.com"
-set :deploy_to,   "/var/www/#{application}"
+set :deploy_to,   "/home/devel/www/beta.#{application}"
 set :app_path,    "app"
 set :user, "devel"
 
@@ -15,7 +15,7 @@ set :ssh_options, { :forward_agent => true }
 set :shared_files,      ["app/config/parameters.yml"]
 set :shared_children,     [web_path + "/uploads", app_path + "/sessions", app_path + "/uploads", app_path + "/logs", web_path + "/blog/app/uploads"]
 
-set :repository,  "git@bitbucket.org:gamejamalicante/gamejamua.com.git"
+set :repository,  "git@github.com:gamejamalicante/gamejamua.com.git"
 set :scm,         :git
 
 set :keep_releases, 5

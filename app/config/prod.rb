@@ -1,4 +1,4 @@
-set :domain, 'v2.gamejamua.com'
+set :domain, 'gamejamua.com'
 
 role :web, domain
 role :app, domain, :primary => true
