@@ -3,4 +3,6 @@ imports:
 
 doctrine:
     dbal:
-        dbname: %database_name%_migration
+        connections:
+            default:
+                dbname: %database_name%_migration

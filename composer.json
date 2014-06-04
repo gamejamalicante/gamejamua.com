@@ -44,7 +44,9 @@
         "jms/payment-core-bundle": "@dev",
         "jms/payment-paypal-bundle": "@dev",
         "hwi/oauth-bundle": "@dev",
-        "endroid/twitter-bundle": "@dev"
+        "endroid/twitter-bundle": "@dev",
+        "webfactory/exceptions-bundle": "@stable",
+        "elao/error-notifier-bundle" : "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

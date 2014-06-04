@@ -120,7 +120,7 @@ class TeamController extends AbstractController
         {
             $this->dispatchEvent(GameJamCompoEvents::TEAM_REQUEST_ACCEPTED, new TeamInvitationEvent($teamInvitation));
             $team->addMember($teamInvitation->getTarget());
-            
+
             $this->persistAndFlush($team);
         }
 

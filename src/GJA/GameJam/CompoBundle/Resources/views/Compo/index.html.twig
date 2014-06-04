@@ -77,6 +77,14 @@
             reloadActivity('.activity');
 
             setInterval('reloadActivity(".activity")', 10000);
+
+            {% if not compo.hasFinished %}
+                {% if compo.hasStarted %}
+                    $('.countdown').countdown({until: {{ compo.secondsToFinish }}});
+                {% else %}
+                    $('.countdown').countdown({until: {{ compo.secondsToStartTime }}});
+                {% endif %}
+            {% endif %}
         })
     </script>
 {% endblock %}
@@ -90,6 +98,7 @@
         </div>
     </div>
     <div class="section compo">
+        <div id="countdown-container">{% if not compo.hasFinished %}¡Quedan <span class="countdown"></span> {% if compo.hasStarted %}para que acabe{% else %}para que empieze{% endif %}!{% endif %}</div>
         <h1><strong>{{ compo }}</strong></h1>
         <div class="row description">
             <div class="col-md-6">
@@ -155,7 +164,7 @@
                         {% endif %}
                     {% endif %}
                 </div>
-                {% endif %}
+                {% endif %}<br><br>
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>
                 <div class="application">
                     {% if user_application %}

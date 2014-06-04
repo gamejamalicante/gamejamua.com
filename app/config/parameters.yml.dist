@@ -14,6 +14,7 @@ parameters:
     ga_tracker: ~ # Analytics tracker id
 
     main_email: ~ # Main email
+    admin_email: ~ # Admin email, will receive status notifications
 
     paypal_username: ~ # PayPal API username
     paypal_password: ~ # PayPal API password
@@ -31,3 +32,8 @@ parameters:
     # to do api calls
     twitter_access_token: XX
     twitter_access_token_secret: XX
+
+    mailer_transport: smtp
+    mailer_host: XXX
+    mailer_user: XXX
+    mailer_password: XXX

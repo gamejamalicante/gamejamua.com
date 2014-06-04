@@ -1,6 +1,8 @@
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
+        legacy_encoder:
+            id: gamejam.user.security.legacy_password_encoder
 
     role_hierarchy:
         ROLE_USER: []
@@ -16,6 +18,7 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
+
 
     firewalls:
         dev:

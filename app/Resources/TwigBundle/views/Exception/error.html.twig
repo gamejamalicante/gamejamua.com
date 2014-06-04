@@ -1,0 +1,14 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section profile">
+    <h2>Error inesperado</h2>
+    <p>Ups, ha ocurrido un error inesperado. Tranquilo, ya nos ha llegado una notificación y nos pondremos en marcha enseguida para solventarlo :)</p><br>
+    <strong>Estado:</strong><br>{{ status_text }}<br><br>
+    <strong>Código de estado:</strong><br>{{ status_code }}<br><br>
+    <strong>Fecha:</strong><br>{{ "now"|date("c") }}<br><br>
+    <strong>IP:</strong><br>{{ app.request.server.get('REMOTE_ADDR') }}<br><br>
+    <strong>Información de petición completa</strong>
+    <pre>{{ app.request }}</pre>
+    </div>
+{% endblock %}

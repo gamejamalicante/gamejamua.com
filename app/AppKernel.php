@@ -33,13 +33,15 @@ class AppKernel extends Kernel
             new JMS\Payment\CoreBundle\JMSPaymentCoreBundle(),
             new \JMS\Payment\PaypalBundle\JMSPaymentPaypalBundle(),
             new \HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new \Endroid\Bundle\TwitterBundle\EndroidTwitterBundle()
+            new \Endroid\Bundle\TwitterBundle\EndroidTwitterBundle(),
+            new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'migration'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Webfactory\Bundle\ExceptionsBundle\WebfactoryExceptionsBundle();
         }
 
         return $bundles;

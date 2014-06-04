@@ -9,6 +9,7 @@ namespace GJA\GameJam\CompoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -26,12 +27,12 @@ class Compo
     protected $id;
 
     /**
-     * @ORM\Column(type="decimal", precision=2)
+     * @ORM\Column(type="decimal", precision=2, nullable=true)
      */
     protected $memberFee;
 
     /**
-     * @ORM\Column(type="decimal", precision=2)
+     * @ORM\Column(type="decimal", precision=2, nullable=true)
      */
     protected $normalFee;
 
@@ -42,11 +43,12 @@ class Compo
 
     /**
      * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
      */
     protected $nameSlug;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -66,17 +68,17 @@ class Compo
     protected $period;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $applicationStartAt;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $applicationPeriod;
 
     /**
-     * @ORM\OneToOne(targetEntity="Theme")
+     * @ORM\OneToOne(targetEntity="Theme", cascade={"persist"})
      */
     protected $theme;
 
@@ -530,5 +532,26 @@ class Compo
     public function getMaxTeamMembers()
     {
         return $this->maxTeamMembers;
+    }
+
+    public function getSecondsToFinish()
+    {
+        if($this->hasStarted())
+            return null;
+
+        return $this->endAt()->getTimestamp()-(new \DateTime("now"))->getTimestamp();
+    }
+
+    public function hasFinished()
+    {
+        if($this->isRunning())
+            return false;
+
+        $now = new \DateTime("now");
+
+        if($now > $this->endAt())
+            return true;
+
+        return false;
     }
 }

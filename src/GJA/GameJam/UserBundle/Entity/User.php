@@ -20,13 +20,14 @@ use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Activity;
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="gamejam_users")
  */
-class User extends BaseUser
+class User extends BaseUser implements EncoderAwareInterface
 {
     const SEX_MALE = 0;
     const SEX_FEMALE = 1;
@@ -156,6 +157,11 @@ class User extends BaseUser
      * @ORM\Column(type="string")
      */
     protected $twitter;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $legacyPassword = false;
 
     /**
      * @param mixed $achievements
@@ -654,5 +660,29 @@ class User extends BaseUser
     public function getTwitter()
     {
         return $this->twitter;
+    }
+
+    /**
+     * @param mixed $legacyPassword
+     */
+    public function setLegacyPassword($legacyPassword)
+    {
+        $this->legacyPassword = $legacyPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLegacyPassword()
+    {
+        return $this->legacyPassword;
+    }
+
+    public function getEncoderName()
+    {
+        if($this->legacyPassword)
+            return 'legacy_encoder';
+
+        return null;
     }
 }

@@ -1,18 +1,20 @@
 imports:
     - { resource: config.yml }
 
+framework:
+    router:
+        strict_requirements: null
+
 monolog:
     handlers:
         main:
-            type:         fingers_crossed
+            type: fingers_crossed
             action_level: error
-            handler:      nested
+            handler: nested
         nested:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-        console:
-            type:  console
+            type: stream
+            path: %kernel.logs_dir%/%kernel.environment%.log
+            level: error
 
 assetic:
     filters:
@@ -22,3 +24,12 @@ assetic:
         uglifycss:
             bin: /usr/local/bin/uglifycss
             apply_to: "\.css$"
+
+elao_error_notifier:
+    from: info@gamejamua.com
+    to: %admin_email%
+    handle404: false
+    mailer: swiftmailer.mailer
+    handlePHPErrors: true
+    handlePHPWarnings: false
+    repeatTimeout: 3600

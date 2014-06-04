@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1cf0f03e4d4f53d458c5d57bdc50bde8",
+    "hash": "b21b6adc1ad9762e1fd7c4bbc1a63ca6",
     "packages": [
         {
             "name": "amnl/router-unslash",
@@ -744,12 +744,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "fcc2a3cfd69eec0734636838fbb782919a0447e9"
+                "reference": "e351fae65807ab46a10e878eddabd499b391cdc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/fcc2a3cfd69eec0734636838fbb782919a0447e9",
-                "reference": "fcc2a3cfd69eec0734636838fbb782919a0447e9",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e351fae65807ab46a10e878eddabd499b391cdc9",
+                "reference": "e351fae65807ab46a10e878eddabd499b391cdc9",
                 "shasum": ""
             },
             "require": {
@@ -810,7 +810,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-05-21 17:49:35"
+            "time": "2014-06-04 00:56:03"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -1294,12 +1294,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "2101a8fdc640ce3df640181f83a7d2aa1eee04c1"
+                "reference": "6f622ab1f751c6ea3c734c4a4cd7209a684e9d79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2101a8fdc640ce3df640181f83a7d2aa1eee04c1",
-                "reference": "2101a8fdc640ce3df640181f83a7d2aa1eee04c1",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/6f622ab1f751c6ea3c734c4a4cd7209a684e9d79",
+                "reference": "6f622ab1f751c6ea3c734c4a4cd7209a684e9d79",
                 "shasum": ""
             },
             "require": {
@@ -1363,7 +1363,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-05-31 11:37:50"
+            "time": "2014-06-03 19:42:38"
         },
         {
             "name": "egeloen/google-map",
@@ -1527,6 +1527,60 @@
                 "json"
             ],
             "time": "2014-05-28 20:10:05"
+        },
+        {
+            "name": "elao/error-notifier-bundle",
+            "version": "dev-master",
+            "target-dir": "Elao/ErrorNotifierBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Elao/ErrorNotifierBundle.git",
+                "reference": "059a1a470476b4fe9f8b149f0fcc27081ae19b26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Elao/ErrorNotifierBundle/zipball/059a1a470476b4fe9f8b149f0fcc27081ae19b26",
+                "reference": "059a1a470476b4fe9f8b149f0fcc27081ae19b26",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Elao\\ErrorNotifierBundle": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Elao Team",
+                    "homepage": "http://www.elao.com"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "http://github.com/Elao/ErrorNotifierBundle/contributors"
+                }
+            ],
+            "description": "This bundle send html mail when an error appear",
+            "homepage": "http://github.com/Elao/ErrorNotifierBundle",
+            "keywords": [
+                "bundle",
+                "elao",
+                "error",
+                "notifier"
+            ],
+            "time": "2014-02-25 13:32:00"
         },
         {
             "name": "endroid/twitter",
@@ -1783,12 +1837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hwi/HWIOAuthBundle.git",
-                "reference": "8fe09e0daf8405ef784adf125909f0cba1c31d4e"
+                "reference": "26033b75bda64e33d9258dda50defd10e6b6dbb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/8fe09e0daf8405ef784adf125909f0cba1c31d4e",
-                "reference": "8fe09e0daf8405ef784adf125909f0cba1c31d4e",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/26033b75bda64e33d9258dda50defd10e6b6dbb2",
+                "reference": "26033b75bda64e33d9258dda50defd10e6b6dbb2",
                 "shasum": ""
             },
             "require": {
@@ -1889,7 +1943,7 @@
                 "yahoo",
                 "yandex"
             ],
-            "time": "2014-05-30 10:44:00"
+            "time": "2014-06-02 13:28:07"
         },
         {
             "name": "imagine/imagine",
@@ -2437,12 +2491,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "016423a804140a33814b8fad4240dbfa49a884da"
+                "reference": "25b16e801979098cb2f120e697bfce454b18bf23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/016423a804140a33814b8fad4240dbfa49a884da",
-                "reference": "016423a804140a33814b8fad4240dbfa49a884da",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/25b16e801979098cb2f120e697bfce454b18bf23",
+                "reference": "25b16e801979098cb2f120e697bfce454b18bf23",
                 "shasum": ""
             },
             "require": {
@@ -2470,7 +2524,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9.x-dev"
+                    "dev-master": "1.10.x-dev"
                 }
             },
             "autoload": {
@@ -2497,7 +2551,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-05-29 15:04:35"
+            "time": "2014-06-04 16:30:04"
         },
         {
             "name": "ornicar/gravatar-bundle",
@@ -3037,12 +3091,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle.git",
-                "reference": "ff46000dd73411bbe812238f38bcacaf3f94b504"
+                "reference": "df10fae8852a5733e671b4ba37cf2f4beafa7561"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/ff46000dd73411bbe812238f38bcacaf3f94b504",
-                "reference": "ff46000dd73411bbe812238f38bcacaf3f94b504",
+                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/df10fae8852a5733e671b4ba37cf2f4beafa7561",
+                "reference": "df10fae8852a5733e671b4ba37cf2f4beafa7561",
                 "shasum": ""
             },
             "require": {
@@ -3092,7 +3146,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-05-05 14:19:41"
+            "time": "2014-06-04 01:48:14"
         },
         {
             "name": "symfony/icu",
@@ -3149,16 +3203,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "93970f8abcd53e1079cb06ce4db53263e143ad9a"
+                "reference": "e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/93970f8abcd53e1079cb06ce4db53263e143ad9a",
-                "reference": "93970f8abcd53e1079cb06ce4db53263e143ad9a",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a",
+                "reference": "e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.6",
+                "monolog/monolog": "~1.8",
                 "php": ">=5.3.2",
                 "symfony/config": "~2.3",
                 "symfony/dependency-injection": "~2.3",
@@ -3172,7 +3226,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5.x-dev"
+                    "dev-master": "2.6.x-dev"
                 }
             },
             "autoload": {
@@ -3202,7 +3256,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2014-04-29 08:13:14"
+            "time": "2014-06-04 16:49:13"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -3270,12 +3324,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "5c782607ade9bd7bc8e51131cdcd06ee0d568c92"
+                "reference": "36d144b0904f8ab32bac22abc5a51d5fd7af90cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/5c782607ade9bd7bc8e51131cdcd06ee0d568c92",
-                "reference": "5c782607ade9bd7bc8e51131cdcd06ee0d568c92",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/36d144b0904f8ab32bac22abc5a51d5fd7af90cf",
+                "reference": "36d144b0904f8ab32bac22abc5a51d5fd7af90cf",
                 "shasum": ""
             },
             "require": {
@@ -3332,6 +3386,7 @@
             "require-dev": {
                 "doctrine/data-fixtures": "1.0.*",
                 "doctrine/dbal": "~2.2",
+                "doctrine/doctrine-bundle": "~1.2",
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "egulias/email-validator": "1.1.0",
                 "ircmaxell/password-compat": "1.0.*",
@@ -3378,7 +3433,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-31 02:03:04"
+            "time": "2014-06-04 17:22:16"
         },
         {
             "name": "twig/extensions",
@@ -3485,6 +3540,56 @@
                 "templating"
             ],
             "time": "2014-05-26 15:15:28"
+        },
+        {
+            "name": "webfactory/exceptions-bundle",
+            "version": "4.0.0",
+            "target-dir": "Webfactory/Bundle/ExceptionsBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webfactory/exceptions-bundle.git",
+                "reference": "28b79273c26af2d4a5ecb4cc1764eb4f222afd62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webfactory/exceptions-bundle/zipball/28b79273c26af2d4a5ecb4cc1764eb4f222afd62",
+                "reference": "28b79273c26af2d4a5ecb4cc1764eb4f222afd62",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/twig-bundle": "~2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "sensio/framework-extra-bundle": "~2.2",
+                "symfony/framework-bundle": "~2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-default": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Webfactory\\Bundle\\ExceptionsBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "webfactory GmbH",
+                    "email": "info@webfactory.de",
+                    "homepage": "http://www.webfactory.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple controller to display error pages during development plus some building blocks for more user-friendly error pages.",
+            "homepage": "http://inside.webfactory.de/de/blog/symfony2-exception-handling-and-custom-error-pages-explained.html",
+            "time": "2014-04-30 16:46:25"
         }
     ],
     "packages-dev": [],
@@ -3507,7 +3612,9 @@
         "jms/payment-core-bundle": 20,
         "jms/payment-paypal-bundle": 20,
         "hwi/oauth-bundle": 20,
-        "endroid/twitter-bundle": 20
+        "endroid/twitter-bundle": 20,
+        "webfactory/exceptions-bundle": 0,
+        "elao/error-notifier-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

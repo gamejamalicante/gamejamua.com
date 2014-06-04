@@ -862,6 +862,24 @@ textarea.shout
     font-size: 16px;
 }
 
+.section.compo #countdown-container
+{
+    float: right;
+    font-size: 18px;
+}
+
+.section.compo .countdown-section
+{
+    padding: 5px;
+}
+
+.section.compo .countdown-amount
+{
+    padding-right: 3px;
+    padding-left: 3px;
+    font-size: 25px;
+}
+
 .section.compo .application, .section.compo .description
 {
     background-color: #e1e1f2;

@@ -6,9 +6,8 @@ _profiler:
     resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
     prefix:   /_profiler
 
-_configurator:
-    resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
-    prefix:   /_configurator
-
 _main:
     resource: routing.yml
+
+_webfactory_exceptions:
+    resource: "@WebfactoryExceptionsBundle/Resources/config/routing.yml"
