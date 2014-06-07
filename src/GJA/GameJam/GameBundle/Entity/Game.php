@@ -9,6 +9,7 @@ namespace GJA\GameJam\GameBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use GJA\GameJam\CompoBundle\Entity\Diversifier;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
@@ -177,6 +178,11 @@ class Game
     public function getDiversifiers()
     {
         return $this->diversifiers;
+    }
+
+    public function addDiversifier(Diversifier $diversifier)
+    {
+        $this->diversifiers[] = $diversifier;
     }
 
     /**

@@ -12,8 +12,8 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use GJA\GameJam\CompoBundle\Achievement\ConstraintCheckerInterface;
 use GJA\GameJam\CompoBundle\Achievement\GranterInterface;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\AchievementRepository")
@@ -48,6 +48,7 @@ class Achievement
 
     /**
      * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
      */
     protected $nameSlug;
 
@@ -60,6 +61,11 @@ class Achievement
      * @ORM\Column(type="string", nullable=true)
      */
     protected $granter;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $hidden = false;
 
     /**
      * @param mixed $description
@@ -187,5 +193,21 @@ class Achievement
         }
 
         return false;
+    }
+
+    /**
+     * @param mixed $hidden
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
     }
 } 

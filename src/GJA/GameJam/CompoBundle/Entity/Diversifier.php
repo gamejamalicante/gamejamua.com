@@ -29,6 +29,7 @@ class Diversifier
 
     /**
      * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
      */
     protected $nameSlug;
 

@@ -348,7 +348,9 @@ class Compo
     {
         $period = new \DateInterval($this->period);
 
-        return $this->getStartAt()->add($period);
+        $startAt = clone $this->getStartAt();
+
+        return $startAt->add($period);
     }
 
     public function getEndAt()

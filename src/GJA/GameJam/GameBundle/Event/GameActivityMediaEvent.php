@@ -23,7 +23,7 @@ class GameActivityMediaEvent extends GameActivityEvent
 
     public function __construct(Game $game = null, Media $media = null)
     {
-        parent::__construct($game);
+        parent::__construct($game->getUser(), $game);
 
         $this->media = $media;
     }
