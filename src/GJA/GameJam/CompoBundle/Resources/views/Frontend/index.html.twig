@@ -57,12 +57,14 @@
         <h2><i class="fa fa-bullhorn"></i> Noticias y novedades</h2>
         <div class="news row">
             {% for new in news|slice(0,2) %}
+                <a href="{{ path('gamejam_compo_notifications_view', {notification: new.nameSlug}) }}">
                 <div class="col-md-6 nopadding last">
                     <div class="item">
                         <h3>{{ new.title }} <span class="date">{{ time_diff(new.date) }}</span></h3>
                         {{ new.content|truncate(200) }}
                     </div>
                 </div>
+                </a>
             {% else %}
                 <p>No hay ninguna noticia reciente... seriously?</p>
             {% endfor %}
@@ -76,7 +78,9 @@
                     {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
                 </div>
             {% else %}
-                Parece que está parada la cosa...
+                <div class="section index activity">
+                    Parece que está parada la cosa...
+                </div>
             {% endfor %}
         </div>
     </div>

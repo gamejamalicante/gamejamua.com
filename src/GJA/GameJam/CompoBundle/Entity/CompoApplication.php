@@ -36,12 +36,12 @@ class CompoApplication
     protected $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Compo")
+     * @ORM\ManyToOne(targetEntity="Compo", inversedBy="applications")
      */
     protected $compo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="applications")
      */
     protected $user;
 
@@ -61,7 +61,7 @@ class CompoApplication
     protected $completed = false;
 
     /**
-     * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"}, inversedBy="compoApplication")
      */
     protected $order;
 

@@ -4,6 +4,7 @@ namespace GJA\GameJam\CompoBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Notification;
+use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -23,6 +24,29 @@ class NotificationController extends AbstractController
         $notifications = $this->getRepository("GameJamCompoBundle:Notification")->findByUser($this->getUser());
 
         return ['notifications' => $notifications];
+    }
+
+    /**
+     * @Route("/", name="gamejam_compo_notifications_mark_all")
+     * @Template()
+     */
+    public function markAllAsReadAction()
+    {
+        if(!$user = $this->getUser())
+            throw new AccessDeniedException;
+
+        /** @var Notification[] $notifications */
+        $notifications = $this->getRepository("GameJamCompoBundle:Notification")->findByUser($this->getUser());
+
+        foreach($notifications as $notification)
+        {
+            if($notification->read($user))
+                $this->persist($notification);
+        }
+
+        $this->flush();
+
+        return $this->redirectToPath("gamejam_compo_notifications");
     }
 
     /**

@@ -58,11 +58,6 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $teams;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Compo", mappedBy="soloUsers")
-     */
-    protected $compos;
-
-    /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\CompoApplication", mappedBy="user")
      */
     protected $applications;
@@ -258,22 +253,6 @@ class User extends BaseUser implements EncoderAwareInterface
     public function getCoins()
     {
         return $this->coins;
-    }
-
-    /**
-     * @param mixed $compos
-     */
-    public function setCompos($compos)
-    {
-        $this->compos = $compos;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCompos()
-    {
-        return $this->compos;
     }
 
     /**

@@ -34,7 +34,7 @@
                     - {{ user.email }}
                 {% endif %}
             </p>
-            <p>Registrado: <strong>{{ time_diff(user.registeredAt) }}</strong> - Última vez visto: <strong>{{ time_diff(user.lastLogin) }}</strong></p>
+            <p>Registrado: <strong>{{ time_diff(user.registeredAt) }}</strong> - Última vez visto: <strong>{% if user.lastLogin %}{{ time_diff(user.lastLogin) }}{% else %}desconocido{% endif %}</strong></p>
             {% if user.presentation %}<p class="presentation">{{ user.presentation }}</p>{% endif %}
         </div>
         <div class="clearfix"></div>

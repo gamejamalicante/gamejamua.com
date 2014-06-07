@@ -2,6 +2,9 @@
 
 {% block content %}
     <div class="section text notifications">
+        {% if app.user %}
+            <span class="date pull-right"><a class="btn" href="{{ path('gamejam_compo_notifications_mark_all') }}">Marcar todo como leído</a></span>
+        {% endif %}
         <h1>Notificaciones</h1>
 
         {% for notification in notifications %}

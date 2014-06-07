@@ -4,6 +4,7 @@ namespace GJA\GameJam\CompoBundle\Command;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\Theme;
 use GJA\GameJam\UserBundle\Entity\User;
@@ -35,6 +36,16 @@ class MigrationCommand extends ContainerAwareCommand
      */
     protected $output;
 
+    /**
+     * @var Compo[]
+     */
+    protected $edicionesMap = array();
+
+    /**
+     * @var User[]
+     */
+    protected $usuariosMap = array();
+
     public function setContainer(ContainerInterface $container = null)
     {
         parent::setContainer($container);
@@ -46,12 +57,13 @@ class MigrationCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName("gamejam:migration:migrate")
+            ->setDescription("Migrate old database data to new system")
             ->addOption("dry-run", "dr", InputOption::VALUE_NONE, "Dry run the process");
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dryRun = true;
+        $this->dryRun = $input->getOption("dry-run");
         $this->output = $output;
 
         // migrate editions
@@ -61,6 +73,7 @@ class MigrationCommand extends ContainerAwareCommand
         $this->migrateUsers();
 
         // migrate posts
+        $this->migratePosts();
 
         // migrate games
 
@@ -93,6 +106,8 @@ class MigrationCommand extends ContainerAwareCommand
             $compo->setTheme($this->findTheme($edition->tema));
 
             $this->persist($compo);
+
+            $this->edicionesMap[$edition->id] = $compo;
         }
 
         $this->flush();
@@ -108,6 +123,18 @@ class MigrationCommand extends ContainerAwareCommand
 
             $this->output->writeln("Migrating user: <info>" . $user->nombre . "</info>");
 
+            if($user->cumple == '0000-00-00')
+                $user->cumple = null;
+
+            if($user->sexo == '0')
+                $user->sexo = null;
+            elseif($user->sexo == '1')
+                $user->sexo = 0;
+            elseif($user->sexo == '2')
+                $user->sexo = 1;
+            else
+                $user->sexo = null;
+
             $userEntity = new User();
             $userEntity->setUsername($user->nombre);
             $userEntity->setEmail($user->email);
@@ -117,7 +144,7 @@ class MigrationCommand extends ContainerAwareCommand
             $userEntity->setRoles(array("ROLE_USER", "ROLE_OLD"));
             $userEntity->setCoins($user->puntos);
             $userEntity->setTwitter($user->twitter);
-            $userEntity->setBirthDate(new \DateTime($user->cumple));
+            $userEntity->setBirthDate($user->cumple ? new \DateTime($user->cumple) : null);
             $userEntity->setRegisteredAt(new \DateTime($user->fecha));
             $userEntity->setPresentation($user->descripcion);
             $userEntity->setAvatarUrl($user->imagen);
@@ -126,11 +153,59 @@ class MigrationCommand extends ContainerAwareCommand
             $userEntity->setEnabled(true);
             $userEntity->setPublicEmail($user->emailpublico);
             $userEntity->setPublicProfile($user->datospublicos);
+            $userEntity->setSex($user->sexo);
 
             $this->persist($userEntity);
+
+            $this->usuariosMap[$user->id] = $userEntity;
         }
 
         $this->flush();
+    }
+
+    protected function migratePosts()
+    {
+        $posts = $this->connection->query("SELECT * FROM POSTS;")->fetchAll();
+
+        foreach($posts as $post)
+        {
+            $post = (object) $post;
+
+            $date = new \DateTime($post->fecha);
+            $compo = $this->findGameJamInDateRange($date);
+
+            if($compo)
+            {
+                $this->output->writeln("\tFound gamejam for post: <info>" .$compo. "</info>");
+            }
+
+            $activity = new Activity();
+            $activity->setType(Activity::TYPE_SHOUT);
+            $activity->setDate($date);
+            $activity->setContent(['content' => $post->contenido]);
+            $activity->setUser($this->usuariosMap[$post->usuario]);
+            $activity->setCompo($compo);
+
+            $this->output->writeln("Migrating post: <info>" .strlen($post->contenido). "</info> characters found in GameJam: <info>" .$compo. "</info>");
+
+            $this->persist($activity);
+        }
+
+        $this->flush();
+    }
+
+    protected function findGameJamInDateRange(\DateTime $date)
+    {
+        /** @var Compo[] $compos */
+        $compos = $this->entityManager->getRepository("GameJamCompoBundle:Compo")->findAll();
+
+        foreach($compos as $compo)
+        {
+            if($compo->getStartAt() <= $date and $compo->getEndAt() >= $date)
+                return $compo;
+        }
+
+        return null;
     }
 
     protected function persist($entity)

@@ -8,7 +8,7 @@
         {% else %}
         <div class="section active-compo">
             <h2><i class="fa fa-rocket"></i> ¡Estás apuntado para participar en la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-            <p>La competición empieza en <strong>{{ compo.getDaysToStart }}</strong> días. ¡Te esperamos!</p>
+            <p>La competición empieza en <strong>{{ compo.getDaysToStart }}</strong> días. <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ver la página de competición con noticias, actividad, etc.</a></p>
         </div>
         {% endif %}
     {% else %}

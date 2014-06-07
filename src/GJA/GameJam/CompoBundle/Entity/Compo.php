@@ -78,7 +78,7 @@ class Compo
     protected $applicationEndAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Theme", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Theme", inversedBy="compo", cascade={"persist"})
      */
     protected $theme;
 
@@ -341,7 +341,7 @@ class Compo
 
     public function getDaysToStart()
     {
-        return $this->getTimeToStart()->format("%d");
+        return $this->getTimeToStart()->days;
     }
 
     public function endAt()
@@ -349,6 +349,11 @@ class Compo
         $period = new \DateInterval($this->period);
 
         return $this->getStartAt()->add($period);
+    }
+
+    public function getEndAt()
+    {
+        return $this->endAt();
     }
 
     /**
