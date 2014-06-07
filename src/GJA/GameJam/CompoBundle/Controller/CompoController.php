@@ -15,6 +15,7 @@ use Certadia\Library\Controller\AbstractController;
 
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
+use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
 use GJA\GameJam\CompoBundle\Form\Type\CompoApplicationType;
 use GJA\GameJam\CompoBundle\Form\Type\TeamInvitationType;
@@ -40,10 +41,16 @@ class CompoController extends AbstractController
      */
     public function indexAction(Compo $compo)
     {
+        /** @var User $user */
         $user = $this->getUser();
         $userApplication = $user ? $compo->getApplicationForUser($this->getUser()) : null;
 
-        return ['user' => $user, 'user_application' => $userApplication, 'compo' => $compo];
+        return [
+            'user' => $user,
+            'user_application' => $userApplication,
+            'compo' => $compo,
+            'team' => $user ? $user->getTeamForCompo($compo) : null
+        ];
     }
 
     /**
@@ -100,7 +107,7 @@ class CompoController extends AbstractController
     }
 
     /**
-     * @Route("/_team", name="gamejam_compo_compo_activity")
+     * @Route("/_team", name="gamejam_compo_compo_team")
      * @Template("GameJamCompoBundle:Compo:_team.html.twig")
      */
     public function partialTeamAction(Compo $compo)
@@ -127,14 +134,10 @@ class CompoController extends AbstractController
 
                 $templateVars['invite_form'] = $teamForm->createView();
             }
-            else
-            {
-                // TODO: leave team form
-            }
         }
         else
         {
-            $teamCreateForm = $this->createForm(new TeamType($user, $compo));
+            $teamCreateForm = $this->createForm(new TeamType());
             $teamForm = $this->createForm(new TeamRequestType($compo));
 
             $templateVars['creation_form'] = $teamCreateForm->createView();

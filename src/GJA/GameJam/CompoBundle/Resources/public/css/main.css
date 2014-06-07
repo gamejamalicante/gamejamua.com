@@ -211,7 +211,7 @@ body
 .layout header .header-right
 {
     position: relative;
-    width: 515px;
+    width: 470px;
     height: 100%;
 }
 
@@ -835,6 +835,17 @@ textarea.shout
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+.section .contributor.featured
+{
+    background-color: #d2d4f2;
+    border: 2px solid #c1c1d1;
+}
+
+.section .contributor.featured img.logo
+{
+    width: 150px;
 }
 
 .section .contributor h2

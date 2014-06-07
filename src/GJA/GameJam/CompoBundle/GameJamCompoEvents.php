@@ -15,6 +15,8 @@ final class GameJamCompoEvents
 {
     const ACTIVITY = "gamejam.compo.activity";
 
+    const TEAM_CREATION = "gamejam.compo.team_creation";
+
     const TEAM_INVITATION = "gamejam.compo.team_invitation";
     const TEAM_REQUEST = "gamejam.compo.team_request";
 

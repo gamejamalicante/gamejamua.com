@@ -46,11 +46,6 @@ class CompoApplication
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team")
-     */
-    protected $team;
-
-    /**
      * @ORM\Column(type="smallint")
      */
     protected $modality;
@@ -186,35 +181,11 @@ class CompoApplication
     }
 
     /**
-     * @param mixed $team
-     */
-    public function setTeam($team)
-    {
-        $this->team = $team;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTeam()
-    {
-        return $this->team;
-    }
-
-    /**
      * @param mixed $completed
      */
     public function setCompleted($completed)
     {
         $this->completed = $completed;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCompleted()
-    {
-        return $this->completed;
     }
 
     public function isCompleted()

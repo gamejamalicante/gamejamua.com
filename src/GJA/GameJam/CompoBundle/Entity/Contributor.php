@@ -57,6 +57,11 @@ class Contributor
     protected $featured;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $description;
+
+    /**
      * @param mixed $composJudged
      */
     public function setComposJudged($composJudged)
@@ -138,7 +143,7 @@ class Contributor
 
     public function getImageWebPath()
     {
-        return 'uploads/contributors/' . $this->nameSlug. '.png';
+        return 'bundles/gamejamcompo/images/contributors/' . $this->nameSlug. '.png';
     }
 
     public function __toString()
@@ -176,5 +181,21 @@ class Contributor
     public function getFeatured()
     {
         return $this->featured;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

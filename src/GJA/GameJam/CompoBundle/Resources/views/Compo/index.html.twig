@@ -1,11 +1,26 @@
 {% extends 'GameJamCompoBundle::layout.html.twig' %}
 
+{% block styles %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'components/select2/select2.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
 {% block active_current %} class="active"{% endblock %}
 
 {% block compo_announcement %}{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {% javascripts
+        'components/select2/select2.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+
     <script type="text/javascript">
 
         var lastUpdate = Math.round(+new Date()/1000)-86400;
@@ -87,7 +102,7 @@
             {% endif %}
         });
 
-        function loadTeamForm(form, result, successText, errorText)
+        function loadTeamForm(form, result, successText, errorText, callback)
         {
             $(form).submit(function(e)
             {
@@ -95,10 +110,17 @@
 
                 var data = $(this).serialize();
 
+                $(result).html('<img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" />');
+
                 var teamRequest = $.ajax({
                     url: $(this).attr('action'),
                     type: 'post',
                     data: data
+                });
+
+                teamRequest.error(function()
+                {
+                    $(result).html(errorText);
                 });
 
                 teamRequest.done(function(response)
@@ -106,10 +128,13 @@
                     if(response.result == true)
                     {
                         $(result).html(successText);
+
+                        if(callback != null)
+                            callback(response);
                     }
                     else
                     {
-                        $(result).html(errorText);
+                        $(result).html(response.error);
                     }
                 });
             });
@@ -119,6 +144,12 @@
         {
             loadTeamForm('#send-invitation', '#send-invitation-result', '¡Invitación enviada', 'Oops! Error!');
             loadTeamForm('#send-request', '#send-request-result', '¡Petición enviada!', 'Oops! Error!');
+            loadTeamForm('#team-create', '#create-team-result', '!Éxito!', 'Oops! Error!', function()
+            {
+                $('#team-container').load('{{ path('gamejam_compo_compo_team', {compo: compo.nameSlug}) }}');
+            });
+
+            $('select.select2').select2();
         });
     </script>
 {% endblock %}
@@ -132,6 +163,14 @@
         </div>
     </div>
     <div class="section compo">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div id="countdown-container">{% if not compo.hasFinished %}¡Quedan <span class="countdown"></span> {% if compo.hasStarted %}para que acabe{% else %}para que empieze{% endif %}!{% endif %}</div>
         <h1><strong>{{ compo }}</strong></h1>
         <div class="row description">
@@ -147,7 +186,11 @@
                     Patrocinadores y colaboradores, ¡mil gracias!:<br>
                     {% for sponsor in compo.sponsors %}
                         <a href="{{ sponsor.url }}" target="_blank" rel="nofollow">
-                            <img src="{{ asset(sponsor.imageWebPath|apply_filter("sponsor_compo_mini")) }}" class="sponsor">
+                            {% if sponsor.featured %}
+                                <img src="{{ asset(sponsor.imageWebPath|apply_filter("sponsor_compo_featured")) }}" class="sponsor">
+                            {% else %}
+                                <img src="{{ asset(sponsor.imageWebPath|apply_filter("sponsor_compo_mini")) }}" class="sponsor">
+                            {% endif %}
                         </a>
                     {% endfor %}
                 </p>
@@ -157,7 +200,7 @@
             <div class="col-sm-6">
                 <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
                 <h2><i class="fa fa-comment-o"></i> Actividad de los participantes</h2>
-                <div class="activity">{{ render(controller('GameJamCompoBundle:Compo:partialLastActivity', {compo: compo.nameSlug})) }}</div>
+                <div class="activity">Nada por aquí... :(</div>
             </div>
             <div class="col-sm-6">
                 {% if user %}
@@ -177,7 +220,7 @@
                 {% endif %}
                 {% if user_application %}
                 <h2><i class="fa fa-users"></i> Tu equipo</h2>
-                <div class="application">
+                <div class="application" id="team-container">
                     {{ render(controller("GameJamCompoBundle:Compo:partialTeam", {compo: compo.nameSlug})) }}
                 </div>
                 {% endif %}<br><br>
@@ -186,8 +229,8 @@
                     {% if user_application %}
                         <img class="avatar pull-right" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 50) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
                         <p>
-                        {% if user_application.team %}
-                            <strong>Equipo:</strong> {{ user_application.team }}
+                        {% if user %}
+                            <strong>Equipo:</strong> {{ team }}
                         {% else %}
                             <strong>Estás participando en solitario :(</strong>
                         {% endif %}

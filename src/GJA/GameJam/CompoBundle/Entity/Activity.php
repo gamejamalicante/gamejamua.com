@@ -23,7 +23,8 @@ class Activity
     const TYPE_SHOUT = 7;
     const TYPE_TWITTER = 8;
     const TYPE_DOWNLOAD = 9;
-    const TYPE_TEAM = 10;
+    const TYPE_TEAM_CREATION = 10;
+    const TYPE_TEAM_JOIN = 11;
 
     /**
      * @ORM\Id
@@ -219,8 +220,12 @@ class Activity
                 return 'twitter';
             break;
 
-            case self::TYPE_TEAM:
-                return 'team';
+            case self::TYPE_TEAM_CREATION:
+                return 'team_creation';
+            break;
+
+            case self::TYPE_TEAM_JOIN:
+                return 'team_join';
             break;
         }
     }

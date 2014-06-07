@@ -5,7 +5,7 @@
         <h1>Colaboradores y jurados</h1>
         <p>En esta lista se muestran todos aquellos colaboradores y jurados que han colaborado con nosotros en alguna de nuestras ediciones. <strong>¡Mil gracias!</strong></p>
         {% for contributor in contributors %}
-        <div class="contributor">
+        <div class="contributor{% if contributor.featured %} featured{% endif %}">
             <img src="{{ asset(contributor.imageWebPath) }}" class="logo">
             <h2>{{ contributor }}</h2>
             <p><i class="fa fa-globe"></i> <a href="{{ contributor.url }}" target="_blank" rel="nofollow">{{ contributor.url }}</a></p>
@@ -24,6 +24,9 @@
                         {{ compo }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </p>
+            {% endif %}
+            {% if contributor.featured %}
+                <p>{{ contributor.description }}</p>
             {% endif %}
             <div class="clearfix"></div>
         </div>

@@ -124,6 +124,9 @@ avalanche_imagine:
         sponsor_compo_mini:
             type:    relative_resize
             options: { heighten: 60 }
+        sponsor_compo_featured:
+            type: relative_resize
+            options: { heighten: 90 }
         game_gallery_mini:
             type: relative_resize
             options: { heighten: 65 }

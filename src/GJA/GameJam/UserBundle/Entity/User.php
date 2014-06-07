@@ -723,4 +723,9 @@ class User extends BaseUser implements EncoderAwareInterface
 
         return null;
     }
+
+    public function addToTeam(Team $team)
+    {
+        $this->teams[] = $team;
+    }
 }

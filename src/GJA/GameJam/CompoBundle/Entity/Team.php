@@ -14,6 +14,7 @@ namespace GJA\GameJam\CompoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -30,11 +31,13 @@ class Team
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -45,6 +48,7 @@ class Team
 
     /**
      * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
      */
     protected $nameSlug;
 

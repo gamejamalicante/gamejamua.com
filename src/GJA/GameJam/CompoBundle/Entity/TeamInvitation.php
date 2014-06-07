@@ -3,11 +3,16 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use GJA\GameJam\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="gamejam_compos_teams_invitations")
+ * @ORM\Table(name="gamejam_compos_teams_invitations", uniqueConstraints=
+ * {
+ *      @ORM\UniqueConstraint(name="unique_inv", columns={"team_id", "sender_id", "target_id", "compo_id", "type"})
+ * })
  * @ORM\HasLifecycleCallbacks
+ * )
  */
 class TeamInvitation
 {
@@ -108,7 +113,7 @@ class TeamInvitation
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getTarget()
     {
@@ -124,7 +129,7 @@ class TeamInvitation
     }
 
     /**
-     * @return mixed
+     * @return Team
      */
     public function getTeam()
     {

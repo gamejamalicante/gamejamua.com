@@ -14,20 +14,38 @@ class NotificationListener
      */
     protected $mailer;
 
-    public function __construct(\Swift_Mailer $mailer)
+    /**
+     * @var \Twig_Environment
+     */
+    protected $twig;
+
+    /**
+     * @var string
+     */
+    protected $replyTo;
+
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, $replyTo)
     {
         $this->mailer = $mailer;
+        $this->twig = $twig;
+        $this->replyTo = $replyTo;
     }
 
     public function onNotificationSent(NotificationEvent $notificationEvent)
     {
         $notification = $notificationEvent->getNotification();
 
+        $body = $this->twig->render("GameJamCompoBundle:Notification:mailBase.html.twig", [
+            'title' => $notification->getTitle(),
+            'content' => $notification->getContent()
+        ]);
+
         $mail = \Swift_Message::newInstance()
             ->setSubject(self::MAIL_PREFIX . " " .$notification->getTitle())
-            ->setBody($notification->getContent())
+            ->setBody($body)
+            ->setFrom($this->replyTo)
             ->setContentType("text/html")
-            ->setReplyTo("info@gamejamua.com");
+            ->setReplyTo($this->replyTo);
 
         foreach($notificationEvent->getTargets() as $target)
         {

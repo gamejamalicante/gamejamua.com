@@ -1,7 +1,6 @@
 {% extends 'GameJamCompoBundle:Notification:_team_invitation_title.html.twig' %}
 
 {% block content %}
-    <br><br>
-    Si quieres aceptar esta invitación haz click aquí.
-    Si por el contraro quieres rechazarla, haz click aquíi.
+    <br><br>El equipo es: <strong>{{ team_invitation.team }}</strong><br><br>
+    Si quieres aceptar esta invitación <a href="{{ path('gamejam_compo_team_accept_invitation', {compo: team_invitation.compo.nameSlug, teamInvitation: team_invitation.hash}) }}">haz click aquí</a>.<br>
 {% endblock %}

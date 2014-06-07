@@ -36,7 +36,7 @@ class ContributorController extends AbstractController
      */
     public function partialContributorsAction()
     {
-        $contributors = $this->getRepository("GameJamCompoBundle:Contributor")->findBy(['featured' => true], ['name' => 'ASC']);
+        $contributors = $this->getRepository("GameJamCompoBundle:Contributor")->findBy([], ['featured' => 'DESC']);
 
         return ['contributors' => $contributors];
     }

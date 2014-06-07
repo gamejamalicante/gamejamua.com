@@ -91,6 +91,7 @@ class Compo
     /**
      * @ORM\ManyToMany(targetEntity="Contributor", inversedBy="composSponsored")
      * @ORM\JoinTable(name="gamejam_compos_compos_sponsors")
+     * @ORM\OrderBy({"featured"="DESC"})
      */
     protected $sponsors;
 
@@ -119,6 +120,11 @@ class Compo
      * @ORM\OrderBy({"date"="DESC"})
      */
     protected $activity;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="compo")
+     */
+    protected $teams;
 
     /**
      * @param mixed $games
@@ -422,20 +428,7 @@ class Compo
 
     public function getTeams()
     {
-        $teams = new ArrayCollection();
-
-        foreach($this->getApplications() as $application)
-        {
-            if($team = $application->getTeam())
-            {
-                if(!$teams->exists($team))
-                {
-                    $teams->add($team);
-                }
-            }
-        }
-
-        return $teams;
+        return $this->teams;
     }
 
     /**

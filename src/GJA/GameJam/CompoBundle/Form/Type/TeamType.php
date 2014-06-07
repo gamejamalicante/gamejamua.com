@@ -10,27 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TeamType extends AbstractType
 {
-    /**
-     * @var User
-     */
-    protected $user;
-
-    /**
-     * @var Compo
-     */
-    protected $compo;
-
-    public function __construct(User $user, Compo $compo)
-    {
-        $this->user = $user;
-        $this->compo = $compo;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('leader', 'hidden', ['data' => $this->user])
-            ->add('compo', 'hidden', ['data' => $this->compo])
-            ->add('name');
+        $builder->add('name');
     }
 
     public function getName()

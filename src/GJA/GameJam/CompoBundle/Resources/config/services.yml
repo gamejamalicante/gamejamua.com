@@ -39,7 +39,7 @@ services:
 
     gamejam.compo.listener.notification_listener:
         class: GJA\GameJam\CompoBundle\EventListener\NotificationListener
-        arguments: [@mailer]
+        arguments: [@mailer, @twig, %main_email%]
         tags:
             - { name: 'kernel.event_listener', event: 'gamejam.compo.notification.sent', method: 'onNotificationSent' }
 
