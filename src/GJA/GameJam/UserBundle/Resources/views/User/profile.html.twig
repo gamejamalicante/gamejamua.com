@@ -25,6 +25,14 @@
                 {% if user.siteUrl %}
                      - <a rel="nofollow" href="{{ user.siteUrl }}" target="_blank"><i class="fa fa-globe"></i> {{ user.siteUrl }}</a>
                 {% endif %}
+                {% if user.publicProfile %}
+                    {% if user.sex is not null %}- {% if not user.sex %}<i class="fa fa-male"></i>{% else %}<i class="fa fa-female"></i>{% endif %}{% endif %}
+                    {% if user.birthDate %}- {{ user.age }} años{% endif %}
+                    {% if user.city %}- {{ user.city }}{% endif %}
+                {% endif %}
+                {% if user.publicEmail %}
+                    - {{ user.email }}
+                {% endif %}
             </p>
             <p>Registrado: <strong>{{ time_diff(user.registeredAt) }}</strong> - Última vez visto: <strong>{{ time_diff(user.lastLogin) }}</strong></p>
             {% if user.presentation %}<p class="presentation">{{ user.presentation }}</p>{% endif %}

@@ -11,10 +11,13 @@
 
 namespace GJA\GameJam\CompoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use GJA\GameJam\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\NotificationRepository")
  * @ORM\Table(name="gamejam_compos_notifications")
  */
 class Notification
@@ -36,6 +39,12 @@ class Notification
     protected $title;
 
     /**
+     * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"id", "title"})
+     */
+    protected $nameSlug;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $announce;
@@ -48,8 +57,16 @@ class Notification
     /**
      * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="notifications")
      * @ORM\JoinTable(name="gamejam_compos_notifications_users")
+     *
+     * @var ArrayCollection
      */
     protected $users;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="readNotifications", cascade={"persist"})
+     * @ORM\JoinTable(name="gamejam_compos_notifications_users_read")
+     */
+    protected $usersRead;
 
     /**
      * @ORM\Column(type="smallint")
@@ -176,5 +193,92 @@ class Notification
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function isGlobal()
+    {
+        return $this->getType() == self::TYPE_GLOBAL;
+    }
+
+    public function isPendingForUser($user)
+    {
+        if(is_null($user))
+            return true;
+
+        if($this->isGlobal())
+        {
+            return !$user->hasReadNotification($this);
+        }
+
+        if($this->users->contains($user))
+        {
+            return !$user->hasReadNotification($this);
+        }
+
+        return false;
+    }
+
+    public function canUserReadIt($user)
+    {
+        if($this->isGlobal())
+            return true;
+
+        if(is_null($user))
+            return false;
+
+        if($this->getType() == self::TYPE_INCLUDE_ONLY)
+            return $this->users->contains($user);
+
+        if($this->getType() == self::TYPE_EXCLUDE_ONLY)
+            return !$this->users->contains($user);
+
+        return false;
+    }
+
+    /**
+     * @param mixed $nameSlug
+     */
+    public function setNameSlug($nameSlug)
+    {
+        $this->nameSlug = $nameSlug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNameSlug()
+    {
+        return $this->nameSlug;
+    }
+
+    /**
+     * @param mixed $usersRead
+     */
+    public function setUsersRead($usersRead)
+    {
+        $this->usersRead = $usersRead;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsersRead()
+    {
+        return $this->usersRead;
+    }
+
+    public function read(User $user)
+    {
+        if($this->usersRead->contains($user))
+            return false;
+
+        $this->usersRead->add($user);
+
+        return true;
+    }
+
+    public function addUser(User $user)
+    {
+        $this->users->add($user);
     }
 } 

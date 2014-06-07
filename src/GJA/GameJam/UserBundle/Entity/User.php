@@ -18,6 +18,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use GJA\GameJam\CompoBundle\Entity\Achievement;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
+use GJA\GameJam\CompoBundle\Entity\Notification;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
@@ -133,7 +134,7 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $publicEmail = false;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Notification", mappedBy="usersRead")
      */
     protected $readNotifications;
 
@@ -684,5 +685,28 @@ class User extends BaseUser implements EncoderAwareInterface
             return 'legacy_encoder';
 
         return null;
+    }
+
+    public function getAge()
+    {
+        $now = new \DateTime("now");
+
+        return $now->diff($this->getBirthDate())->format("%Y");
+    }
+
+    public function hasReadNotification(Notification $notification)
+    {
+        return $this->readNotifications->contains($notification);
+    }
+
+    public function getTeamForCompo(Compo $compo)
+    {
+        foreach($this->getTeams() as $team)
+        {
+            if($team->getCompo() === $compo)
+                return $team;
+        }
+
+        return  null;
     }
 }

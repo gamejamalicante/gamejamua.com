@@ -12,12 +12,36 @@
             </a>
         </div>
         <div class="col-md-4">
-            <a href="">
+            {% if compo %}
+                {% if app.user and app.user.hasAppliedTo(compo) %}
+                    {% if compo.hasStarted %}
+                    <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">
+                    <div class="box register">
+                        <h2>¡GameJam en curso!</h2>
+                        <div class="description">Pulsa aquí para ir a la página del concurso</div>
+                    </div>
+                    {% else %}
+                    <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">
+                    <div class="box register">
+                        <h2>¡GameJam inminente!</h2>
+                        <div class="description">¡Ya estás inscrito!</div>
+                    </div>
+                    {% endif %}
+                </a>
+                {% else %}
+                    <a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">
+                        <div class="box register">
+                            <h2>¡Inscripciones abiertas!</h2>
+                            <div class="description">Pulsa aquí para inscribirte</div>
+                        </div>
+                    </a>
+                {% endif %}
+            {% else %}
                 <div class="box register">
-                    <h2>¡Inscríbete aquí!</h2>
-                    <div class="description">Incripción cerrada.</div>
+                    <h2>¡Inscripción cerrada!</h2>
+                    <div class="description">No hay ninguna GameJam en curso.</div>
                 </div>
-            </a>
+            {% endif %}
         </div>
         <div class="col-md-4">
             <a href="">

@@ -19,7 +19,7 @@ class ProfileType extends AbstractType
             ->add('presentation', null, ['required' => false])
             ->add('publicProfile', null, ['required' => false])
             ->add('publicEmail', null, ['required' => false])
-            ->add('allowCommunications');
+            ->add('allowCommunications', null, ['required' => false]);
     }
 
     /**

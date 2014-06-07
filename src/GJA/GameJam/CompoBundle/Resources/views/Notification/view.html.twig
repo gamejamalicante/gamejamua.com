@@ -1,0 +1,12 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section text">
+        <a href="{{ path('gamejam_compo_notifications') }}" class="btn btn-green pull-right"><i class="fa fa-arrow-left"></i> Volver</a><h1>Notificationes</h1>
+        <div class="notification pending">
+            <span class="date">{{ time_diff(notification.date) }}</span>
+            <h3>{{ notification }}</h3>
+            <p>{{ notification.content }}</p>
+        </div>
+    </div>
+{% endblock %}

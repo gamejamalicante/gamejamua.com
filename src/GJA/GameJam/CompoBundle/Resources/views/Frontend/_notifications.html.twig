@@ -1,0 +1,5 @@
+{% if pending > 0 %}
+    <a href="{{ path('gamejam_compo_notifications') }}" class="navbar-notification new">{{ pending }}</a>
+{% else %}
+    <a class="navbar-notification" href="{{ path('gamejam_compo_notifications') }}">0</a>
+{% endif %}

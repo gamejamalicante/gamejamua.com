@@ -21,8 +21,9 @@ parameters:
     paypal_signature: ~ # PayPal API signature
     paypal_debug: true
 
-    mailchimp_api_key: ~
-    mailchimp_list_id: ~
+    mailchimp_api_key: XX
+    mailchimp_list_members: XX
+    mailchimp_list_associated: XX
 
     # to allow oauth login
     oauth:
@@ -37,3 +38,5 @@ parameters:
     mailer_host: XXX
     mailer_user: XXX
     mailer_password: XXX
+
+    twitter.username: ~ # Tweets from page will be published here

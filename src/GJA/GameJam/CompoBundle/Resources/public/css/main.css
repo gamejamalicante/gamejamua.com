@@ -61,8 +61,8 @@ body
 
 .navbar .avatar
 {
-    width: 25px;
-    margin-left: 10px;
+    width: 28px;
+    margin-left: 5px;
 }
 
 .btn
@@ -211,7 +211,7 @@ body
 .layout header .header-right
 {
     position: relative;
-    width: 465px;
+    width: 515px;
     height: 100%;
 }
 
@@ -521,12 +521,12 @@ footer .copyright a
 
 .section.profile .info .action
 {
-    font-size: 18px;
+    font-size: 14px;
     color: #221b37;
-    border-radius: 10px;
-    padding: 5px 10px;
+    border-radius: 3px;
+    padding: 5px 9px;
     float: right;
-    margin-left: 15px;
+    margin-left: 11px;
 }
 
 .section.profile .info .asset.game
@@ -647,6 +647,11 @@ footer .copyright a
 .activity .item.achievement h3
 {
     font-size: 14px;
+}
+
+.activity .item .avatar
+{
+    width: 50px;
 }
 
 textarea.shout
@@ -887,6 +892,11 @@ textarea.shout
     margin-top: 15px;
 }
 
+.section.compo .application .avatar
+{
+    width: 80px;
+}
+
 .section.compo .compo-content
 {
     margin-top: 20px;
@@ -1055,4 +1065,80 @@ ul.media li.element, ul.downloads li.element
     float: right;
     margin-top: 10px;
     margin-right: 10px;
+}
+
+.navbar-notification
+{
+    border-radius: 5px;
+    color: #8a8a8a;
+    padding: 5px 10px;
+    background-color: #4d4e47;
+    box-shadow: 0 5px 10px rgba(0,0,0,1);
+}
+
+.navbar-notification.new
+{
+    color: #eecc31;
+    background-color: #8a761e;
+    box-shadow: 0 5px 5px #645616;
+}
+
+.section.text .notification
+{
+    color: rgba(94, 100, 114, 0.48);
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 16px;
+    background-color: rgba(159, 170, 190, 0.48);
+    margin-top: 10px;
+}
+
+.section.text .notification:hover
+{
+    background-color: rgba(121, 125, 143, 0.48);
+}
+
+.section.text .notification h3
+{
+    margin: 0;
+}
+
+.section.text.notifications a:hover
+{
+    text-decoration: none;
+}
+
+.section.text .notification.pending
+{
+    color: #221b37;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 16px;
+    background-color: rgba(159, 212, 163, 0.48);
+    margin-bottom: 10px;
+    border: 2px solid rgba(88, 118, 88, 0.48);
+}
+
+.section.text .notification.pending:hover
+{
+    background-color: rgba(147, 196, 148, 0.48);
+    border: 2px solid rgba(75, 103, 75, 0.48);
+}
+
+.section.text .notification .date
+{
+    color: #f5bbff;
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 2px 7px;
+    background-color: #37242a;
+    display: inline-block;
+    float: right;
+}
+
+.section.text .notification i
+{
+    float: right;
+    margin-right: 10px;
+    font-size: 20px;
 }

@@ -73,9 +73,9 @@ class Compo
     protected $applicationStartAt;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $applicationPeriod;
+    protected $applicationEndAt;
 
     /**
      * @ORM\OneToOne(targetEntity="Theme", cascade={"persist"})
@@ -316,25 +316,26 @@ class Compo
 
     public function isRunning()
     {
-        $now = new \DateTime("now");
-        $finish = clone $now;
+        if(!$this->hasStarted())
+            return false;
 
-        $finish->add(new \DateInterval($this->period));
+        if($this->hasFinished())
+            return false;
 
-        if($this->getStartAt() >= $now && $finish <= $now)
-            return true;
-
-        return false;
+        return true;
     }
 
     public function getTimeToStart()
     {
         if($this->hasStarted())
-        {
             return false;
-        }
 
         return $this->getStartAt()->diff(new \DateTime("now"));
+    }
+
+    public function getDaysToStart()
+    {
+        return $this->getTimeToStart()->format("%d");
     }
 
     public function endAt()
@@ -388,22 +389,6 @@ class Compo
     }
 
     /**
-     * @param mixed $applicationPeriod
-     */
-    public function setApplicationPeriod($applicationPeriod)
-    {
-        $this->applicationPeriod = $applicationPeriod;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApplicationPeriod()
-    {
-        return $this->applicationPeriod;
-    }
-
-    /**
      * @param mixed $applicationStartAt
      */
     public function setApplicationStartAt($applicationStartAt)
@@ -417,6 +402,22 @@ class Compo
     public function getApplicationStartAt()
     {
         return $this->applicationStartAt;
+    }
+
+    /**
+     * @param mixed $applicationEndAt
+     */
+    public function setApplicationEndAt($applicationEndAt)
+    {
+        $this->applicationEndAt = $applicationEndAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicationEndAt()
+    {
+        return $this->applicationEndAt;
     }
 
     public function getTeams()
@@ -537,14 +538,14 @@ class Compo
     public function getSecondsToFinish()
     {
         if($this->hasStarted())
-            return null;
+            return 0;
 
         return $this->endAt()->getTimestamp()-(new \DateTime("now"))->getTimestamp();
     }
 
     public function hasFinished()
     {
-        if($this->isRunning())
+        if(!$this->hasStarted())
             return false;
 
         $now = new \DateTime("now");

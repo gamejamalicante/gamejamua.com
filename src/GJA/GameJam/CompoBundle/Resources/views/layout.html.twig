@@ -39,8 +39,8 @@
             {% if app.user and is_granted("ROLE_USER") %}
             <div class="navbar-right logged">
                 <ul>
-                    <li><a class="navbar-notification"></a></li>
-                    <li><img class="avatar" src="{% if gravatar_exists(app.user.email) %}{{ gravatar(app.user.email, 40) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.png') }}{% endif %}" /></li>
+                    <li>{{ render(controller("GameJamCompoBundle:Frontend:partialNotifications")) }}</li>
+                    <li><img class="avatar" src="{% if gravatar_exists(app.user.email) %}{{ gravatar(app.user.email, 40) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" /></li>
                     <li>¡Bienvenido <strong><a href="{{ path('gamejam_user_profile', {user: app.user.username}) }}">{{ app.user }}</a></strong>!</li>
                     <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" height="25"> {{ app.user.coins }}</li>
                     <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" height="25"> {{ app.user.games|length }}</li>

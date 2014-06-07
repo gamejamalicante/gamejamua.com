@@ -10,6 +10,7 @@ services:
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.creation', method: 'onCreation' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.info_update', method: 'onInfoUpdate' }
             - { name: 'kernel.event_listener', event: 'gamejam.game.activity.achievement', method: 'onAchievementGranted' }
+
     gamejam.compo.listener.game_persist:
         class: GJA\GameJam\CompoBundle\EventListener\GamePersistListener
         arguments: [@event_dispatcher]
@@ -29,6 +30,26 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'gamejam.compo.activity', method: 'onActivity' }
 
+    gamejam.compo.listener.notification_listener:
+        class: GJA\GameJam\CompoBundle\EventListener\NotificationListener
+        arguments: [@mailer]
+        tags:
+            - { name: 'kernel.event_listener', event: 'gamejam.compo.notification.sent', method: 'onNotificationSent' }
+
+    gamejam.compo.subscriber.team_invitation:
+        class: GJA\GameJam\CompoBundle\EventSubscriber\TeamInvitationSubscriber
+        arguments: [@gamejam.compo.notifier, @gamejam.compo.notifier.notification_builder]
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
     gamejam.compo.mailer:
         class: GJA\GameJam\CompoBundle\Service\Mailer
         arguments: [@mailer]
+
+    gamejam.compo.notifier:
+        class: GJA\GameJam\CompoBundle\Notifier\Notifier
+        arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
+
+    gamejam.compo.notifier.notification_builder:
+        class: GJA\GameJam\CompoBundle\Notifier\NotificationBuilder
+        arguments: [@twig]

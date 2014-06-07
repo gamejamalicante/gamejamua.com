@@ -1,0 +1,19 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="section text notifications">
+        <h1>Notificaciones</h1>
+
+        {% for notification in notifications %}
+        <a href="{{ path('gamejam_compo_notifications_view', {notification: notification.nameSlug}) }}">
+            <div class="notification{% if notification.isPendingForUser(app.user) %} pending{% endif %}">
+                <span class="date">{{ time_diff(notification.date) }}</span>{% if notification.isPendingForUser(app.user) %}<i class="fa fa-envelope"></i>{% endif %}
+                <h3>{{ notification }}</h3>
+                {% if notification.isPendingForUser(app.user) %}
+                <p>{{ notification.content|truncate(100) }}</p>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+{% endblock %}

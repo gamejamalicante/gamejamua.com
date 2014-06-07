@@ -35,12 +35,20 @@ class FrontendController extends AbstractController
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getRepository("GameJamCompoBundle:Activity");
 
-        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1, 'announce' => false]);
+        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1]);
         $activity = $activityRepository->findOnlyActivity(5);
         $messages = $activityRepository->findOnlyMessages(10);
         $twitterMentions = $activityRepository->findTwitterMentions(5);
 
-        return ['news' => $news, 'activity' => $activity, 'messages' => $messages, 'twitter_mentions' => $twitterMentions];
+        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
+
+        return [
+            'news' => $news,
+            'activity' => $activity,
+            'messages' => $messages,
+            'twitter_mentions' => $twitterMentions,
+            'compo' => $compo
+        ];
     }
 
     /**
@@ -144,6 +152,17 @@ class FrontendController extends AbstractController
             : null;
 
         return ['csrf_token' => $csrfToken];
+    }
+
+    /**
+     * @Route("/_partial/notifications", name="gamejam_compo_frontend_partial_notifications")
+     * @Template("GameJamCompoBundle:Frontend:_notifications.html.twig")
+     */
+    public function partialNotificationsAction()
+    {
+        $pendingNotifications = $this->getRepository("GameJamCompoBundle:Notification")->findTotalPendingByUser($this->getUser());
+
+        return ['pending' => $pendingNotifications];
     }
 
     /**
