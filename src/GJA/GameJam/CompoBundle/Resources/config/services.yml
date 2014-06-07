@@ -24,6 +24,13 @@ services:
             - { name: 'kernel.event_listener', event: 'gamejam.user.activity.shout', method: 'onShout' }
             - { name: 'kernel.event_listener', event: 'gamejam.user.activity.achievement', method: 'onAchievementGranted' }
 
+    gamejam.compo.listener.team_activity:
+        class: GJA\GameJam\CompoBundle\EventListener\TeamActivityListener
+        arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
+        tags:
+            - { name: 'kernel.event_listener', event: 'gamejam.compo.team_invitation.accepted', method: 'onTeamInvitationEvent' }
+            - { name: 'kernel.event_listener', event: 'gamejam.compo.team_request.accepted', method: 'onTeamInvitationEvent' }
+
     gamejam.compo.listener.achievement_activity:
         class: GJA\GameJam\CompoBundle\EventListener\AchievementListener
         arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
@@ -38,7 +45,7 @@ services:
 
     gamejam.compo.subscriber.team_invitation:
         class: GJA\GameJam\CompoBundle\EventSubscriber\TeamInvitationSubscriber
-        arguments: [@gamejam.compo.notifier, @gamejam.compo.notifier.notification_builder]
+        arguments: [@gamejam.compo.notifier, @gamejam.compo.notifier.notification_builder, @event_dispatcher]
         tags:
             - { name: 'kernel.event_subscriber' }
 

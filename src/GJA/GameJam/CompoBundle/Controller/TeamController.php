@@ -7,56 +7,97 @@ use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
 use GJA\GameJam\CompoBundle\Event\TeamInvitationEvent;
+use GJA\GameJam\CompoBundle\Form\Type\TeamInvitationType;
+use GJA\GameJam\CompoBundle\Form\Type\TeamRequestType;
 use GJA\GameJam\CompoBundle\GameJamCompoEvents;
 use GJA\GameJam\GameBundle\GameJamGameEvents;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * @Route("/compos/{compo}/{team}")
+ * @Route("/compos/{compo}/team")
  * @ParamConverter("compo", options={"mapping":{"compo":"nameSlug"}})
- * @ParamConverter("team", options={"mapping":{"team":"nameSlug"}})
  */
 class TeamController extends AbstractController
 {
     /**
-     * @Route("/enviar-invitacion/{user}", name="gamejam_compo_team_send_invitation")
+     * @Route("/enviar-peticion", name="gamejam_compo_team_send_request", defaults={"_format":"json"})
+     * @Method({"POST"})
      */
-    public function sendInvitation(Compo $compo, Team $team, User $user)
+    public function submitRequest(Request $request, Compo $compo)
+    {
+        $teamForm = $this->createForm(new TeamRequestType($compo));
+
+        $teamForm->handleRequest($request);
+
+        if($teamForm->isValid())
+        {
+            /** @var TeamInvitation $teamInvitation */
+            $teamInvitation = $teamForm->getData();
+            $teamInvitation->setTarget($teamInvitation->getTeam()->getLeader());
+            $teamInvitation->setSender($this->getUser());
+            $teamInvitation->setCompo($compo);
+
+            $this->persistAndFlush($teamInvitation);
+
+            $this->dispatchEvent(GameJamCompoEvents::TEAM_REQUEST, new TeamInvitationEvent($teamInvitation));
+
+            return new JsonResponse(['result' => true]);
+        }
+
+        return new JsonResponse(['result' => false]);
+    }
+
+    /**
+     * @Route("/enviar-invitacion", name="gamejam_compo_team_send_invitation", defaults={"_format":"json"})
+     * @Method({"POST"})
+     */
+    public function submitInvitation(Request $request, Compo $compo)
     {
         /** @var User $leader */
-        $leader = $this->getUser();
+        $leader = $user = $this->getUser();
+        $team = $leader->getTeamForCompo($compo);
 
         if($leader !== $team->getLeader())
             throw new AccessDeniedException;
 
-        if($leader === $user)
-            throw new \InvalidArgumentException;
+        $teamInviteForm = $this->createForm(new TeamInvitationType($compo, $user));
 
-        // create team invitation
-        $teamInvitation = new TeamInvitation();
-        $teamInvitation->setType(TeamInvitation::TYPE_INVITATION);
-        $teamInvitation->setSender($leader);
-        $teamInvitation->setTarget($user);
-        $teamInvitation->setCompo($compo);
+        $teamInviteForm->handleRequest($request);
 
-        // persist invitation
-        $this->persistAndFlush($teamInvitation);
+        if($teamInviteForm->isValid())
+        {
+            /** @var TeamInvitation $teamInvitation */
+            $teamInvitation = $teamInviteForm->getData();
+            $teamInvitation->setSender($leader);
+            $teamInvitation->setCompo($compo);
+            $teamInvitation->setTeam($team);
 
-        // dispach event
-        $this->dispatchEvent(GameJamCompoEvents::TEAM_INVITATION, new TeamInvitationEvent($teamInvitation));
+            $this->persistAndFlush($teamInvitation);
+
+            $this->dispatchEvent(GameJamCompoEvents::TEAM_INVITATION, new TeamInvitationEvent($teamInvitation));
+
+            return new JsonResponse(['result' => true]);
+        }
+
+        return new JsonResponse(['result' => false, 'errors' => $teamInviteForm->getErrors()]);
     }
 
     /**
      * @Route("/aceptar-invitacion/{teamInvitation}", name="gamejam_compo_team_accept_invitation")
      * @ParamConverter("teamInvitation", options={"mapping":{"teamInvitation":"hash"}})
      */
-    public function acceptInvitation(Compo $compo, Team $team, TeamInvitation $teamInvitation)
+    public function acceptInvitation(Compo $compo, TeamInvitation $teamInvitation)
     {
+        /** @var User $user */
         $user = $this->getUser();
+        $team = $teamInvitation->getTeam();
 
         if($teamInvitation->getTarget() !== $user)
             throw new AccessDeniedException;
@@ -65,48 +106,35 @@ class TeamController extends AbstractController
         {
             // team is full, cancel invitation
             $this->dispatchEvent(GameJamCompoEvents::TEAM_INVITATION_CANCELLED, new TeamInvitationEvent($teamInvitation));
+
+            $result = ["team_invitation" => "full"];
         }
         else
         {
             $this->dispatchEvent(GameJamCompoEvents::TEAM_INVITATION_ACCEPTED, new TeamInvitationEvent($teamInvitation));
             $team->addMember($teamInvitation->getTarget());
+
             $this->persistAndFlush($team);
+
+            $result = ["team_invitation" => "joined"];
         }
 
         // delete invitation
         $this->deleteAndFlush($teamInvitation);
-    }
 
-    /**
-     * @Route("/enviar-peticion/{user}", name="gamejam_compo_team_send_request")
-     */
-    public function sendRequest(Compo $compo, Team $team)
-    {
-        $sender = $this->getUser();
-        $leader = $team->getLeader();
+        $result += array('compo' => $compo->getNameSlug());
 
-        if($leader === $sender)
-            throw new \InvalidArgumentException;
-
-        $teamInvitation = new TeamInvitation();
-        $teamInvitation->setSender($sender);
-        $teamInvitation->setTarget($leader);
-        $teamInvitation->setTeam($team);
-        $teamInvitation->setCompo($compo);
-        $teamInvitation->setType(TeamInvitation::TYPE_REQUEST);
-
-        $this->persistAndFlush($teamInvitation);
-
-        $this->dispatchEvent(GameJamCompoEvents::TEAM_REQUEST, new TeamInvitationEvent($teamInvitation));
+        return $this->redirectToPath("gamejam_compo_compo", $result);
     }
 
     /**
      * @Route("/aceptar-peticion/{teamInvitation}", name="gamejam_compo_team_accept_request")
      * @ParamConverter("teamInvitation", options={"mapping":{"teamInvitation":"hash"}})
      */
-    public function acceptRequest(Compo $compo, Team $team, TeamInvitation $teamInvitation)
+    public function acceptRequest(Compo $compo, TeamInvitation $teamInvitation)
     {
         $leader = $this->getUser();
+        $team = $teamInvitation->getTeam();
 
         if($leader !== $team->getLeader())
             throw new AccessDeniedException;
@@ -115,6 +143,8 @@ class TeamController extends AbstractController
         {
             // team is full, cancel invitation
             $this->dispatchEvent(GameJamCompoEvents::TEAM_REQUEST_CANCELLED, new TeamInvitationEvent($teamInvitation));
+
+            $result = ["team_request" => "full"];
         }
         else
         {
@@ -122,9 +152,13 @@ class TeamController extends AbstractController
             $team->addMember($teamInvitation->getTarget());
 
             $this->persistAndFlush($team);
+
+            $result = ["team_request" => "accepted"];
         }
 
         // delete invitation
         $this->deleteAndFlush($teamInvitation);
+
+        return $this->redirectToPath("gamejam_compo_compo", $result);
     }
 } 

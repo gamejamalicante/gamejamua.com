@@ -23,6 +23,7 @@ class Activity
     const TYPE_SHOUT = 7;
     const TYPE_TWITTER = 8;
     const TYPE_DOWNLOAD = 9;
+    const TYPE_TEAM = 10;
 
     /**
      * @ORM\Id
@@ -70,6 +71,11 @@ class Activity
      * @ORM\Column(type="smallint")
      */
     protected $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team")
+     */
+    protected $team;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -212,6 +218,10 @@ class Activity
             case self::TYPE_TWITTER:
                 return 'twitter';
             break;
+
+            case self::TYPE_TEAM:
+                return 'team';
+            break;
         }
     }
 
@@ -277,5 +287,21 @@ class Activity
     public function getDownload()
     {
         return $this->download;
+    }
+
+    /**
+     * @param mixed $team
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

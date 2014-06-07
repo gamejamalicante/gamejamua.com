@@ -18,6 +18,7 @@ use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
 use GJA\GameJam\CompoBundle\Form\Type\CompoApplicationType;
 use GJA\GameJam\CompoBundle\Form\Type\TeamInvitationType;
+use GJA\GameJam\CompoBundle\Form\Type\TeamRequestType;
 use GJA\GameJam\CompoBundle\Form\Type\TeamType;
 use GJA\GameJam\CompoBundle\Order\CompoInscriptionItem;
 use GJA\GameJam\UserBundle\Entity\Order;
@@ -107,26 +108,40 @@ class CompoController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        $templateVars = [
+            'compo' => $compo,
+            'team' => null,
+            'user' => $user,
+            'invite_form' => null,
+            'creation_form' => null,
+            'request_form' => null
+        ];
+
         if($team = $user->getTeamForCompo($compo))
         {
+            $templateVars['team'] = $team;
+
             if($team->getLeader() === $user)
             {
-                $teamForm = $this->createForm(new TeamInvitationType(TeamInvitation::TYPE_INVITATION, $user));
+                $teamForm = $this->createForm(new TeamInvitationType($compo, $user));
 
-                return ['invite_form' => $teamForm->createView()];
+                $templateVars['invite_form'] = $teamForm->createView();
             }
             else
             {
-                // TODO: leave team forms
+                // TODO: leave team form
             }
         }
         else
         {
             $teamCreateForm = $this->createForm(new TeamType($user, $compo));
-            $teamForm = $this->createForm(new TeamInvitationType(TeamInvitation::TYPE_REQUEST, $user));
+            $teamForm = $this->createForm(new TeamRequestType($compo));
 
-            return ['creation_form' => $teamCreateForm->createView(), 'request_form' => $teamForm->createView()];
+            $templateVars['creation_form'] = $teamCreateForm->createView();
+            $templateVars['request_form'] = $teamForm->createView();
         }
+
+        return $templateVars;
     }
 
     /**
@@ -146,11 +161,6 @@ class CompoController extends AbstractController
      */
     public function partialActivityAction(Compo $compo, \DateTime $since)
     {
-        if(is_null($since))
-        {
-
-        }
-
         $since->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $activity = $this->getRepository("GameJamCompoBundle:Activity")->findAllSince($since, $compo);

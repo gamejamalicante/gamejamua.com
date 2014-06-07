@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_compos_teams_invitations")
+ * @ORM\HasLifecycleCallbacks
  */
 class TeamInvitation
 {
@@ -160,5 +161,16 @@ class TeamInvitation
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        if(is_null($this->hash))
+        {
+            $this->hash = sha1($this->getTarget()->getId() . mt_rand(1, 9999) . uniqid());
+        }
     }
 } 

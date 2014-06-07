@@ -10,7 +10,7 @@
                 <span class="date">{{ time_diff(notification.date) }}</span>{% if notification.isPendingForUser(app.user) %}<i class="fa fa-envelope"></i>{% endif %}
                 <h3>{{ notification }}</h3>
                 {% if notification.isPendingForUser(app.user) %}
-                <p>{{ notification.content|truncate(100) }}</p>
+                <p>{{ notification.content|raw|truncate(100) }}</p>
                 {% endif %}
             </div>
         </a>

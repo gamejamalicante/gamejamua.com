@@ -155,7 +155,7 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $oauthTokens = array();
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $twitter;
 
@@ -549,6 +549,20 @@ class User extends BaseUser implements EncoderAwareInterface
         return false;
     }
 
+    public function getApplicationTo(Compo $compo)
+    {
+        foreach($this->getApplications() as $application)
+        {
+            if($compo === $application->getCompo())
+            {
+                if($application->isCompleted())
+                    return $application;
+            }
+        }
+
+        return null;
+    }
+
     public function getOpenApplicationTo(Compo $compo)
     {
         foreach($this->getApplications() as $application)
@@ -707,6 +721,6 @@ class User extends BaseUser implements EncoderAwareInterface
                 return $team;
         }
 
-        return  null;
+        return null;
     }
 }

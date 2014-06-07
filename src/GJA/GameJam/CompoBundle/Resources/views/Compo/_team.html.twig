@@ -1,0 +1,31 @@
+{% if team %}
+    Formas parte del equipo <strong>{{ team }}</strong>. Miembros:
+    <ul>
+        {% for member in team.users %}
+            <li>{% if member == user %}Tú{% else %}{{ member }}{% endif %}{% if team.leader == member %} (Líder){% endif %}</li>
+        {% endfor %}
+    </ul>
+    {% if invite_form %}
+        <form action="{{ path('gamejam_compo_team_send_invitation', {compo: compo.nameSlug}) }}" method="post" id="send-invitation">
+        {{ form_widget(invite_form) }}
+            <button class="btn btn-success">Enviar invitación</button>
+        </form>
+        <div id="send-invitation-result"></div>
+    {% endif %}
+{% else %}
+    Estás participando en solitario.
+    {% if compo.teamFormationOpen %}
+        <h4>Buscar un equipo</h4>
+        <form action="{{ path('gamejam_compo_team_send_request', {compo: compo.nameSlug}) }}" method="post" id="send-request">
+        {{ form_widget(request_form) }}
+            <button class="btn btn-success">Enviar petición</button>
+        </form>
+        <div id="send-request-result"></div>
+
+        <h4>Crear un equipo</h4>
+        Escribe el nombre de tu equipo y podrás invitar a otros miembros a formar parte de él:
+        {{ form_widget(creation_form) }}
+    {% else %}
+        El periodo de formación de equipos ha terminado
+    {% endif %}
+{% endif %}

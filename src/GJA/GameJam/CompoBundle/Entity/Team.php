@@ -54,7 +54,7 @@ class Team
     protected $leader;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", mappedBy="teams")
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User", mappedBy="teams", cascade={"persist"})
      */
     protected $users;
 
@@ -223,5 +223,10 @@ class Team
     public function addMember(User $user)
     {
         $this->users[] = $user;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 } 

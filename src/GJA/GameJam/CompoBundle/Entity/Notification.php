@@ -279,6 +279,6 @@ class Notification
 
     public function addUser(User $user)
     {
-        $this->users->add($user);
+        $this->users[] = $user;
     }
 } 

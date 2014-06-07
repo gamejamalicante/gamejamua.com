@@ -85,7 +85,41 @@
                     $('.countdown').countdown({until: {{ compo.secondsToStartTime }}});
                 {% endif %}
             {% endif %}
-        })
+        });
+
+        function loadTeamForm(form, result, successText, errorText)
+        {
+            $(form).submit(function(e)
+            {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                var teamRequest = $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'post',
+                    data: data
+                });
+
+                teamRequest.done(function(response)
+                {
+                    if(response.result == true)
+                    {
+                        $(result).html(successText);
+                    }
+                    else
+                    {
+                        $(result).html(errorText);
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function()
+        {
+            loadTeamForm('#send-invitation', '#send-invitation-result', '¡Invitación enviada', 'Oops! Error!');
+            loadTeamForm('#send-request', '#send-request-result', '¡Petición enviada!', 'Oops! Error!');
+        });
     </script>
 {% endblock %}
 
@@ -144,25 +178,7 @@
                 {% if user_application %}
                 <h2><i class="fa fa-users"></i> Tu equipo</h2>
                 <div class="application">
-                    {% if user_application.team %}
-                        Formas parte del equipo <strong>{{ user_application.team }}</strong>. Miembros:
-                        <ul>
-                        {% for member in user_application.team %}
-                            <li>{{ member }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        Estás participando en solitario.
-                        {% if compo.teamFormationOpen %}
-                            <h4>Buscar un equipo</h4>
-                            Selecciona el equipo al que quieras enviar la solicitud de ingreso
-
-                            <h4>Crear un equipo</h4>
-                            Escribe el nombre de tu equipo y podrás invitar a otros miembros a formar parte de él:
-                        {% else %}
-                            El periodo de formación de equipos ha terminado
-                        {% endif %}
-                    {% endif %}
+                    {{ render(controller("GameJamCompoBundle:Compo:partialTeam", {compo: compo.nameSlug})) }}
                 </div>
                 {% endif %}<br><br>
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>

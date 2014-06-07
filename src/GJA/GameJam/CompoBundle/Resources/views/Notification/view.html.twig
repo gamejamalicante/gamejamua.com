@@ -6,7 +6,7 @@
         <div class="notification pending">
             <span class="date">{{ time_diff(notification.date) }}</span>
             <h3>{{ notification }}</h3>
-            <p>{{ notification.content }}</p>
+            <p>{{ notification.content|raw }}</p>
         </div>
     </div>
 {% endblock %}

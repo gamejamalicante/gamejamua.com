@@ -3,6 +3,7 @@
 namespace GJA\GameJam\CompoBundle\Notifier;
 
 use GJA\GameJam\CompoBundle\Entity\Notification;
+use GJA\GameJam\UserBundle\Entity\User;
 
 class NotificationBuilder
 {
@@ -24,6 +25,8 @@ class NotificationBuilder
     public function createNotification($type)
     {
         $notification = new Notification();
+        $notification->setAnnounce(true);
+        $notification->setDate(new \DateTime("now"));
         $notification->setType($type);
 
         $this->notification = $notification;
@@ -51,6 +54,13 @@ class NotificationBuilder
         $content = $this->twig->render($template, $vars);
 
         $this->notification->setContent($content);
+
+        return $this;
+    }
+
+    public function addUser(User $user)
+    {
+        $this->notification->addUser($user);
 
         return $this;
     }

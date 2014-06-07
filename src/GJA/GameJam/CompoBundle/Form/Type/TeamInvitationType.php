@@ -2,33 +2,43 @@
 
 namespace GJA\GameJam\CompoBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
+use GJA\GameJam\CompoBundle\Entity\Compo;
+use GJA\GameJam\CompoBundle\Entity\Team;
+use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TeamInvitationType extends AbstractType
+class TeamInvitationType extends AbstractTeamInvitationType
 {
     /**
-     * @var string
+     * @var \GJA\GameJam\UserBundle\Entity\User
      */
-    protected $type;
+    protected $user;
 
-    /**
-     * @var User
-     */
-    protected $sender;
-
-    public function __construct($type, User $sender)
+    public function __construct(Compo $compo, User $user)
     {
-        $this->type;
+        parent::__construct($compo);
+
+        $this->user = $user;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('team')
-            ->add('type', 'hidden', $this->type)
-            ->add('sender', 'hidden');
+        parent::buildForm($builder, $options);
+
+        $builder->add('type', 'hidden', ['data' => TeamInvitation::TYPE_INVITATION])
+            ->add('target', null, ['required' => true, 'query_builder' => function(EntityRepository $repository)
+                {
+                    $builder = $repository->createQueryBuilder("u");
+
+                    $builder->andWhere("u != :user")
+                        ->setParameter('user', $this->user);
+
+                    return $builder;
+                }]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
