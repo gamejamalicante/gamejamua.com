@@ -51,7 +51,7 @@
             <a href="">
                 <div class="achievement">
                     <p class="title">{{ achievement }}</p>
-                    <img title="{{ achievement }}" src="{{ asset('bundles/gamejamcompo/images/achievement/' ~ achievement.achievement.nameSlug) }}.png">
+                    <img title="{{ achievement }}" src="{{ asset(achievement.achievement.webPath) }}" style="width: 128px;">
                 </div>
             </a>
         {% else %}

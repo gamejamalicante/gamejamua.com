@@ -28,7 +28,7 @@ class UserRepository extends EntityRepository
     public function findByRole($role)
     {
         $dql = <<<DQL
-SELECT u FROM GameJamUserBundle:User u WHERE u.roles LIKE ':role'
+SELECT u FROM GameJamUserBundle:User u WHERE u.roles LIKE :role
 DQL;
 
         return $this->getEntityManager()->createQuery($dql)

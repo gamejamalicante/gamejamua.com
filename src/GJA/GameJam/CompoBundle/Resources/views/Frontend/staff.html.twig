@@ -8,8 +8,10 @@
         <div class="staff">
             {% for user in staff %}
                 <div class="col-md-2 nopadding">
-                    <img src="{{ gravatar(user.email, 100) }}" class="avatar" /><br>
+                    <a href="{{ path('gamejam_user_profile', {user: user.username}) }}">
+                    <img src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 100) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" class="avatar" style="width: 100px" /><br>
                     {{ user }}
+                    </a>
                 </div>
             {% endfor %}
         </div>

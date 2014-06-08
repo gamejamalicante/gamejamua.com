@@ -53,6 +53,11 @@ class Achievement
     protected $nameSlug;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $image;
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $description;
@@ -209,5 +214,26 @@ class Achievement
     public function getHidden()
     {
         return $this->hidden;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function getWebPath()
+    {
+        return 'bundles/gamejamcompo/images/achievement/' . $this->image. '.png';
     }
 } 

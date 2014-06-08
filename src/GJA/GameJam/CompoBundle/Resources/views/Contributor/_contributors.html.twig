@@ -1,3 +1,9 @@
 {% for contributor in contributors %}
-<a href="{{ contributor.url }}" target="_blank" rel="nofollow"><img src="{{ asset(contributor.imageWebPath) }}" class="sponsor{% if contributor.featured %} featured{% endif %}"></a>
+    {% if contributor.url %}
+<a href="{{ contributor.url }}" target="_blank" rel="nofollow">
+    {% endif %}
+    <img src="{{ asset(contributor.imageWebPath) }}" class="sponsor{% if contributor.featured %} featured{% endif %}">
+    {% if contributor.url %}
+</a>
+{% endif %}
 {% endfor %}

@@ -35,7 +35,7 @@ class FrontendController extends AbstractController
         /** @var ActivityRepository $activityRepository */
         $activityRepository = $this->getRepository("GameJamCompoBundle:Activity");
 
-        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1]);
+        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1], ['date' => 'DESC']);
         $activity = $activityRepository->findOnlyActivity(5);
         $messages = $activityRepository->findOnlyMessages(10);
         $twitterMentions = $activityRepository->findTwitterMentions(5);

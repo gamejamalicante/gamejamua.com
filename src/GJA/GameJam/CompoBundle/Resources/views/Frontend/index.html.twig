@@ -44,7 +44,7 @@
             {% endif %}
         </div>
         <div class="col-md-4">
-            <a href="">
+            <a href="{{ path('gamejam_compo_games') }}">
                 <div class="box games">
                     <h2>Nuestros juegos</h2>
                 </div>
@@ -61,7 +61,7 @@
                 <div class="col-md-6 nopadding last">
                     <div class="item">
                         <h3>{{ new.title }} <span class="date">{{ time_diff(new.date) }}</span></h3>
-                        {{ new.content|truncate(200) }}
+                        {{ new.content|truncate(250)|raw }}
                     </div>
                 </div>
                 </a>

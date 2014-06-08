@@ -37,10 +37,10 @@ twig:
             name: GameJam Alicante
             twitter:
                 name: %twitter.username%
-                url: http://twitter.com/GameJamUA
+                url: https://twitter.com/GameJamUA
                 hashtags: %twitter.hashtags%
             facebook:
-                url: ~
+                url: https://facebook.com/GameJamUA
 
 assetic:
     debug:          "%kernel.debug%"

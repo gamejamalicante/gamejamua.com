@@ -37,7 +37,7 @@ class Contributor
     protected $nameSlug;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
 
@@ -57,7 +57,7 @@ class Contributor
     protected $featured;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
 

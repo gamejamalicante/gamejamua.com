@@ -19,7 +19,6 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username_email
 
-
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -54,3 +53,4 @@ security:
         - { path: ^/compos/.*/inscribirse, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/panel, roles: ROLE_USER }
+        - { path: ^/juegos/.*/(dar-monedas|like), roles: ROLE_USER }

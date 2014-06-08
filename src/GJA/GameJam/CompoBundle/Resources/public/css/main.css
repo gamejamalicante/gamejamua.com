@@ -653,6 +653,7 @@ footer .copyright a
     border-radius: 10px;
     padding: 2px 8px;
     background-color: rgba(62, 62, 62, 0.48);
+    display: inline-block;
 }
 
 .activity .item.twitt img

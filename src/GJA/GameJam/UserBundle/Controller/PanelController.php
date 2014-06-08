@@ -84,7 +84,7 @@ class PanelController extends AbstractController
             {
                 $activity->setContent(['content' => $activity->getContent()]);
                 $activity->setUser($this->getUser());
-                $activity->setCompo($this->getRepository("GameJamCompoBundle:Compo")->findOneBy([], ['id' => 'ASC']));
+                $activity->setCompo($this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true], ['id' => 'ASC']));
 
                 $this->persistAndFlush($activity);
 

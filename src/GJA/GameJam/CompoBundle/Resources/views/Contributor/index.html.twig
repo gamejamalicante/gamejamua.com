@@ -8,7 +8,9 @@
         <div class="contributor{% if contributor.featured %} featured{% endif %}">
             <img src="{{ asset(contributor.imageWebPath) }}" class="logo">
             <h2>{{ contributor }}</h2>
+            {% if contributor.url %}
             <p><i class="fa fa-globe"></i> <a href="{{ contributor.url }}" target="_blank" rel="nofollow">{{ contributor.url }}</a></p>
+            {% endif %}
             {% if contributor.composSponsored|length %}
             <p>
                 <strong>Ha sponsorizado: </strong>
