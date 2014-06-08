@@ -23,10 +23,13 @@ use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="gamejam_users")
+ * @UniqueEntity(fields={"username"}, message="Este nombre de usuario ya existe")
+ * @UniqueEntity(fields={"email"}, message="El email ya está en uso")
  */
 class User extends BaseUser implements EncoderAwareInterface
 {
