@@ -57,7 +57,7 @@ fos_user:
         form:
             type: gamejam_user_register
         confirmation:
-            enabled: false
+            enabled: true
             template: GameJamUserBundle:Registration:email.html.twig
     from_email:
         address: %main_email%
