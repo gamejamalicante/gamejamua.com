@@ -1,0 +1,13 @@
+{% extends 'GameJamCompoBundle:Mail:layout.html.twig' %}
+
+{% block subject %}[GameJam Alicante] Recuperar contraseña{% endblock %}
+{% block title %}Recuperar contraseña{% endblock %}
+
+{% block content %}Hemos recibido una petición para resetear tu contraseña de <strong>GameJam Alicante</strong>:<br><br>
+Pulsa en el siguiente enlace para recuperar tu contraseña:<br><br>
+<a href="{{ confirmationUrl }}">{{ confirmationUrl }}</a>
+{% endblock %}
+
+{% block body_text %}
+    Para resetear tu contraseña, visita el siguiente enlace: {{ confirmationUrl }}
+{% endblock %}

@@ -56,9 +56,18 @@ fos_user:
     registration:
         form:
             type: gamejam_user_register
+        confirmation:
+            enabled: false
+            template: GameJamUserBundle:Registration:email.html.twig
     from_email:
-        address: contacto@gamejamua.com
+        address: %main_email%
         sender_name: GameJam Alicante
+    resetting:
+        email:
+            template: GameJamUserBundle:Resetting:email.html.twig
+    service:
+        mailer: fos_user.mailer.twig_swift
+
 
 doctrine:
     dbal:

@@ -70,6 +70,11 @@ class Media
     protected $filePath;
 
     /**
+     * @var string
+     */
+    protected $youtubeId;
+
+    /**
      * @param mixed $comment
      */
     public function setComment($comment)
@@ -239,5 +244,38 @@ class Media
     public function getUrl()
     {
         return $this->url;
+    }
+
+    public function getImageUrl()
+    {
+        if($this->type == self::TYPE_IMAGE)
+            return $this->url;
+
+        if($youtubeId = $this->getYoutubeId())
+        {
+            return "http://img.youtube.com/vi/". $youtubeId. "/2.jpg";
+        }
+
+        return '';
+    }
+
+    public function getYoutubeId()
+    {
+        if(!is_null($this->youtubeId))
+            return $this->youtubeId;
+
+        if($this->type == self::TYPE_VIDEO or $this->type == self::TYPE_TIMELAPSE)
+        {
+            preg_match("/youtube.*v\=(.*)\&/i", $this->url, $matches);
+
+            if(isset($matches[1]))
+            {
+                $this->youtubeId = $matches[1];
+
+                return $this->youtubeId;
+            }
+        }
+
+        return null;
     }
 } 

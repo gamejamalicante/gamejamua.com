@@ -1,0 +1,12 @@
+{% extends 'GameJamCompoBundle:Mail:layout.html.twig' %}
+
+{% block subject %}[GameJam Alicante] Confirmar dirección de correo{% endblock %}
+{% block title %}Confirmar dirección de correo{% endblock %}
+
+{% block content %}Pulsa en el siguiente enlace para confirmar tu dirección de correo:<br><br>
+    <a href="{{ confirmationUrl }}">{{ confirmationUrl }}</a>
+{% endblock %}
+
+{% block body_text %}
+Para confirmar tu dirección, visita el siguiente enlace: {{ confirmationUrl }}
+{% endblock %}

@@ -44,8 +44,18 @@
                 } );
 
         function changeImage( el, pos ) {
+            if(el.data('type') == 2 || el.data('type') == 3)
+            {
+                // youtube video
+                $('.image-preview').html('<iframe class="youtube" width="100%" height="300" src="//www.youtube.com/embed/' + el.data('youtube-id') + '" frameborder="0" allowfullscreen></iframe>');
+            }
+            else
+            {
+                var imagePreview = $('<img id="preview" />');
+                $('.image-preview').html(imagePreview);
 
-            $preview.attr( 'src', el.data( 'preview' ) );
+                imagePreview.attr( 'src', el.data( 'preview' ) );
+            }
             $carouselItems.removeClass( 'current-img' );
             el.addClass( 'current-img' );
             carousel.setCurrent( pos );
@@ -126,11 +136,11 @@
                 <div class="col-md-7" style="padding-right: 0;">
                     <div class="gallery">
                         <div class="image-preview">
-                            <img id="preview" />
+                            <img id="preview" src="{{ game.image }}" />
                         </div>
                         <ul id="carousel" class="elastislide-list">
                             {% for media in game.media %}
-                                <li data-preview="{{ asset(media.webPath|apply_filter('game_gallery_preview')) }}"><a href="#"><img src="{{ asset(media.webPath|apply_filter('game_gallery_mini')) }}"></a></li>
+                                <li data-preview="{{ media.url }}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-youtube-id="{{ media.youtubeId }}{% endif %}"><a href="#"><img src="{{ media.imageUrl }}"></a></li>
                             {% endfor %}
                         </ul>
                     </div>

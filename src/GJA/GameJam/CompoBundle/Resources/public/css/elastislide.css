@@ -88,6 +88,7 @@
     display: block;
     border: 2px solid white;
     max-width: 100%;
+    height: 70px;
 }
 
 /* Navigation Arrows */
