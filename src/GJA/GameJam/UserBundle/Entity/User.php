@@ -707,4 +707,22 @@ class User extends BaseUser implements EncoderAwareInterface
     {
         $this->teams[] = $team;
     }
+
+    public function getLevel()
+    {
+        $level = 0;
+
+        foreach($this->getApplications() as $application)
+        {
+            if($application->isCompleted())
+                $level++;
+        }
+
+        return $level;
+    }
+
+    public function substractCoins($coins)
+    {
+        $this->coins -= (int) $coins;
+    }
 }

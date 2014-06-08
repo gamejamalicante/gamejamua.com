@@ -1,0 +1,13 @@
+{% extends 'GameJamGameBundle:GamePanel:create.html.twig' %}
+
+{% block title_top %}
+    <div class="pull-right">
+        <a class="btn btn-lg action" href="{{ path('gamejam_game', {game: game.nameSlug}) }}"><i class="fa fa-arrow-left"></i> Volver al juego</a>
+    </div>
+{% endblock %}
+
+{% block form_action %}{{ path('gamejam_game_panel_edit', {game: game.nameSlug}) }}{% endblock %}
+
+{% block title %}Editar juego: {{ game }}{% endblock %}
+
+{% block button_submit %}¡Editar juego!{% endblock %}

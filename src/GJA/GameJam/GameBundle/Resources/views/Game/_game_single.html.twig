@@ -1,0 +1,31 @@
+<div class="gamelistelement{% if game.position %} {{ game.position }}{% endif %}">
+    <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">
+        <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{{ game.image }}');"></div>
+    </a>
+    <div class="gamelistdescription">
+        <div class="pull-right"><i class="fa fa-thumbs-up"></i> {{ game.likes }}</div>
+
+        <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}" class="title">{{ game }}</a><br>
+        {% if game.compo %}Tema: <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo.theme }}</a><br>{% endif %}
+        Divs:
+        {% for diversifier in game.diversifiers|slice(0, 1) %}
+            <a href="#">{{ diversifier }}</a>
+        {% endfor %}
+
+        <div style="position:relative; display: inline-block;">
+            <i class="fa fa-plus moredivslock"></i>
+            <div class="moredivs">
+                {% for diversifier in game.diversifiers|slice(1,100) %}
+                    <a href="#">
+                        {{ diversifier }}
+                    </a><br>
+                {% endfor %}
+            </div>
+        </div>
+        {% if game.coins %}
+        <br>
+        <div class="pull-right"><img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" style="width: 10px;"> {{ game.coins }}</div>
+        <br>
+        {% endif %}
+    </div>
+</div>

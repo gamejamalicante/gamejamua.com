@@ -11,6 +11,10 @@
 
 namespace GJA\GameJam\GameBundle\Event;
 
+use GJA\GameJam\GameBundle\Entity\Game;
+use GJA\GameJam\UserBundle\Entity\User;
+use GJA\GameJam\UserBundle\Event\UserActivityEvent;
+
 class GameActivityCoinsEvent extends GameActivityEvent
 {
     /**
@@ -18,7 +22,18 @@ class GameActivityCoinsEvent extends GameActivityEvent
      */
     protected $coins;
 
+    /**
+     * @var integer
+     */
     protected $totalCoins;
+
+    public function __construct(User $user, Game $game, $coins)
+    {
+        parent::__construct($user, $game);
+
+        $this->coins = $coins;
+        $this->totalCoins = $game->getCoins();
+    }
 
     /**
      * @param mixed $coins

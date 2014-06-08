@@ -72,13 +72,13 @@
     </div>
     <div class="section">
         <h2><i class="fa fa-cloud"></i> Última actividad de los miembros</h2>
-        <div class="row">
+        <div class="row activity-frontend">
             {% for item in activity %}
-                <div class="section index activity">
+                <div class="activity">
                     {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
                 </div>
             {% else %}
-                <div class="section index activity">
+                <div class="activity">
                     Parece que está parada la cosa...
                 </div>
             {% endfor %}

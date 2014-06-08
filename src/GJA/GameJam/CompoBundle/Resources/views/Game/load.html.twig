@@ -1,3 +1,5 @@
 {% for game in games %}
-Hola gAME!
+    {% include 'GameJamGameBundle:Game:_game_single.html.twig' %}
+{% else %}
+    No hemos encontrado juegos con esos criterios :(
 {% endfor %}

@@ -45,9 +45,9 @@ class Media
     protected $game;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      */
-    protected $filePath;
+    protected $url;
 
     /**
      * @ORM\Column(type="array", nullable=true)
@@ -55,7 +55,7 @@ class Media
     protected $data;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $comment;
 
@@ -65,9 +65,9 @@ class Media
     protected $type;
 
     /**
-     * @var
+     * TODO: allow image uploads
      */
-    protected $url;
+    protected $filePath;
 
     /**
      * @param mixed $comment

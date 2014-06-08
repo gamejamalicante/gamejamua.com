@@ -9,7 +9,9 @@ use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
+use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Theme;
+use GJA\GameJam\GameBundle\Entity\Download;
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\GameBundle\Entity\Media;
 use GJA\GameJam\UserBundle\Entity\AchievementGranted;
@@ -97,14 +99,23 @@ class MigrationCommand extends ContainerAwareCommand
         // migrate games
         $this->migrateGames();
 
-        // migrate game media
-        $this->migrateGameMedia();
-
         // migrate applications
         $this->migrateApplications();
 
+        // migrate game media
+        $this->migrateGameMedia();
+
         // migrate achievements
         $this->migrateAchievements();
+
+        // migrate coins
+        $this->migrateCoins();
+
+        // migrate winners
+        $this->migrateWinners();
+
+        // migrate downloads
+        $this->migrateDownloads();
     }
 
     protected function migrateEditions()
@@ -184,7 +195,7 @@ class MigrationCommand extends ContainerAwareCommand
 
     protected function migratePosts()
     {
-        $posts = $this->connection->query("SELECT * FROM POSTS;")->fetchAll();
+        $posts = $this->connection->query("SELECT * FROM POSTS ORDER BY fecha ASC;")->fetchAll();
 
         foreach($posts as $post)
         {
@@ -321,6 +332,9 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $applications = $this->connection->query("SELECT p.*, pn.usuario AS pasanoche FROM PARTICIPANTES p LEFT JOIN PASANLANOCHE pn ON pn.usuario = p.usuario");
 
+        $teams = array();
+
+        $i = 1;
         foreach($applications as $application)
         {
             $application = (object) $application;
@@ -358,6 +372,51 @@ class MigrationCommand extends ContainerAwareCommand
             $compoApplication->setNightStay($application->pasanoche ? true : false);
 
             $this->persist($compoApplication);
+
+            // migrate teams
+            if(!isset($teams[$application->juego]))
+            {
+                $teamMembers = $this->connection->query("SELECT * FROM PARTICIPANTES WHERE juego = " . $application->juego)->fetchAll();
+
+                if(count($teamMembers) > 1)
+                {
+                    // create team
+                    $team = new Team();
+                    $team->setCompo($compo);
+                    $team->setCreatedAt($compo->getStartAt());
+                    $team->setName("Equipo " . $i);
+
+                    $j=0;
+                    foreach($teamMembers as $teamMember)
+                    {
+                        $teamMember = (object) $teamMember;
+
+                        if($j==0)
+                        {
+                            // set first member as leader
+                            $team->setLeader($this->usuariosMap[$teamMember->usuario]);
+                        }
+
+                        $teamMember = $this->usuariosMap[$teamMember->usuario];
+                        $teamMember->addToTeam($team);
+
+                        $this->persist($teamMember);
+                    }
+
+                    $game->setTeam($team);
+
+                    $this->persist($team);
+                    $this->persist($game);
+
+                    $i++;
+                }
+                else
+                {
+                    $game->setUser($user);
+                }
+
+                $teams[$application->juego] = true;
+            }
         }
 
         $this->flush();
@@ -384,6 +443,8 @@ class MigrationCommand extends ContainerAwareCommand
             $achievementEntity->setType($type);
             $achievementEntity->setHidden($achievement->oculto);
 
+            $this->persist($achievementEntity);
+
             // try to find granted date
             preg_match("/([0-9]+)\/([0-9]+)\/([0-9]+)/i", $achievement->nombre, $matches);
 
@@ -399,7 +460,7 @@ class MigrationCommand extends ContainerAwareCommand
             }
             else
             {
-                $date = null;
+                $date = new \DateTime("now");
             }
 
             // granted data
@@ -422,6 +483,133 @@ class MigrationCommand extends ContainerAwareCommand
         }
 
         $this->flush();
+    }
+
+    protected function migrateCoins()
+    {
+        $coins = $this->connection->query("SELECT juego, SUM(monedas) as monedas FROM VOTOSUSUARIOS GROUP BY juego;")->fetchAll();
+
+        foreach($coins as $coin)
+        {
+            $coin = (object) $coin;
+
+            $game = $this->juegosMap[$coin->juego];
+            $game->setCoins($coin->monedas);
+
+            $this->persist($game);
+        }
+
+        $this->flush();
+    }
+
+    protected function migrateWinners()
+    {
+        $winners = $this->connection->query("SELECT * FROM GANADORES")->fetchAll();
+
+        foreach($winners as $winner)
+        {
+            $winner = (object) $winner;
+
+            $game = @$this->juegosMap[$winner->juego];
+
+            if(!$game)
+                continue;
+
+            switch($winner->puesto)
+            {
+                case '1':
+                    $game->setWinner(Game::WINNER_FIRST);
+                break;
+
+                case '2':
+                    $game->setWinner(Game::WINNER_SECOND);
+                break;
+
+                case '3':
+                    $game->setWinner(Game::WINNER_THIRD);
+                break;
+
+                case 'graficos':
+                    $game->addMention(Game::MENTION_GRAPHICS);
+                break;
+
+                case 'audio':
+                    $game->addMention(Game::MENTION_AUDIO);
+                break;
+
+                case 'originalidad':
+                    $game->addMention(Game::MENTION_ORIGINALITY);
+                break;
+
+                case 'tema':
+                    $game->addMention(Game::MENTION_THEME);
+                break;
+
+                default:
+                    continue 2;
+                break;
+            }
+
+            $this->persist($game);
+        }
+
+        $this->flush();
+    }
+
+    protected function migrateDownloads()
+    {
+        $downloads = $this->connection->query("SELECT * FROM ENLACESJUEGOS;")->fetchAll();
+
+        foreach($downloads as $download)
+        {
+            $download = (object) $download;
+
+            $game = @$this->juegosMap[$download->juego];
+
+            if(!$game)
+                continue;
+
+            if(empty($download->url))
+                continue;
+
+            $downloadEntity = new Download();
+            $downloadEntity->setCreatedAt(new \DateTime($download->fecha));
+            $downloadEntity->setComment($download->comentario);
+            $downloadEntity->setGamejam($download->gamejam);
+            $downloadEntity->setFileUrl($download->url);
+            $downloadEntity->setGame($game);
+            $downloadEntity->setPlatforms($this->constructPlatformsFromLegacy($download));
+            $downloadEntity->setVersion($download->version == '0.0' ? null : $download->version);
+
+            $this->persist($downloadEntity);
+        }
+
+        $this->flush();
+    }
+
+    protected function constructPlatformsFromLegacy($legacyDownload)
+    {
+        $platforms = array();
+
+        if($legacyDownload->win)
+            $platforms[] = Download::PLATFORM_WINDOWS;
+
+        if($legacyDownload->mac)
+            $platforms[] = Download::PLATFORM_MAC;
+
+        if($legacyDownload->linux)
+            $platforms[] = Download::PLATFORM_LINUX;
+
+        if($legacyDownload->android)
+            $platforms[] = Download::PLATFORM_ANDROID;
+
+        if($legacyDownload->ios)
+            $platforms[] = Download::PLATFORM_IOS;
+
+        if($legacyDownload->web)
+            $platforms[] = Download::PLATFORM_WEB;
+
+        return $platforms;
     }
 
     protected function findGameJamInDateRange(\DateTime $date)

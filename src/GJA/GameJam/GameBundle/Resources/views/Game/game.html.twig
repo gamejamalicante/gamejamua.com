@@ -52,12 +52,75 @@
 
         }
 
+        $(document).ready(function()
+        {
+            $('.voteup').click(function()
+            {
+                {% if not app.user %}
+                    window.alert('Debes estar registrado para valorar juegos')
+                {% else %}
+                $('#vote-up .count').html('<img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" />');
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ path('gamejam_game_like', {game: game.nameSlug}) }}',
+                    success: function(result)
+                    {
+                        $('#vote-up .count').html(result.likes);
+                    }
+                });
+                {% endif %}
+            });
+
+            $('#give-coins').click(function()
+            {
+                {% if not app.user %}
+                    window.alert('Debes estar registrado para dar UltraCoins');
+                {% else %}
+                    $('.give-coins-form').fadeIn();
+                {% endif %}
+            });
+
+            $('#give-coins-form').submit(function(e)
+            {
+                e.preventDefault();
+
+                $('#give-coins .count').html('<img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" />');
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    method: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: data,
+                    success: function(result)
+                    {
+                        $('#give-coins .count').html(result.coins);
+                        $('.give-coins-form').fadeOut();
+                    }
+                })
+            });
+        })
+
     </script>
 {% endblock %}
 
 {% block content %}
     <div class="section game">
+    <span class="{% if game.hasUserAlreadyLiked(app.user) %}voted{% else %}voteup{% endif %}"><span class="count">{{ game.likes }}</span> <i class="fa fa-thumbs-up"></i></span>
+    <span class="givecoins" id="give-coins"><span class="count">{{ game.coins }}</span> <img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}"> </span>
     <h1>{{ game }}</h1>
+        {% if give_coins_form %}
+        <div class="content info showcase give-coins-form" style="display: none;">
+            <form action="{{ path('gamejam_game_givecoins', {game: game.nameSlug}) }}" method="post" id="give-coins-form">
+                Quiero dar a este juego:
+                <div style="margin-top: 10px" class="input-group datetime">
+                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                    {{ form_widget(give_coins_form.coins, {'attr':{'class':'form-control'}}) }}
+                </div>
+                <button type="submit" class="btn">Dar monedas</button>
+            </form>
+        </div>
+        {% endif %}
         <div class="content info showcase">
             <div class="row">
                 <div class="col-md-7" style="padding-right: 0;">
@@ -65,21 +128,19 @@
                         <div class="image-preview">
                             <img id="preview" />
                         </div>
-                        <!-- Elastislide Carousel -->
                         <ul id="carousel" class="elastislide-list">
                             {% for media in game.media %}
                                 <li data-preview="{{ asset(media.webPath|apply_filter('game_gallery_preview')) }}"><a href="#"><img src="{{ asset(media.webPath|apply_filter('game_gallery_mini')) }}"></a></li>
                             {% endfor %}
                         </ul>
-                        <!-- End Elastislide Carousel -->
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <img src="http://placehold.it/300x90" width="100%" />
+                    <img src="{{ game.image }}" width="368" height="110" />
                     <p class="description scrollable">{{ game.description }}</p>
                     {% if game.compo %}
                         <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>
-                        <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>@Gedmo\Slug(fields={"title", "code"})
+                        <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>
                         {% if game.diversifiers|length %}
                             <p><i class="fa fa-gear"></i> <strong>Diversificadores: </strong>
                                 {% for diversifier in game.diversifiers %}
@@ -89,43 +150,60 @@
                         {% endif %}
                     {% endif %}
                     {% if game.team %}
-                    <p><i class="fa fa-group"></i><strong> Equipo: </strong>
-                        {% for user in game.team.users %}
-                            <a href="{{ path('gamejam_user_profile', {user: user.username}) }}">{{ user }}</a>{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
+                        <p><i class="fa fa-group"></i><strong> Equipo: </strong>
+                            {% for user in game.team.users %}
+                                <a href="{{ path('gamejam_user_profile', {user: user.username}) }}">{{ user }}</a>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
                     {% elseif game.user %}
-                    <p><i class="fa fa-group"></i> <strong>Creador: </strong> {{ game.user }}</p>
+                        <p><i class="fa fa-group"></i> <strong>Creador: </strong> {{ game.user }}</p>
+                    {% endif %}
+                    {% if app.user and game.userAllowedToEdit(app.user) %}
+                        <a class="btn btn-lg action" href="{{ path('gamejam_game_panel_edit', {game: game.nameSlug}) }}"><i class="fa fa-pencil"></i> Editar juego</a>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="content info">
+        <div class="section activity">
             <div class="row">
                 <div class="col-md-6">
                     <h2><i class="fa fa-comment"></i> Actividad</h2>
-                    <div class="activity">
-                        {% for activity in game.activity %}
-                            {% include 'GameJamGameBundle:Game:_activity_' ~activity.typeName~'.html.twig' %}
+                    <div class="activity" style="margin-top: 10px;">
+                        {% for item in game.activity %}
+                            {% include ['GameJamGameBundle:Game:_activity_' ~item.typeName~'.html.twig', 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig'] %}
+                        {% else %}
+                            <p class="item shout">
+                                Aun no hay ninguna actividad...
+                            </p>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <h2><i class="fa fa-file"></i> Descargas</h2>
-                    <div class="downloads">
-                        {% if game.downloads|length %}
-                            {% if game.gamejamdownload %}
-                            <div class="download gamejam-version">
-                                <a class="btn btn-green pull-right"><i class="fa fa-download"></i> Descargar</a>
-                                <h4>Versión GameJam</h4>
-                                <p class="description">Esta es la versión original subida durante la GameJam</p>
-                                <p><strong>Tamaño: </strong></p>
-                                <p><strong>Plataformas: </strong></p>
+                    <div class="activity" style="margin-top: 10px;">
+                        {% for download in game.downloads %}
+                            <div class="item download{% if download.gamejam %} gamejam{% endif %}">
+                                <a class="btn btn-green pull-right" href="{{ download.fileUrl }}" target="_blank"><i class="fa fa-download"></i> Descargar</a>
+                                {% if download.gamejam %}
+                                    <h4>Versión GameJam</h4>
+                                    <p class="description">Esta es la versión original subida durante la GameJam</p>
+                                {% elseif game.description %}
+                                    <h4>Version {{ download.version }}</h4>
+                                    <p class="description">{{ game.description }}</p>
+                                {% endif %}
+                                {% if download.size %}<p><strong>Tamaño: </strong></p>{% endif %}
+                                {% if download.platforms|length %}
+                                    <p>
+                                        <strong>Plataformas: </strong>
+                                        {% for platform in download.platforms %}
+                                            <i class="fa fa-{{ download.platformDescription(platform).slug }}"></i> {{ download.platformDescription(platform).name }}
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
                             </div>
-                            {% endif %}
                         {% else %}
                             No hay descargas aún :(
-                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

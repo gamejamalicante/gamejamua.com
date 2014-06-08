@@ -10,6 +10,8 @@
             var data = $(element).serializeArray();
             var target = $(element).attr('action');
 
+            $(resultElement).html('<div style="text-align:center"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /><br><br>Cargando lista de juegos...</div>')
+
             $.ajax({
                 url: target,
                 type: 'get',
@@ -51,11 +53,11 @@
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                 {{ form_widget(form.filterType, {'attr':{'class':'form-control'}}) }}
                 {{ form_widget(form.compo, {'attr':{'class':'form-control'}}) }}
-                {{ form_widget(form.diversifier, {'attr':{'class':'form-control'}}) }}
+                {{ form_widget(form.diversifier, {'attr':{'class':'form-control', 'style': 'max-width: 300px;'}}) }}
                 {{ form_widget(form.order, {'attr':{'class':'form-control'}}) }}
             </div>
             {{ form_rest(form) }}
         </form>
-        <div id="game-load-result"></div>
+        <div id="game-load-result" class="anygame"></div>
     </div>
 {% endblock %}

@@ -627,6 +627,25 @@ footer .copyright a
     background-color: rgba(0, 0, 0, 0.48);
 }
 
+.activity-frontend
+{
+    margin: 15px 15px 0 5px;
+}
+
+.activity-frontend .activity .item
+{
+    color: #474747;
+    padding: 0;
+    font-size: 12px;
+    background-color: transparent;
+}
+
+.activity-frontend .activity .item .avatar
+{
+    width: 15px;
+    margin-right: 2px;
+}
+
 .activity .item span
 {
     color: #a6a6a6;
@@ -644,6 +663,11 @@ footer .copyright a
     border-radius: 5px;
 }
 
+.activity .item
+{
+    margin-bottom: 10px;
+}
+
 .activity .item.achievement h3
 {
     font-size: 14px;
@@ -652,6 +676,21 @@ footer .copyright a
 .activity .item .avatar
 {
     width: 50px;
+}
+
+.activity .item.download.gamejam
+{
+    background-color: #360303;
+    background-image: url("/bundles/gamejamcompo/images/logo.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: 20% auto;
+    border: 2px solid #000000;
+}
+
+.activity .item.download
+{
+    margin-bottom: 10px;
 }
 
 textarea.shout
@@ -699,8 +738,8 @@ textarea.shout
 .section.game .content.info.showcase p.description
 {
     height: 120px;
-    overflow-y: scroll;
-    font-size: 12px;
+    overflow-y: auto;
+    font-size: 15px;
     overflow-x: hidden;
     padding-right: 15px;
 }
@@ -1152,4 +1191,215 @@ ul.media li.element, ul.downloads li.element
     float: right;
     margin-right: 10px;
     font-size: 20px;
+}
+
+.gamelistelement {
+    display: inline-block;
+    border: solid 1px #373737;
+    width: 33%;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.anygame.profile .gamelistelement
+{
+    width: 100%;
+}
+
+.anygame.profile .gamelistdescription
+{
+    width: 79%;
+}
+
+.gamelistelement.first {
+    background: url("/bundles/gamejamgame/images/first.png") no-repeat;
+    background-size: auto 100%;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 1.00);
+    background-position: bottom right;
+}
+
+.gamelistelement.second {
+    background: url("/bundles/gamejamgame/images/second.png") no-repeat;
+    background-size: auto 100%;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 1.00);
+    background-position: bottom right;
+}
+
+.gamelistelement.third {
+    background: url("/bundles/gamejamgame/images/third.png") no-repeat;
+    background-size: auto 100%;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 1.00);
+    background-position: bottom right;
+}
+
+.gamelistelement.claro {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.gamelisticon {
+    width: 70px;
+    height: 70px;
+    background-size: auto 70px;
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    border-radius: 5px;
+    background: black center center;
+}
+
+.gamelistdescription {
+    height: 70px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px 0;
+    color: #5b5b5b;
+    font-size: 11px;
+    position: relative;
+    width: 68%;
+}
+
+.gamelistdescription a {
+    color: #868686;
+    text-decoration: none;
+}
+
+.gamelistdescription a:hover {
+    color: #a5a5a5;
+    text-decoration: underline;
+}
+
+.gamelistdescription .title {
+    color: #b4b4b4;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.gamelistdescription .title:hover {
+    color: #e2e2e2;
+    text-decoration: underline;
+}
+
+.gamelistdescription .down {
+    background-color: #979797;
+    padding: 1px 3px 2px;
+    margin-top: 3px;
+    color: #ddd;
+    font-size: 10px;
+    display: inline-block;
+    width: auto;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+}
+
+.gamelistdescription .down:hover {
+    text-decoration: none;
+    color: #ddd;
+    background-color: #666666;
+}
+
+.moredivslock + .moredivs:before {
+    content: "▲";
+    position: absolute;
+    top: -9px;
+    color: white;
+}
+
+.moredivslock {
+}
+
+.moredivslock + .moredivs {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    margin-left: -6px;
+    z-index: 99;
+    margin-top: 0;
+    white-space: nowrap;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.moredivslock:hover + .moredivs {
+    display: block;
+}
+
+.moredivslock + .moredivs:hover {
+    display: block;
+}
+
+.anygame {
+    border-radius: 5px;
+    background-color: #131313;
+    border: solid 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    padding: 10px;
+    color: #FFF;
+}
+
+.voteup
+{
+    float: right;
+    background-color: #59769e;
+    color:rgba(255,255,255,0.6);
+    padding: 6px 8px 8px;
+    border-radius: 10px;
+    margin: 1px;
+    font-size: 30px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5),
+    inset 0 10px 10px rgba(255,255,255,0.1),
+    inset 0 1px 1px rgba(255,255,255,0.5);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.givecoins
+{
+    float: right;
+    background-color: #eecc31;
+    color:rgba(255,255,255,0.6);
+    padding: 6px 8px 8px;
+    color: #5C6C3C;
+    border-radius: 10px;
+    margin: 1px;
+    font-size: 30px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5),
+    inset 0 10px 10px rgba(255,255,255,0.1),
+    inset 0 1px 1px rgba(255,255,255,0.5);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.givecoins img
+{
+    height: 35px;
+}
+
+.voteup.edit{
+    background-color: #398f39;
+}
+
+.voted{
+    float: right;
+    background-color: rgba(255,255,255,0.1);
+    color:rgba(255,255,255,0.4);
+    padding: 8px;
+    padding-top: 6px;
+    border-radius: 10px;
+    margin: 1px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.voteup:hover{
+    color: white;
+}
+
+.give-coins-form
+{
+    color: #FFF;
+    font-size: 15px;
 }

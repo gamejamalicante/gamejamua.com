@@ -10,6 +10,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
+use GJA\GameJam\CompoBundle\Entity\Team;
+use GJA\GameJam\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
@@ -17,6 +19,16 @@ use GJA\GameJam\CompoBundle\Entity\Diversifier;
  */
 class Game
 {
+    const WINNER_FIRST = 1;
+    const WINNER_SECOND = 2;
+    const WINNER_THIRD = 3;
+
+    const MENTION_GRAPHICS = 1;
+    const MENTION_AUDIO = 2;
+    const MENTION_ORIGINALITY = 3;
+    const MENTION_ENTERTAINMENT = 4;
+    const MENTION_THEME = 5;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -71,6 +83,7 @@ class Game
 
     /**
      * @ORM\OneToMany(targetEntity="Download", mappedBy="game", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"gamejam"="DESC", "version"="ASC"})
      * @var ArrayCollection
      */
     protected $downloads;
@@ -102,13 +115,36 @@ class Game
 
     /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Activity", mappedBy="game")
+     * @ORM\OrderBy({"date"="DESC"})
      */
     protected $activity;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $winner;
+
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    protected $mentions;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="gamejam_games_user_likes")
+     */
+    protected $userLike;
 
     /**
      * @var bool
      */
     protected $isNew = false;
+
+    protected $positions = array(
+        self::WINNER_FIRST => "first",
+        self::WINNER_SECOND => "second",
+        self::WINNER_THIRD => "third"
+    );
 
     public function __construct()
     {
@@ -351,7 +387,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Team
      */
     public function getTeam()
     {
@@ -436,5 +472,126 @@ class Game
     public function getIsNew()
     {
         return $this->isNew;
+    }
+
+    /**
+     * @param mixed $winner
+     */
+    public function setWinner($winner)
+    {
+        $this->winner = $winner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * @param mixed $mentions
+     */
+    public function setMentions($mentions)
+    {
+        $this->mentions = $mentions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMentions()
+    {
+        return $this->mentions;
+    }
+
+    public function addMention($mention)
+    {
+        $this->mentions[] = $mention;
+    }
+
+    public function getPosition()
+    {
+        if(!is_null($this->winner))
+        {
+            return $this->positions[$this->winner];
+        }
+
+        return null;
+    }
+
+    public function isUserAllowedToEdit(User $user)
+    {
+        if($this->user === $user)
+            return true;
+
+        if(!$this->getTeam())
+            return false;
+
+        foreach($this->getTeam()->getUsers() as $teamMember)
+        {
+            if($teamMember === $user)
+                return true;
+        }
+
+        return false;
+    }
+
+    public function giveCoins($coins)
+    {
+        $this->coins += (int) $coins;
+    }
+
+    /**
+     * @param array $positions
+     */
+    public function setPositions($positions)
+    {
+        $this->positions = $positions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
+
+    /**
+     * @param mixed $userLike
+     */
+    public function setUserLike($userLike)
+    {
+        $this->userLike = $userLike;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserLike()
+    {
+        return $this->userLike;
+    }
+
+    public function like(User $user)
+    {
+        if($this->userLike->contains($user))
+            return false;
+
+        $this->userLike->add($user);
+
+        $this->likes++;
+
+        return true;
+    }
+
+    public function hasUserAlreadyLiked($user)
+    {
+        if(is_null($user))
+            return false;
+
+        return $this->userLike->contains($user);
     }
 }

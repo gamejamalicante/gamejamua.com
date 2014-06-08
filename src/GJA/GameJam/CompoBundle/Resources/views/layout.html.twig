@@ -43,7 +43,7 @@
                     <li><img class="avatar" src="{% if gravatar_exists(app.user.email) %}{{ gravatar(app.user.email, 40) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" /></li>
                     <li>¡Bienvenido <strong><a href="{{ path('gamejam_user_profile', {user: app.user.username}) }}">{{ app.user }}</a></strong>!</li>
                     <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" height="25"> {{ app.user.coins }}</li>
-                    <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" height="25"> {{ app.user.games|length }}</li>
+                    <li class="asset"><img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" height="25"> {{ app.user.level }}</li>
                     <li><a href="{{ path('fos_user_security_logout') }}" class="btn btn-logout"><i class="fa fa-power-off"></i> Desconectar</a></li>
                 </ul>
             </div>
@@ -128,6 +128,23 @@
                     }
                 }
             });
+
+            $('.shout-form').submit(function(e)
+            {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    data: data,
+                    method: $(this).attr('method'),
+                    success: function(result)
+                    {
+                        $('#shout').close();
+                    }
+                })
+            })
         });
     </script>
 {% endblock %}

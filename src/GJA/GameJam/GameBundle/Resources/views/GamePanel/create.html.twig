@@ -21,7 +21,8 @@
 
 {% block content %}
     <div class="section profile">
-        <h1>Crear juego nuevo</h1>
+        {% block title_top %}{% endblock %}
+        <h1>{% block title %}Crear juego nuevo{% endblock %}</h1>
         <div class="form-result">
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
@@ -42,13 +43,13 @@
         <p>¡Edita los datos de tu juego, añade enlaces, imagenes y videos!</p>
         <div class="info">
         </div>
-        <form id="loginform" action="{{ path('gamejam_game_panel_create') }}" {{ form_enctype(form) }} method="post">
+        <form id="loginform" action="{% block form_action %}{{ path('gamejam_game_panel_create') }}{% endblock %}" {{ form_enctype(form) }} method="post">
             <strong>Nombre del juego</strong>
             <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
                 {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
             </div>
-            <strong>Imagen del juego (300x90)</strong>
+            <strong>Imagen del juego (370x110)</strong>
             <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
                 {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
@@ -79,7 +80,7 @@
             </ul>
             <div style="margin-top:10px" class="form-group bottom">
                 <div class="col-sm-12 controls">
-                    <button type="submit" id="btn-login" class="btn btn-green submit">¡Añadir juego!</button>
+                    <button type="submit" id="btn-login" class="btn btn-green submit">{% block button_submit %}¡Añadir juego!{% endblock %}</button>
                 </div>
             </div>
             <div style="display: none">

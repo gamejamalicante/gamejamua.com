@@ -76,7 +76,7 @@
                     data: data
                 });
 
-                shoutRequest.done(function(response, status, xhr)
+                shoutRequest.done(function()
                 {
                     reloadActivity('.activity', true);
                 });
@@ -196,6 +196,7 @@
                 </p>
             </div>
         </div>
+        {% if compo.open %}
         <div class="row compo-content">
             <div class="col-sm-6">
                 <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
@@ -247,5 +248,10 @@
                 </div>
             </div>
         </div>
+        {% else %}
+            <div style="margin: 50px; text-align: center;">
+            <h1 style="text-align: center">GameJam finalizada. ¡Muchas gracias por participar!</h1>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

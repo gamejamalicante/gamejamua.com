@@ -1,4 +1,5 @@
 <form action="{{ path('gamejam_user_panel_shout') }}" method="post" class="shout-form">
     {{ form_widget(form.content, {'attr':{'class':'shout form-control', 'placeholder':'Escribe aquí lo que se te pase por la mente...'}}) }}
     {{ form_rest(form) }}
+    <button type="submit" class="btn btn-twitter pull-right" style="margin-top: 5px;">¡Enviar!</button>
 </form>

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/panel/juegos")
@@ -55,6 +56,9 @@ class GamePanelController extends AbstractController
      */
     public function editAction(Request $request, Game $game)
     {
+        if(!$game->isUserAllowedToEdit($this->getUser()))
+            throw new AccessDeniedException;
+
         $form = $this->createForm(new GameType(), $game);
 
         if($request->isMethod("POST"))
@@ -68,12 +72,12 @@ class GamePanelController extends AbstractController
                 $this->addSuccessMessage("Cambios en el juego guardados");
 
                 // game creation event
-                $this->dispatchEvent(GameJamGameEvents::ACTIVITY_INFO_UPDATE, new GameActivityInfoUpdateEvent($game));
+                $this->dispatchEvent(GameJamGameEvents::ACTIVITY_INFO_UPDATE, new GameActivityInfoUpdateEvent($this->getUser(), $game));
 
                 return $this->redirectToPath('gamejam_game_panel_edit', ['game' => $game->getNameSlug()]);
             }
         }
 
-        return ['form' => $form->createView()];
+        return ['form' => $form->createView(), 'game' => $game];
     }
 }

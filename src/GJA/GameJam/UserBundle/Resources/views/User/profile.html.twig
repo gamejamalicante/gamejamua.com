@@ -15,7 +15,7 @@
             <h2>
                 <i class="fa fa-user"></i> {{ user.nickname }}
                 <img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" class="asset"> {{ user.coins }}
-                <img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" class="asset game"> {{ user.games|length }}
+                <img src="{{ asset('bundles/gamejamcompo/images/game.png') }}" class="asset game"> {{ user.level }}
             </h2>
             <p>
                 {{ user.username }}
@@ -61,9 +61,9 @@
     <div class="section activity">
         <div class="col-md-6 nopadding">
             <h2><i class="fa fa-comment"></i> Actividad</h2>
-            <div class="activity">
-                {% for activity in user.activity %}
-                    {% include ['GameJamUserBundle:User:_activity_' ~activity.typeName~'.html.twig', 'GameJamGameBundle:Game:_activity_' ~activity.typeName~'.html.twig'] %}
+            <div class="activity" style="margin-top: 10px;">
+                {% for item in user.activity %}
+                    {% include ['GameJamUserBundle:User:_activity_' ~item.typeName~'.html.twig', 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig'] %}
                 {% else %}
                     <p class="item shout">
                         Este usuario aún no ha publicado nada :(
@@ -73,16 +73,18 @@
         </div>
         <div class="col-md-6 nopadding last">
             <h2><i class="fa fa-rocket"></i> Juegos publicados</h2>
-            {% if user == app.user %}
-                <span class="pull-right"><a class="btn action btn-green" href="{{ path('gamejam_game_panel_create') }}"><i class="fa fa-plus"></i> Añadir juego</a></span>
-            {% endif %}
+            <div class="anygame profile" style="margin-top: 10px;">
             {% for game in user.allGames %}
-                {% include 'GameJamUserBundle:User:_game.html.twig' %}
+                {% include 'GameJamGameBundle:Game:_game_single.html.twig' %}
             {% else %}
                 <p class="item shout">
                     Este usuario aún no tiene juegos :(
                 </p>
             {% endfor %}
+            {% if user == app.user %}
+                <a class="btn action btn-green" href="{{ path('gamejam_game_panel_create') }}"><i class="fa fa-plus"></i> Añadir juego</a>
+            {% endif %}
+            </div>
         </div>
     </div>
     <div class="clearfix"></div>

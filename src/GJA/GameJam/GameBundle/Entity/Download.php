@@ -23,8 +23,9 @@ class Download
     const PLATFORM_WINDOWS = 1;
     const PLATFORM_MAC = 2;
     const PLATFORM_LINUX = 3;
-    const PLATFORM_ANDROID = 3;
-    const PLATFORM_WEB = 4;
+    const PLATFORM_ANDROID = 4;
+    const PLATFORM_WEB = 5;
+    const PLATFORM_IOS = 6;
 
     /**
      * @ORM\Id
@@ -51,7 +52,7 @@ class Download
     protected $updatedAt;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $version;
 
@@ -63,10 +64,10 @@ class Download
     /**
      * @ORM\Column(type="json_array")
      */
-    protected $platforms;
+    protected $platforms = array();
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $comment;
 
@@ -76,9 +77,40 @@ class Download
     protected $game;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $size;
+
+    /**
+     * @var array
+     * TODO: move this to it's entity
+     */
+    protected $platformMap = array(
+        self::PLATFORM_IOS => array(
+            'slug' => 'ios',
+            'name' => 'iOS (iPhone/iPad)'
+        ),
+        self::PLATFORM_WEB => array(
+            'slug' => 'web',
+            'name' => 'Web (HTML5/Javascript)'
+        ),
+        self::PLATFORM_ANDROID => array(
+            'slug' => 'android',
+            'name' => 'Android'
+        ),
+        self::PLATFORM_LINUX => array(
+            'slug' => 'linux',
+            'name' => 'GNU/Linux'
+        ),
+        self::PLATFORM_MAC => array(
+            'slug' => 'mac',
+            'name' => 'Mac'
+        ),
+        self::PLATFORM_WINDOWS => array(
+            'slug' => 'windows',
+            'name' => 'Windows (7/8)'
+        )
+    );
 
     /**
      * @param mixed $comment
@@ -261,5 +293,10 @@ class Download
     public function getFileUrl()
     {
         return $this->fileUrl;
+    }
+
+    public function getPlatformDescription($platform)
+    {
+        return $this->platformMap[$platform];
     }
 } 

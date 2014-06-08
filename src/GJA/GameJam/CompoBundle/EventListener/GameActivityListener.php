@@ -44,7 +44,7 @@ class GameActivityListener extends AbstractActivityListener
         $this->persistAndDispatchActivity($activity);
     }
 
-    public function onInfoUpdated(GameActivityInfoUpdateEvent $event)
+    public function onInfoUpdate(GameActivityInfoUpdateEvent $event)
     {
         $activity = $this->createActivity($event->getGame(), $event->getUser());
         $activity->setType(Activity::TYPE_INFO_UPDATE);

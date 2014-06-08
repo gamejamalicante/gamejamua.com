@@ -46,6 +46,7 @@ class ActivityRepository extends EntityRepository
                 Activity::TYPE_LIKES,
                 Activity::TYPE_MEDIA
             ])
+        ->addOrderBy("a.date", "DESC")
         ->setMaxResults($limit);
 
         return $query->getQuery()->getResult();
@@ -60,6 +61,7 @@ class ActivityRepository extends EntityRepository
                 Activity::TYPE_SHOUT,
                 Activity::TYPE_TWITTER
             ])
+            ->addOrderBy("a.date", "DESC")
             ->setMaxResults($limit);
 
         return $query->getQuery()->getResult();
