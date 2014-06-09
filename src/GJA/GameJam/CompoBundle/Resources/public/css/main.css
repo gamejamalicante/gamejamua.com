@@ -501,6 +501,8 @@ footer .copyright a
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.6);
     margin-right: 20px;
+    width: 200px;
+    height: 200px;
 }
 
 .section.profile .pull-right .avatar

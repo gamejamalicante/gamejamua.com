@@ -105,7 +105,7 @@
                     {% if team %}
                         Formas parte del equipo <strong>{{ team }}</strong>. <br><br>
                         {% for member in team.users %}
-                            <img class="avatar" src="{% if gravatar_exists(member.email) %}{{ gravatar(member.email, 10) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" style="width: 20px;" /> {{ member }} {% if team.leader == member %} (Líder){% endif %}<br>
+                            <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> {{ member }} {% if team.leader == member %} (Líder){% endif %}<br>
                         {% endfor %}
                         {% if invite_form %}
                             <h4>Invitar a gente a tu equipo</h4>
