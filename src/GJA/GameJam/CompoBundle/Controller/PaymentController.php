@@ -37,12 +37,6 @@ class PaymentController extends AbstractPaymentController
     public function detailsAction(Request $request, Compo $compo, Order $order)
     {
         $order = $this->processOrderDetails($compo, $order);
-        $paymentInstruction = $order->getPaymentInstruction();
-
-        if($paymentInstruction && $paymentInstruction->getState() == FinancialTransactionInterface::STATE_PENDING)
-        {
-            return $this->redirectToPath("gamejam_compo_payment_complete", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()]);
-        }
 
         $routes = [
             'already_paid' => $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]),

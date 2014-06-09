@@ -46,7 +46,6 @@ abstract class AbstractPaymentController extends AbstractController
                     'return_url' => $routes['paypal_success'],
                     'cancel_url' => $routes['paypal_cancel'],
                     'checkout_params' => $this->getPaypalItemDescription($order),
-                    'amount' => $order->getPaypalAmount()
                 ),
             ),
         ));
@@ -124,10 +123,6 @@ abstract class AbstractPaymentController extends AbstractController
 
             $number++;
         }
-
-        $paypalConfig['L_PAYMENTREQUEST_0_NAME' . $number] = "Cargo servicio PayPal";
-        $paypalConfig['L_PAYMENTREQUEST_0_QTY' . $number] = 1;
-        $paypalConfig['L_PAYMENTREQUEST_0_AMT' . $number] = (string) $order->getPaypalCommission();
 
         $paypalConfig['PAGESTYLE'] = "Gamejam";
 
