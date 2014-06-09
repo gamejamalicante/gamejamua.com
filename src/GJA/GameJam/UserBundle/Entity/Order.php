@@ -68,6 +68,7 @@ class Order
 
     /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\CompoApplication", mappedBy="order")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $compoApplication;
 
