@@ -1,6 +1,9 @@
 {% extends 'GameJamUserBundle:Panel:edit.html.twig' %}
 
 {% block content %}
-    {% block hwi_oauth_content %}
-    {% endblock %}
+    <div class="section profile">
+        <h1>Conectar cuenta externa</h1>
+        {% block hwi_oauth_content %}
+        {% endblock %}
+    </div>
 {% endblock %}

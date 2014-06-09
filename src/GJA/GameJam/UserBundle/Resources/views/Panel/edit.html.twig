@@ -50,7 +50,7 @@
             <div class="twitter" style="margin-bottom: 25px;">
             <strong>Twitter</strong> (la usaremos para mostrar tus Tweets sobre la GameJam a lo largo de la web)<br>
             {% if user.hasOauthServiceConnected("twitter") %}
-                <button class="btn btn-twitter btn-large">Desconectar tu cuenta de Twitter (<strong>@{{ user.getOauthTwitterUsername }}</strong>)</button>
+                <a class="btn btn-twitter btn-large" href="#">Desconectar tu cuenta de Twitter (<strong>@{{ user.getOauthTwitterUsername }}</strong>)</a>
             {% else %}
                 <a class="btn btn-twitter btn-lg" href="{{ path('hwi_oauth_service_redirect', {service: "twitter"}) }}">Conectar Twitter</a>
             {% endif %}
