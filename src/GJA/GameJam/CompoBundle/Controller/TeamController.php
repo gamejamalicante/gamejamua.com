@@ -206,11 +206,14 @@ class TeamController extends AbstractController
                 return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
             }
 
-            if($target->getApplicationTo($compo)->getModality() !== $leader->getApplicationTo($compo)->getModality())
+            if($targetApplication = $target->getApplicationTo($compo))
             {
-                $this->addSuccessMessage("<strong>Error</strong>: No podéis formar parte del mismo equipo ya que no estáis bajo la misma modalidad");
+                if($targetApplication->getModality() !== $leader->getApplicationTo($compo)->getModality())
+                {
+                    $this->addSuccessMessage("<strong>Error</strong>: No podéis formar parte del mismo equipo ya que no estáis bajo la misma modalidad");
 
-                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+                    return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+                }
             }
 
             if($targetTeam = $target->getTeamForCompo($compo))
