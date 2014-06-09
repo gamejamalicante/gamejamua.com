@@ -57,7 +57,8 @@ class TeamController extends AbstractController
             'request_form' => null,
             'is_leader' => false,
             'teams' => $teams,
-            'open_formation' => $compo->isTeamFormationOpen()
+            'open_formation' => $compo->isTeamFormationOpen(),
+            'user_application' => $compo->getApplicationForUser($user)
         ];
 
         if($team = $user->getTeamForCompo($compo))
