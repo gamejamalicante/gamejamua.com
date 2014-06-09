@@ -94,6 +94,11 @@ class Notification
         return $this->announce;
     }
 
+    public function isAnnounce()
+    {
+        return $this->announce;
+    }
+
     /**
      * @param mixed $content
      */
