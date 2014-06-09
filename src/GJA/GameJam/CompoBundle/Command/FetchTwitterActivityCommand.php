@@ -78,7 +78,8 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
             $activity->setCompo($this->getCurrentCompo());
 
             $content = array(
-                'content' => $tweet->text
+                'content' => $tweet->text,
+                'id' => $tweet->id
             );
 
             if(!$user)
@@ -137,11 +138,13 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
 
         $query = implode($hashtags, " OR ");
 
+        /** @var Activity $lastInteraction */
         $lastInteraction = $activityRepository->findLastTwitterInteraction();
 
         if($lastInteraction)
         {
-            $query .= " since:" . $lastInteraction->getDate()->format("Y-m-d");
+            if(isset($lastInteraction->getContent()['id']))
+                $query .= " since_id:" . $lastInteraction->getContent()['id'];
         }
 
         return $query;
