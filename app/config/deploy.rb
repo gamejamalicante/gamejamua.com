@@ -4,7 +4,6 @@ set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
 set :application, "gamejamua.com"
-set :deploy_to,   "/home/devel/www/beta.#{application}"
 set :app_path,    "app"
 set :user, "devel"
 
@@ -66,8 +65,13 @@ desc 'Update blog'
 
     capifony_pretty_print '--> Updating WordPress blog'
 
-    run "cp #{release_path}/web/blog/.env.#{fetch(:stage)} #{release_path}/web/blog/.env"
-    run "cd #{release_path}/web/blog ; composer install"
+    origin_file = "web/blog/.env.#{fetch(:stage)}"
+    destination_file = deploy_to + '/' + shared_dir + '/.env'
+
+    run "sh -c 'if [ ! -d #{File.dirname(destination_file)} ] ; then mkdir -p #{File.dirname(destination_file)}; fi'"
+    top.upload(origin_file, destination_file)
+
+    run "mv #{shared_path}/.env #{current_path}/web/blog/ ; cd #{current_path}/web/blog/ ; composer install"
 
     capifony_puts_ok
 end
