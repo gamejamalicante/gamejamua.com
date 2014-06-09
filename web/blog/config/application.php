@@ -37,7 +37,7 @@ $table_prefix = 'blog_';
  * Authentication Unique Keys and Salts
  * https://api.wordpress.org/secret-key/1.1/salt
  */
-$salt = "nUoUgcfYc6wSwh6qBknsEnI29JEBeigTf";
+$salt = getenv("SALT");
 define('AUTH_KEY',         $salt);
 define('SECURE_AUTH_KEY',  $salt);
 define('LOGGED_IN_KEY',    $salt);
