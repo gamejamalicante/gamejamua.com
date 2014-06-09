@@ -145,7 +145,7 @@ class MigrationCommand extends ContainerAwareCommand
 
     protected function migrateUsers()
     {
-        $users = $this->connection->query("SELECT * FROM USUARIOS u JOIN DATOSUSUARIO d ON d.id = u.id;")->fetchAll();
+        $users = $this->connection->query("SELECT * FROM USUARIOS u JOIN DATOSUSUARIO d ON d.id = u.id LEFT JOIN PRIVILEGIOS p ON u.id = p.usuario;")->fetchAll();
 
         foreach($users as $user)
         {
@@ -165,13 +165,21 @@ class MigrationCommand extends ContainerAwareCommand
             else
                 $user->sexo = null;
 
+            $roles = array("ROLE_USER", "ROLE_OLD");
+
+            if($user->cargo == '1')
+                $roles[] = "ROLE_ADMIN";
+
+            if($user->cargo == '3')
+                $roles[] = "ROLE_CONTRIBUTOR";
+
             $userEntity = new User();
             $userEntity->setUsername($user->nombre);
             $userEntity->setEmail($user->email);
             $userEntity->setNickname($user->nick);
             $userEntity->setLegacyPassword(true);
             $userEntity->setPassword($user->password);
-            $userEntity->setRoles(array("ROLE_USER", "ROLE_OLD"));
+            $userEntity->setRoles($roles);
             $userEntity->setCoins($user->puntos);
             $userEntity->setTwitter($user->twitter);
             $userEntity->setBirthDate($user->cumple ? new \DateTime($user->cumple) : null);

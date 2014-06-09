@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_games_media")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Media
 {
@@ -73,6 +74,11 @@ class Media
      * @var string
      */
     protected $youtubeId;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * @param mixed $comment

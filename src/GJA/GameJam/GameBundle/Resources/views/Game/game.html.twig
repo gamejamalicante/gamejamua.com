@@ -64,7 +64,7 @@
 
         $(document).ready(function()
         {
-            $('.voteup').click(function()
+            $('#vote-up').click(function()
             {
                 {% if not app.user %}
                     window.alert('Debes estar registrado para valorar juegos')
@@ -75,7 +75,11 @@
                     url: '{{ path('gamejam_game_like', {game: game.nameSlug}) }}',
                     success: function(result)
                     {
+                        $('#vote-up').removeClass('voteup').addClass('voted');
                         $('#vote-up .count').html(result.likes);
+                        $('#vote-up').click(function()
+                        {
+                        });
                     }
                 });
                 {% endif %}
@@ -116,7 +120,7 @@
 
 {% block content %}
     <div class="section game">
-    <span class="{% if game.hasUserAlreadyLiked(app.user) %}voted{% else %}voteup{% endif %}"><span class="count">{{ game.likes }}</span> <i class="fa fa-thumbs-up"></i></span>
+    <span class="{% if game.hasUserAlreadyLiked(app.user) %}voted{% else %}voteup{% endif %}" id="vote-up"><span class="count">{{ game.likes }}</span> <i class="fa fa-thumbs-up"></i></span>
     <span class="givecoins" id="give-coins"><span class="count">{{ game.coins }}</span> <img src="{{ asset('bundles/gamejamcompo/images/coin.png') }}"> </span>
     <h1>{{ game }}</h1>
         {% if give_coins_form %}
@@ -127,7 +131,7 @@
                     <span class="input-group-addon"><i class="fa fa-money"></i></span>
                     {{ form_widget(give_coins_form.coins, {'attr':{'class':'form-control'}}) }}
                 </div>
-                <button type="submit" class="btn">Dar monedas</button>
+                <button type="submit" class="btn">Dar UltraCoins</button>
             </form>
         </div>
         {% endif %}

@@ -12,6 +12,7 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use GJA\GameJam\UserBundle\Entity\Order;
 
 /**
  * @ORM\Entity
@@ -62,6 +63,7 @@ class CompoApplication
 
     /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"}, inversedBy="compoApplication")
+     * @var Order
      */
     protected $order;
 
@@ -207,5 +209,16 @@ class CompoApplication
     public function getOrder()
     {
         return $this->order;
+    }
+
+    public function isOrderPending()
+    {
+        if($order = $this->getOrder())
+        {
+            if(!$order->isPaid())
+                return true;
+        }
+
+        return false;
     }
 }

@@ -12,10 +12,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
  * @ORM\Table(name="gamejam_games")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Game
 {
@@ -50,6 +52,7 @@ class Game
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     protected $name;
 
@@ -61,11 +64,13 @@ class Game
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     protected $description;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank
      */
     protected $image;
 
@@ -134,6 +139,11 @@ class Game
      * @ORM\JoinTable(name="gamejam_games_user_likes")
      */
     protected $userLike;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * @var bool
@@ -538,6 +548,22 @@ class Game
         return false;
     }
 
+    public function isUserAllowedToDelete(User $user)
+    {
+        if(!$this->getTeam())
+        {
+            if($user === $this->getUser())
+                return true;
+        }
+        else
+        {
+            if($user === $this->getTeam()->getLeader())
+                return true;
+        }
+
+        return false;
+    }
+
     public function giveCoins($coins)
     {
         $this->coins += (int) $coins;
@@ -593,5 +619,15 @@ class Game
             return false;
 
         return $this->userLike->contains($user);
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 }

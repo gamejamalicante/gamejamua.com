@@ -9,7 +9,7 @@
             {% for user in staff %}
                 <div class="col-md-2 nopadding">
                     <a href="{{ path('gamejam_user_profile', {user: user.username}) }}">
-                    <img src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 100) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" class="avatar" style="width: 100px" /><br>
+                    <img src="{{ user_avatar(user, 100) }}" class="avatar" style="width: 100px" /><br>
                     {{ user }}
                     </a>
                 </div>

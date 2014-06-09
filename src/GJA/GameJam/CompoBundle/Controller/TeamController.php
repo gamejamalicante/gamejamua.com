@@ -39,6 +39,13 @@ class TeamController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
         $teams = $this->getRepository("GameJamCompoBundle:Team")->findBy(['compo' => $compo]);
 
         $templateVars = [
@@ -83,10 +90,17 @@ class TeamController extends AbstractController
      */
     public function submitRequest(Request $request, Compo $compo)
     {
-        $teamForm = $this->createForm(new TeamRequestType($compo));
-
         /** @var User $user */
         $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
+        $teamForm = $this->createForm(new TeamRequestType($compo));
 
         if($user->getTeamForCompo($compo))
         {
@@ -106,6 +120,13 @@ class TeamController extends AbstractController
             if($user === $leader)
             {
                 $this->addSuccessMessage("<strong>Error</strong>: ¡No puedes hacer peticiones a tu propio equipo!");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+            }
+
+            if($user->getApplicationTo($compo)->getModality() !== $leader->getApplicationTo($compo)->getModality())
+            {
+                $this->addSuccessMessage("<strong>Error</strong>: No podéis formar parte del mismo equipo ya que no estáis bajo la misma modalidad");
 
                 return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
             }
@@ -144,8 +165,18 @@ class TeamController extends AbstractController
      */
     public function submitInvitation(Request $request, Compo $compo)
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
         /** @var User $leader */
-        $leader = $user = $this->getUser();
+        $leader = $user;
         $team = $leader->getTeamForCompo($compo);
 
         if($leader !== $team->getLeader())
@@ -170,6 +201,13 @@ class TeamController extends AbstractController
             if($target === $leader)
             {
                 $this->addSuccessMessage("<strong>Error</strong>: ¡No puedes invitarte a tí mismo!");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+            }
+
+            if($target->getApplicationTo($compo)->getModality() !== $leader->getApplicationTo($compo)->getModality())
+            {
+                $this->addSuccessMessage("<strong>Error</strong>: No podéis formar parte del mismo equipo ya que no estáis bajo la misma modalidad");
 
                 return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
             }
@@ -220,6 +258,14 @@ class TeamController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
         $team = $teamInvitation->getTeam();
 
         if($teamInvitation->getTarget() !== $user)
@@ -263,7 +309,17 @@ class TeamController extends AbstractController
      */
     public function acceptRequest(Compo $compo, TeamInvitation $teamInvitation)
     {
-        $leader = $this->getUser();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
+        $leader = $user;
         $team = $teamInvitation->getTeam();
 
         if($leader !== $team->getLeader())
@@ -309,6 +365,13 @@ class TeamController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
 
         if($team = $user->getTeamForCompo($compo))
         {
@@ -364,7 +427,17 @@ class TeamController extends AbstractController
      */
     public function cancelInvitationAction(Compo $compo, TeamInvitation $teamInvitation)
     {
-        if($teamInvitation->isUserAbleToCancel($this->getUser()))
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
+        if($teamInvitation->isUserAbleToCancel($user))
         {
             $this->deleteAndFlush($teamInvitation);
             $this->addSuccessMessage("Hemos eliminado la petición de equipo");
@@ -380,6 +453,14 @@ class TeamController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
+
         $team = $user->getTeamForCompo($compo);
 
         if($compo->isTeamFormationOpen() && $team)
@@ -413,6 +494,13 @@ class TeamController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete antes de poder gestionar tu equipo");
+
+            return $this->redirectToPath("gamejam_compo_compo_join", ['compo' => $compo->getNameSlug()]);
+        }
 
         if($compo->isTeamFormationOpen() && $team = $user->getTeamForCompo($compo))
         {

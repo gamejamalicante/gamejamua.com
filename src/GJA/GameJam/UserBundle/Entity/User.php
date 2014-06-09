@@ -290,7 +290,8 @@ class User extends BaseUser implements EncoderAwareInterface
 
         foreach($this->getTeams() as $team)
         {
-            $games->add($team->getGame());
+            if($game = $team->getGame())
+               $games->add($game);
         }
 
         foreach($this->getGames() as $game)

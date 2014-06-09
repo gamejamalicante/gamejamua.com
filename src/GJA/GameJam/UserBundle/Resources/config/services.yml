@@ -12,6 +12,11 @@ services:
     gamejam.user.security.legacy_password_encoder:
         class: GJA\GameJam\UserBundle\Security\LegacyPasswordEncoder
 
+    gamejam.user.twig.user_avatar:
+        class: GJA\GameJam\UserBundle\Twig\AvatarExtension
+        arguments: [@templating.helper.gravatar]
+        tags:
+            - { name: twig.extension, alias: 'user_avatar' }
 
 #    gamejam.user.user_action_listener:
 #        class: GJA\GameJam\UserBundle\EventListener\UserActionListener

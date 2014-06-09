@@ -24,7 +24,7 @@
         </div>
         <p>¡Editar y completa tu perfil, haz que todos te conozcan!</p>
         <div class="pull-right">
-            <img class="avatar" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 200) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
+            <img class="avatar" src="{{ user_avatar(user, 200) }}" />
         </div>
         <div class="info">
         </div>

@@ -30,6 +30,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         site:
+            bank_account: %bank_account%
             main_email: %main_email%
             irc:
                 server: 'irc.quakenet.org'
@@ -111,6 +112,7 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+            softdeleteable: true
 
 mz_mail_chimp:
     api_key: %mailchimp_api_key%
@@ -182,3 +184,21 @@ endroid_twitter:
     consumer_secret: %oauth.twitter_client_secret%
     access_token: %twitter_access_token%
     access_token_secret: %twitter_access_token_secret%
+
+#liip_cache_control:
+#    varnish:
+#        host: http://%domain%
+#        ips: 127.0.0.1
+#        port: 6081
+#        purge_instruction: ban
+#    debug: true
+#    rules:
+#        - { path: ^/(admin|login|logout|login_check|panel), controls: { public: false } }
+#        - { path: ^/user/, controls: { public: true, max_age: 86400, 86400
+#        - { path: ^/juegos/.*, controls: { public: true, max_age: 30000, s_maxage: 30000, last_modified: "-1 hour" } }
+#        - { path: ^/(.*)/(properties|inmuebles), controls: { public: false } }
+#        - { path: ^/(.*)/properties/listing, controls: { public: false } }
+#        - { controller: ^InmomedFrontendBundle:Frontend:weatherPartial, controls: { public: true, max_age: 3600, s_maxage: 3600, last_modified: "-1 hour" } }
+#        - { path: ^/ }
+#        - { path: ^/$, controls: { public: true, max_age: 604800, s_maxage: 604800, last_modified: "-1 hour" }, vary: [Accept-Language] }
+#        - { path: ^/, controls: { public: true, max_age: 604800, s_maxage: 604800, last_modified: "-1 hour" } }

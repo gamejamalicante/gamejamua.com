@@ -3,7 +3,7 @@
 {% block content %}
     <div class="section profile">
         <div class="pull-left">
-            <img class="avatar" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 200) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
+            <img class="avatar" src="{{ user_avatar(user, 200) }}" />
         </div>
         <div class="info">
             {% if user == app.user %}
@@ -50,8 +50,14 @@
         {% for achievement in user.achievements %}
             <a href="">
                 <div class="achievement">
-                    <p class="title">{{ achievement }}</p>
-                    <img title="{{ achievement }}" src="{{ asset(achievement.achievement.webPath) }}" style="width: 128px;">
+                    <p class="title">
+                        {% if achievement.achievement.hidden and not achievement.achievement.isGrantedTo(app.user) %}
+                            Logro oculto
+                        {% else %}
+                            {{ achievement }}
+                        {% endif %}
+                    </p>
+                    <img src="{{ asset(achievement.achievement.webPath) }}" style="width: 128px;">
                 </div>
             </a>
         {% else %}

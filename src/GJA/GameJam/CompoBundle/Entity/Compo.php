@@ -499,6 +499,11 @@ class Compo
         return $this->maxPeople - $validApplications;
     }
 
+    public function getCompletedApplications()
+    {
+        return $this->maxPeople - $this->getOpenPlaces();
+    }
+
     public function isTeamFormationOpen()
     {
         $now = new \DateTime("now");

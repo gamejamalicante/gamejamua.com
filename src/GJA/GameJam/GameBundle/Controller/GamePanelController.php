@@ -80,4 +80,35 @@ class GamePanelController extends AbstractController
 
         return ['form' => $form->createView(), 'game' => $game];
     }
+
+    /**
+     * @Route("/delete/{game}", name="gamejam_game_panel_delete")
+     * @ParamConverter("game", options={"mapping":{"game":"nameSlug"}})
+     */
+    public function deleteAction(Game $game)
+    {
+        if(!$game->isUserAllowedToDelete($this->getUser()))
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> no puedes eliminar este juego ya que pertenece a tu equipo. Por favor, contacta con el líder del equipo.");
+
+            return $this->redirectToPath('gamejam_game_panel_edit', ['game' => $game->getNameSlug()]);
+        }
+
+        if($game->getCompo())
+        {
+            // game from compo, softdelete
+            $this->deleteAndFlush($game);
+        }
+        else
+        {
+            // not from compo, hard delelete
+            $this->getEntityManager()->getFilters()->disable("soft-deleteable");
+
+            $this->deleteAndFlush($game);
+        }
+
+        $this->addSuccessMessage("Hemos eliminado el juego con éxito");
+
+        return $this->redirectToPath('gamejam_game_panel_create');
+    }
 }

@@ -46,7 +46,8 @@
         "hwi/oauth-bundle": "@dev",
         "endroid/twitter-bundle": "@dev",
         "webfactory/exceptions-bundle": "@stable",
-        "elao/error-notifier-bundle" : "dev-master"
+        "elao/error-notifier-bundle" : "dev-master",
+        "liip/cache-control-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [

@@ -20,6 +20,14 @@
 
 {% block content %}
     <div class="section inscription">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="mainbox col-md-6 col-sm-8 pull-right">
             <div class="panel panel-primary" >
                 <div class="panel-heading">

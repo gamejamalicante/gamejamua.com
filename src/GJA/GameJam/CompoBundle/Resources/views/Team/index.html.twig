@@ -82,7 +82,7 @@
                     <td>{% if team.game %}{{ team.game }}{% else %}Aún no lo han creado{% endif %}</td>
                     <td style="width: 190px;">
                         {% for member in team.users %}
-                            <img class="avatar" src="{% if gravatar_exists(member.email) %}{{ gravatar(member.email, 10) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" style="width: 20px;" /> {{ member }}<br>
+                            <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> {{ member }}<br>
                         {% endfor %}
                     </td>
                 </tr>

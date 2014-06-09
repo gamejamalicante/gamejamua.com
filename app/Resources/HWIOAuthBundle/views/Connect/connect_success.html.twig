@@ -1,0 +1,7 @@
+{% extends 'HWIOAuthBundle::layout.html.twig' %}
+
+{% block hwi_oauth_content %}
+    {{ parent() }}
+    <br>
+    <a class="btn" href="{{ path('gamejam_user_panel_edit') }}"><i class="fa fa-arrow-left"></i> Volver a tu panel de control</a>
+{% endblock hwi_oauth_content %}

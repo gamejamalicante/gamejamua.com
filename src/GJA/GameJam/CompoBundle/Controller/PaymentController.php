@@ -15,6 +15,7 @@ use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Order\CompoInscriptionItem;
 use GJA\GameJam\UserBundle\Controller\AbstractPaymentController;
 use GJA\GameJam\UserBundle\Entity\Order;
+use JMS\Payment\CoreBundle\Model\FinancialTransactionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -37,11 +38,17 @@ class PaymentController extends AbstractPaymentController
     {
         $order = $this->processOrderDetails($compo, $order);
 
+        if($order->getPaymentInstruction()->getState() == FinancialTransactionInterface::STATE_PENDING)
+        {
+            return $this->redirectToPath("gamejam_compo_payment_complete", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()]);
+        }
+
         $routes = [
             'already_paid' => $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]),
             'payment_complete' => $this->redirectToPath("gamejam_compo_payment_complete", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()]),
             'paypal_success' => $this->generateUrl("gamejam_compo_payment_complete", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()], true),
-            'paypal_cancel' => $this->generateUrl("gamejam_compo_payment_details", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => true], true)
+            'paypal_cancel' => $this->generateUrl("gamejam_compo_payment_details", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => true], true),
+            'bank_account_details_route' => $this->generateUrl("gamejam_compo_bank_account_details", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()])
         ];
 
         $form = $this->createPaymentForm($order, $routes);
@@ -79,6 +86,16 @@ class PaymentController extends AbstractPaymentController
         $this->addSuccessMessage("Ha habido un error procesando este pago. Por favor, vuelve a intentarlo");
 
         return $this->redirectToPath("gamejam_compo_payment_details", array('order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => 1));
+    }
+
+    /**
+     * @Route("/{order}/bank_account_details", name="gamejam_compo_bank_account_details")
+     * @ParamConverter("order", options={"mapping":{"order":"orderNumber"}})
+     * @Template
+     */
+    public function bankAccountDetailsAction(Compo $compo, Order $order)
+    {
+        return ['compo' => $compo, 'order' => $order];
     }
 
     private function processOrderDetails(Compo $compo, Order $order)

@@ -40,3 +40,5 @@ parameters:
     mailer_password: XXX
 
     twitter.username: ~ # Tweets from page will be published here
+
+    bank_account: ESXX XXXX XXXX XXXX XXXX

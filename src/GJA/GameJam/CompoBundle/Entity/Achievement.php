@@ -14,6 +14,7 @@ namespace GJA\GameJam\CompoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\CompoBundle\Achievement\GranterInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use GJA\GameJam\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\AchievementRepository")
@@ -235,5 +236,19 @@ class Achievement
     public function getWebPath()
     {
         return 'bundles/gamejamcompo/images/achievement/' . $this->image. '.png';
+    }
+
+    public function isGrantedTo($user)
+    {
+        if(is_null($user))
+            return false;
+
+        foreach($user->getAchievements() as $achievement)
+        {
+            if($achievement->getAchievement() === $this)
+                return true;
+        }
+
+        return false;
     }
 } 

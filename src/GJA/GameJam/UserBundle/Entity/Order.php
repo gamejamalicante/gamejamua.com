@@ -40,6 +40,7 @@ class Order
 
     /**
      * @ORM\OneToOne(targetEntity="JMS\Payment\CoreBundle\Entity\PaymentInstruction")
+     * @var PaymentInstruction
      */
     protected $paymentInstruction;
 

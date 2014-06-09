@@ -10,7 +10,7 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')
-            ->add('image', null, ['required' => false])
+            ->add('image', null, ['required' => true])
             ->add('diversifiers', null, ['required' => false, 'multiple' => true, 'expanded' => false])
             ->add('description')
             ->add('media', 'collection', [

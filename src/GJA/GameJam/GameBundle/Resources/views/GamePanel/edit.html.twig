@@ -3,6 +3,7 @@
 {% block title_top %}
     <div class="pull-right">
         <a class="btn btn-lg action" href="{{ path('gamejam_game', {game: game.nameSlug}) }}"><i class="fa fa-arrow-left"></i> Volver al juego</a>
+        {% if game.isUserAllowedToDelete(app.user) %}<br><br><a class="btn btn-lg btn-logout" href="{{ path('gamejam_game_panel_delete', {game: game.nameSlug}) }}"><i class="fa fa-trash-o"></i> Eliminar juego</a>{% endif %}
     </div>
 {% endblock %}
 
@@ -11,3 +12,12 @@
 {% block title %}Editar juego: {{ game }}{% endblock %}
 
 {% block button_submit %}¡Editar juego!{% endblock %}
+
+{% block compo_info %}
+    {% if game.compo %}
+        <strong>Edición GameJam</strong>
+        <div style="margin-bottom: 25px" class="input-group">
+            {{ game.compo }}{% if game.team %} - <strong>Equipo: </strong>{{ game.team }}{% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

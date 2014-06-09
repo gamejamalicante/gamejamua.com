@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_games_downloads")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Download
 {
@@ -80,6 +81,11 @@ class Download
      * @ORM\Column(type="string", nullable=true)
      */
     protected $size;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * @var array
@@ -298,5 +304,15 @@ class Download
     public function getPlatformDescription($platform)
     {
         return $this->platformMap[$platform];
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 } 

@@ -1,0 +1,27 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block content %}
+    <div class="section inscription">
+        <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right"><i class="fa fa-arrow-left"></i> Volver a la GameJam</a>
+        <h1>Inscribirse en la <strong>{{ compo }}</strong></h1>
+        <p>¡Ya estás casi dentro!</p>
+        <div class="mainbox col-md-12 col-sm-8 nopadding">
+            <div class="panel panel-primary" >
+                <div class="panel-heading">
+                    <div class="panel-title">Pago con cuenta bancaria</div>
+                </div>
+
+                <div class="panel-body">
+                    <p>Para completar la inscripción necesitamos que hagas un ingreso en la cuenta con la cantidad correspondiente. En un plazo de 2-3 días revisaremos tu ingreso y procederos a actualizar tu inscripción. ¡Date prisa, pues mientras tanto se pueden agotar las inscripciones!<br><br>
+                    <strong>Número de cuenta bancaria:</strong> {{ site.bank_account }}<br>
+                    <strong>Concepto para la transferencia:</strong> {{ order.orderNumber }}<br>
+                    <strong>Cantidad a ingresar: </strong>{{ order.amount }} €</p>
+                    Si tienes algún problema, no dudes en ponerte en contacto con nosotros.
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

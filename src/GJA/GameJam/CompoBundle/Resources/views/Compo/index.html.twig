@@ -157,6 +157,12 @@
                 </div>
             {% endfor %}
         {% endfor %}
+        {% if user_application and user_application.isOrderPending %}
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_complete', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
+            </div>
+        {% endif %}
         {% block returnback %}
             <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right">{% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %} <i class="fa fa-arrow-right"></i></a>
         {% endblock %}
@@ -177,7 +183,7 @@
                 <h2><i class="fa fa-rocket"></i> Tema elegido: <strong>{% if compo.theme %}{{ compo.theme }}{% else %}¡Aún no hay tema!{% endif %}</strong></h2>
                 <p><strong>Fecha de inicio:</strong> {{ compo.startAt|date("d/m/Y H:i:s") }}</p>
                 <p><strong>Fecha final:</strong> {{ compo.endAt|date("d/m/Y H:i:s") }}</p>
-                <p><strong>Número de participantes:</strong> {{ compo.applications|length }} participantes en {{ compo.teams|length }} equipos</p>
+                <p><strong>Número de participantes:</strong> {{ compo.completedApplications }} participantes en {{ compo.teams|length }} equipos</p>
                 <p>
                     Patrocinadores y colaboradores, ¡mil gracias!:<br>
                     {% for sponsor in compo.sponsors %}
@@ -224,9 +230,15 @@
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>
                 <div class="application">
                     {% if user_application %}
-                        <img class="avatar pull-right" src="{% if gravatar_exists(user.email) %}{{ gravatar(user.email, 50) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
+                        {% if user_application.isOrderPending %}
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_complete', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
+                            </div>
+                        {% endif %}
+                        <img class="avatar pull-right" src="{{ user_avatar(user, 50) }}" />
                         <p>
-                        {% if user %}
+                        {% if team %}
                             <strong>Equipo:</strong> {{ team }}
                         {% else %}
                             <strong>Estás participando en solitario :(</strong>

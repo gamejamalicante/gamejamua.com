@@ -1,5 +1,5 @@
 <div class="item achievement">
-    <img class="avatar" src="{% if gravatar_exists(item.user.email) %}{{ gravatar(item.user.email, 20) }}{% else %}{{ asset('bundles/gamejamcompo/images/noavatar.jpg') }}{% endif %}" />
+    <img class="avatar" src="{{ user_avatar(item.user) }}" />
     <h3>{{ item.user }} ha actualizado la información del juego</h3>
     <div class="clearfix"></div>
 </div>
