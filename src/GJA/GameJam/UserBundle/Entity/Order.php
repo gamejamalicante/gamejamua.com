@@ -14,8 +14,10 @@ namespace GJA\GameJam\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use GJA\GameJam\CompoBundle\Order\ItemInterface;
+use JMS\Payment\CoreBundle\Entity\Payment;
 use JMS\Payment\CoreBundle\Entity\PaymentInstruction;
 use JMS\Payment\CoreBundle\Model\PaymentInstructionInterface;
+use JMS\Payment\CoreBundle\Model\PaymentInterface;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\UserBundle\Repository\UserRepository")
@@ -39,7 +41,7 @@ class Order
     protected $createdAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="JMS\Payment\CoreBundle\Entity\PaymentInstruction")
+     * @ORM\OneToOne(targetEntity="JMS\Payment\CoreBundle\Entity\PaymentInstruction", cascade={"persist"})
      * @var PaymentInstruction
      */
     protected $paymentInstruction;
@@ -68,7 +70,6 @@ class Order
 
     /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\CompoApplication", mappedBy="order")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $compoApplication;
 
@@ -135,9 +136,10 @@ class Order
     {
         if($paymentInstruction = $this->getPaymentInstruction())
         {
-            return $paymentInstruction->getState() == PaymentInstructionInterface::STATE_CLOSED ?
-                true :
-                false;
+            /** @var Payment $payment */
+            $payment = $paymentInstruction->getPayments()->first();
+
+            return $payment->getState() === PaymentInterface::STATE_APPROVING;
         }
 
         return false;

@@ -71,7 +71,10 @@ class PaymentController extends AbstractPaymentController
         {
             $order->getCompoApplication()->setCompleted(true);
 
-            $this->persistAndFlush($order->getCompoApplication());
+            $this->persist($order->getCompoApplication());
+            $this->persist($order->getPaymentInstruction());
+
+            $this->flush();
 
             $this->addSuccessMessage("¡Pago realizado! Ya estás inscrito en la GameJam, ¡a disfrutar!");
 

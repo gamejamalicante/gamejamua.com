@@ -157,7 +157,7 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        {% if user_application and user_application.isOrderPending %}
+        {% if user_application and not user_application.isCompleted %}
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_complete', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
@@ -230,7 +230,7 @@
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>
                 <div class="application">
                     {% if user_application %}
-                        {% if user_application.isOrderPending %}
+                        {% if not user_application.isCompleted %}
                             <div class="alert alert-success">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_complete', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.

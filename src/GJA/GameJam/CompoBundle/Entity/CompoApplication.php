@@ -63,6 +63,7 @@ class CompoApplication
 
     /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"}, inversedBy="compoApplication")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Order
      */
     protected $order;
@@ -204,7 +205,7 @@ class CompoApplication
     }
 
     /**
-     * @return mixed
+     * @return Order
      */
     public function getOrder()
     {
