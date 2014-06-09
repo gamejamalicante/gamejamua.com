@@ -75,6 +75,7 @@ class Activity
 
     /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $team;
 

@@ -4,15 +4,17 @@ namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\UserBundle\Entity\User;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\TeamInvitationRepository")
  * @ORM\Table(name="gamejam_compos_teams_invitations", uniqueConstraints=
  * {
  *      @ORM\UniqueConstraint(name="unique_inv", columns={"team_id", "sender_id", "target_id", "compo_id", "type"})
  * })
  * @ORM\HasLifecycleCallbacks
- * )
+ * @UniqueEntity(fields={"team", "sender", "target", "compo", "type"}, message="¡Ya has enviado está petición!")
  */
 class TeamInvitation
 {
@@ -28,8 +30,15 @@ class TeamInvitation
 
     /**
      * @ORM\ManyToOne(targetEntity="Team")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $team;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $sentAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
@@ -177,5 +186,32 @@ class TeamInvitation
         {
             $this->hash = sha1($this->getTarget()->getId() . mt_rand(1, 9999) . uniqid());
         }
+    }
+
+    /**
+     * @param mixed $sentAt
+     */
+    public function setSentAt($sentAt)
+    {
+        $this->sentAt = $sentAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSentAt()
+    {
+        return $this->sentAt;
+    }
+
+    public function isUserAbleToCancel(User $user)
+    {
+        if($this->getSender() === $user)
+            return true;
+
+        if($this->getTarget() === $user)
+            return true;
+
+        return false;
     }
 } 

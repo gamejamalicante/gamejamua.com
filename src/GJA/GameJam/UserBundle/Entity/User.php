@@ -61,6 +61,16 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $teams;
 
     /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\TeamInvitation", mappedBy="target", fetch="LAZY")
+     */
+    protected $teamInvitationsReceived;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\TeamInvitation", mappedBy="sender", fetch="LAZY")
+     */
+    protected $teamInvitationsSent;
+
+    /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\CompoApplication", mappedBy="user")
      */
     protected $applications;
@@ -84,7 +94,7 @@ class User extends BaseUser implements EncoderAwareInterface
     /**
      * @ORM\Column(type="integer")
      */
-    protected $coins = 0;
+    protected $coins = 100;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -695,6 +705,10 @@ class User extends BaseUser implements EncoderAwareInterface
         return $this->readNotifications->contains($notification);
     }
 
+    /**
+     * @param Compo $compo
+     * @return Team
+     */
     public function getTeamForCompo(Compo $compo)
     {
         foreach($this->getTeams() as $team)
@@ -727,5 +741,42 @@ class User extends BaseUser implements EncoderAwareInterface
     public function substractCoins($coins)
     {
         $this->coins -= (int) $coins;
+    }
+
+    /**
+     * @param mixed $teamInvitationsReceived
+     */
+    public function setTeamInvitationsReceived($teamInvitationsReceived)
+    {
+        $this->teamInvitationsReceived = $teamInvitationsReceived;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeamInvitationsReceived()
+    {
+        return $this->teamInvitationsReceived;
+    }
+
+    /**
+     * @param mixed $teamInvitationsSent
+     */
+    public function setTeamInvitationsSent($teamInvitationsSent)
+    {
+        $this->teamInvitationsSent = $teamInvitationsSent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeamInvitationsSent()
+    {
+        return $this->teamInvitationsSent;
+    }
+
+    public function removeFromTeam(Team $team)
+    {
+        $this->teams->removeElement($team);
     }
 }

@@ -104,7 +104,7 @@ class Game
     protected $coins = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team", inversedBy="games")
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Team", inversedBy="game")
      */
     protected $team;
 

@@ -33,7 +33,7 @@ abstract class AbstractPaymentController extends AbstractController
         $pluginController = $this->get('payment.plugin_controller');
 
         /** @var Form $form */
-        $form = $this->get('form.factory')->create('jms_choose_payment_method', null, array(
+        $form = $this->createForm('jms_choose_payment_method', null, array(
             'amount' => $order->getPaypalAmount(),
             'currency' => 'EUR',
             'default_method' => 'paypal_express_checkout',

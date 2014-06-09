@@ -39,12 +39,6 @@
                                 <label>
                                     {{ form_widget(form.method.0, {'attr':{'selected':'selected'}}) }} Pago con PayPal <img src="{{ asset('bundles/gamejamcompo/images/paypal.png') }}"> <img src="{{ asset('bundles/gamejamcompo/images/visa.png') }}"> <img src="{{ asset('bundles/gamejamcompo/images/mastercard.png') }}">
                                 </label><br>
-                                <label>
-                                    <input type="radio"> Transferencia bancaria
-                                </label><br>
-                                <label>
-                                    <input type="radio"> Pago en mano
-                                </label>
                             </div>
                         </div>
                         <div style="margin-top:10px" class="form-group bottom">
@@ -59,8 +53,8 @@
         <h1>Inscribirse en la <strong>{{ compo }}</strong></h1>
         <p>¡Ya estás casi dentro! Ahora puedes realizar el pago online para confirmar tu registro en la GameJam. Tenemos varias maneras de pagar, ¡elige la que mejor te convenga!</p>
         <p><strong>PayPal</strong><br>Haz el pago online y queda registrado en la GameJam de manera instantánea! El coste de PayPal incluye un pequeño recargo (sí, los sinvergüenzas de PayPal cobran comisiones)</p>
-        <p><strong>Cuenta bancaria</strong><br>También puedes hacer un ingreso a través de nuestra cuenta bancaria. Si eliges este modo de pago, tendrás máximo 1 semana para hacer el ingreso, ¡si no perderás tu plaza en la GameJam! Este modo no lleva comisiones.</p>
-        <p><strong>Pago en mano</strong><br>Si eliges este método de pago, nos pondremos en contacto contigo para gestionar el pago en mano. Lo mismo que con cuenta bancaria, tienes 1 semana para realizarlo! Por supuesto, sin comisiones (pero si nos quieres invitar a un algo, tampoco vamos a decir que no)</p>
+        {# <p><strong>Cuenta bancaria</strong><br>También puedes hacer un ingreso a través de nuestra cuenta bancaria. Si eliges este modo de pago, tendrás máximo 1 semana para hacer el ingreso, ¡si no perderás tu plaza en la GameJam! Este modo no lleva comisiones.</p>
+        <p><strong>Pago en mano</strong><br>Si eliges este método de pago, nos pondremos en contacto contigo para gestionar el pago en mano. Lo mismo que con cuenta bancaria, tienes 1 semana para realizarlo! Por supuesto, sin comisiones (pero si nos quieres invitar a un algo, tampoco vamos a decir que no)</p> #}
         <div class="clearfix"></div>
     </div>
 {% endblock %}

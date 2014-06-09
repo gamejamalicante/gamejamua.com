@@ -21,6 +21,7 @@
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
 
+    {% if compo.open %}
     <script type="text/javascript">
 
         var lastUpdate = Math.round(+new Date()/1000)-86400;
@@ -92,6 +93,8 @@
 
             setInterval('reloadActivity(".activity")', 10000);
 
+            {% block countdown_js %}
+
             {% if not compo.hasFinished %}
                 {% if compo.hasStarted %}
                     $('.countdown').countdown({until: {{ compo.secondsToFinish }}});
@@ -99,6 +102,8 @@
                     $('.countdown').countdown({until: {{ compo.secondsToStartTime }}});
                 {% endif %}
             {% endif %}
+
+            {% endblock %}
         });
 
         function loadTeamForm(form, result, successText, errorText, callback)
@@ -138,29 +143,11 @@
                 });
             });
         }
-
-        $(document).ready(function()
-        {
-            loadTeamForm('#send-invitation', '#send-invitation-result', '¡Invitación enviada', 'Oops! Error!');
-            loadTeamForm('#send-request', '#send-request-result', '¡Petición enviada!', 'Oops! Error!');
-            loadTeamForm('#team-create', '#create-team-result', '!Éxito!', 'Oops! Error!', function()
-            {
-                $('#team-container').load('{{ path('gamejam_compo_compo_team', {compo: compo.nameSlug}) }}');
-            });
-
-            $('select.select2').select2();
-        });
     </script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-    <div class="modal fade" id="twitter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body"><div class="te"></div></div>
-            </div>
-        </div>
-    </div>
     <div class="section compo">
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
@@ -170,8 +157,18 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        <div id="countdown-container">{% if not compo.hasFinished %}¡Quedan <span class="countdown"></span> {% if compo.hasStarted %}para que acabe{% else %}para que empieze{% endif %}!{% endif %}</div>
+        {% block returnback %}
+            <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right">{% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %} <i class="fa fa-arrow-right"></i></a>
+        {% endblock %}
         <h1><strong>{{ compo }}</strong></h1>
+        {% block countdown %}
+            <div id="countdown-container" class="pull-left">
+                {% if not compo.hasFinished %}
+                    ¡Quedan <span class="countdown"></span> {% if compo.hasStarted %}para que acabe{% else %}para que empieze{% endif %}!
+                {% endif %}
+            </div><br><br>
+        {% endblock %}
+        {% block compo_body %}
         <div class="row description">
             <div class="col-md-6">
                 <p>{{ compo.description|raw }}</p>
@@ -221,7 +218,7 @@
                 {% if user_application %}
                 <h2><i class="fa fa-users"></i> Tu equipo</h2>
                 <div class="application" id="team-container">
-                    {{ render(controller("GameJamCompoBundle:Compo:partialTeam", {compo: compo.nameSlug})) }}
+                    <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}">Pulsa aquí</a> para gestionar tu equipo
                 </div>
                 {% endif %}<br><br>
                 <h2><i class="fa fa-pencil"></i> Tu inscripción</h2>
@@ -252,5 +249,6 @@
             <h1 style="text-align: center">GameJam finalizada. ¡Muchas gracias por participar!</h1>
             </div>
         {% endif %}
+        {% endblock %}
     </div>
 {% endblock %}

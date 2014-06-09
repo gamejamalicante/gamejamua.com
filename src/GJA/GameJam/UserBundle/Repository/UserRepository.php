@@ -12,6 +12,7 @@
 namespace GJA\GameJam\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 class UserRepository extends EntityRepository
 {
@@ -34,5 +35,23 @@ DQL;
         return $this->getEntityManager()->createQuery($dql)
             ->setParameter('role', '%' . $role. '%')
             ->getResult();
+    }
+
+    public function findOneByUsernameOrEmail($username)
+    {
+        $dql = <<<DQL
+SELECT u FROM GameJamUserBundle:User u WHERE u.username = :username OR u.email = :username
+DQL;
+
+        try
+        {
+            return $this->getEntityManager()->createQuery($dql)
+                ->setParameter('username', $username)
+                ->getSingleResult();
+        }
+        catch(NoResultException $ex)
+        {
+            return null;
+        }
     }
 } 

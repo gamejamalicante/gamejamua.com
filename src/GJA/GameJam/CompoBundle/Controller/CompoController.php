@@ -49,7 +49,8 @@ class CompoController extends AbstractController
             'user' => $user,
             'user_application' => $userApplication,
             'compo' => $compo,
-            'team' => $user ? $user->getTeamForCompo($compo) : null
+            'team' => $user ? $user->getTeamForCompo($compo) : null,
+            'open_formation' => $compo->isTeamFormationOpen()
         ];
     }
 
@@ -104,47 +105,6 @@ class CompoController extends AbstractController
         }
 
         return ['compo' => $compo, 'form' => $form->createView()];
-    }
-
-    /**
-     * @Route("/_team", name="gamejam_compo_compo_team")
-     * @Template("GameJamCompoBundle:Compo:_team.html.twig")
-     */
-    public function partialTeamAction(Compo $compo)
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $templateVars = [
-            'compo' => $compo,
-            'team' => null,
-            'user' => $user,
-            'invite_form' => null,
-            'creation_form' => null,
-            'request_form' => null
-        ];
-
-        if($team = $user->getTeamForCompo($compo))
-        {
-            $templateVars['team'] = $team;
-
-            if($team->getLeader() === $user)
-            {
-                $teamForm = $this->createForm(new TeamInvitationType($compo, $user));
-
-                $templateVars['invite_form'] = $teamForm->createView();
-            }
-        }
-        else
-        {
-            $teamCreateForm = $this->createForm(new TeamType());
-            $teamForm = $this->createForm(new TeamRequestType($compo));
-
-            $templateVars['creation_form'] = $teamCreateForm->createView();
-            $templateVars['request_form'] = $teamForm->createView();
-        }
-
-        return $templateVars;
     }
 
     /**

@@ -104,7 +104,7 @@ class TeamInvitationSubscriber implements EventSubscriberInterface
             ->createNotification(Notification::TYPE_INCLUDE_ONLY)
             ->setRenderedTitle("GameJamCompoBundle:Notification:_team_request_accepted_title.html.twig", ['team_invitation' => $teamInvitation])
             ->setRenderedContent("GameJamCompoBundle:Notification:_team_request_accepted_content.html.twig", ['team_invitation' => $teamInvitation])
-            ->addUser($teamInvitation->getTarget())
+            ->addUser($teamInvitation->getSender())
             ->build();
 
         $this->notifier->sendNotification($notification);
@@ -118,7 +118,7 @@ class TeamInvitationSubscriber implements EventSubscriberInterface
             ->createNotification(Notification::TYPE_INCLUDE_ONLY)
             ->setRenderedTitle("GameJamCompoBundle:Notification:_team_request_rejected_title.html.twig", ['team_invitation' => $teamInvitation])
             ->setRenderedContent("GameJamCompoBundle:Notification:_team_request_rejected_content.html.twig", ['team_invitation' => $teamInvitation])
-            ->addUser($teamInvitation->getTarget())
+            ->addUser($teamInvitation->getSender())
             ->build();
 
         $this->notifier->sendNotification($notification);

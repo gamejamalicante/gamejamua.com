@@ -31,12 +31,69 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class TeamController extends AbstractController
 {
     /**
-     * @Route("/enviar-peticion", name="gamejam_compo_team_send_request", defaults={"_format":"json"})
+     * @Route("/", name="gamejam_compo_team")
+     * @Template()
+     */
+    public function indexAction(Compo $compo)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $teams = $this->getRepository("GameJamCompoBundle:Team")->findBy(['compo' => $compo]);
+
+        $templateVars = [
+            'compo' => $compo,
+            'team' => null,
+            'user' => $user,
+            'invite_form' => null,
+            'creation_form' => null,
+            'request_form' => null,
+            'is_leader' => false,
+            'teams' => $teams,
+            'open_formation' => $compo->isTeamFormationOpen()
+        ];
+
+        if($team = $user->getTeamForCompo($compo))
+        {
+            $templateVars['team'] = $team;
+            $templateVars['is_leader'] = $team->getLeader() === $user;
+
+            if($team->getLeader() === $user)
+            {
+                $teamForm = $this->createForm(new TeamInvitationType($this->getEntityManager()));
+
+                $templateVars['invite_form'] = $teamForm->createView();
+            }
+        }
+        else
+        {
+            $teamCreateForm = $this->createForm(new TeamType());
+            $teamForm = $this->createForm(new TeamRequestType($compo));
+
+            $templateVars['creation_form'] = $teamCreateForm->createView();
+            $templateVars['request_form'] = $teamForm->createView();
+        }
+
+        return $templateVars;
+    }
+
+    /**
+     * @Route("/enviar-peticion", name="gamejam_compo_team_send_request")
      * @Method({"POST"})
      */
     public function submitRequest(Request $request, Compo $compo)
     {
         $teamForm = $this->createForm(new TeamRequestType($compo));
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($user->getTeamForCompo($compo))
+        {
+            $this->addSuccessMessage("<strong>Error</strong>: ¡Ya tienes equipo para esta GameJam! Si quieres cambiar, salte primero y vuelve a enviar la petición");
+
+            return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+        }
 
         $teamForm->handleRequest($request);
 
@@ -44,7 +101,16 @@ class TeamController extends AbstractController
         {
             /** @var TeamInvitation $teamInvitation */
             $teamInvitation = $teamForm->getData();
-            $teamInvitation->setTarget($teamInvitation->getTeam()->getLeader());
+            $leader = $teamInvitation->getTeam()->getLeader();
+
+            if($user === $leader)
+            {
+                $this->addSuccessMessage("<strong>Error</strong>: ¡No puedes hacer peticiones a tu propio equipo!");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+            }
+
+            $teamInvitation->setTarget($leader);
             $teamInvitation->setSender($this->getUser());
             $teamInvitation->setCompo($compo);
             $teamInvitation->setType(TeamInvitation::TYPE_REQUEST);
@@ -55,24 +121,25 @@ class TeamController extends AbstractController
             }
             catch(UniqueConstraintViolationException $ex)
             {
-                // TODO: use validator here
-                return new JsonResponse(['result' => false, 'error' => '¡Ya has enviado esta petición!']);
+                $this->addSuccessMessage("<strong>Error</strong>: ¡Ya has enviado esa petición, you silly goose!");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
             }
 
             $this->dispatchEvent(GameJamCompoEvents::TEAM_REQUEST, new TeamInvitationEvent($teamInvitation));
 
-            $result = ['result' => true];
+            $this->addSuccessMessage("¡Hemos enviado tu petición correctamente a <strong>" .$teamInvitation->getTeam(). "</strong> correctamente!");
         }
         else
         {
-            $result = ['result' => false, 'message' => 'Error desconocido :('];
+            $this->addSuccessMessage("<strong>Error</strong>: Ocurrió un error enviando la invitación. Por favor, vuelve a intentarlo");
         }
 
-        return new JsonResponse($result);
+        return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
     }
 
     /**
-     * @Route("/enviar-invitacion", name="gamejam_compo_team_send_invitation", defaults={"_format":"json"})
+     * @Route("/enviar-invitacion", name="gamejam_compo_team_send_invitation")
      * @Method({"POST"})
      */
     public function submitInvitation(Request $request, Compo $compo)
@@ -84,7 +151,7 @@ class TeamController extends AbstractController
         if($leader !== $team->getLeader())
             throw new NotFoundHttpException;
 
-        $teamInviteForm = $this->createForm(new TeamInvitationType($compo, $user));
+        $teamInviteForm = $this->createForm(new TeamInvitationType($this->getEntityManager()));
 
         $teamInviteForm->handleRequest($request);
 
@@ -92,6 +159,31 @@ class TeamController extends AbstractController
         {
             /** @var TeamInvitation $teamInvitation */
             $teamInvitation = $teamInviteForm->getData();
+
+            if(is_null($target = $teamInvitation->getTarget()))
+            {
+                $this->addSuccessMessage("<strong>Error</strong>: El usuario no existe");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+            }
+
+            if($target === $leader)
+            {
+                $this->addSuccessMessage("<strong>Error</strong>: ¡No puedes invitarte a tí mismo!");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+            }
+
+            if($targetTeam = $target->getTeamForCompo($compo))
+            {
+                if($targetTeam === $team)
+                {
+                    $this->addSuccessMessage("<strong>Error:</strong> ¡este miembro ya forma parte de tu equipo!");
+
+                    return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+                }
+            }
+
             $teamInvitation->setSender($leader);
             $teamInvitation->setCompo($compo);
             $teamInvitation->setTeam($team);
@@ -103,20 +195,21 @@ class TeamController extends AbstractController
             }
             catch(UniqueConstraintViolationException $ex)
             {
-                // TODO: use validator here
-                return new JsonResponse(['result' => false, 'error' => '¡Ya has enviado esta invitación!']);
+                $this->addSuccessMessage("<strong>Error</strong>: ¡Ya has enviado esa petición, you silly goose!");
+
+                return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
             }
 
             $this->dispatchEvent(GameJamCompoEvents::TEAM_INVITATION, new TeamInvitationEvent($teamInvitation));
 
-            $result = ['result' => true];
+            $this->addSuccessMessage("¡Hemos la invitación a <strong>" .$teamInvitation->getTarget(). "</strong> correctamente!");
         }
         else
         {
-            $result = ['result' => false, 'error' => 'Error desconocido :('];
+            $this->addSuccessMessage("<strong>Error</strong>: Ocurrió un error enviando la invitación. Por favor, vuelve a intentarlo");
         }
 
-        return new JsonResponse($result);
+        return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
     }
 
     /**
@@ -144,14 +237,22 @@ class TeamController extends AbstractController
             $target = $teamInvitation->getTarget();
             $target->addToTeam($team);
 
-            $this->persistAndFlush($target, true);
+            $this->persist($target);
 
             $this->dispatchEvent(GameJamCompoEvents::TEAM_INVITATION_ACCEPTED, new TeamInvitationEvent($teamInvitation));
+
+            // delete all team invitations
+            $teamInvitations = $this->getRepository("GameJamCompoBundle:TeamInvitation")->findAllByUser($target);
+
+            foreach($teamInvitations as $teamInvitation)
+            {
+                $this->getEntityManager()->remove($teamInvitation);
+            }
+
+            $this->flush();
+
             $this->addSuccessMessage("¡Ya está! ¡Ya formas parte de <strong>" .$team. "</strong>!");
         }
-
-        // delete invitation
-        $this->deleteAndFlush($teamInvitation);
 
         return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
     }
@@ -177,17 +278,25 @@ class TeamController extends AbstractController
         }
         else
         {
-            $target = $teamInvitation->getTarget();
+            $target = $teamInvitation->getSender();
             $target->addToTeam($team);
 
-            $this->persistAndFlush($target, true);
+            $this->persist($target);
 
             $this->dispatchEvent(GameJamCompoEvents::TEAM_REQUEST_ACCEPTED, new TeamInvitationEvent($teamInvitation));
+
+            // delete all team invitations
+            $teamInvitations = $this->getRepository("GameJamCompoBundle:TeamInvitation")->findAllByUser($target);
+
+            foreach($teamInvitations as $teamInvitation)
+            {
+                $this->getEntityManager()->remove($teamInvitation);
+            }
+
+            $this->flush();
+
             $this->addSuccessMessage("¡Hemos añadido a <strong>" .$teamInvitation->getTarget(). "</strong> al equipo!");
         }
-
-        // delete invitation
-        $this->deleteAndFlush($teamInvitation);
 
         return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
     }
@@ -198,6 +307,16 @@ class TeamController extends AbstractController
      */
     public function createAction(Request $request, Compo $compo)
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($team = $user->getTeamForCompo($compo))
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> No puedes crear un equipo ya que ya formas parte del equipo <strong>" .$team. "</strong>");
+
+            return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+        }
+
         $teamCreateForm = $this->createForm(new TeamType());
 
         $teamCreateForm->handleRequest($request);
@@ -217,13 +336,102 @@ class TeamController extends AbstractController
             $this->persist($team);
             $this->persist($leader);
 
+            // delete all team invitations
+            $teamInvitations = $this->getRepository("GameJamCompoBundle:TeamInvitation")->findAllByUser($user);
+
+            foreach($teamInvitations as $teamInvitation)
+            {
+                $this->getEntityManager()->remove($teamInvitation);
+            }
+
             $this->flush();
 
             $this->dispatchEvent(GameJamCompoEvents::TEAM_CREATION, new TeamEvent($team, $leader));
 
-            return new JsonResponse(['result' => true]);
+            $this->addSuccessMessage("Acabamos de crear tu equipo. Ahora puedes invitar a más gente hasta un máximo de <strong>" .$compo->getMaxTeamMembers(). "</strong> miembros");
+        }
+        else
+        {
+            $this->addSuccessMessage("<strong>Error</strong>: Ocurrió un error creando el equipo. Por favor, vuelve a intentarlo");
         }
 
-        return new JsonResponse(['result' => false, 'error' => $teamCreateForm->getErrors()]);
+        return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+    }
+
+    /**
+     * @Route("/cancelar/{teamInvitation}", name="gamejam_compo_team_cancel")
+     * @ParamConverter("teamInvitation", options={"mapping":{"teamInvitation":"hash"}})
+     */
+    public function cancelInvitationAction(Compo $compo, TeamInvitation $teamInvitation)
+    {
+        if($teamInvitation->isUserAbleToCancel($this->getUser()))
+        {
+            $this->deleteAndFlush($teamInvitation);
+            $this->addSuccessMessage("Hemos eliminado la petición de equipo");
+        }
+
+        return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+    }
+
+    /**
+     * @Route("/leave", name="gamejam_compo_team_leave")
+     */
+    public function leaveAction(Compo $compo)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $team = $user->getTeamForCompo($compo);
+
+        if($compo->isTeamFormationOpen() && $team)
+        {
+            if($team->getLeader() === $user)
+            {
+                $this->addSuccessMessage("<strong>Error:</strong> no puedes salir del equipo del cual eres el líder. ¡Deberás desbandarlo!");
+            }
+            else
+            {
+                $user->removeFromTeam($team);
+
+                $this->persist($user);
+                $this->flush();
+
+                $this->addSuccessMessage("Te hemos eliminado del grupo correctamente");
+            }
+        }
+        else
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> el período de formación de equipos está cerrada. Si aun así quieres salir de tu grupo, contacta con un administrador");
+        }
+
+        return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
+    }
+
+    /**
+     * @Route("/disband", name="gamejam_compo_team_disband")
+     */
+    public function disbandAction(Compo $compo)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($compo->isTeamFormationOpen() && $team = $user->getTeamForCompo($compo))
+        {
+            if($team->getLeader() !== $user)
+            {
+                $this->addSuccessMessage("<strong>Error:</strong> no puedes desbandar un equipo a menos que seas el líder");
+            }
+            else
+            {
+                $this->deleteAndFlush($team);
+
+                $this->addSuccessMessage("Equipo eliminado correctamente. Todos los miembras están fuera ahora.");
+            }
+        }
+        else
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> el período de formación de equipos está cerrada. Si aun así quieres salir de tu grupo, contacta con un administrador");
+        }
+
+        return $this->redirectToPath("gamejam_compo_team", ['compo' => $compo->getNameSlug()]);
     }
 } 

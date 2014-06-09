@@ -27,7 +27,7 @@ class NotificationController extends AbstractController
     }
 
     /**
-     * @Route("/", name="gamejam_compo_notifications_mark_all")
+     * @Route("/mark-all-as-read", name="gamejam_compo_notifications_mark_all")
      * @Template()
      */
     public function markAllAsReadAction()

@@ -15,10 +15,13 @@ use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_compos_teams")
+ * @UniqueEntity(fields={"name"}, message="El nombre del grupo ya existe")
+ * @UniqueEntity(fields={"leader", "compo"}, message="Ya eres el líder de un grupo en esta GameJam")
  */
 class Team
 {
@@ -63,9 +66,9 @@ class Team
     protected $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="team")
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="team")
      */
-    protected $games;
+    protected $game;
 
     /**
      * @ORM\ManyToOne(targetEntity="Compo", inversedBy="teams")
@@ -184,20 +187,17 @@ class Team
         return $this->users;
     }
 
-    /**
-     * @param mixed $games
-     */
-    public function setGames($games)
+    public function setGame($game)
     {
-        $this->games = $games;
+        $this->game = $game;
     }
 
     /**
-     * @return Game[]
+     * @return Game
      */
-    public function getGames()
+    public function getGame()
     {
-        return $this->games;
+        return $this->game;
     }
 
     /**
@@ -232,5 +232,10 @@ class Team
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function removeMember(User $user)
+    {
+        $this->users->removeElement($user);
     }
 } 

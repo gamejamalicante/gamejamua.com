@@ -2,27 +2,28 @@
 
 namespace GJA\GameJam\CompoBundle\Form\Type;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
+use GJA\GameJam\CompoBundle\Form\DataTransformer\TeamInvitationTargetTransformer;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TeamInvitationType extends AbstractTeamInvitationType
+class TeamInvitationType extends AbstractType
 {
     /**
-     * @var \GJA\GameJam\UserBundle\Entity\User
+     * @var DataTransformerInterface
      */
-    protected $user;
+    protected $userDataTransformer;
 
-    public function __construct(Compo $compo, User $user)
+    public function __construct(EntityManager $entityManager)
     {
-        parent::__construct($compo);
-
-        $this->user = $user;
+        $this->userDataTransformer = new TeamInvitationTargetTransformer($entityManager);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,15 +31,7 @@ class TeamInvitationType extends AbstractTeamInvitationType
         parent::buildForm($builder, $options);
 
         $builder->add('type', 'hidden', ['data' => TeamInvitation::TYPE_INVITATION])
-            ->add('target', null, ['required' => true, 'query_builder' => function(EntityRepository $repository)
-                {
-                    $builder = $repository->createQueryBuilder("u");
-
-                    $builder->andWhere("u != :user")
-                        ->setParameter('user', $this->user);
-
-                    return $builder;
-                }]);
+            ->add($builder->create('target', 'text', ['required' => true])->addModelTransformer($this->userDataTransformer));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

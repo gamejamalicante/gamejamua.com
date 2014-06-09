@@ -40,6 +40,7 @@ class TeamActivityListener extends AbstractActivityListener
         $activity->setTeam($team);
         $activity->setUser($user);
         $activity->setType($type);
+        $activity->setCompo($team->getCompo());
 
         return $activity;
     }
