@@ -71,7 +71,7 @@ desc 'Update blog'
     run "sh -c 'if [ ! -d #{File.dirname(destination_file)} ] ; then mkdir -p #{File.dirname(destination_file)}; fi'"
     top.upload(origin_file, destination_file)
 
-    run "mv #{shared_path}/.env #{current_path}/web/blog/ ; cd #{release_path}/web/blog/ ; composer install"
+    run "mv #{shared_path}/.env #{release_path}/web/blog/ ; cd #{release_path}/web/blog/ ; composer install"
 
     capifony_puts_ok
 end

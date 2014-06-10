@@ -134,15 +134,7 @@ class Order
 
     public function isPaid()
     {
-        if($paymentInstruction = $this->getPaymentInstruction())
-        {
-            /** @var Payment $payment */
-            $payment = $paymentInstruction->getPayments()->first();
-
-            return $payment->getState() === PaymentInterface::STATE_APPROVING;
-        }
-
-        return false;
+        return $this->getCompoApplication()->isCompleted();
     }
 
     /**

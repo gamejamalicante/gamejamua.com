@@ -18,7 +18,8 @@
                     <strong>Número de cuenta bancaria:</strong> {{ site.bank_account }}<br>
                     <strong>Concepto para la transferencia:</strong> {{ order.orderNumber }}<br>
                     <strong>Cantidad a ingresar: </strong>{{ order.amount }} €</p>
-                    Si tienes algún problema, no dudes en ponerte en contacto con nosotros.
+                    Si tienes algún problema, no dudes en ponerte en contacto con nosotros.<br><br>
+                    <div style="text-align: center"><a class="btn" href="{{ path('gamejam_compo_payment_details', {order: order.orderNumber, compo: compo.nameSlug}) }}"><i class="fa fa-arrow-left"></i> Cambiar modo de pago</a></div>
                 </div>
             </div>
         </div>

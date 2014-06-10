@@ -160,7 +160,7 @@
         {% if user_application and not user_application.isCompleted %}
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_complete', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
+                <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_details', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
             </div>
         {% endif %}
         {% block returnback %}
@@ -233,7 +233,7 @@
                         {% if not user_application.isCompleted %}
                             <div class="alert alert-success">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_complete', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
+                                <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_details', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
                             </div>
                         {% endif %}
                         <img class="avatar pull-right" src="{{ user_avatar(user, 50) }}" />
