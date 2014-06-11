@@ -6,7 +6,6 @@
 <!--[if gt IE 9]><!--><html class="no-js" xmlns="http://www.w3.org/1999/xhtml" lang="es" prefix="og: http://ogp.me/ns#"><!--<![endif]-->
 <head profile="http://gmpg.org/xfn/11">
     <title><?php wp_title( '|', true, 'right' ); ?></title>
-    <meta name="description" content="" />
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
