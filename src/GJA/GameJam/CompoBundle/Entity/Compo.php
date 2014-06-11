@@ -560,4 +560,17 @@ class Compo
 
         return false;
     }
+
+    public function getJoinedMembers()
+    {
+        $members = array();
+
+        foreach($this->getApplications() as $application)
+        {
+            if($application->isCompleted())
+                $members[] = $application->getUser();
+        }
+
+        return $members;
+    }
 }

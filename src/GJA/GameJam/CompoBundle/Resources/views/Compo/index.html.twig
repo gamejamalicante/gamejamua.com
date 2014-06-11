@@ -267,6 +267,12 @@
                     {% else %}
                         ¡Aun no estás inscrito! <a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">Pulsa aquí</a> para inscribirte.
                     {% endif %}
+                </div><br><br>
+                <h2><i class="fa fa-pencil"></i> Miembros inscritos</h2>
+                <div class="application">
+                {% for member in compo.joinedMembers %}
+                        <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> {{ member }}<br>
+                {% endfor %}
                 </div>
             </div>
         </div>
