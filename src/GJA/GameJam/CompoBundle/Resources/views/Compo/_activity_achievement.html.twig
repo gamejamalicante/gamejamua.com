@@ -1,5 +1,6 @@
 <div class="item achievement">
     <img class="avatar" src="{{ user_avatar(item.user) }}" />
     <h3>{{ item.user }} ha conseguido el logro <strong>{{ item.achievement }}</strong></h3>
+    <span class="date"><i class="fa fa-clock-o"></i> {{ time_diff(item.date) }}</span>
     <div class="clearfix"></div>
 </div>

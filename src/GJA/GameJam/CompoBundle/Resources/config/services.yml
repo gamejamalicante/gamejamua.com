@@ -22,6 +22,7 @@ services:
         class: GJA\GameJam\CompoBundle\EventListener\TeamActivityListener
         arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
         tags:
+            - { name: 'kernel.event_listener', event: 'gamejam.compo.team_creation', method: 'onTeamCreationEvent' }
             - { name: 'kernel.event_listener', event: 'gamejam.compo.team_invitation.accepted', method: 'onTeamInvitationEvent' }
             - { name: 'kernel.event_listener', event: 'gamejam.compo.team_request.accepted', method: 'onTeamInvitationEvent' }
 

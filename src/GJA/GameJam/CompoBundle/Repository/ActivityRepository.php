@@ -43,8 +43,9 @@ class ActivityRepository extends EntityRepository
                 Activity::TYPE_CREATION,
                 Activity::TYPE_INFO_UPDATE,
                 Activity::TYPE_LIKES,
-                Activity::TYPE_LIKES,
-                Activity::TYPE_MEDIA
+                Activity::TYPE_MEDIA,
+                Activity::TYPE_TEAM_CREATION,
+                Activity::TYPE_TEAM_JOIN
             ])
         ->addOrderBy("a.date", "DESC")
         ->setMaxResults($limit);

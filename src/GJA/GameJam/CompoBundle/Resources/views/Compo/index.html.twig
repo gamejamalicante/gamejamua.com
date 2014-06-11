@@ -24,7 +24,7 @@
     {% if compo.open %}
     <script type="text/javascript">
 
-        var lastUpdate = Math.round(+new Date()/1000)-86400;
+        var lastUpdate = Math.round(+new Date()/1000);
 
         function reloadActivity(target, showEffect)
         {
@@ -35,17 +35,28 @@
 
             $.get(targetUrl, function(content)
             {
-                if(!showEffect)
+                if(content)
                 {
-                    $(target).prepend(content);
-                }
-                else
-                {
-                    var newElement = $('<div style="display: none;">' + content+ '</div>');
+                    if(!showEffect)
+                    {
+                        $(target).prepend(content);
+                    }
+                    else
+                    {
+                        var newElement = $(content);
 
-                    $(target).prepend(newElement);
+                        if(newElement != '')
+                        {
+                            $(target).prepend(newElement);
+                            newElement.show('slow');
 
-                    newElement.show('slow');
+                            // remove old elements
+                            var lastId = newElement.data('id');
+                            var removeFrom = lastId - 30;
+
+                            $('#activity-' + removeFrom + ' ~ div').remove();
+                        }
+                    }
                 }
 
                 $('.loading').fadeOut();
@@ -163,9 +174,12 @@
                 <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_details', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
             </div>
         {% endif %}
+        <div class="pull-right">
         {% block returnback %}
-            <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right">{% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %} <i class="fa fa-arrow-right"></i></a>
+            <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-users"></i> {% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %}</a>
+            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a>{% endif %}
         {% endblock %}
+        </div>
         <h1><strong>{{ compo }}</strong></h1>
         {% block countdown %}
             <div id="countdown-container" class="pull-left">
@@ -203,7 +217,7 @@
             <div class="col-sm-6">
                 <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
                 <h2><i class="fa fa-comment-o"></i> Actividad de los participantes</h2>
-                <div class="activity">Nada por aquí... :(</div>
+                <div class="activity">{{ render(controller("GameJamCompoBundle:Compo:partialLastActivity", {compo: compo.nameSlug})) }}</div>
             </div>
             <div class="col-sm-6">
                 {% if user %}

@@ -61,6 +61,8 @@ class CompoApplication
      */
     protected $completed = false;
 
+    protected $edit;
+
     /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"}, inversedBy="compoApplication")
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -221,5 +223,21 @@ class CompoApplication
         }
 
         return false;
+    }
+
+    /**
+     * @param mixed $edit
+     */
+    public function setEdit($edit)
+    {
+        $this->edit = $edit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEdit()
+    {
+        return $this->edit;
     }
 }

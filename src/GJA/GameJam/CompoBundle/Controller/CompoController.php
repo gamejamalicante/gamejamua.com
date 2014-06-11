@@ -108,6 +108,54 @@ class CompoController extends AbstractController
     }
 
     /**
+     * @Route("/modificar-inscripcion", name="gamejam_compo_compo_modify_inscription")
+     * @Template()
+     */
+    public function modifyApplicationAction(Request $request, Compo $compo)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if(!$user->hasAppliedTo($compo))
+        {
+            $this->addSuccessMessage("Por favor, inscríbete en la GameJam para acceder a esta sección");
+
+            return $this->redirectToPath('gamejam_compo_compo_join', ['compo' => $compo->getNameSlug()]);
+        }
+
+        $application = $user->getApplicationTo($compo);
+
+        if(!$application || !$application->isCompleted())
+        {
+            return $this->redirectToPath("gamejam_compo_payment_details", ['compo' => $compo->getNameSlug(), 'order' => $application->getOrder()->getOrderNumber()]);
+        }
+
+        $applicationForm = $this->createForm(new CompoApplicationType(), $application)
+            ->remove("modality")
+            ->add('edit', 'hidden');
+
+        if($this->isPost())
+        {
+            $applicationForm->handleRequest($request);
+
+            if($applicationForm->isValid())
+            {
+                $this->persistAndFlush($application);
+
+                $this->addSuccessMessage("Hemos actualizado tu información de inscripción");
+
+                return $this->redirectToPath("gamejam_compo_compo", ["compo" => $compo->getNameSlug()]);
+            }
+            else
+            {
+                $this->addSuccessMessage("<strong>Error:</strong> " . $applicationForm->getErrors());
+            }
+        }
+
+        return ['form' => $applicationForm->createView(), 'user_application' => $application, 'compo' => $compo];
+    }
+
+    /**
      * @Route("/_activity", name="gamejam_compo_compo_activity")
      * @Template("GameJamCompoBundle:Compo:_activity.html.twig")
      */
@@ -115,7 +163,7 @@ class CompoController extends AbstractController
     {
         $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy(['compo' => $compo], ['id' => 'DESC'], 30, 0);
 
-        return array('activity' => $activity);
+        return array('activity' => $activity, 'hidden' => false);
     }
 
     /**
@@ -128,6 +176,6 @@ class CompoController extends AbstractController
 
         $activity = $this->getRepository("GameJamCompoBundle:Activity")->findAllSince($since, $compo);
 
-        return ['activity' => $activity];
+        return ['activity' => $activity, 'hidden' => true];
     }
 } 

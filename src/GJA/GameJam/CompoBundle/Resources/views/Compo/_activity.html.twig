@@ -1,3 +1,5 @@
 {% for item in activity %}
+    <div id="activity-{{ item.id }}" data-id="{{ item.id }}" data-date="{{ item.date|date("U") }}"{% if hidden %} style="display: none;"{% endif %}>
     {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
+    </div>
 {% endfor %}

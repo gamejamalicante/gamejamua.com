@@ -50,7 +50,7 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/compos/.*/(inscribirse|team), roles: ROLE_USER }
+        - { path: ^/compos/.*/(inscribirse|team|modificar-inscripcion), roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/panel, roles: ROLE_USER }
         - { path: ^/juegos/.*/(dar-monedas|like), roles: ROLE_USER }

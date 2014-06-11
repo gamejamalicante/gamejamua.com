@@ -14,7 +14,7 @@ namespace GJA\GameJam\CompoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\ContributorRepository")
  * @ORM\Table(name="gamejam_compos_contributors")
  */
 class Contributor

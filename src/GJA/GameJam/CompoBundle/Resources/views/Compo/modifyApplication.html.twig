@@ -1,0 +1,40 @@
+{% extends 'GameJamCompoBundle:Compo:index.html.twig' %}
+
+{% block returnback %}<a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right"><i class="fa fa-arrow-left"></i> Volver</a>{% endblock %}
+
+{% block countdown_js %}{% endblock %}
+{% block countdown %}
+    <h2>Modificar mi inscripción</h2>
+{% endblock %}
+
+{% block compo_body %}
+    <div class="section">
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Hemos encontrado errores en el formulario:</strong>
+                {{ display_form_errors.display_error(form) }}
+            </div>
+        {% endif %}
+        <form action="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" method="post">
+            <strong>Modalidad de inscripción</strong>
+            <div style="margin-bottom: 25px" class="input-group">
+                {{ user_application.modalityAsString }} (si quieres cambiar tu modalidad, ponte en contacto con nosotros)
+            </div>
+            <div class="input-group">
+                <div class="checkbox">
+                    <label>
+                        {{ form_widget(form.nightStay) }} Quiero quedarme a dormir en el recinto al menos una de las noches
+                    </label>
+                </div>
+            </div>
+            <div style="margin-top:10px" class="form-group bottom">
+                <div class="col-sm-12 controls">
+                    <button type="submit" id="btn-login" class="btn btn-green submit">¡Cambiar inscripción!</button>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+        </form>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class="section">
-        <h1>Colaboradores y jurados</h1>
-        <p>En esta lista se muestran todos aquellos colaboradores y jurados que han colaborado con nosotros en alguna de nuestras ediciones. <strong>¡Mil gracias!</strong></p>
-        {% for contributor in contributors %}
+        <h1>Sponsors</h1>
+        <p>En esta lista se muestran todos nuestros sponsors.<strong>¡Mil gracias!</strong></p>
+        {% for contributor in sponsors %}
         <div class="contributor{% if contributor.featured %} featured{% endif %}">
             <img src="{{ asset(contributor.imageWebPath) }}" class="logo">
             <h2>{{ contributor }}</h2>
@@ -12,20 +12,6 @@
             <p><i class="fa fa-globe"></i> <a href="{{ contributor.url }}" target="_blank" rel="nofollow">{{ contributor.url }}</a></p>
             {% endif %}
             {% if contributor.composSponsored|length %}
-            <p>
-                <strong>Ha sponsorizado: </strong>
-                {% for compo in contributor.composSponsored %}
-                    {{ compo }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-            {% endif %}
-            {% if contributor.composJudged|length %}
-                <p>
-                    <strong>Ha participado como jurado: </strong>
-                    {% for compo in contributor.composJudged %}
-                        {{ compo }}{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </p>
             {% endif %}
             {% if contributor.featured %}
                 <p>{{ contributor.description }}</p>
@@ -33,5 +19,16 @@
             <div class="clearfix"></div>
         </div>
         {% endfor %}
+        <h2>Jurados</h2>
+        <p>Estos son todos los jurados que valorarán tu juego en la presente edición</p>
+        {% for contributor in juries %}
+            <div class="pull-left" style="margin: 15px; text-align: center">
+                {% if contributor.url %}<a href="{{ contributor.url }}" target="_blank" rel="nofollow">{% endif %}
+                <img src="{{ asset(contributor.imageWebPath) }}" height="80"><br>
+                {% if contributor.url %}</a>{% endif %}
+                <h2 style="text-align: center">{{ contributor }}</h2>
+            </div>
+        {% endfor %}
+        <div class="clearfix"></div>
     </div>
 {% endblock %}

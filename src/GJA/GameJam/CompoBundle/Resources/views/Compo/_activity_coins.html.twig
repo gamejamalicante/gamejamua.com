@@ -1,5 +1,6 @@
 <div class="item achievement">
     <img class="avatar" src="{{ asset('bundles/gamejamcompo/images/coin.png') }}" />
     <h3>{{ item.user }} ha dado {{ item.content.coins }} UltraCoins a <strong>{{ item.game }}</strong>. ¡Ya lleva <strong>{{ item.content.total_coins }}</strong> UltraCoins!</h3>
+    <span class="date"><i class="fa fa-clock-o"></i> {{ time_diff(item.date) }}</span>
     <div class="clearfix"></div>
 </div>
