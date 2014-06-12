@@ -1,6 +1,6 @@
 <div class="item achievement">
     <img class="avatar" src="{{ user_avatar(item.user) }}" />
-    <h3>{{ item.user }} ha creado el equipo <strong>{{ item.team }}</strong></h3>
+    <h3><a href="{{ path('gamejam_user_profile', {user: item.user.username}) }}">{{ item.user }}</a> ha creado el equipo <strong>{{ item.team }}</strong></h3>
     <span class="date"><i class="fa fa-clock-o"></i> {{ time_diff(item.date) }}</span>
     <div class="clearfix"></div>
 </div>

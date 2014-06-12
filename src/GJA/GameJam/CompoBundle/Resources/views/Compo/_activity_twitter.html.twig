@@ -1,11 +1,11 @@
 <div class="item">
     {% if item.user %}
         <img class="avatar" src="{{ user_avatar(item.user, 50) }}" />
-        <span class="type"><i class="fa fa-twitter"></i> @{{ item.user.twitter }}</span>
-    <h3>{{ item.user }}</h3>
+        <span class="type"><i class="fa fa-twitter"></i> <a href="https://twitter.com/{{ item.user.twitter }}" rel="nofollow" target="_blank">@{{ item.user.twitter }}</a></span>
+    <h3><a href="{{ path('gamejam_user_profile', {user: item.user.username}) }}">{{ item.user }}</a></h3>
     {% else %}
         <img class="avatar" src="{{ item.content.avatar }}" />
-        <h3>@{{ item.content.screen_name }}</h3>
+        <h3><a href="https://twitter.com/{{ item.content.screen_name }}" rel="nofollow" target="_blank">@{{ item.content.screen_name }}</a></h3>
     {% endif %}
     <span class="date"><i class="fa fa-twitter"></i> {{ time_diff(item.date) }}</span>
     <p>{{ item.content.content|raw }}</p>

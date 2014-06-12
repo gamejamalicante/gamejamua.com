@@ -271,7 +271,7 @@
                 <h2><i class="fa fa-pencil"></i> Miembros inscritos</h2>
                 <div class="application">
                 {% for member in compo.joinedMembers %}
-                        <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> {{ member }}<br>
+                        <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member }}</a><br>
                 {% endfor %}
                 </div>
             </div>
