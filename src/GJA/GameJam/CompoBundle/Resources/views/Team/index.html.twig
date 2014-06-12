@@ -53,7 +53,7 @@
                     {% for sent in user.teamInvitationsSent %}
                     <tr>
                         <td>{{ time_diff(sent.sentAt) }}</td>
-                        <td>{% if is_leader %}{{ sent.target }}{% else %}{{ sent.team }}{% endif %}</td>
+                        <td>{% if is_leader %}<a href="{{ path('gamejam_user_profile', {user: sent.target.username}) }}">{{ sent.target }}</a>{% else %}{{ sent.team }}{% endif %}</td>
                         <td><i class="fa fa-trash-o"></i> <a href="{{ path('gamejam_compo_team_cancel', {compo: compo.nameSlug, teamInvitation: sent.hash}) }}">Cancelar</a></td>
                     </tr>
                     {% else %}
@@ -82,7 +82,7 @@
                     <td>{% if team.game %}{{ team.game }}{% else %}Aún no lo han creado{% endif %}</td>
                     <td style="width: 190px;">
                         {% for member in team.users %}
-                            <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> {{ member }}<br>
+                            <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member }}</a><br>
                         {% endfor %}
                     </td>
                 </tr>
@@ -105,7 +105,7 @@
                     {% if team %}
                         Formas parte del equipo <strong>{{ team }}</strong>. <br><br>
                         {% for member in team.users %}
-                            <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> {{ member }} {% if team.leader == member %} (Líder){% endif %}<br>
+                            <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member }}</a> {% if team.leader == member %} (Líder){% endif %}<br>
                         {% endfor %}
                         {% if invite_form %}
                             <h4>Invitar a gente a tu equipo</h4>
