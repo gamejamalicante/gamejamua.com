@@ -4,6 +4,7 @@ namespace GJA\GameJam\CompoBundle\EventListener;
 
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\Team;
+use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
 use GJA\GameJam\CompoBundle\Event\TeamEvent;
 use GJA\GameJam\CompoBundle\Event\TeamInvitationEvent;
 use GJA\GameJam\UserBundle\Entity\User;
@@ -17,7 +18,7 @@ class TeamActivityListener extends AbstractActivityListener
         $this->persistActivity(
             $this->createTeamActivity(
                 $teamInvitation->getTeam(),
-                $teamInvitation->getTarget(),
+                ($teamInvitation->getType() == TeamInvitation::TYPE_INVITATION ? $teamInvitation->getTarget() : $teamInvitation->getSender()),
                 Activity::TYPE_TEAM_JOIN
             )
         );
