@@ -11,7 +11,12 @@
             <p>La competición empieza en <strong>{{ compo.getDaysToStart }}</strong> días. <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ver la página de competición con noticias, actividad, etc.</a></p>
         </div>
         {% endif %}
-    {% else %}
+    {% elseif compo.isFull %}
+        <div class="section active-compo">
+            <h2><i class="fa fa-rocket"></i> ¡Todas las plazas para la <strong>{{ compo }}</strong> completas! <i class="fa fa-rocket"></i></h2>
+           <p>La competición empieza en <strong>{{ compo.getDaysToStart }}</strong> días. <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ver la página de competición con noticias, actividad, etc.</a></p>
+        </div>
+        {% else %}
     <div class="section active-compo">
         <h2><i class="fa fa-rocket"></i> ¡Ya están abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
         <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a> ¡Sólo quedan <strong>{{ compo.openPlaces }}</strong> plazas disponibles!</p>

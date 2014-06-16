@@ -60,6 +60,13 @@ class CompoController extends AbstractController
      */
     public function joinAction(Compo $compo, Request $request)
     {
+        if($compo->isFull())
+        {
+            $this->addSuccessMessage("¡Lo sentimos! Todas las plazas para esta GameJam están completas");
+
+            return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 

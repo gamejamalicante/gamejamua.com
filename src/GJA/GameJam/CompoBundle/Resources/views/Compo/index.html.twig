@@ -264,6 +264,8 @@
                         <p>
                             <strong>¿Te quedas a dormir?:</strong> {% if user_application.nightStay %}¡Sí!{% else %}No, mejor duermo en casa{% endif %}
                         </p>
+                    {% elseif compo.isFull %}
+                        ¡Todas las plazas completas!
                     {% else %}
                         ¡Aun no estás inscrito! <a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">Pulsa aquí</a> para inscribirte.
                     {% endif %}

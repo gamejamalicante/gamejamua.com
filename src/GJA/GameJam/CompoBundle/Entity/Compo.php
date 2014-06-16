@@ -499,6 +499,11 @@ class Compo
         return $this->maxPeople - $validApplications;
     }
 
+    public function isFull()
+    {
+        return $this->getOpenPlaces() == 0;
+    }
+
     public function getCompletedApplications()
     {
         return $this->maxPeople - $this->getOpenPlaces();
