@@ -192,6 +192,9 @@ liip_monitor:
         doctrine_dbal: default
         writable_directory: [%kernel.root_dir%/../web/uploads, %kernel.root_dir%/../web/media]
 
+site_status_checker:
+    token: %site_status_token%
+
 #liip_cache_control:
 #    varnish:
 #        host: http://%domain%
