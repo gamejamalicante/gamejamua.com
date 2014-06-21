@@ -48,6 +48,10 @@ gamejam_user:
     resource: "@GameJamUserBundle/Controller/"
     type: annotation
 
+_monitor:
+    resource: "@LiipMonitorBundle/Resources/config/routing.xml"
+    prefix: /monitor/health
+
 _status_checker:
     resource: "@SiteStatusCheckerBundle/Resources/config/routing.yml"
     prefix: /status
