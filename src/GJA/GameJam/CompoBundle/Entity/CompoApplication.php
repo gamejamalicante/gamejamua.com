@@ -262,7 +262,7 @@ class CompoApplication
     /**
      * @param mixed $lockTime
      */
-    public function setLockTime(\DateTime $lockTime)
+    public function setLockTime($lockTime)
     {
         $this->lockTime = $lockTime;
     }
