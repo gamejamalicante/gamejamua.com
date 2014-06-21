@@ -30,12 +30,9 @@ class Page
 
     /**
      * @ORM\Column(type="string")
-     * @Gedmo\Slug(fields={"name"})
+     * @Gedmo\Slug(fields={"title"})
      */
     protected $nameSlug;
 
-    /**
-     * @ORM\Column(type="
-     */
     protected $template;
 } 
