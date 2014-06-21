@@ -48,6 +48,10 @@ gamejam_user:
     resource: "@GameJamUserBundle/Controller/"
     type: annotation
 
+_status_checker:
+    resource: "@SiteStatusCheckerBundle/Resources/config/routing.yml"
+    prefix: /status
+
 _imagine:
     resource: .
     type:     imagine
