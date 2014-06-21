@@ -13,6 +13,7 @@ namespace GJA\GameJam\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Order\ItemInterface;
 use JMS\Payment\CoreBundle\Entity\Payment;
 use JMS\Payment\CoreBundle\Entity\PaymentInstruction;
@@ -214,7 +215,7 @@ class Order
     }
 
     /**
-     * @return mixed
+     * @return CompoApplication
      */
     public function getCompoApplication()
     {

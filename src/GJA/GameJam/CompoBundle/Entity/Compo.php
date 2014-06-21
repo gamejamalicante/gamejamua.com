@@ -127,6 +127,11 @@ class Compo
     protected $teams;
 
     /**
+     * @ORM\OneToMany(targetEntity="Page", mappedBy="compo")
+     */
+    protected $pages;
+
+    /**
      * @param mixed $games
      */
     public function setGames($games)
@@ -341,7 +346,12 @@ class Compo
 
     public function getDaysToStart()
     {
-        return $this->getTimeToStart()->days;
+        if($daysToStart = $this->getTimeToStart())
+        {
+            return $daysToStart->days;
+        }
+
+        return 0;
     }
 
     public function endAt()
@@ -492,7 +502,7 @@ class Compo
 
         foreach($this->getApplications() as $application)
         {
-            if($application->isCompleted() && $application->getModality() != CompoApplication::MODALITY_FREE)
+            if(($application->isCompleted() || $application->isInProgress()) && $application->getModality() != CompoApplication::MODALITY_FREE)
                 $validApplications++;
         }
 
@@ -577,5 +587,21 @@ class Compo
         }
 
         return $members;
+    }
+
+    /**
+     * @param mixed $pages
+     */
+    public function setPages($pages)
+    {
+        $this->pages = $pages;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return $this->pages;
     }
 }

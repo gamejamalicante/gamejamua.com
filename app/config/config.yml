@@ -185,6 +185,13 @@ endroid_twitter:
     access_token: %twitter_access_token%
     access_token_secret: %twitter_access_token_secret%
 
+liip_monitor:
+    enable_controller: true
+    checks:
+        php_extensions: [apc]
+        doctrine_dbal: default
+        writable_directory: [%kernel.root_dir%/../web/uploads, %kernel.root_dir%/../web/media]
+
 #liip_cache_control:
 #    varnish:
 #        host: http://%domain%
@@ -196,9 +203,6 @@ endroid_twitter:
 #        - { path: ^/(admin|login|logout|login_check|panel), controls: { public: false } }
 #        - { path: ^/user/, controls: { public: true, max_age: 86400, 86400
 #        - { path: ^/juegos/.*, controls: { public: true, max_age: 30000, s_maxage: 30000, last_modified: "-1 hour" } }
-#        - { path: ^/(.*)/(properties|inmuebles), controls: { public: false } }
-#        - { path: ^/(.*)/properties/listing, controls: { public: false } }
-#        - { controller: ^InmomedFrontendBundle:Frontend:weatherPartial, controls: { public: true, max_age: 3600, s_maxage: 3600, last_modified: "-1 hour" } }
 #        - { path: ^/ }
 #        - { path: ^/$, controls: { public: true, max_age: 604800, s_maxage: 604800, last_modified: "-1 hour" }, vary: [Accept-Language] }
 #        - { path: ^/, controls: { public: true, max_age: 604800, s_maxage: 604800, last_modified: "-1 hour" } }

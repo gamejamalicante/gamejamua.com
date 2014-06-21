@@ -52,7 +52,7 @@
 
                             // remove old elements
                             var lastId = newElement.data('id');
-                            var removeFrom = lastId - 30;
+                            var removeFrom = lastId - 7;
 
                             $('#activity-' + removeFrom + ' ~ div').remove();
                         }
@@ -168,7 +168,7 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        {% if user_application and not user_application.isCompleted %}
+        {% if user_application is defined and user_application and not user_application.isCompleted %}
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>¡Atención!</strong> Aun no has completado el pago para inscribirte en la GameJam. <a href="{{ path('gamejam_compo_payment_details', {order: user_application.order.orderNumber, compo: compo.nameSlug}) }}">Pulsa aquí</a> para seguir con el proceso.
@@ -266,6 +266,13 @@
                         </p>
                     {% elseif compo.isFull %}
                         ¡Todas las plazas completas!
+                        {% if user %}
+                             {% if not user.waitingListFor(compo) %}
+                                 <a href="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}">Pulsa aquí</a> si quieres entrar en la lista de espera.
+                             {% else %}
+                                Estás en la lista de espera. ¡Te avisaremos si ampliamos plazas!
+                             {% endif %}
+                        {% endif %}
                     {% else %}
                         ¡Aun no estás inscrito! <a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">Pulsa aquí</a> para inscribirte.
                     {% endif %}

@@ -8,20 +8,20 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://server-staging-1.certadia.net:2635"
+            "url": "http://ams-stag-01.certadia.net:2635"
         }
     ],
     "require": {
         "certadia/library": "@dev",
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.4",
+        "symfony/symfony": "~2.5",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~2.3",
+        "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "components/jquery": "1.*",
@@ -45,18 +45,23 @@
         "jms/payment-paypal-bundle": "@dev",
         "hwi/oauth-bundle": "@dev",
         "endroid/twitter-bundle": "@dev",
-        "webfactory/exceptions-bundle": "@stable",
-        "elao/error-notifier-bundle" : "dev-master",
-        "liip/cache-control-bundle": "~1.0"
+        "webfactory/exceptions-bundle": "@dev",
+        "elao/error-notifier-bundle" : "@dev",
+        "liip/cache-control-bundle": "~1.0",
+        "liip/monitor-bundle": "@dev",
+        "sensiolabs/security-checker": "@dev",
+        "albertofem/sitestatuschecker-bundle": "@dev"
     },
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
         ],
         "post-update-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
         ]
     },
     "config": {
@@ -67,6 +72,7 @@
     "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
-        "symfony-web-dir": "web"
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink"
     }
 }

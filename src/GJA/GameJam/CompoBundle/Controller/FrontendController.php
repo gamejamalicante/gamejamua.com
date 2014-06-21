@@ -71,6 +71,7 @@ class FrontendController extends AbstractController
 
     /**
      * @Route("/contacto/{success}", name="gamejam_compo_frontend_contact", defaults={"success"=false})
+     * @Route("/contacto.php")
      * @Template()
      */
     public function contactAction(Request $request, $success = false)

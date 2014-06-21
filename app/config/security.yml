@@ -20,6 +20,11 @@ security:
             id: fos_user.user_provider.username_email
 
     firewalls:
+        health:
+            pattern: ^/monitor/health
+            anonymous: ~
+            http_basic:
+                realm: "Secured Area"
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -54,3 +59,4 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/panel, roles: ROLE_USER }
         - { path: ^/juegos/.*/(dar-monedas|like), roles: ROLE_USER }
+        - { path: ^/monitor/health, role: ROLE_SUPER_ADMIN }

@@ -36,12 +36,9 @@ abstract class AbstractPaymentController extends AbstractController
         $form = $this->createForm('jms_choose_payment_method', null, array(
             'amount' => $order->getAmount(),
             'currency' => 'EUR',
-            'allowed_methods' => array('paypal_express_checkout', 'gamejam_compo_form_bank_account'),
+            'allowed_methods' => array('paypal_express_checkout'),
             'default_method' => 'paypal_express_checkout',
             'predefined_data' => array(
-                'gamejam_compo_form_bank_account' => array(
-                    'bank_account_details_route' => $routes['bank_account_details_route']
-                ),
                 'paypal_express_checkout' => array(
                     'return_url' => $routes['paypal_success'],
                     'cancel_url' => $routes['paypal_cancel'],

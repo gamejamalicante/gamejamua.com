@@ -24,6 +24,8 @@ class CompoApplication
     const MODALITY_OUT_OF_COMPO = 2;
     const MODALITY_FREE = 3;
 
+    const LOCK_TTL = "PT10M";
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -60,6 +62,11 @@ class CompoApplication
      * @ORM\Column(type="boolean")
      */
     protected $completed = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lockTime = null;
 
     protected $edit;
 
@@ -239,5 +246,32 @@ class CompoApplication
     public function getEdit()
     {
         return $this->edit;
+    }
+
+    public function isInProgress()
+    {
+        if(is_null($this->getLockTime()))
+            return false;
+
+        $now = new \DateTime("now");
+        $lockTime = clone $this->getLockTime();
+
+        return ($lockTime->add(new \DateInterval(self::LOCK_TTL)) > $now);
+    }
+
+    /**
+     * @param mixed $lockTime
+     */
+    public function setLockTime(\DateTime $lockTime)
+    {
+        $this->lockTime = $lockTime;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLockTime()
+    {
+        return $this->lockTime;
     }
 }

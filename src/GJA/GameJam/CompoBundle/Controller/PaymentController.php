@@ -36,6 +36,13 @@ class PaymentController extends AbstractPaymentController
      */
     public function detailsAction(Request $request, Compo $compo, Order $order)
     {
+        if($compo->isFull())
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");
+
+            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+        }
+
         $order = $this->processOrderDetails($compo, $order);
 
         $routes = [
@@ -61,17 +68,31 @@ class PaymentController extends AbstractPaymentController
      */
     public function completeAction(Compo $compo, Order $order)
     {
+        if($compo->isFull())
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");
+
+            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+        }
+
         $result = $this->processInternalPayment($order);
+        $compoApplication = $order->getCompoApplication();
 
         if($result instanceof Response)
         {
+            // lock application
+            $compoApplication->setLockTime(new \DateTime("now"));
+
+            $this->persistAndFlush($order->getCompoApplication());
+
             return $result;
         }
         elseif($result == true)
         {
-            $order->getCompoApplication()->setCompleted(true);
+            $compoApplication->setLockTime(null);
+            $compoApplication->setCompleted(true);
 
-            $this->persist($order->getCompoApplication());
+            $this->persist($compoApplication);
             $this->persist($order->getPaymentInstruction());
 
             $this->flush();
@@ -80,6 +101,9 @@ class PaymentController extends AbstractPaymentController
 
             return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
         }
+
+        $compoApplication->setLockTime(null);
+        $this->persistAndFlush($compoApplication);
 
         $this->addSuccessMessage("Ha habido un error procesando este pago. Por favor, vuelve a intentarlo");
 
@@ -93,6 +117,13 @@ class PaymentController extends AbstractPaymentController
      */
     public function bankAccountDetailsAction(Compo $compo, Order $order)
     {
+        if($compo->isFull())
+        {
+            $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");
+
+            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+        }
+
         return ['compo' => $compo, 'order' => $order];
     }
 

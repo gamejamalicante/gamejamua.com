@@ -17,10 +17,12 @@ use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
+use GJA\GameJam\CompoBundle\Entity\WaitingList;
 use GJA\GameJam\CompoBundle\Form\Type\CompoApplicationType;
 use GJA\GameJam\CompoBundle\Form\Type\TeamInvitationType;
 use GJA\GameJam\CompoBundle\Form\Type\TeamRequestType;
 use GJA\GameJam\CompoBundle\Form\Type\TeamType;
+use GJA\GameJam\CompoBundle\Form\Type\WaitingListType;
 use GJA\GameJam\CompoBundle\Order\CompoInscriptionItem;
 use GJA\GameJam\UserBundle\Entity\Order;
 use GJA\GameJam\UserBundle\Entity\User;
@@ -163,12 +165,52 @@ class CompoController extends AbstractController
     }
 
     /**
+     * @Route("/lista-de-espera", name="gamejam_compo_compo_waitinglist")
+     * @Template()
+     */
+    public function waitingListAction(Request $request, Compo $compo)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($user->getWaitingListFor($compo))
+        {
+            $this->addSuccessMessage("Ya estás en la lista de espera.");
+
+            return $this->redirectToPath("gamejam_compo_compo", ["compo" => $compo->getNameSlug()]);
+        }
+
+        $waitingListForm = $this->createForm(new WaitingListType());
+
+        if($this->isPost())
+        {
+            $waitingListForm->handleRequest($request);
+
+            if($waitingListForm->isValid())
+            {
+                /** @var WaitingList $waitingList */
+                $waitingList = $waitingListForm->getData();
+                $waitingList->setUser($this->getUser());
+                $waitingList->setCompo($compo);
+
+                $this->persistAndFlush($waitingList);
+
+                $this->addSuccessMessage("Te hemos añadido correctamente a la lista de espera. Si se abre más plazas te avisaremos");
+
+                return $this->redirectToPath("gamejam_compo_compo", ["compo" => $compo->getNameSlug()]);
+            }
+        }
+
+        return ['form' => $waitingListForm->createView(), 'compo' => $compo];
+    }
+
+    /**
      * @Route("/_activity", name="gamejam_compo_compo_activity")
      * @Template("GameJamCompoBundle:Compo:_activity.html.twig")
      */
     public function partialLastActivityAction(Compo $compo)
     {
-        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy(['compo' => $compo], ['id' => 'DESC'], 30, 0);
+        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy(['compo' => $compo], ['id' => 'DESC'], 7, 0);
 
         return array('activity' => $activity, 'hidden' => false);
     }

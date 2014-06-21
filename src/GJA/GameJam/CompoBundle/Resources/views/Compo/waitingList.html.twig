@@ -1,0 +1,30 @@
+{% extends 'GameJamCompoBundle:Compo:index.html.twig' %}
+
+{% block returnback %}<a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right"><i class="fa fa-arrow-left"></i> Volver</a>{% endblock %}
+
+{% block countdown_js %}{% endblock %}
+{% block countdown %}
+    <h2>Lista de espera</h2>
+{% endblock %}
+
+{% block compo_body %}
+    <div class="section">
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Hemos encontrado errores en el formulario:</strong>
+                {{ display_form_errors.display_error(form) }}
+            </div>
+        {% endif %}
+        <form action="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}" method="post">
+            <div class="alert alert-info">Al entrar en la lista de espera, te avisaremos si finalmente decidimos ampliar plazas por cualquier motivo. Antes de abrir plazas al público, iremos uno por uno en la lista de espera, por lo que si quieres estar seguro de que no perderás plaza entonces, ¡apúntate!</div>
+            <div style="margin-top:10px" class="form-group bottom">
+                <div class="col-sm-12 controls">
+                    <button type="submit" id="btn-login" class="btn btn-green submit">Apuntarme a la lista de espera</button>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+        </form>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

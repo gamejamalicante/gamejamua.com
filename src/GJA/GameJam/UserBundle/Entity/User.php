@@ -21,6 +21,7 @@ use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Entity\Notification;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Activity;
+use GJA\GameJam\CompoBundle\Entity\WaitingList;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -35,6 +36,16 @@ class User extends BaseUser implements EncoderAwareInterface
 {
     const SEX_MALE = 0;
     const SEX_FEMALE = 1;
+
+    /**
+     * @Assert\Regex(pattern="/^[a-z0-9_-]{3,20}$/i", message="El nombre de usuario no es válido")
+     */
+    protected $username;
+
+    /**
+     * @Assert\Regex(pattern="/^(([a-zA-Z]+\d+)|(\d+[a-zA-Z]+))[a-zA-Z0-9]*$/", message="La contraseña es muy insegura")
+     */
+    protected $plainPassword;
 
     /**
      * @ORM\Id
@@ -171,6 +182,11 @@ class User extends BaseUser implements EncoderAwareInterface
      * @ORM\Column(type="boolean")
      */
     protected $legacyPassword = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\WaitingList", mappedBy="user")
+     */
+    protected $waitingLists;
 
     /**
      * @param mixed $achievements
@@ -776,5 +792,32 @@ class User extends BaseUser implements EncoderAwareInterface
     public function removeFromTeam(Team $team)
     {
         $this->teams->removeElement($team);
+    }
+
+    public function getWaitingListFor(Compo $compo)
+    {
+        foreach($this->getWaitingLists() as $waitingList)
+        {
+            if($waitingList->getCompo() === $compo)
+            {
+                return $waitingList;
+            }
+        }
+    }
+
+    /**
+     * @param mixed $waitingLists
+     */
+    public function setWaitingLists($waitingLists)
+    {
+        $this->waitingLists = $waitingLists;
+    }
+
+    /**
+     * @return WaitingList[]
+     */
+    public function getWaitingLists()
+    {
+        return $this->waitingLists;
     }
 }
