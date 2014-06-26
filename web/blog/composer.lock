@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2a7b349d2befb8881b4d562fc855a4d9",
+    "hash": "5eff0053c866daf92731ab1248d8caa2",
     "packages": [
         {
             "name": "composer/installers",
@@ -123,16 +123,16 @@
         },
         {
             "name": "mustache/mustache",
-            "version": "v2.6.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/mustache.php.git",
-                "reference": "43dc9457a2089cf86c0f7fdb79fcdc516293a4b6"
+                "reference": "1430ca884912eaba2b3830856b45685733b16789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/43dc9457a2089cf86c0f7fdb79fcdc516293a4b6",
-                "reference": "43dc9457a2089cf86c0f7fdb79fcdc516293a4b6",
+                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/1430ca884912eaba2b3830856b45685733b16789",
+                "reference": "1430ca884912eaba2b3830856b45685733b16789",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                 "mustache",
                 "templating"
             ],
-            "time": "2014-04-14 01:24:40"
+            "time": "2014-06-20 19:34:49"
         },
         {
             "name": "rhumsaa/array_column",
@@ -458,6 +458,29 @@
             "time": "2013-11-30 13:14:44"
         },
         {
+            "name": "wpackagist-plugin/google-analytics-for-wordpress",
+            "version": "4.3.5",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/google-analytics-for-wordpress/",
+                "reference": "tags/4.3.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/google-analytics-for-wordpress.4.3.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/google-analytics-for-wordpress": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/google-analytics-for-wordpress/"
+        },
+        {
             "name": "wpackagist/wordpress-seo",
             "version": "1.5.3.3",
             "source": {
@@ -478,8 +501,12 @@
             "homepage": "http://wordpress.org/plugins/wordpress-seo/"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "wordpress": 20
@@ -487,5 +514,7 @@
     "platform": {
         "php": ">=5.3.0"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

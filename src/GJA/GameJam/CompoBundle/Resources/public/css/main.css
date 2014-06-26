@@ -1428,3 +1428,21 @@ ul.media li.element, ul.downloads li.element
     color: #FFF;
     font-size: 15px;
 }
+
+.blog-content
+{
+    font-size: 18px;
+    padding: 5px;
+}
+
+.blog-content img:not(.blog-featured-img)
+{
+    margin: 15px;
+}
+
+.blog-featured-img
+{
+    float: right;
+    margin-left: 10px;
+    width: 180px;
+}
