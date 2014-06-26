@@ -22,6 +22,8 @@
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
     <script type="text/javascript">stLight.options({publisher: "ur-e94483d1-a190-9d91-ee59-136d6609af51", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 
+    <?php wp_head(); ?>
+
 </head>
 
 
