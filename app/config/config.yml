@@ -7,7 +7,7 @@ parameters:
     twitter.username: gamejamua
 
 framework:
-    translator:      { fallback: es }
+    translator:      { fallback: en }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -194,6 +194,26 @@ liip_monitor:
 
 site_status_checker:
     token: %site_status_token%
+
+knp_gaufrette:
+    adapters:
+        uploads:
+            local:
+                directory: %kernel.root_dir%/../web/uploads
+        temp:
+            local:
+                directory: %kernel.root_dir%/../web/uploads/temp
+    filesystems:
+        uploads:
+            adapter:    uploads
+            alias:      media_filesystem
+        temp:
+            adapter:    temp
+            alias:      temp_filesystem
+
+thrace_media:
+    temporary_filesystem_key: temp
+    media_filesystem_key: uploads
 
 #liip_cache_control:
 #    varnish:

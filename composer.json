@@ -51,6 +51,9 @@
         "liip/monitor-bundle": "@dev",
         "sensiolabs/security-checker": "@dev",
         "albertofem/sitestatuschecker-bundle": "@dev",
+        "thrace-project/media-bundle":"@dev",
+        "liip/imagine-bundle": "@dev",
+        "knplabs/knp-gaufrette-bundle": "@dev",
         "intervention/image": "@dev",
         "gregwar/image": "@dev"
     },

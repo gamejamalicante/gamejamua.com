@@ -3,7 +3,11 @@
 {% block styles %}
     {{ parent() }}
     {% stylesheets filter='cssrewrite'
-    'components/select2/select2.css'
+        'components/jquery-ui/themes/cupertino/jquery-ui.css'
+        '@GameJamCompoBundle/Resources/public/css/jquery.Jcrop.css'
+        '@GameJamCompoBundle/Resources/public/css/colorbox/example1/colorbox.css'
+        '@ThraceMediaBundle/Resources/public/css/base.css'
+        'components/select2/select2.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
     {% endstylesheets %}
@@ -12,12 +16,23 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-    'components/select2/select2.js'
-    '@GameJamGameBundle/Resources/public/js/game.js'
+        'components/select2/select2.js'
+        'components/jquery-ui/ui/core.js'
+        'components/jquery-ui/ui/widget.js'
+        'components/jquery-ui/ui/progressbar.js'
+        'components/jquery-ui/ui/dialog.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.html5.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.flash.js'
+        '@GameJamCompoBundle/Resources/public/js/jquery.colorbox.js'
+        '@GameJamCompoBundle/Resources/public/js/jquery.Jcrop.js'
+        '@ThraceMediaBundle/Resources/public/js/image-upload.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
 {% endblock %}
+
+{% form_theme form with ['ThraceMediaBundle:Form:fields.html.twig'] %}
 
 {% block content %}
     <div class="section profile">
@@ -43,7 +58,7 @@
         <p>¡Edita los datos de tu juego, añade enlaces, imagenes y videos!</p>
         <div class="info">
         </div>
-        <form id="loginform" action="{% block form_action %}{{ path('gamejam_game_panel_create') }}{% endblock %}" {{ form_enctype(form) }} method="post">
+        <form id="loginform" action="{% block form_action %}{{ path('gamejam_game_panel_create') }}{% endblock %}" {{ form_enctype(form) }} novalidate="novalidate" method="post">
             <strong>Nombre del juego (*)</strong>
             <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
@@ -52,10 +67,7 @@
             {% block compo_info %}
             {% endblock %}
             <strong>Imagen del juego (370x110) (*)</strong>
-            <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-                {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
-            </div>
+            {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
             <strong>Diversificadores</strong>
             <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-adjust"></i></span>

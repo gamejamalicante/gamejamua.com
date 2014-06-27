@@ -36,7 +36,10 @@ class AppKernel extends Kernel
             new \Endroid\Bundle\TwitterBundle\EndroidTwitterBundle(),
             new \Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
             new \Liip\MonitorBundle\LiipMonitorBundle(),
-            new \AFM\Bundle\SiteStatusCheckerBundle\SiteStatusCheckerBundle()
+            new \AFM\Bundle\SiteStatusCheckerBundle\SiteStatusCheckerBundle(),
+            new \Thrace\MediaBundle\ThraceMediaBundle(),
+            new \Liip\ImagineBundle\LiipImagineBundle(),
+            new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'migration'))) {

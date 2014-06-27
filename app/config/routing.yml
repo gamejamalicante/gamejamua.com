@@ -56,6 +56,14 @@ _status_checker:
     resource: "@SiteStatusCheckerBundle/Resources/config/routing.yml"
     prefix: /status
 
+_thrace_media_backend:
+    resource: "@ThraceMediaBundle/Resources/config/routing/backend.xml"
+    prefix:   /admin
+
+_thrace_media_frontend:
+    resource: "@ThraceMediaBundle/Resources/config/routing/frontend.xml"
+    prefix:   /uploader/
+
 _imagine:
     resource: .
     type:     imagine

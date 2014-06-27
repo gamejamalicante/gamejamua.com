@@ -8,13 +8,14 @@ namespace GJA\GameJam\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Thrace\MediaBundle\Entity\AbstractImage;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_games_media")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Media
+class Media extends AbstractImage
 {
     const TYPE_IMAGE = 1;
     const TYPE_VIDEO = 2;
@@ -46,7 +47,7 @@ class Media
     protected $game;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
 
@@ -63,7 +64,7 @@ class Media
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $type;
+    protected $type = self::TYPE_IMAGE;
 
     /**
      * TODO: allow image uploads
@@ -283,5 +284,10 @@ class Media
         }
 
         return null;
+    }
+
+    public function getUploadDir()
+    {
+        return '/media/game/' . $this->getGame()->getId();
     }
 } 

@@ -13,6 +13,7 @@ use GJA\GameJam\CompoBundle\Entity\Diversifier;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use Thrace\MediaBundle\Model\ImageInterface;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
@@ -69,8 +70,8 @@ class Game
     protected $description;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank
+     * @ORM\OneToOne(targetEntity="Media", cascade={"all"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $image;
 
@@ -290,9 +291,11 @@ class Game
     /**
      * @param mixed $image
      */
-    public function setImage($image)
+    public function setImage(Media $image = null)
     {
         $this->image = $image;
+        $this->image->setGame($this);
+        $this->image->setType(Media::TYPE_IMAGE);
     }
 
     /**
