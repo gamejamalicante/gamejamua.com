@@ -6,10 +6,12 @@ use Doctrine\ORM\EntityManager;
 use Endroid\Twitter\Twitter;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Repository\ActivityRepository;
+use GJA\GameJam\CompoBundle\Service\LinkUnshortener;
 use GJA\GameJam\GameBundle\GameJamGameEvents;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -39,24 +41,38 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName("gamejam:compo:fetch_twitter_activity")
-            ->setDescription("Fetch twitter activity and generates events");
+            ->setDescription("Fetch twitter activity and generates events")
+            ->addOption('dry-run', 'dr', InputOption::VALUE_NONE, 'Dry run the process');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $dryRun = $input->getOption('dry-run');
+
         /** @var Twitter $twitter */
         $twitter = $this->getContainer()->get('endroid.twitter');
 
-        $query = $this->prepareQuery();
+        $query = $this->prepareQuery($output);
+        $sinceId = $this->getSinceId();
+
+        $parameters = array(
+            'q' => $query,
+        );
+
+        if($sinceId)
+        {
+            $output->writeln("Found last tweet ID: <info>" .$sinceId. "</info>");
+            $parameters['since_id'] = $sinceId;
+        }
 
         try
         {
-            $response = $twitter->query("search/tweets", "get", "json", array('q' => $query));
+            $response = $twitter->query("search/tweets", "get", "json", $parameters);
         }
         catch(\Exception $ex)
         {
             $output->writeln("Failed fetching Tweets: ". $ex->getMessage());
-            exit(0x255);
+            return 0x255;
         }
 
         $response = json_decode($response->getContent());
@@ -76,9 +92,16 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
             $activity->setType(Activity::TYPE_TWITTER);
             $activity->setUser($user);
             $activity->setCompo($this->getCurrentCompo());
+            $activity->setDate(new \DateTime($tweet->created_at));
+
+            /** @var LinkUnshortener $linkUnshortener */
+            $linkUnshortener = $this->getContainer()->get('gamejam.compo.link_unshortener');
+
+            $content = $linkUnshortener->findAndUnshortenLinks($tweet->text);
+            $content = $this->findAndLinkHastagsAndMentions($content);
 
             $content = array(
-                'content' => $tweet->text,
+                'content' => $content,
                 'id' => $tweet->id
             );
 
@@ -96,7 +119,8 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
             $this->entityManager->persist($activity);
         }
 
-        $this->entityManager->flush();
+        if(!$dryRun)
+            $this->entityManager->flush();
     }
 
     protected function findUserFromTwitterUsername($username)
@@ -121,11 +145,8 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
         return $this->entityManager->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true], ['id' => 'ASC']);
     }
 
-    protected function prepareQuery()
+    protected function prepareQuery(OutputInterface $output)
     {
-        /** @var ActivityRepository $activityRepository */
-        $activityRepository = $this->entityManager->getRepository("GameJamCompoBundle:Activity");
-
         $hashtags = $this->getContainer()->getParameter("twitter.hashtags");
         $username = "@" . $this->getContainer()->getParameter("twitter.username");
 
@@ -138,15 +159,47 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
 
         $query = implode($hashtags, " OR ");
 
+        $output->writeln('Query to execute: <info>' .$query. '</info>');
+
+        return $query;
+    }
+
+    protected function getSinceId()
+    {
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $this->entityManager->getRepository("GameJamCompoBundle:Activity");
+
         /** @var Activity $lastInteraction */
         $lastInteraction = $activityRepository->findLastTwitterInteraction();
 
         if($lastInteraction)
         {
             if(isset($lastInteraction->getContent()['id']))
-                $query .= " since_id:" . $lastInteraction->getContent()['id'];
+                return $lastInteraction->getContent()['id'];
         }
 
-        return $query;
+        return null;
+    }
+
+    private function findAndLinkHastagsAndMentions($content)
+    {
+        preg_match_all('/(?<mention>(?:#|@)(?:.*?)(?:$| ))/i', $content, $matches);
+
+        foreach($matches['mention'] as $mention)
+        {
+            $mention = trim($mention);
+
+            if($mention{0} == '@')
+            {
+                $content = str_replace($mention, '<a href="https://twitter.com/' .str_replace('@', '', $mention). '">' .$mention. '</a>', $content);
+            }
+
+            if($mention{1} == '#')
+            {
+                $content = str_replace($mention, '<a href="https://twitter.com/hashtag/' .str_replace('#', '', $mention). '">' .$mention. '</a>', $content);
+            }
+        }
+
+        return $content;
     }
 } 

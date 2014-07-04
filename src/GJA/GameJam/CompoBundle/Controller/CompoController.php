@@ -210,7 +210,7 @@ class CompoController extends AbstractController
      */
     public function partialLastActivityAction(Compo $compo)
     {
-        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy(['compo' => $compo], ['id' => 'DESC'], 7, 0);
+        $activity = $this->getRepository("GameJamCompoBundle:Activity")->findBy(['compo' => $compo], ['date' => 'DESC'], 7, 0);
 
         return array('activity' => $activity, 'hidden' => false);
     }

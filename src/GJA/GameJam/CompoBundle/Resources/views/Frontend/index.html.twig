@@ -86,7 +86,7 @@
     </div>
     <h2><i class="fa fa-comment-o"></i> Últimos mensajes</h2>
     {% for item in messages %}
-        <div class="section index activity">
+        <div class="section index activity activity-last-frontend">
             {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
         </div>
     {% else %}

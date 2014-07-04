@@ -189,6 +189,11 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $waitingLists;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $lastIp;
+
+    /**
      * @param mixed $achievements
      */
     public function setAchievements($achievements)
@@ -819,5 +824,21 @@ class User extends BaseUser implements EncoderAwareInterface
     public function getWaitingLists()
     {
         return $this->waitingLists;
+    }
+
+    /**
+     * @param mixed $lastIp
+     */
+    public function setLastIp($lastIp)
+    {
+        $this->lastIp = $lastIp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastIp()
+    {
+        return $this->lastIp;
     }
 }

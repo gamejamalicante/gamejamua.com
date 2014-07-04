@@ -1,0 +1,5 @@
+var challengeLoader : URLLoader = new URLLoader();
+var challenge : URLRequest = new URLRequest("{{ url('gamejam_api_challenge_complete', {challenge: challenge.token}) }}");
+challenge.method = URLRequestMethod.POST;
+
+challengeLoader.load(request);

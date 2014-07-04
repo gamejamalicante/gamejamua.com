@@ -44,6 +44,9 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
 
+    gamejam.compo.link_unshortener:
+        class: GJA\GameJam\CompoBundle\Service\LinkUnshortener
+
     gamejam.compo.mailer:
         class: GJA\GameJam\CompoBundle\Service\Mailer
         arguments: [@mailer]

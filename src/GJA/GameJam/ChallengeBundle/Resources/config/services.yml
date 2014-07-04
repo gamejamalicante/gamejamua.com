@@ -1,0 +1,5 @@
+services:
+    gamejam.challenge.listener.rate_limit_generate_key:
+        class: GJA\GameJam\ChallengeBundle\Listener\RateLimitGenerateKeyListener
+        tags:
+            - { name: kernel.event_listener, event: 'ratelimit.generate.key', method: 'onGenerateKey' }

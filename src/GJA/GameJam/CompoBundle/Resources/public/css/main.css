@@ -857,7 +857,7 @@ textarea.shout
 
 .section.index.activity .item
 {
-
+    position: relative;
 }
 
 .activity .item .avatar
@@ -1445,4 +1445,45 @@ ul.media li.element, ul.downloads li.element
     float: right;
     margin-left: 10px;
     width: 180px;
+}
+
+.activity-last-frontend .embed
+{
+    height: 150px !important;
+    width: auto !important;
+}
+
+.activity-last-frontend .embed img
+{
+    height: 150px !important;
+    width: auto !important;
+}
+
+.shout-last .embed
+{
+    height: 150px !important;
+    width: auto !important;
+}
+
+.shout-last .embed img
+{
+    height: 150px !important;
+    width: auto !important;
+}
+
+.embed
+{
+    width: 100% !important;
+}
+
+.embed img
+{
+    width: auto !important;
+    height: 150px !important;
+}
+
+.embed iframe
+{
+    width: 100% !important;
+    max-height: 240px !important;
 }

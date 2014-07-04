@@ -43,6 +43,7 @@ class Media extends AbstractImage
 
     /**
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="media")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $game;
 
@@ -205,20 +206,7 @@ class Media extends AbstractImage
 
     public function getWebPath()
     {
-        $webPath = "uploads/games/" . $this->getGame()->getNameSlug() . "/";
-
-        switch($this->type)
-        {
-            case self::TYPE_IMAGE:
-                $webPath .= "screenshots";
-            break;
-
-            default:
-                $webPath .= "other";
-            break;
-        }
-
-        return $webPath . "/" . $this->filePath;
+        return $this->getUploadDir() . '/' . $this->getName();
     }
 
     /**
@@ -273,13 +261,16 @@ class Media extends AbstractImage
 
         if($this->type == self::TYPE_VIDEO or $this->type == self::TYPE_TIMELAPSE)
         {
-            preg_match("/youtube.*v\=(.*)\&/i", $this->url, $matches);
-
-            if(isset($matches[1]))
+            if(preg_match("/youtube/i", $this->url))
             {
-                $this->youtubeId = $matches[1];
+                parse_str(parse_url($this->url, PHP_URL_QUERY), $youtubeVars);
 
-                return $this->youtubeId;
+                if(isset($youtubeVars['v']))
+                {
+                    $this->youtubeId = $youtubeVars['v'];
+
+                    return $this->youtubeId;
+                }
             }
         }
 
@@ -288,6 +279,11 @@ class Media extends AbstractImage
 
     public function getUploadDir()
     {
-        return '/media/game/' . $this->getGame()->getId();
+        return '/uploads/game/' . $this->getGame()->getId();
+    }
+
+    public function __toString()
+    {
+        return $this->getWebPath();
     }
 } 

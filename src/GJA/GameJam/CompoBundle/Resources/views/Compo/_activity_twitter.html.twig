@@ -8,6 +8,7 @@
         <h3><a href="https://twitter.com/{{ item.content.screen_name }}" rel="nofollow" target="_blank">@{{ item.content.screen_name }}</a></h3>
     {% endif %}
     <span class="date"><i class="fa fa-twitter"></i> {{ time_diff(item.date) }}</span>
-    <p>{{ item.content.content|raw }}</p>
+    <p>{{ item.shoutContent|raw|converturls|raw }}</p>
+    {% if loop.index0 == 0 %}<p>{{ item.embeddedContent|raw }}</p>{% endif %}
     <div class="clearfix"></div>
 </div>

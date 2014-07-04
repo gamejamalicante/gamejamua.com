@@ -39,10 +39,21 @@ class AppKernel extends Kernel
             new \AFM\Bundle\SiteStatusCheckerBundle\SiteStatusCheckerBundle(),
             new \Thrace\MediaBundle\ThraceMediaBundle(),
             new \Liip\ImagineBundle\LiipImagineBundle(),
-            new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle()
+            new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
         );
 
-        if (in_array($this->getEnvironment(), array('dev', 'test', 'migration'))) {
+        if (in_array($this->getEnvironment(), array('rest_dev', 'rest_prod')))
+        {
+            $bundles[] = new \GJA\GameJam\ChallengeBundle\GameJamChallengeBundle();
+            $bundles[] = new \FOS\RestBundle\FOSRestBundle();
+            $bundles[] = new Noxlogic\RateLimitBundle\NoxlogicRateLimitBundle();
+            $bundles[] = new \JMS\SerializerBundle\JMSSerializerBundle();
+            $bundles[] = new \Snc\RedisBundle\SncRedisBundle();
+        }
+
+        if (in_array($this->getEnvironment(), array('dev', 'test', 'migration')))
+        {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

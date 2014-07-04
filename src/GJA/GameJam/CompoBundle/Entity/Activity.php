@@ -7,6 +7,8 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Embera\Embera;
+use Embera\Formatter;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\ActivityRepository")
@@ -309,5 +311,32 @@ class Activity
     public function getTeam()
     {
         return $this->team;
+    }
+
+    public function getShoutContent()
+    {
+        return $this->getContent()['content'];
+    }
+
+    public function getEmbeddedContent()
+    {
+        if(isset($this->getContent()['content']))
+        {
+            $embera = new Embera();
+            $embera = new Formatter($embera);
+
+            $urlInfo = $embera->getUrlInfo($this->getShoutContent());
+
+            if(empty($urlInfo))
+                return '';
+
+            $urlContent = array_slice(array_keys($urlInfo), 0, 1);
+
+            $embera->setTemplate('<div class="embed">{html}</div>');
+
+            return $embera->transform($urlContent);
+        }
+
+        return '';
     }
 }

@@ -38,7 +38,7 @@ class FrontendController extends AbstractController
         $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1], ['date' => 'DESC']);
         $activity = $activityRepository->findOnlyActivity(5);
         $messages = $activityRepository->findOnlyMessages(10);
-        $twitterMentions = $activityRepository->findTwitterMentions(5);
+        $twitterMentions = $activityRepository->findTwitterMentions(8);
 
         $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
 

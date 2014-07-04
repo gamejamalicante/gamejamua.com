@@ -1,4 +1,9 @@
-<p class="item shout">
-    <i class="fa fa-comment-o"></i> {{ activity.content.content|raw }}
-    <span class="date">{{ time_diff(activity.date) }}</span>
-</p>
+<div class="item">
+    <img class="avatar" src="{{ user_avatar(item.user, 50) }}" />
+    <span class="type"><i class="fa fa-comment"></i> Post</span>
+    <h3><a href="{{ path('gamejam_user_profile', {user: item.user.username}) }}">{{ item.user }}</a></h3>
+    <span class="date"><i class="fa fa-clock-o"></i> {{ time_diff(item.date) }}</span>
+    <p>{{ item.shoutContent|converturls|raw }}</p>
+    {% if loop.index0 == 0 %}<p>{{ item.embeddedContent|raw }}</p>{% endif %}
+    <div class="clearfix"></div>
+</div>
