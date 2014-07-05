@@ -1,0 +1,132 @@
+{% extends 'GameJamCompoBundle:Compo:index.html.twig' %}
+
+{% block returnback %}<a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}" class="btn btn-green pull-right"><i class="fa fa-arrow-left"></i> Volver</a>{% endblock %}
+
+{% block countdown_js %}{% endblock %}
+{% block countdown %}
+    <h2>Retos solidarios</h2>
+{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        '@GameJamCompoBundle/Resources/public/css/prism.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@GameJamCompoBundle/Resources/public/js/prism.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        function showChallengeInfo(token)
+        {
+            var url = '{{ path('gamejam_compo_compo_challenges_info', {compo: compo.nameSlug, challenge: '__challenge'}) }}'.replace('__challenge', token);
+            var target = $('.challenge-info');
+
+            target.html('<img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" />');
+
+            target.load(url, function()
+            {
+                Prism.highlightAll();
+
+                $('.show-snippet').click(function()
+                {
+                    $('.snippet-' + $(this).data('language')).toggle();
+                })
+            });
+
+            $('.before-challenge').hide();
+            target.fadeIn();
+        }
+
+        $(document).ready(function()
+        {
+            $('.challenge-info-link').click(function()
+            {
+                showChallengeInfo($(this).data('token'));
+            });
+
+            {% if challenge %}
+            showChallengeInfo('{{ challenge }}');
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+{% block compo_body %}
+    <div class="row description">
+        <div class="col-md-6 pull-right">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">Instrucciones para usar los retos en tu código</div>
+                </div>
+                <div class="panel-body">
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {{ message|raw }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% if not form.vars.valid %}
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Hemos encontrado errores en el formulario:</strong>
+                            {{ display_form_errors.display_error(form) }}
+                        </div>
+                    {% endif %}
+                    <strong>Crear nuevo reto</strong>
+                    <form action="{{ path('gamejam_compo_compo_challenges', {compo: compo.nameSlug}) }}" method="post">
+                        {{ form_widget(form.name, {'attr':{'class':'form-control', 'placeholder':'Nombre del reto...'}}) }}
+                        <button type="submit" class="btn btn-twitter" style="margin-top: 5px;">¡Crear nuevo reto!</button>
+                    </form>
+                    <p><strong>Instrucciones para usar tu reto</strong></p>
+                    <p>Implementar los retos solidarios es muy sencillo. Sólo tienes que hacer una petición a nuestro servicio web REST, cuya URL incluye los datos que identifican a tu juego. ¡Nosotros nos encargamos del resto!</p>
+                    <p class="before-challenge"><strong>Selecciona un reto de la parte izquierda o crea uno con el formulario de arriba.</strong></p>
+                    <p class="challenge-info"></p>
+                </div>
+            </div>
+        </div>
+
+        <p class="alert alert-warning">
+            <strong>¡IMPORTANTE!</strong>
+            Los retos creados antes del inicio oficial de la GameJam serán eliminados, por lo que sólo sirve para hacer pruebas.
+        </p>
+        <p>Desde aquí puedes crear tus retos solidarios e introducirlos en tu juego para conseguir que nuestros patrocinadores puedan donar dinero a causas solidarias. Para saber más sobre este sistema, mírate <a href="//gamejamua.com/blog/iv-gamejam-edicion-solidaria-como-funcionan-los-juegos-solidarios/">nuestra entrada en el blog sobre los Retos Solidarios</a>.</p>
+        <p>
+            <h3>Mis retos solidarios</h3>
+            <table class="table table-striped table-bordered" style="width: auto;">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Completado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for challenge in challenges %}
+                    <tr>
+                        <td><a href="javascript: void(-1);" class="challenge-info-link" data-token="{{ challenge.token }}">{{ challenge }}</a><br><code>{{ challenge.token }}</code></td>
+                        <td>{{ challenge.completions }}</td>
+                        <td style="width: 120px;"><i class="fa fa-trash-o"></i> <a href="">Eliminar</a><br><i class="fa fa-bar-chart-o"></i> <a href="">Estadísticas</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aún no tienes ningún reto creado. Utiliza el formulario de arriba para crear un nuevo reto</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </p>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

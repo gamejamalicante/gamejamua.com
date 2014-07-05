@@ -88,6 +88,7 @@
     {% for item in messages %}
         <div class="section index activity activity-last-frontend">
             {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
+            <div class="clearfix"></div>
         </div>
     {% else %}
         <div class="section index">

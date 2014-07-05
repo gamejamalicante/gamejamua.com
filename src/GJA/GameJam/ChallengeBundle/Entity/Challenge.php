@@ -4,10 +4,12 @@
 namespace GJA\GameJam\ChallengeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\ActivityRepository")
  * @ORM\Table(name="gamejam_challenges_challenge")
+ * @ORM\HasLifecycleCallbacks
  */
 class Challenge
 {
@@ -19,9 +21,32 @@ class Challenge
     protected $id;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $temp = false;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
+     */
+    protected $nameSlug;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game")
@@ -42,6 +67,11 @@ class Challenge
      * @ORM\Column(type="string")
      */
     protected $token;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     */
+    protected $user;
 
     /**
      * @param mixed $completed
@@ -142,5 +172,105 @@ class Challenge
     public function isCompleted()
     {
         return $this->completed;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $nameSlug
+     */
+    public function setNameSlug($nameSlug)
+    {
+        $this->nameSlug = $nameSlug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNameSlug()
+    {
+        return $this->nameSlug;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $temp
+     */
+    public function setTemp($temp)
+    {
+        $this->temp = $temp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTemp()
+    {
+        return $this->temp;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $token = substr(sha1($this->getUser()->getId() . uniqid()), 0, 15);
+
+        $this->token = $token;
+    }
+
+    public function complete()
+    {
+        $this->completions++;
     }
 } 

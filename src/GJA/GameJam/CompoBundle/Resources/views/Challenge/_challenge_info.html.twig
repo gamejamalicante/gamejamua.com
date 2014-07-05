@@ -1,0 +1,13 @@
+<h3>{{ challenge }}</h3>
+
+<p>
+    <strong>Token:</strong> <strong><code>{{ challenge.token }}</code></strong></p>
+    <p><strong>URL:</strong> <strong style=""><code style="display: inline; white-space: normal; word-wrap: break-word">{{ endpoint }}</code></strong></p>
+    <p><strong>Método HTTP:</strong> <strong><code>POST</code></strong>
+</p>
+{% for language, data in site.challenges.snippets %}
+<p>
+    <strong class="show-snippet" data-language="{{ language }}">Ejemplo en {{ data.name }}</strong>
+    <pre class="snippet snippet-{{ language }}"><code class="language-{{ data.class }}">{% filter escape %}{% include 'GameJamChallengeBundle:Snippet:challenge.'~language~'.twig' %}{% endfilter %}</code></pre>
+</p>
+{% endfor %}

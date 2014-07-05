@@ -1,5 +1,5 @@
 HttpClient challengeClient = new DefaultHttpClient();
-HttpPost challenge = new HttpPost("{{ url('gamejam_api_challenge_complete', {challenge: challenge.token}) }}");
+HttpPost challenge = new HttpPost("{{ endpoint }}");
 
 try {
     challengeClient.execute(challenge);

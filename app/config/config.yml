@@ -42,6 +42,38 @@ twig:
                 hashtags: %twitter.hashtags%
             facebook:
                 url: https://facebook.com/GameJamUA
+            challenges:
+                snippets:
+                    lua:
+                        name: LUA
+                        class: c
+                    c:
+                        name: C/C++
+                        class: c
+                    as3:
+                        name: ActionScript 3
+                        class: c
+                    csharp:
+                        name: C#
+                        class: csharp
+                    java:
+                        name: Java
+                        class: java
+                    unitycsharp:
+                        name: Unity (C#)
+                        class: csharp
+                    unityscript:
+                        name: UnityScript
+                        class: js
+                    js:
+                        name: JavaScript
+                        class: js
+                    android:
+                        name: Android (Java)
+                        class: java
+                    jquery:
+                        name: JQuery
+                        class: js
 
 assetic:
     debug:          "%kernel.debug%"

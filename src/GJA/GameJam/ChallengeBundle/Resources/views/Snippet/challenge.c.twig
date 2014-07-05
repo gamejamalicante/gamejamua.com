@@ -1,7 +1,7 @@
 #include <curl/curl.h>
 
 CURL* curl;
-char* url = "{{ url('gamejam_api_challenge_complete', {challenge: challenge.token}) }}";
+char* url = "{{ endpoint }}";
 
 curl = curl_easy_init();
 curl_easy_setopt(curl, CURLOPT_URL, url);

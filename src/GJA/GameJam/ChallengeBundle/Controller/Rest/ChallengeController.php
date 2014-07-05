@@ -11,13 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
- * @Route("/challenge/{challenge}", name="gamejam_api_challenge_complete")
+ * @Route("/challenge/{challenge}")
  * @ParamConverter("challenge", options={"mapping":{"challenge":"token"}})
  */
 class ChallengeController extends AbstractController
 {
     /**
-     * @Route("/complete", defaults={"_format":"json"})
+     * @Route("/complete", defaults={"_format":"json"}, name="gamejam_api_challenge_complete")
      * @Rest\View
      * @RateLimit(limit=10, period=3600)
      */
@@ -27,5 +27,11 @@ class ChallengeController extends AbstractController
         {
             throw new ChallengeCompletedException('Challenge is already completed');
         }
+
+        $challenge->complete();
+
+        $this->persistAndFlush($challenge);
+
+        return array('result' => true, 'completions' => $challenge->getCompletions());
     }
 }

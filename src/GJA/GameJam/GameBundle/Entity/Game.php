@@ -9,6 +9,7 @@ namespace GJA\GameJam\GameBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
@@ -145,6 +146,11 @@ class Game
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $deletedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\ChallengeBundle\Entity\Challenge", mappedBy="game")
+     */
+    protected $challenges;
 
     /**
      * @var bool
@@ -632,5 +638,26 @@ class Game
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * @param mixed $challenges
+     */
+    public function setChallenges($challenges)
+    {
+        $this->challenges = $challenges;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChallenges()
+    {
+        return $this->challenges;
+    }
+
+    public function addChallenge(Challenge $challenge)
+    {
+        $this->challenges[] = $challenge;
     }
 }

@@ -168,7 +168,7 @@
         <div class="pull-right">
         {% block returnback %}
             <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-users"></i> {% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %}</a>
-            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a>{% endif %}
+            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a> <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_challenges', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Retos solidarios</a>{% endif %}
         {% endblock %}
         </div>
         <h1><strong>{{ compo }}</strong></h1>
