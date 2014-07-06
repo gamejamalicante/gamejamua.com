@@ -4,14 +4,23 @@
     {{ form_widget(item.type, {'attr':{'class':'form-control'}}) }}
 </div>
 
-<strong>URL de la imagen / vídeo</strong>
-<div style="margin-bottom: 25px" class="input-group select2">
-    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
-    {{ form_widget(item.url, {'attr':{'class':'form-control', 'placeholder': 'http://'}}) }}
-</div>
-
 <strong>Descripción</strong>
 <div style="margin-bottom: 25px" class="input-group select2">
     <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
     {{ form_widget(item.comment, {'attr':{'class':'form-control', 'placeholder': 'Introduce una pequeña descripción de este image o vídeo'}}) }}
+</div>
+
+<div class="url">
+<strong>URL del vídeo / descarga / etc. (opcional)</strong>
+<div style="margin-bottom: 25px" class="input-group select2">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+    {{ form_widget(item.url, {'attr':{'class':'form-control', 'placeholder': 'http://'}}) }}
+</div>
+</div>
+
+<div class="image">
+<strong>Subir imagen</strong>
+<div class="well">
+{{ form_widget(item) }}
+</div>
 </div>

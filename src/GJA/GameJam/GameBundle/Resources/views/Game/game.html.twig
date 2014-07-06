@@ -54,7 +54,7 @@
                 var imagePreview = $('<img id="preview" />');
                 $('.image-preview').html(imagePreview);
 
-                imagePreview.attr( 'src', el.data( 'preview' ) );
+                imagePreview.attr('src', el.data('preview'));
             }
             $carouselItems.removeClass( 'current-img' );
             el.addClass( 'current-img' );
@@ -138,19 +138,25 @@
         <div class="content info showcase">
             <div class="row">
                 <div class="col-md-7" style="padding-right: 0;">
+                    {% if game.media|length > 0 %}
                     <div class="gallery">
                         <div class="image-preview">
-                            <img id="preview" src="{{ game.image }}" />
+                            <img id="preview" />
                         </div>
                         <ul id="carousel" class="elastislide-list">
                             {% for media in game.media %}
-                                <li data-preview="{{ media.url }}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-youtube-id="{{ media.youtubeId }}{% endif %}"><a href="#"><img src="{{ media.imageUrl }}"></a></li>
+                                <li data-preview="{{ asset(media.webPath) | apply_filter('game_gallery_image') }}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-youtube-id="{{ media.youtubeId }}{% endif %}"><a href="javascript: void(-1);"><img src="{{ asset(media.webPath) | apply_filter('game_gallery_thumb') }}"></a></li>
                             {% endfor %}
                         </ul>
                     </div>
+                    {% else %}
+                    <div class="gallery">
+                        Este juego aun no tiene imágenes :(
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="col-md-5">
-                    <img src="{{ game.image }}" width="368" height="110" />
+                    <img src="{{ asset(game.image) | apply_filter('game_gallery_top') }}" width="370" height="110" />
                     <p class="description scrollable">{{ game.description }}</p>
                     {% if game.compo %}
                         <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>

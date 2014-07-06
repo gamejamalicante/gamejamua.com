@@ -37,7 +37,7 @@ class GamePanelController extends AbstractController
 
             if($form->isValid())
             {
-                $this->persistAndFlush($game);
+                $this->persistAndFlush($game, true);
 
                 // game creation event
                 $this->dispatchEvent(GameJamGameEvents::ACTIVITY_CREATION, new GameActivityCreationEvent($this->getUser(), $game));
@@ -67,7 +67,19 @@ class GamePanelController extends AbstractController
 
             if($form->isValid())
             {
-                $this->persistAndFlush($game);
+                $media = $game->getMedia();
+                $image = $game->getImage();
+
+                $this->persist($image);
+
+                foreach($media as $mediaElement)
+                {
+                    $mediaElement->setGame($game);
+                    $this->persist($mediaElement);
+                }
+
+                $this->persist($game);
+                $this->flush();
 
                 $this->addSuccessMessage("Cambios en el juego guardados");
 
@@ -101,8 +113,8 @@ class GamePanelController extends AbstractController
         }
         else
         {
-            // not from compo, hard delelete
-            $this->getEntityManager()->getFilters()->disable("soft-deleteable");
+            // not from compo, hard delete
+            $this->getEntityManager()->getFilters()->disable("softdeleteable");
 
             $this->deleteAndFlush($game);
         }

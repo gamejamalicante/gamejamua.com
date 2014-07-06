@@ -21,6 +21,7 @@ class Media extends AbstractImage
     const TYPE_VIDEO = 2;
     const TYPE_TIMELAPSE = 3;
     const TYPE_OTHER = 4;
+    const TYPE_SHOWCASE = 5;
 
     /**
      * @ORM\Id
@@ -46,6 +47,11 @@ class Media extends AbstractImage
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $game;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Game", mappedBy="image")
+     */
+    protected $showcaseGame;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -159,7 +165,16 @@ class Media extends AbstractImage
      */
     public function getGame()
     {
-        return $this->game;
+        switch ($this->type)
+        {
+            case self::TYPE_SHOWCASE:
+                return $this->getShowcaseGame();
+            break;
+
+            default:
+                return $this->game;
+            break;
+        }
     }
 
     /**
@@ -206,7 +221,7 @@ class Media extends AbstractImage
 
     public function getWebPath()
     {
-        return $this->getUploadDir() . '/' . $this->getName();
+        return 'uploads' . $this->getUploadDir() . '/' . $this->getName();
     }
 
     /**
@@ -277,13 +292,45 @@ class Media extends AbstractImage
         return null;
     }
 
+    protected function getUploadPath()
+    {
+        switch($this->type)
+        {
+            case self::TYPE_IMAGE:
+                return 'image';
+            break;
+
+            default:
+                return 'other';
+            break;
+        }
+    }
+
     public function getUploadDir()
     {
-        return '/uploads/game/' . $this->getGame()->getId();
+        $game = $this->getGame();
+
+        return '/game/' . $game->getId() . '/' .$this->getUploadPath();
     }
 
     public function __toString()
     {
         return $this->getWebPath();
+    }
+
+    /**
+     * @param mixed $showcaseGame
+     */
+    public function setShowcaseGame($showcaseGame)
+    {
+        $this->showcaseGame = $showcaseGame;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowcaseGame()
+    {
+        return $this->showcaseGame;
     }
 } 

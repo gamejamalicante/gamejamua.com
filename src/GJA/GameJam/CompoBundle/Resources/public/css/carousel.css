@@ -19,10 +19,17 @@
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.2);
 }
 
-.gallery .image-preview img {
-    width: 100%;
-    display: block;
+.gallery .image-preview
+{
     height: 300px;
+    width: 100%;
+}
+
+.gallery .image-preview img {
+    width: auto;
+    display: block;
+    max-height: 300px;
+    margin: 0 auto;
 }
 
 .gallery .elastislide-carousel ul li.current-img a img {

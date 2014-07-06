@@ -9,5 +9,6 @@ services:
             - { name: form.type, alias: gamejam_game_download }
     gamejam.game.form_type.media:
         class: GJA\GameJam\GameBundle\Form\Type\MediaType
+        parent: thrace_media.form.type.image_upload
         tags:
             - { name: form.type, alias: gamejam_game_media }

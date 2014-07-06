@@ -52,6 +52,7 @@ class Activity
 
     /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game", inversedBy="activity")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $game;
 

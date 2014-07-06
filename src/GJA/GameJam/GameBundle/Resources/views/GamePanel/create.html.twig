@@ -3,9 +3,8 @@
 {% block styles %}
     {{ parent() }}
     {% stylesheets filter='cssrewrite'
-        'components/jquery-ui/themes/cupertino/jquery-ui.css'
+        'components/jquery-ui/themes/eggplant/jquery-ui.css'
         '@GameJamCompoBundle/Resources/public/css/jquery.Jcrop.css'
-        '@GameJamCompoBundle/Resources/public/css/colorbox/example1/colorbox.css'
         '@ThraceMediaBundle/Resources/public/css/base.css'
         'components/select2/select2.css'
     %}
@@ -24,15 +23,23 @@
         '@GameJamCompoBundle/Resources/public/js/plupload.js'
         '@GameJamCompoBundle/Resources/public/js/plupload.html5.js'
         '@GameJamCompoBundle/Resources/public/js/plupload.flash.js'
-        '@GameJamCompoBundle/Resources/public/js/jquery.colorbox.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.es.js'
         '@GameJamCompoBundle/Resources/public/js/jquery.Jcrop.js'
         '@ThraceMediaBundle/Resources/public/js/image-upload.js'
+        '@GameJamCompoBundle/Resources/public/js/jquery.center.js'
+        '@GameJamGameBundle/Resources/public/js/game.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('.ui-dialog').center(false);
+        })
+    </script>
 {% endblock %}
 
-{% form_theme form with ['ThraceMediaBundle:Form:fields.html.twig'] %}
+{% form_theme form with ['GameJamGameBundle:GamePanel/Form:fields.html.twig'] %}
 
 {% block content %}
     <div class="section profile">
@@ -67,7 +74,9 @@
             {% block compo_info %}
             {% endblock %}
             <strong>Imagen del juego (370x110) (*)</strong>
-            {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
+            <div class="well">
+            {{ form_widget(form.image) }}
+            </div>
             <strong>Diversificadores</strong>
             <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-adjust"></i></span>

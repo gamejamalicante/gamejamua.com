@@ -8,13 +8,15 @@ function addMediaForm(collectionHolder, newLinkLi, deleteLink) {
 
     collectionHolder.data('index', index + 1);
 
-    var newFormLi = $('<li class="element"></li>').append(newForm);
+    var newFormLi = $('<li class="element" id="image-upload-element-' +index+'"></li>').append(newForm);
     newLinkLi.before(newFormLi);
 
     if(deleteLink)
         addMediaDeleteLink(newFormLi);
 
     $('select.select2').select2();
+    ThraceMedia.imageUpload($('#image-upload-element-' + index + ' .thrace-image-upload'));
+    $('.ui-dialog').center(false);
 }
 
 function addMediaDeleteLink(mediaRemove) {

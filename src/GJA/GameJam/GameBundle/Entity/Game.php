@@ -71,7 +71,7 @@ class Game
     protected $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media", cascade={"all"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="Media", cascade={"all"}, orphanRemoval=true, fetch="EAGER", inversedBy="showcaseGame")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $image;
@@ -83,7 +83,7 @@ class Game
     protected $diversifiers;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="game", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="game", cascade={"all"})
      * @var ArrayCollection
      */
     protected $media;
@@ -297,11 +297,11 @@ class Game
     /**
      * @param mixed $image
      */
-    public function setImage(Media $image = null)
+    public function setImage(Media $image)
     {
         $this->image = $image;
-        $this->image->setGame($this);
-        $this->image->setType(Media::TYPE_IMAGE);
+        $this->image->setShowcaseGame($this);
+        $this->image->setType(Media::TYPE_SHOWCASE);
     }
 
     /**

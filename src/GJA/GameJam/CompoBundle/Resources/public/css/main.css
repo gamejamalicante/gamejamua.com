@@ -1502,3 +1502,38 @@ ul.media li.element, ul.downloads li.element
 {
     cursor: pointer;
 }
+
+.thrace-image-upload-main .thrace-image img
+{
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 350px !important;
+}
+
+.thrace-controls .ui-icon
+{
+    float: left;
+}
+
+.ui-dialog
+{
+    margin-top: 100px;
+    position: absolute !important;
+}
+
+.ui-dialog .btn
+{
+    color: #000;
+}
+
+.ui-widget-overlay
+{
+    background: #000 !important;
+}
+
+.ui-state-error
+{
+    width: 100% !important;
+    margin-bottom: 15px;
+}

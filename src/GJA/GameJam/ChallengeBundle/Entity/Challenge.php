@@ -50,6 +50,7 @@ class Challenge
 
     /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $game;
 

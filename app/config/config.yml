@@ -7,7 +7,7 @@ parameters:
     twitter.username: gamejamua
 
 framework:
-    translator:      { fallback: en }
+    translator:      { fallback: es }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -124,7 +124,13 @@ doctrine:
                 charset:  UTF8
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+        entity_managers:
+            default:
+                auto_mapping: true
+                filters:
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
 
 swiftmailer:
     transport: %mailer_transport%
@@ -176,6 +182,15 @@ avalanche_imagine:
         game_gallery_preview:
             type: relative_resize
             options: { heighten: 300 }
+        game_gallery_top:
+            type: thumbnail
+            options: { size: [370, 110], mode: outbound }
+        game_gallery_thumb:
+            type: thumbnail
+            options: { size: [120, 70], mode: outbound }
+        game_gallery_image:
+            type: thumbnail
+            options: { size: [545, 300], mode: inset }
 
 presta_sitemap:
     dumper_base_url: "https://www.%domain%/"
@@ -246,6 +261,8 @@ knp_gaufrette:
 thrace_media:
     temporary_filesystem_key: temp
     media_filesystem_key: uploads
+    plupload:
+        max_upload_size: 8000000
 
 #liip_cache_control:
 #    varnish:
