@@ -226,6 +226,16 @@
                     {{ render(controller("GameJamUserBundle:Panel:shoutPartial")) }}
                 </div>
                 {% endif %}
+                {% if compo.hasStarted and user_application and user_application.isCompleted %}
+                <h2><i class="fa fa-rocket"></i> Tu juego</h2>
+                <div class="application" id="team-container">
+                    {% if game %}
+                    <h3>{{ game }}</h3>
+                    {% else %}
+                        ¡Aún no tienes juego para esta GameJam! <a href="{{ path('gamejam_game_panel_create') }}">Pulsa aquí para crearlo</a>
+                    {% endif %}
+                </div><br><br>
+                {% endif %}
                 {% if user_application %}
                 <h2><i class="fa fa-users"></i> Tu equipo</h2>
                 <div class="application" id="team-container">

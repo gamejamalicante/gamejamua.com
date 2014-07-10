@@ -8,6 +8,7 @@ use GJA\GameJam\GameBundle\Event\GameActivityCreationEvent;
 use GJA\GameJam\GameBundle\Event\GameActivityInfoUpdateEvent;
 use GJA\GameJam\GameBundle\Form\Type\GameType;
 use GJA\GameJam\GameBundle\GameJamGameEvents;
+use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -25,6 +26,33 @@ class GamePanelController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
+
+        if($runningCompo !== null) {
+            // check if he is competing
+            $competing = $user->hasAppliedTo($runningCompo);
+
+            if($competing) {
+                // check if solo or team
+                $team = $user->getTeamForCompo($runningCompo);
+
+                if(is_null($team)) {
+                    // user is solo, check game created
+                    /** @var Game $game */
+                    $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'user' => $user]);
+                } else {
+                    $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'team' => $team]);
+                }
+
+                if(!is_null($game)) {
+                    $this->addSuccessMessage('¡Ya tenemos registrado un juego para la competición! Desde aquí puedes editarlo');
+                    return $this->redirectToPath('gamejam_game_panel_edit', ['game' => $game->getNameSlug()]);
+                }
+            }
+        }
+
         $game = new Game();
         $game->setIsNew(true);
         $game->setUser($this->getUser());
@@ -37,6 +65,18 @@ class GamePanelController extends AbstractController
 
             if($form->isValid())
             {
+                if($runningCompo !== null) {
+                    if($competing) {
+                        $game->setCompo($runningCompo);
+
+                        if(!is_null($team)) {
+                            $game->setTeam($team);
+                        } else {
+                            $game->setUser($user);
+                        }
+                    }
+                }
+
                 $this->persistAndFlush($game, true);
 
                 // game creation event
@@ -46,7 +86,7 @@ class GamePanelController extends AbstractController
             }
         }
 
-        return ['form' => $form->createView()];
+        return ['form' => $form->createView(), 'running_compo' => $runningCompo];
     }
 
     /**

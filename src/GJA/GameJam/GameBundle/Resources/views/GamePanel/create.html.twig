@@ -72,6 +72,12 @@
                 {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
             </div>
             {% block compo_info %}
+                {% if running_compo %}
+                    <strong>GameJam</strong>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        {{ running_compo }} (¡Este juego se creará para esta GameJam!)
+                    </div>
+                {% endif %}
             {% endblock %}
             <strong>Imagen del juego (370x110) (*)</strong>
             <div class="well">

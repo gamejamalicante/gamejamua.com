@@ -46,13 +46,16 @@ class CompoController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $userApplication = $user ? $compo->getApplicationForUser($this->getUser()) : null;
+        $team = $user ? $user->getTeamForCompo($compo) : null;
+        $game = $team ? $team->getGame() : $user ? $user->getGameForCompo($compo) : null;
 
         return [
             'user' => $user,
             'user_application' => $userApplication,
             'compo' => $compo,
-            'team' => $user ? $user->getTeamForCompo($compo) : null,
-            'open_formation' => $compo->isTeamFormationOpen()
+            'team' => $team,
+            'open_formation' => $compo->isTeamFormationOpen(),
+            'game' => $game
         ];
     }
 

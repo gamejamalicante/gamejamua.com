@@ -12,7 +12,7 @@ use GJA\GameJam\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\CompoRepository")
  * @ORM\Table(name="gamejam_compos")
  */
 class Compo
@@ -319,7 +319,9 @@ class Compo
 
     public function hasStarted()
     {
-        if($this->getStartAt() <= new \DateTime("now"))
+        $now = new \DateTime('now');
+
+        if($this->getStartAt() <= $now)
             return true;
 
         return false;
@@ -560,7 +562,9 @@ class Compo
         if(!$this->hasStarted())
             return 0;
 
-        return $this->endAt()->getTimestamp()-(new \DateTime("now"))->getTimestamp();
+        $now = new \DateTime('now');
+
+        return $this->endAt()->getTimestamp()-$now->getTimestamp();
     }
 
     public function hasFinished()

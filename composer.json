@@ -9,6 +9,10 @@
         {
             "type": "composer",
             "url": "http://ams-stag-01.certadia.net:2635"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/albertofem/media-bundle.git"
         }
     ],
     "require": {
@@ -52,7 +56,7 @@
         "liip/monitor-bundle": "@dev",
         "sensiolabs/security-checker": "@dev",
         "albertofem/sitestatuschecker-bundle": "@dev",
-        "thrace-project/media-bundle":"@dev",
+        "thrace-project/media-bundle":"dev-master",
         "liip/imagine-bundle": "@dev",
         "knplabs/knp-gaufrette-bundle": "@dev",
         "liip/url-auto-converter-bundle": "@dev",
@@ -78,11 +82,11 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
         "component-dir": "web/components",
         "component-baseurl": "/components"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
