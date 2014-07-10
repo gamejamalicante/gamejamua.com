@@ -557,7 +557,7 @@ class Compo
 
     public function getSecondsToFinish()
     {
-        if($this->hasStarted())
+        if(!$this->hasStarted())
             return 0;
 
         return $this->endAt()->getTimestamp()-(new \DateTime("now"))->getTimestamp();
