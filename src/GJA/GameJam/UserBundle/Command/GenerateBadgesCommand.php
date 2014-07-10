@@ -28,7 +28,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
     {
         $this->setName('gamejam:user:generate-badges')
             ->addOption('username', null, InputOption::VALUE_REQUIRED, 'Pick an username', 'all')
-            ->addOption('limit', null, InputOption::VALUE_NONE, 'Limit when all');
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Limit when all');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -46,7 +46,9 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         foreach ($users as $key => $user) {
             $output->writeln('Generating badge for user: <info>' .$user. '</info>');
             $badgeFilename = $this->generateBadge($user);
-            $output->writeln('Generated badge: <info>' .$badgeFilename. '</info>\n');
+
+            if($badgeFilename !== false)
+                $output->writeln('Generated badge: <info>' .$badgeFilename. '</info>\\n');
 
             if($key >= $limit) {
                 break;
@@ -56,6 +58,13 @@ class GenerateBadgesCommand extends ContainerAwareCommand
 
     protected function generateBadge(User $user)
     {
+        /** @var Compo $compo */
+        $compo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
+
+        if(!$user->hasAppliedTo($compo)) {
+            return false;
+        }
+
         $badgeNormalFile = __DIR__ . '/../Resources/badges/badge_normal_vacio.png';
         $badgeOrgFile = __DIR__ . '/../Resources/badges/badge_org_vacio.png';
 
@@ -66,9 +75,6 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         } else {
             $badge = $badgeNormalFile;
         }
-
-        /** @var Compo $compo */
-        $compo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
         $image = new Image($badge);
         $image->useFallback(false);
