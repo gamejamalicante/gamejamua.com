@@ -98,7 +98,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
     {
         $avatarUrl = $user->getAvatarUrl();
 
-        if (!is_null($avatarUrl)) {
+        if (!is_null($avatarUrl) && $this->remoteImageExists($avatarUrl)) {
             $avatar = $avatarUrl;
         } else {
             // check gravatar
@@ -138,5 +138,13 @@ class GenerateBadgesCommand extends ContainerAwareCommand
     private function drawTeam(Image $image, $team, $fontSci)
     {
         $image->write($fontSci, $team, 20, 192, 14);
+    }
+
+    private function remoteImageExists($url)
+    {
+        if (!$fp = curl_init($url))
+            return false;
+
+        return true;
     }
 } 
