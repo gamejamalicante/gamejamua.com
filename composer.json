@@ -50,7 +50,9 @@
         "liip/cache-control-bundle": "~1.0",
         "liip/monitor-bundle": "@dev",
         "sensiolabs/security-checker": "@dev",
-        "albertofem/sitestatuschecker-bundle": "@dev"
+        "albertofem/sitestatuschecker-bundle": "@dev",
+        "intervention/image": "@dev",
+        "gregwar/image": "@dev"
     },
     "scripts": {
         "post-install-cmd": [

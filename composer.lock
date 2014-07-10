@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1982828ea2300302d46cfe541d3d1479",
+    "hash": "be7ca150a2c6cbb6d7f4084dc14d5f0b",
     "packages": [
         {
             "name": "albertofem/sitestatuschecker-bundle",
@@ -208,7 +208,7 @@
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:certadia/php-library.git",
-                "reference": "9c6bb9ee4b4f89a15839ccee1f8017103ff12c9d"
+                "reference": "06fef3a96e0d6f0f6b3e7e74c77a43f556bfd924"
             },
             "require": {
                 "antimattr/google-bundle": "dev-master",
@@ -217,7 +217,10 @@
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "liip/functional-test-bundle": "dev-master",
                 "php": ">=5.4",
-                "symfony/symfony": "~2.4"
+                "symfony/symfony": "~2.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
             },
             "type": "library",
             "autoload": {
@@ -229,7 +232,7 @@
                 }
             },
             "description": "PHP Libraries",
-            "time": "2014-04-15 14:30:00"
+            "time": "2014-06-24 11:20:34"
         },
         {
             "name": "components/bootstrap",
@@ -799,12 +802,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "247bd099b8f74eed3d7bdb42a5e0bb1af1925dce"
+                "reference": "e7a917e9eddd38e9fb37afd6ef95e1b542304a53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/247bd099b8f74eed3d7bdb42a5e0bb1af1925dce",
-                "reference": "247bd099b8f74eed3d7bdb42a5e0bb1af1925dce",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e7a917e9eddd38e9fb37afd6ef95e1b542304a53",
+                "reference": "e7a917e9eddd38e9fb37afd6ef95e1b542304a53",
                 "shasum": ""
             },
             "require": {
@@ -865,21 +868,20 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-06-19 21:21:27"
+            "time": "2014-06-27 13:03:59"
         },
         {
             "name": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "target-dir": "Doctrine/Bundle/DoctrineBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "7fc096f725dc6878d2d754cf8e674a13c86a2a24"
+                "reference": "e604136b2bfb95cfcade987ec21d69bf65975b71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/7fc096f725dc6878d2d754cf8e674a13c86a2a24",
-                "reference": "7fc096f725dc6878d2d754cf8e674a13c86a2a24",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/e604136b2bfb95cfcade987ec21d69bf65975b71",
+                "reference": "e604136b2bfb95cfcade987ec21d69bf65975b71",
                 "shasum": ""
             },
             "require": {
@@ -911,8 +913,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Doctrine\\Bundle\\DoctrineBundle": ""
+                "psr-4": {
+                    "Doctrine\\Bundle\\DoctrineBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -947,7 +949,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2014-06-13 13:38:13"
+            "time": "2014-06-21 16:09:36"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -1349,12 +1351,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "38187a31d635c7b0a71aabc8e31eeb64b029dbb5"
+                "reference": "9e36a95a978ac2cf8297b430368f8473c6ab67fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/38187a31d635c7b0a71aabc8e31eeb64b029dbb5",
-                "reference": "38187a31d635c7b0a71aabc8e31eeb64b029dbb5",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/9e36a95a978ac2cf8297b430368f8473c6ab67fb",
+                "reference": "9e36a95a978ac2cf8297b430368f8473c6ab67fb",
                 "shasum": ""
             },
             "require": {
@@ -1418,7 +1420,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-06-21 12:56:47"
+            "time": "2014-06-26 16:25:53"
         },
         {
             "name": "egeloen/google-map",
@@ -1536,20 +1538,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/egeloen/ivory-json-builder.git",
-                "reference": "bcd21c287675d80f02c8945c13fa150bd77525f0"
+                "reference": "b8951e4b4e247fe9c34ab27012bd8b29de3ec72a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egeloen/ivory-json-builder/zipball/bcd21c287675d80f02c8945c13fa150bd77525f0",
-                "reference": "bcd21c287675d80f02c8945c13fa150bd77525f0",
+                "url": "https://api.github.com/repos/egeloen/ivory-json-builder/zipball/b8951e4b4e247fe9c34ab27012bd8b29de3ec72a",
+                "reference": "b8951e4b4e247fe9c34ab27012bd8b29de3ec72a",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "php": ">=5.3.0",
                 "symfony/property-access": "~2.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "~3.7",
+                "phpunit/phpunit": "~4.0",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
@@ -1579,7 +1582,7 @@
                 "builder",
                 "json"
             ],
-            "time": "2014-06-20 22:07:56"
+            "time": "2014-06-25 18:20:13"
         },
         {
             "name": "elao/error-notifier-bundle",
@@ -1884,6 +1887,95 @@
             "time": "2014-06-06 09:08:07"
         },
         {
+            "name": "gregwar/cache",
+            "version": "v1.0.9",
+            "target-dir": "Gregwar/Cache",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Cache.git",
+                "reference": "514b9b469082028d094e33e4a059c863c546b14e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Cache/zipball/514b9b469082028d094e33e4a059c863c546b14e",
+                "reference": "514b9b469082028d094e33e4a059c863c546b14e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gregwar\\Cache": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregwar",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                }
+            ],
+            "description": "A lightweight file-system cache system",
+            "keywords": [
+                "cache",
+                "caching",
+                "file-system",
+                "system"
+            ],
+            "time": "2014-07-05 17:42:36"
+        },
+        {
+            "name": "gregwar/image",
+            "version": "dev-master",
+            "target-dir": "Gregwar/Image",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Image.git",
+                "reference": "31cf30151015d66f320011ea8646e90bb62ffb13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Image/zipball/31cf30151015d66f320011ea8646e90bb62ffb13",
+                "reference": "31cf30151015d66f320011ea8646e90bb62ffb13",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "gregwar/cache": "1.*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gregwar\\Image": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                }
+            ],
+            "description": "Image handling",
+            "homepage": "https://github.com/Gregwar/Image",
+            "keywords": [
+                "gd",
+                "image"
+            ],
+            "time": "2014-06-30 15:00:37"
+        },
+        {
             "name": "hwi/oauth-bundle",
             "version": "dev-master",
             "target-dir": "HWI/Bundle/OAuthBundle",
@@ -1999,6 +2091,147 @@
             "time": "2014-06-02 13:28:07"
         },
         {
+            "name": "illuminate/config",
+            "version": "4.0.x-dev",
+            "target-dir": "Illuminate/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/config.git",
+                "reference": "aa1269fd861f8392bce67a7d631c946a60842859"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/config/zipball/aa1269fd861f8392bce67a7d631c946a60842859",
+                "reference": "aa1269fd861f8392bce67a7d631c946a60842859",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "4.0.x",
+                "illuminate/support": "4.0.x",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Illuminate\\Config": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com",
+                    "homepage": "https://github.com/taylorotwell",
+                    "role": "Creator of Laravel"
+                }
+            ],
+            "time": "2013-09-14 15:49:06"
+        },
+        {
+            "name": "illuminate/filesystem",
+            "version": "v4.0.0-BETA4",
+            "target-dir": "Illuminate/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/filesystem.git",
+                "reference": "7f671cb4b7d8a0bd948fa6ef9bde1a421d8499bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/7f671cb4b7d8a0bd948fa6ef9bde1a421d8499bf",
+                "reference": "7f671cb4b7d8a0bd948fa6ef9bde1a421d8499bf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "4.0.x",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Illuminate\\Filesystem": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com",
+                    "homepage": "https://github.com/taylorotwell",
+                    "role": "Creator of Laravel"
+                }
+            ],
+            "description": "A filesystem abstraction library.",
+            "time": "2013-03-27 13:45:01"
+        },
+        {
+            "name": "illuminate/support",
+            "version": "4.0.x-dev",
+            "target-dir": "Illuminate/Support",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/support.git",
+                "reference": "11ae214c05cce720abeac5443df3f1c27c7eae31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/11ae214c05cce720abeac5443df3f1c27c7eae31",
+                "reference": "11ae214c05cce720abeac5443df3f1c27c7eae31",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.7.2",
+                "patchwork/utf8": "1.1.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Illuminate\\Support": ""
+                },
+                "files": [
+                    "Illuminate/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com",
+                    "homepage": "https://github.com/taylorotwell",
+                    "role": "Creator of Laravel"
+                }
+            ],
+            "time": "2013-12-05 19:57:51"
+        },
+        {
             "name": "imagine/imagine",
             "version": "v0.4.1",
             "source": {
@@ -2044,6 +2277,64 @@
                 "image processing"
             ],
             "time": "2012-12-13 18:31:18"
+        },
+        {
+            "name": "intervention/image",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "fc0c20277260f09aa0bd172d66d8b39957c50078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/fc0c20277260f09aa0bd172d66d8b39957c50078",
+                "reference": "fc0c20277260f09aa0bd172d66d8b39957c50078",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "illuminate/config": "4.*",
+                "illuminate/support": "4.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "3.*"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Intervention\\Image\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.net",
+                    "homepage": "http://olivervogel.net/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel 4 integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "time": "2014-06-30 15:30:03"
         },
         {
             "name": "ivaynberg/select2",
@@ -2504,12 +2795,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
-                "reference": "e7480e6716913c553f34b22e4e8c33480a2b022e"
+                "reference": "e665bb4fca6ca449e225db569db671348a2579e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/e7480e6716913c553f34b22e4e8c33480a2b022e",
-                "reference": "e7480e6716913c553f34b22e4e8c33480a2b022e",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/e665bb4fca6ca449e225db569db671348a2579e4",
+                "reference": "e665bb4fca6ca449e225db569db671348a2579e4",
                 "shasum": ""
             },
             "require": {
@@ -2552,7 +2843,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2014-04-02 22:28:13"
+            "time": "2014-06-27 14:00:35"
         },
         {
             "name": "liip/monitor-bundle",
@@ -2561,12 +2852,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipMonitorBundle.git",
-                "reference": "c8e531d1ad5ef20fd8cff702597684ecbc1a2ddf"
+                "reference": "4add8f3a3eee458502b17dfd10001c348464dd71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipMonitorBundle/zipball/c8e531d1ad5ef20fd8cff702597684ecbc1a2ddf",
-                "reference": "c8e531d1ad5ef20fd8cff702597684ecbc1a2ddf",
+                "url": "https://api.github.com/repos/liip/LiipMonitorBundle/zipball/4add8f3a3eee458502b17dfd10001c348464dd71",
+                "reference": "4add8f3a3eee458502b17dfd10001c348464dd71",
                 "shasum": ""
             },
             "require": {
@@ -2624,7 +2915,7 @@
                 "monitor",
                 "monitoring"
             ],
-            "time": "2014-06-19 07:15:56"
+            "time": "2014-06-23 13:48:15"
         },
         {
             "name": "mlpz/mailchimp-bundle",
@@ -3007,12 +3298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "e9caa300faf95076c8e27693f3fdb0bb6e3148c0"
+                "reference": "b71e36491d316be19496cf910e994846b058dcd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/e9caa300faf95076c8e27693f3fdb0bb6e3148c0",
-                "reference": "e9caa300faf95076c8e27693f3fdb0bb6e3148c0",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b71e36491d316be19496cf910e994846b058dcd7",
+                "reference": "b71e36491d316be19496cf910e994846b058dcd7",
                 "shasum": ""
             },
             "require": {
@@ -3057,7 +3348,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-06-06 02:53:20"
+            "time": "2014-06-26 14:40:24"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3123,12 +3414,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "8b7a33aa3d22388443b6de0b0cf184122e9f60d2"
+                "reference": "dfde3b45dd7bc7b9ff8e6bbedcb9911b99abc2dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/8b7a33aa3d22388443b6de0b0cf184122e9f60d2",
-                "reference": "8b7a33aa3d22388443b6de0b0cf184122e9f60d2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/dfde3b45dd7bc7b9ff8e6bbedcb9911b99abc2dd",
+                "reference": "dfde3b45dd7bc7b9ff8e6bbedcb9911b99abc2dd",
                 "shasum": ""
             },
             "require": {
@@ -3164,7 +3455,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-04-28 14:01:06"
+            "time": "2014-06-26 06:37:02"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -3330,16 +3621,15 @@
         {
             "name": "symfony/assetic-bundle",
             "version": "dev-master",
-            "target-dir": "Symfony/Bundle/AsseticBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle.git",
-                "reference": "df10fae8852a5733e671b4ba37cf2f4beafa7561"
+                "reference": "08dcf50de5dd2411dcb8732fa96e0f95ff16628e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/df10fae8852a5733e671b4ba37cf2f4beafa7561",
-                "reference": "df10fae8852a5733e671b4ba37cf2f4beafa7561",
+                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/08dcf50de5dd2411dcb8732fa96e0f95ff16628e",
+                "reference": "08dcf50de5dd2411dcb8732fa96e0f95ff16628e",
                 "shasum": ""
             },
             "require": {
@@ -3367,8 +3657,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Symfony\\Bundle\\AsseticBundle": ""
+                "psr-4": {
+                    "Symfony\\Bundle\\AsseticBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3389,7 +3679,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-06-04 01:48:14"
+            "time": "2014-06-21 16:10:11"
         },
         {
             "name": "symfony/icu",
@@ -3442,16 +3732,15 @@
         {
             "name": "symfony/monolog-bundle",
             "version": "dev-master",
-            "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a"
+                "reference": "b8112a131822e6b48e648ab7c630a8977aaf334e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a",
-                "reference": "e1d4aa99c7440b11e9dfbfef7ed63084401dbc6a",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/b8112a131822e6b48e648ab7c630a8977aaf334e",
+                "reference": "b8112a131822e6b48e648ab7c630a8977aaf334e",
                 "shasum": ""
             },
             "require": {
@@ -3473,8 +3762,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Symfony\\Bundle\\MonologBundle": ""
+                "psr-4": {
+                    "Symfony\\Bundle\\MonologBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3499,21 +3788,20 @@
                 "log",
                 "logging"
             ],
-            "time": "2014-06-04 16:49:13"
+            "time": "2014-06-21 16:10:19"
         },
         {
             "name": "symfony/swiftmailer-bundle",
             "version": "dev-master",
-            "target-dir": "Symfony/Bundle/SwiftmailerBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "85840a287403e53268e212f892607e01cc61b6da"
+                "reference": "8555303e89445133442d4f687d2773b21751d101"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/85840a287403e53268e212f892607e01cc61b6da",
-                "reference": "85840a287403e53268e212f892607e01cc61b6da",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/8555303e89445133442d4f687d2773b21751d101",
+                "reference": "8555303e89445133442d4f687d2773b21751d101",
                 "shasum": ""
             },
             "require": {
@@ -3537,8 +3825,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Symfony\\Bundle\\SwiftmailerBundle": ""
+                "psr-4": {
+                    "Symfony\\Bundle\\SwiftmailerBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3559,7 +3847,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2014-04-29 13:05:02"
+            "time": "2014-06-21 16:10:01"
         },
         {
             "name": "symfony/symfony",
@@ -3567,12 +3855,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "71c3a3599c9c32c2feb09b67b6ec2b84eeb57f8f"
+                "reference": "c6b751cd1069c97ccb28024c737e51490aa55b76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/71c3a3599c9c32c2feb09b67b6ec2b84eeb57f8f",
-                "reference": "71c3a3599c9c32c2feb09b67b6ec2b84eeb57f8f",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/c6b751cd1069c97ccb28024c737e51490aa55b76",
+                "reference": "c6b751cd1069c97ccb28024c737e51490aa55b76",
                 "shasum": ""
             },
             "require": {
@@ -3676,7 +3964,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-06-18 12:04:38"
+            "time": "2014-06-27 09:44:54"
         },
         {
             "name": "twig/extensions",
@@ -3923,7 +4211,9 @@
         "elao/error-notifier-bundle": 20,
         "liip/monitor-bundle": 20,
         "sensiolabs/security-checker": 20,
-        "albertofem/sitestatuschecker-bundle": 20
+        "albertofem/sitestatuschecker-bundle": 20,
+        "intervention/image": 20,
+        "gregwar/image": 20
     },
     "platform": {
         "php": ">=5.3.3"
