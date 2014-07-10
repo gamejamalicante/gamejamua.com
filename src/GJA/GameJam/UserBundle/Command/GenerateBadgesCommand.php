@@ -11,6 +11,7 @@
 
 namespace GJA\GameJam\UserBundle\Command;
 
+use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\UserBundle\Entity\User;
 use Gregwar\Image\Image;
 use Ornicar\GravatarBundle\Templating\Helper\GravatarHelper;
@@ -45,7 +46,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         foreach ($users as $key => $user) {
             $output->writeln('Generating badge for user: <info>' .$user. '</info>');
             $badgeFilename = $this->generateBadge($user);
-            $output->writeln('Generated badge: <info>' .$badgeFilename. '</info>');
+            $output->writeln('Generated badge: <info>' .$badgeFilename. '</info>\n');
 
             if($key >= $limit) {
                 break;
@@ -55,7 +56,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
 
     protected function generateBadge(User $user)
     {
-        $badgeNormalFile = __DIR__ . '/../Resources/badges/badge_part_vacio.png';
+        $badgeNormalFile = __DIR__ . '/../Resources/badges/badge_normal_vacio.png';
         $badgeOrgFile = __DIR__ . '/../Resources/badges/badge_org_vacio.png';
 
         $fontSci = __DIR__ . '/../Resources/badges/SciFly-Sans.ttf';
@@ -66,11 +67,19 @@ class GenerateBadgesCommand extends ContainerAwareCommand
             $badge = $badgeNormalFile;
         }
 
+        /** @var Compo $compo */
+        $compo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
+
         $image = new Image($badge);
+        $image->useFallback(false);
 
         $this->drawAvatar($image, $user);
         $this->drawUsername($image, $user, $fontSci);
         $this->drawTwitter($image, $user, $fontSci);
+        $this->drawLevel($image, $user, $fontSci);
+
+        if($team = $user->getTeamForCompo($compo))
+            $this->drawTeam($image, $team->getName(), $fontSci);
 
         $filename = __DIR__ . '/../Resources/badges/generated/' .$user->getUsername(). '.png';
 
@@ -113,5 +122,15 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         if($twitter = $user->getTwitter()) {
             $image->write($fontFile, '@' . $twitter, 155, 80, 15, 0, 0x6363B0);
         }
+    }
+
+    private function drawLevel(Image $image, User $user, $fontSci)
+    {
+        $image->write($fontSci, $user->getLevel() ?: 0, 40, 172, 14);
+    }
+
+    private function drawTeam(Image $image, $team, $fontSci)
+    {
+        $image->write($fontSci, $team, 20, 192, 14);
     }
 } 
