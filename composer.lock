@@ -4775,12 +4775,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/albertofem/media-bundle.git",
-                "reference": "f9836075d8ce045c358e58425771429bf67ae7b3"
+                "reference": "5035e418857b8e411146a11ee41798252417783d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/albertofem/media-bundle/zipball/f9836075d8ce045c358e58425771429bf67ae7b3",
-                "reference": "f9836075d8ce045c358e58425771429bf67ae7b3",
+                "url": "https://api.github.com/repos/albertofem/media-bundle/zipball/5035e418857b8e411146a11ee41798252417783d",
+                "reference": "5035e418857b8e411146a11ee41798252417783d",
                 "shasum": ""
             },
             "require": {
@@ -4835,7 +4835,7 @@
             "support": {
                 "source": "https://github.com/albertofem/media-bundle/tree/master"
             },
-            "time": "2014-07-06 09:04:12"
+            "time": "2014-07-11 06:46:00"
         },
         {
             "name": "twig/extensions",
@@ -5142,12 +5142,8 @@
             "time": "2014-04-15 19:03:28"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "certadia/library": 20,
@@ -5184,7 +5180,5 @@
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
