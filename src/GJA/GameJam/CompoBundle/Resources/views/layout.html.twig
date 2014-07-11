@@ -96,7 +96,7 @@
         <div class="wood">
             <div class="container layout">
                 <div class="menu">
-                    <a href="{{ path('gamejam_compo_frontend_contact') }}">Contacto</a> - <a href="{{ path('gamejam_compo_frontend_rules') }}">Normas</a> - <a href="{{ path('gamejam_compo_frontend_about') }}">¿Qué es?</a> - <a href="{{ path('gamejam_compo_frontend_staff') }}">¿Quienes somos?</a> - <a href="{{ path('gamejam_compo_contributors') }}">Colaboradores y jurados</a>{% if not app.user and not is_granted("ROLE_USER") %} - <a href="{{ path('fos_user_registration_register') }}">Registrarse</a> - <a href="">Recuperar contraseña</a>{% endif %}
+                    <a href="{{ path('gamejam_compo_frontend_contact') }}">Contacto</a> - <a href="{{ path('gamejam_compo_frontend_rules') }}">Normas</a> - <a href="{{ path('gamejam_compo_frontend_about') }}">¿Qué es?</a> - <a href="{{ path('gamejam_compo_frontend_staff') }}">¿Quienes somos?</a> - <a href="{{ path('gamejam_compo_contributors') }}">Colaboradores y jurados</a>{% if not app.user %} - <a href="{{ path('fos_user_registration_register') }}">Registrarse</a> - <a href="">Recuperar contraseña</a>{% endif %}
                 </div>
                 <div class="sponsors">
                     <h3>Colaboradores destacados</h3>
