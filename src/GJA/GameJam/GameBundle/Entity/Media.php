@@ -8,18 +8,20 @@ namespace GJA\GameJam\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Thrace\MediaBundle\Entity\AbstractImage;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_games_media")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Media
+class Media extends AbstractImage
 {
     const TYPE_IMAGE = 1;
     const TYPE_VIDEO = 2;
     const TYPE_TIMELAPSE = 3;
     const TYPE_OTHER = 4;
+    const TYPE_SHOWCASE = 5;
 
     /**
      * @ORM\Id
@@ -42,11 +44,17 @@ class Media
 
     /**
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="media")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $game;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToOne(targetEntity="Game", mappedBy="image")
+     */
+    protected $showcaseGame;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
 
@@ -63,7 +71,7 @@ class Media
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $type;
+    protected $type = self::TYPE_IMAGE;
 
     /**
      * TODO: allow image uploads
@@ -157,7 +165,16 @@ class Media
      */
     public function getGame()
     {
-        return $this->game;
+        switch ($this->type)
+        {
+            case self::TYPE_SHOWCASE:
+                return $this->getShowcaseGame();
+            break;
+
+            default:
+                return $this->game;
+            break;
+        }
     }
 
     /**
@@ -204,20 +221,7 @@ class Media
 
     public function getWebPath()
     {
-        $webPath = "uploads/games/" . $this->getGame()->getNameSlug() . "/";
-
-        switch($this->type)
-        {
-            case self::TYPE_IMAGE:
-                $webPath .= "screenshots";
-            break;
-
-            default:
-                $webPath .= "other";
-            break;
-        }
-
-        return $webPath . "/" . $this->filePath;
+        return 'uploads' . $this->getUploadDir() . '/' . $this->getName();
     }
 
     /**
@@ -272,16 +276,61 @@ class Media
 
         if($this->type == self::TYPE_VIDEO or $this->type == self::TYPE_TIMELAPSE)
         {
-            preg_match("/youtube.*v\=(.*)\&/i", $this->url, $matches);
-
-            if(isset($matches[1]))
+            if(preg_match("/youtube/i", $this->url))
             {
-                $this->youtubeId = $matches[1];
+                parse_str(parse_url($this->url, PHP_URL_QUERY), $youtubeVars);
 
-                return $this->youtubeId;
+                if(isset($youtubeVars['v']))
+                {
+                    $this->youtubeId = $youtubeVars['v'];
+
+                    return $this->youtubeId;
+                }
             }
         }
 
         return null;
+    }
+
+    protected function getUploadPath()
+    {
+        switch($this->type)
+        {
+            case self::TYPE_IMAGE:
+                return 'image';
+            break;
+
+            default:
+                return 'other';
+            break;
+        }
+    }
+
+    public function getUploadDir()
+    {
+        $game = $this->getGame();
+
+        return '/game/' . $game->getId() . '/' .$this->getUploadPath();
+    }
+
+    public function __toString()
+    {
+        return $this->getWebPath();
+    }
+
+    /**
+     * @param mixed $showcaseGame
+     */
+    public function setShowcaseGame($showcaseGame)
+    {
+        $this->showcaseGame = $showcaseGame;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowcaseGame()
+    {
+        return $this->showcaseGame;
     }
 } 

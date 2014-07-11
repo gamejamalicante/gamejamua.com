@@ -81,6 +81,6 @@ class ActivityRepository extends EntityRepository
 
     public function findLastTwitterInteraction()
     {
-        return $this->findOneBy(['type' => Activity::TYPE_TWITTER], ['date' => "ASC"]);
+        return $this->findOneBy(['type' => Activity::TYPE_TWITTER], ['date' => "DESC"]);
     }
 } 

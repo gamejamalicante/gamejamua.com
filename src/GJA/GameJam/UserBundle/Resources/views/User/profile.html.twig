@@ -40,9 +40,10 @@
         <div class="clearfix"></div>
     </div>
     {% if user.shouts|length %}
-        <div class="section description">
+        <div class="section description shout-last">
             <span class="date">{{ time_diff(user.shouts.first.date) }}</span>
-            {{ user.shouts.first.content.content }}
+            <p>{{ user.shouts.first.shoutContent|converturls|raw }}</p>
+            {{ user.shouts.first.embeddedContent|raw }}
         </div>
     {% endif %}
     <div class="clearfix"></div>

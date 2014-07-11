@@ -9,10 +9,12 @@ namespace GJA\GameJam\GameBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use Thrace\MediaBundle\Model\ImageInterface;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
@@ -69,8 +71,8 @@ class Game
     protected $description;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank
+     * @ORM\OneToOne(targetEntity="Media", cascade={"all"}, orphanRemoval=true, fetch="EAGER", inversedBy="showcaseGame")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $image;
 
@@ -81,7 +83,7 @@ class Game
     protected $diversifiers;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="game", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="game", cascade={"all"})
      * @var ArrayCollection
      */
     protected $media;
@@ -144,6 +146,11 @@ class Game
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $deletedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\ChallengeBundle\Entity\Challenge", mappedBy="game")
+     */
+    protected $challenges;
 
     /**
      * @var bool
@@ -290,9 +297,11 @@ class Game
     /**
      * @param mixed $image
      */
-    public function setImage($image)
+    public function setImage(Media $image)
     {
         $this->image = $image;
+        $this->image->setShowcaseGame($this);
+        $this->image->setType(Media::TYPE_SHOWCASE);
     }
 
     /**
@@ -533,6 +542,9 @@ class Game
 
     public function isUserAllowedToEdit(User $user)
     {
+        if($user->hasRole('ROLE_ADMIN'))
+            return true;
+
         if($this->user === $user)
             return true;
 
@@ -629,5 +641,26 @@ class Game
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * @param mixed $challenges
+     */
+    public function setChallenges($challenges)
+    {
+        $this->challenges = $challenges;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChallenges()
+    {
+        return $this->challenges;
+    }
+
+    public function addChallenge(Challenge $challenge)
+    {
+        $this->challenges[] = $challenge;
     }
 }

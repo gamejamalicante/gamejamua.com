@@ -8,13 +8,25 @@ function addMediaForm(collectionHolder, newLinkLi, deleteLink) {
 
     collectionHolder.data('index', index + 1);
 
-    var newFormLi = $('<li class="element"></li>').append(newForm);
+    var newFormLi = $('<li class="element" id="image-upload-element-' +index+'"></li>').append(newForm);
     newLinkLi.before(newFormLi);
 
     if(deleteLink)
         addMediaDeleteLink(newFormLi);
 
     $('select.select2').select2();
+
+    var imageElement = $('#image-upload-element-' + index + ' .thrace-image-upload');
+    var imageElementOptions = imageElement.data('options');
+
+    ThraceMedia.imageUpload(imageElement);
+
+    // set session image token
+    $.post('/panel/juegos/image-session-token/' + imageElementOptions.id, {
+        configs: imageElementOptions
+    });
+
+    $('.ui-dialog').center(false);
 }
 
 function addMediaDeleteLink(mediaRemove) {

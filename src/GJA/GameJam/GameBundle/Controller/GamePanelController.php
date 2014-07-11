@@ -8,9 +8,11 @@ use GJA\GameJam\GameBundle\Event\GameActivityCreationEvent;
 use GJA\GameJam\GameBundle\Event\GameActivityInfoUpdateEvent;
 use GJA\GameJam\GameBundle\Form\Type\GameType;
 use GJA\GameJam\GameBundle\GameJamGameEvents;
+use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -25,6 +27,33 @@ class GamePanelController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
+
+        if($runningCompo !== null) {
+            // check if he is competing
+            $competing = $user->hasAppliedTo($runningCompo);
+
+            if($competing) {
+                // check if solo or team
+                $team = $user->getTeamForCompo($runningCompo);
+
+                if(is_null($team)) {
+                    // user is solo, check game created
+                    /** @var Game $game */
+                    $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'user' => $user]);
+                } else {
+                    $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'team' => $team]);
+                }
+
+                if(!is_null($game)) {
+                    $this->addSuccessMessage('¡Ya tenemos registrado un juego para la competición! Desde aquí puedes editarlo');
+                    return $this->redirectToPath('gamejam_game_panel_edit', ['game' => $game->getNameSlug()]);
+                }
+            }
+        }
+
         $game = new Game();
         $game->setIsNew(true);
         $game->setUser($this->getUser());
@@ -37,7 +66,19 @@ class GamePanelController extends AbstractController
 
             if($form->isValid())
             {
-                $this->persistAndFlush($game);
+                if($runningCompo !== null) {
+                    if($competing) {
+                        $game->setCompo($runningCompo);
+
+                        if(!is_null($team)) {
+                            $game->setTeam($team);
+                        } else {
+                            $game->setUser($user);
+                        }
+                    }
+                }
+
+                $this->persistAndFlush($game, true);
 
                 // game creation event
                 $this->dispatchEvent(GameJamGameEvents::ACTIVITY_CREATION, new GameActivityCreationEvent($this->getUser(), $game));
@@ -46,7 +87,20 @@ class GamePanelController extends AbstractController
             }
         }
 
-        return ['form' => $form->createView()];
+        return ['form' => $form->createView(), 'running_compo' => $runningCompo];
+    }
+
+    /**
+     * @Route("/image-session-token/{token}", name="gamejam_game_panel_token")
+     */
+    public function imageSessionTokenAction(Request $request, $token)
+    {
+        $configs = $request->get('configs');
+        $session = $request->getSession();
+
+        $session->set($token, $configs);
+
+        return new JsonResponse(['result' => true]);
     }
 
     /**
@@ -67,7 +121,19 @@ class GamePanelController extends AbstractController
 
             if($form->isValid())
             {
-                $this->persistAndFlush($game);
+                $media = $game->getMedia();
+                $image = $game->getImage();
+
+                $this->persist($image);
+
+                foreach($media as $mediaElement)
+                {
+                    $mediaElement->setGame($game);
+                    $this->persist($mediaElement);
+                }
+
+                $this->persist($game);
+                $this->flush();
 
                 $this->addSuccessMessage("Cambios en el juego guardados");
 
@@ -101,8 +167,8 @@ class GamePanelController extends AbstractController
         }
         else
         {
-            // not from compo, hard delelete
-            $this->getEntityManager()->getFilters()->disable("soft-deleteable");
+            // not from compo, hard delete
+            $this->getEntityManager()->getFilters()->disable("softdeleteable");
 
             $this->deleteAndFlush($game);
         }

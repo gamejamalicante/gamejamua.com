@@ -1,0 +1,2 @@
+WebRequest challenge = WebRequest.Create("{{ url('gamejam_api_challenge_complete', {challenge: challenge.token}) }}");
+challenge.BeginGetResponse();

@@ -1,0 +1,41 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_rest.yml"
+
+fos_rest:
+    routing_loader:
+        include_format: false
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': false
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': false
+
+twig:
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: api_rate_limit
+            dsn: redis://localhost
+
+noxlogic_rate_limit:
+    storage_engine: redis
+    redis_client: api_rate_limit
+
+
+sensio_framework_extra:
+    view:
+        annotations: false

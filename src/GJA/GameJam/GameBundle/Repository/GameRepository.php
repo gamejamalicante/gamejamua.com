@@ -4,6 +4,7 @@ namespace GJA\GameJam\GameBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use GJA\GameJam\CompoBundle\Form\Model\GameFilter;
+use GJA\GameJam\GameBundle\Entity\Media;
 
 class GameRepository extends EntityRepository
 {

@@ -18,7 +18,7 @@
                     <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">
                     <div class="box register">
                         <h2>¡GameJam en curso!</h2>
-                        <div class="description">Pulsa aquí para ir a la página del concurso</div>
+                        <div class="description">Pulsa aquí para ir<br> a la página del concurso</div>
                     </div>
                     {% else %}
                     <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">
@@ -86,8 +86,9 @@
     </div>
     <h2><i class="fa fa-comment-o"></i> Últimos mensajes</h2>
     {% for item in messages %}
-        <div class="section index activity">
+        <div class="section index activity activity-last-frontend">
             {% include 'GameJamCompoBundle:Compo:_activity_' ~item.typeName~'.html.twig' %}
+            <div class="clearfix"></div>
         </div>
     {% else %}
         <div class="section index">

@@ -396,6 +396,11 @@ body
     color: #FFF;
 }
 
+.container .social-media span
+{
+    box-sizing: content-box;
+}
+
 .section .news
 {
     padding: 15px 10px 10px;
@@ -857,7 +862,7 @@ textarea.shout
 
 .section.index.activity .item
 {
-
+    position: relative;
 }
 
 .activity .item .avatar
@@ -1038,7 +1043,7 @@ textarea.shout
     margin-right: 10px;
 }
 
-.loading
+.loading, .hidden
 {
     display: none;
 }
@@ -1445,4 +1450,90 @@ ul.media li.element, ul.downloads li.element
     float: right;
     margin-left: 10px;
     width: 180px;
+}
+
+.activity-last-frontend .embed
+{
+    height: 250px !important;
+    width: 480px !important;
+}
+
+.activity-last-frontend .embed img
+{
+    height: 150px !important;
+    width: auto !important;
+}
+
+.shout-last .embed
+{
+    height: 250px !important;
+    width: 480px !important;
+}
+
+.shout-last .embed img
+{
+    height: 150px !important;
+    width: auto !important;
+}
+
+.embed
+{
+    width: 100% !important;
+}
+
+.embed img
+{
+    width: auto !important;
+    height: 150px !important;
+}
+
+.embed iframe
+{
+    width: 100% !important;
+    max-height: 240px !important;
+}
+
+.snippet
+{
+    display: none;
+}
+
+.show-snippet
+{
+    cursor: pointer;
+}
+
+.thrace-image-upload-main .thrace-image img
+{
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 350px !important;
+}
+
+.thrace-controls .ui-icon
+{
+    float: left;
+}
+
+.ui-dialog
+{
+    margin-top: 100px;
+    position: absolute !important;
+}
+
+.ui-dialog .btn
+{
+    color: #000;
+}
+
+.ui-widget-overlay
+{
+    background: #000 !important;
+}
+
+.ui-state-error
+{
+    width: 100% !important;
+    margin-bottom: 15px;
 }

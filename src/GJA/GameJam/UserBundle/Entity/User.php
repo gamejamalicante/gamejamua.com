@@ -14,7 +14,7 @@ namespace GJA\GameJam\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 use GJA\GameJam\CompoBundle\Entity\Achievement;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
@@ -22,6 +22,7 @@ use GJA\GameJam\CompoBundle\Entity\Notification;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\WaitingList;
+use GJA\GameJam\GameBundle\Entity\Game;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -62,6 +63,7 @@ class User extends BaseUser implements EncoderAwareInterface
 
     /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="user")
+     * @var Game[]
      */
     protected $games;
 
@@ -189,6 +191,11 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $waitingLists;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lastIp;
+
+    /**
      * @param mixed $achievements
      */
     public function setAchievements($achievements)
@@ -295,6 +302,17 @@ class User extends BaseUser implements EncoderAwareInterface
     public function getGames()
     {
         return $this->games;
+    }
+
+    public function getGameForCompo(Compo $compo)
+    {
+        foreach($this->getGames() as $game)
+        {
+            if($game->getCompo() === $compo)
+            {
+                return $game;
+            }
+        }
     }
 
     /**
@@ -819,5 +837,21 @@ class User extends BaseUser implements EncoderAwareInterface
     public function getWaitingLists()
     {
         return $this->waitingLists;
+    }
+
+    /**
+     * @param mixed $lastIp
+     */
+    public function setLastIp($lastIp)
+    {
+        $this->lastIp = $lastIp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastIp()
+    {
+        return $this->lastIp;
     }
 }

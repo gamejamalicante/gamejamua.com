@@ -26,7 +26,7 @@
 
         var lastUpdate = Math.round(+new Date()/1000);
 
-        function reloadActivity(target, showEffect)
+        function reloadActivity(target, showEffect, callback)
         {
             $('.loading').fadeIn();
 
@@ -62,10 +62,14 @@
                 $('.loading').fadeOut();
 
                 lastUpdate = Math.round(+new Date()/1000);
+
+                if(callback)
+                    callback();
             });
         }
 
-        var shoutRequest;
+        var pendingShoutRequest = false;
+        var refreshId = 0;
 
         $(document).ready(function()
         {
@@ -73,14 +77,20 @@
             {
                 e.preventDefault();
 
-                if(shoutRequest)
-                {
-                    shoutRequest.abort();
-                }
+                if(pendingShoutRequest == true)
+                    return;
 
                 var data = $(this).serialize();
+                var shoutbox = $('.shoutbox .shout-form textarea');
 
-                shoutRequest = $.ajax({
+                if(!$.trim(shoutbox.val()))
+                    return;
+
+                shoutbox.attr('read-only', 'read-only');
+                shoutbox.attr('disabled', 'disabled');
+
+                pendingShoutRequest = true;
+                var shoutRequest = $.ajax({
                     url: '{{ path('gamejam_user_panel_shout') }}',
                     type: 'post',
                     data: data
@@ -88,8 +98,14 @@
 
                 shoutRequest.done(function()
                 {
-                    $('.shoutbox .shout-form textarea').val("");
-                    reloadActivity('.activity', true);
+                    reloadActivity('.activity', true, function()
+                    {
+                        shoutbox.val("");
+                        shoutbox.removeAttr('read-only');
+                        shoutbox.removeAttr('disabled');
+
+                        pendingShoutRequest = false;
+                    });
                 });
 
             }).bind("keydown", function(e)
@@ -100,12 +116,7 @@
                 }
             });
 
-            reloadActivity('.activity');
-
-            setInterval('reloadActivity(".activity")', 10000);
-
             {% block countdown_js %}
-
             {% if not compo.hasFinished %}
                 {% if compo.hasStarted %}
                     $('.countdown').countdown({until: {{ compo.secondsToFinish }}});
@@ -117,43 +128,23 @@
             {% endblock %}
         });
 
-        function loadTeamForm(form, result, successText, errorText, callback)
-        {
-            $(form).submit(function(e)
-            {
-                e.preventDefault();
+        $(window).on("blur focus", function(e) {
+            var prevType = $(this).data("prevType");
 
-                var data = $(this).serialize();
+            if (prevType != e.type) {
+                switch (e.type) {
+                    case "blur":
+                        clearInterval(refreshId);
+                        refreshId = 0;
+                        break;
+                    case "focus":
+                        refreshId = setInterval('reloadActivity(".activity")', 10000);
+                        break;
+                }
+            }
 
-                $(result).html('<img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" />');
-
-                var teamRequest = $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'post',
-                    data: data
-                });
-
-                teamRequest.error(function()
-                {
-                    $(result).html(errorText);
-                });
-
-                teamRequest.done(function(response)
-                {
-                    if(response.result == true)
-                    {
-                        $(result).html(successText);
-
-                        if(callback != null)
-                            callback(response);
-                    }
-                    else
-                    {
-                        $(result).html(response.error);
-                    }
-                });
-            });
-        }
+            $(this).data("prevType", e.type);
+        });
     </script>
     {% endif %}
 {% endblock %}
@@ -177,7 +168,7 @@
         <div class="pull-right">
         {% block returnback %}
             <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-users"></i> {% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %}</a>
-            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a>{% endif %}
+            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a> <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_challenges', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Retos solidarios</a>{% endif %}
         {% endblock %}
         </div>
         <h1><strong>{{ compo }}</strong></h1>
@@ -234,6 +225,16 @@
                     </div>
                     {{ render(controller("GameJamUserBundle:Panel:shoutPartial")) }}
                 </div>
+                {% endif %}
+                {% if compo.hasStarted and user_application and user_application.isCompleted %}
+                <h2><i class="fa fa-rocket"></i> Tu juego</h2>
+                <div class="application" id="team-container">
+                    {% if game %}
+                    <h3>{{ game }}</h3>
+                    {% else %}
+                        ¡Aún no tienes juego para esta GameJam! <a href="{{ path('gamejam_game_panel_create') }}">Pulsa aquí para crearlo</a>
+                    {% endif %}
+                </div><br><br>
                 {% endif %}
                 {% if user_application %}
                 <h2><i class="fa fa-users"></i> Tu equipo</h2>

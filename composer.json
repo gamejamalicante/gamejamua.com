@@ -9,6 +9,10 @@
         {
             "type": "composer",
             "url": "http://ams-stag-01.certadia.net:2635"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/albertofem/media-bundle.git"
         }
     ],
     "require": {
@@ -28,6 +32,7 @@
         "components/bootstrap": "3.*",
         "components/font-awesome": "4.*",
         "components/modernizr": "2.*",
+        "components/jqueryui": "1.11.*",
         "ivaynberg/select2": "3.*",
         "sensio/buzz-bundle": "@dev",
         "mlpz/mailchimp-bundle": "@dev",
@@ -51,6 +56,16 @@
         "liip/monitor-bundle": "@dev",
         "sensiolabs/security-checker": "@dev",
         "albertofem/sitestatuschecker-bundle": "@dev",
+        "thrace-project/media-bundle":"dev-master",
+        "liip/imagine-bundle": "@dev",
+        "knplabs/knp-gaufrette-bundle": "@dev",
+        "liip/url-auto-converter-bundle": "@dev",
+        "mpratt/embera": "1.*",
+        "friendsofsymfony/rest-bundle": "1.3.*",
+        "noxlogic/ratelimit-bundle": "1.*",
+        "jms/serializer-bundle": "0.12.*",
+        "snc/redis-bundle": "@dev",
+        "predis/predis": "0.8.x-dev",
         "intervention/image": "@dev",
         "gregwar/image": "@dev"
     },
@@ -67,11 +82,11 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
         "component-dir": "web/components",
         "component-baseurl": "/components"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

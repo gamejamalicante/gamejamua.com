@@ -36,10 +36,24 @@ class AppKernel extends Kernel
             new \Endroid\Bundle\TwitterBundle\EndroidTwitterBundle(),
             new \Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
             new \Liip\MonitorBundle\LiipMonitorBundle(),
-            new \AFM\Bundle\SiteStatusCheckerBundle\SiteStatusCheckerBundle()
+            new \AFM\Bundle\SiteStatusCheckerBundle\SiteStatusCheckerBundle(),
+            new \Thrace\MediaBundle\ThraceMediaBundle(),
+            new \Liip\ImagineBundle\LiipImagineBundle(),
+            new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
+            new \GJA\GameJam\ChallengeBundle\GameJamChallengeBundle()
         );
 
-        if (in_array($this->getEnvironment(), array('dev', 'test', 'migration'))) {
+        if (in_array($this->getEnvironment(), array('rest_dev', 'rest_prod')))
+        {
+            $bundles[] = new \FOS\RestBundle\FOSRestBundle();
+            $bundles[] = new Noxlogic\RateLimitBundle\NoxlogicRateLimitBundle();
+            $bundles[] = new \JMS\SerializerBundle\JMSSerializerBundle();
+            $bundles[] = new \Snc\RedisBundle\SncRedisBundle();
+        }
+
+        if (in_array($this->getEnvironment(), array('dev', 'test', 'migration')))
+        {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

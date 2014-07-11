@@ -1,4 +1,7 @@
-<p class="item shout">
-    <i class="fa fa-comment-o"></i> {{ item.content.content }}
+<div class="item">
+    <span class="type"><i class="fa fa-comment"></i> Post</span>
     <span class="date"><i class="fa fa-clock-o"></i> {{ time_diff(item.date) }}</span>
-</p>
+    <p>{{ item.shoutContent|converturls|raw }}</p>
+    {% if loop.index0 == 0 %}<p>{{ item.embeddedContent|raw }}</p>{% endif %}
+    <div class="clearfix"></div>
+</div>

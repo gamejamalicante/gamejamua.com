@@ -13,6 +13,7 @@ namespace GJA\GameJam\UserBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Activity;
+use GJA\GameJam\CompoBundle\Service\LinkUnshortener;
 use GJA\GameJam\UserBundle\Entity\User;
 use GJA\GameJam\UserBundle\Event\UserActivityShoutEvent;
 use GJA\GameJam\UserBundle\Form\Type\ProfileType;
@@ -82,7 +83,12 @@ class PanelController extends AbstractController
 
             if($form->isValid())
             {
-                $activity->setContent(['content' => $activity->getContent()]);
+                /** @var LinkUnshortener $linkUnshortener */
+                $linkUnshortener = $this->get('gamejam.compo.link_unshortener');
+
+                $content = $linkUnshortener->findAndUnshortenLinks($activity->getContent());
+
+                $activity->setContent(['content' => $content]);
                 $activity->setUser($this->getUser());
                 $activity->setCompo($this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true], ['id' => 'ASC']));
 

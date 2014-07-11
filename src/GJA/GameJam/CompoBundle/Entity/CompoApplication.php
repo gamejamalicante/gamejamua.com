@@ -64,18 +64,33 @@ class CompoApplication
     protected $completed = false;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $lockTime = null;
-
-    protected $edit;
-
-    /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"}, inversedBy="compoApplication")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Order
      */
     protected $order;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lockTime = null;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $assisted;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $dni;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $additionalData;
+
+    protected $edit;
 
     public function __construct()
     {
@@ -273,5 +288,53 @@ class CompoApplication
     public function getLockTime()
     {
         return $this->lockTime;
+    }
+
+    /**
+     * @param mixed $assisted
+     */
+    public function setAssisted($assisted)
+    {
+        $this->assisted = $assisted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssisted()
+    {
+        return $this->assisted;
+    }
+
+    /**
+     * @param mixed $additionalData
+     */
+    public function setAdditionalData($additionalData)
+    {
+        $this->additionalData = $additionalData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdditionalData()
+    {
+        return $this->additionalData;
+    }
+
+    /**
+     * @param mixed $dni
+     */
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDni()
+    {
+        return $this->dni;
     }
 }

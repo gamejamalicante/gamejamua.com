@@ -1,0 +1,4 @@
+var challengeClient = new XMLHttpRequest();
+
+challengeClient.open("POST","{{ url('gamejam_api_challenge_complete', {challenge: challenge.token}) }}",true);
+challengeClient.send();

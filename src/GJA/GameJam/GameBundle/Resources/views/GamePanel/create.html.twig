@@ -3,7 +3,10 @@
 {% block styles %}
     {{ parent() }}
     {% stylesheets filter='cssrewrite'
-    'components/select2/select2.css'
+        'components/jquery-ui/themes/eggplant/jquery-ui.css'
+        '@GameJamCompoBundle/Resources/public/css/jquery.Jcrop.css'
+        '@ThraceMediaBundle/Resources/public/css/base.css'
+        'components/select2/select2.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
     {% endstylesheets %}
@@ -12,12 +15,31 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-    'components/select2/select2.js'
-    '@GameJamGameBundle/Resources/public/js/game.js'
+        'components/select2/select2.js'
+        'components/jquery-ui/ui/core.js'
+        'components/jquery-ui/ui/widget.js'
+        'components/jquery-ui/ui/progressbar.js'
+        'components/jquery-ui/ui/dialog.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.html5.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.flash.js'
+        '@GameJamCompoBundle/Resources/public/js/plupload.es.js'
+        '@GameJamCompoBundle/Resources/public/js/jquery.Jcrop.js'
+        '@ThraceMediaBundle/Resources/public/js/image-upload.js'
+        '@GameJamCompoBundle/Resources/public/js/jquery.center.js'
+        '@GameJamGameBundle/Resources/public/js/game.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('.ui-dialog').center(false);
+        })
+    </script>
 {% endblock %}
+
+{% form_theme form with ['GameJamGameBundle:GamePanel/Form:fields.html.twig'] %}
 
 {% block content %}
     <div class="section profile">
@@ -43,18 +65,23 @@
         <p>¡Edita los datos de tu juego, añade enlaces, imagenes y videos!</p>
         <div class="info">
         </div>
-        <form id="loginform" action="{% block form_action %}{{ path('gamejam_game_panel_create') }}{% endblock %}" {{ form_enctype(form) }} method="post">
+        <form id="loginform" action="{% block form_action %}{{ path('gamejam_game_panel_create') }}{% endblock %}" {{ form_enctype(form) }} novalidate="novalidate" method="post">
             <strong>Nombre del juego (*)</strong>
             <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
                 {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
             </div>
             {% block compo_info %}
+                {% if running_compo %}
+                    <strong>GameJam</strong>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        {{ running_compo }} (¡Este juego se creará para esta GameJam!)
+                    </div>
+                {% endif %}
             {% endblock %}
             <strong>Imagen del juego (370x110) (*)</strong>
-            <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-                {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
+            <div class="well">
+            {{ form_widget(form.image) }}
             </div>
             <strong>Diversificadores</strong>
             <div style="margin-bottom: 25px" class="input-group">
