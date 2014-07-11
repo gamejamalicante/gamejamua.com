@@ -15,7 +15,17 @@ function addMediaForm(collectionHolder, newLinkLi, deleteLink) {
         addMediaDeleteLink(newFormLi);
 
     $('select.select2').select2();
-    ThraceMedia.imageUpload($('#image-upload-element-' + index + ' .thrace-image-upload'));
+
+    var imageElement = $('#image-upload-element-' + index + ' .thrace-image-upload');
+    var imageElementOptions = imageElement.data('options');
+
+    ThraceMedia.imageUpload(imageElement);
+
+    // set session image token
+    $.post('/panel/juegos/image-session-token/' + imageElementOptions.id, {
+        configs: imageElementOptions
+    });
+
     $('.ui-dialog').center(false);
 }
 

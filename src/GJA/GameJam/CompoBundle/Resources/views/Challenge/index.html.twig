@@ -88,6 +88,7 @@
                     <form action="{{ path('gamejam_compo_compo_challenges', {compo: compo.nameSlug}) }}" method="post">
                         {{ form_widget(form.name, {'attr':{'class':'form-control', 'placeholder':'Nombre del reto...'}}) }}
                         <button type="submit" class="btn btn-twitter" style="margin-top: 5px;">¡Crear nuevo reto!</button>
+                        {{ form_rest(form) }}
                     </form>
                     <p><strong>Instrucciones para usar tu reto</strong></p>
                     <p>Implementar los retos solidarios es muy sencillo. Sólo tienes que hacer una petición a nuestro servicio web REST, cuya URL incluye los datos que identifican a tu juego. ¡Nosotros nos encargamos del resto!</p>
@@ -96,11 +97,6 @@
                 </div>
             </div>
         </div>
-
-        <p class="alert alert-warning">
-            <strong>¡IMPORTANTE!</strong>
-            Los retos creados antes del inicio oficial de la GameJam serán eliminados, por lo que sólo sirve para hacer pruebas.
-        </p>
         <p>Desde aquí puedes crear tus retos solidarios e introducirlos en tu juego para conseguir que nuestros patrocinadores puedan donar dinero a causas solidarias. Para saber más sobre este sistema, mírate <a href="//gamejamua.com/blog/iv-gamejam-edicion-solidaria-como-funcionan-los-juegos-solidarios/">nuestra entrada en el blog sobre los Retos Solidarios</a>.</p>
         <p>
             <h3>Mis retos solidarios</h3>
@@ -117,7 +113,7 @@
                     <tr>
                         <td><a href="javascript: void(-1);" class="challenge-info-link" data-token="{{ challenge.token }}">{{ challenge }}</a><br><code>{{ challenge.token }}</code></td>
                         <td>{{ challenge.completions }}</td>
-                        <td style="width: 120px;"><i class="fa fa-trash-o"></i> <a href="">Eliminar</a><br><i class="fa fa-bar-chart-o"></i> <a href="">Estadísticas</a></td>
+                        <td style="width: 120px;"><i class="fa fa-trash-o"></i> <a href="{{ path('gamejam_compo_compo_challenges_delete', {compo: compo.nameSlug, challenge: challenge.token}) }}">Eliminar</a><br><i class="fa fa-bar-chart-o"></i> <a href="">Estadísticas</a></td>
                     </tr>
                 {% else %}
                     <tr>

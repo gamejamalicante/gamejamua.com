@@ -156,7 +156,9 @@
                     {% endif %}
                 </div>
                 <div class="col-md-5">
+                    {% if game.image %}
                     <img src="{{ asset(game.image) | apply_filter('game_gallery_top') }}" width="370" height="110" />
+                    {% endif %}
                     <p class="description scrollable">{{ game.description }}</p>
                     {% if game.compo %}
                         <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>

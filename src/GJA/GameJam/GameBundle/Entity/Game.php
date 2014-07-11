@@ -542,6 +542,9 @@ class Game
 
     public function isUserAllowedToEdit(User $user)
     {
+        if($user->hasRole('ROLE_ADMIN'))
+            return true;
+
         if($this->user === $user)
             return true;
 

@@ -15,6 +15,7 @@ use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\ChallengeBundle\Form\Type\ChallengeType;
 use GJA\GameJam\CompoBundle\Entity\Compo;
+use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -56,6 +57,26 @@ class ChallengeController extends AbstractController
                 $challenge = $form->getData();
                 $challenge->setUser($user);
 
+                $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
+
+                $team = $user->getTeamForCompo($runningCompo);
+
+                if(is_null($team)) {
+                    // user is solo, check game created
+                    /** @var Game $game */
+                    $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'user' => $user]);
+                } else {
+                    $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'team' => $team]);
+                }
+
+                if(!is_null($game)) {
+                    $challenge->setGame($game);
+                } else {
+                    $createGameRoute = $this->generateUrl('gamejam_game_panel_create');
+                    $this->addSuccessMessage('Para crear retos necesitas primero crear un juego. <a href="' .$createGameRoute. '">Pulsa aquí para crearlo</a>');
+                    return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
+                }
+
                 $this->persistAndFlush($challenge);
 
                 $this->addSuccessMessage('¡Reto creado con éxito! El token del reto es: <strong><code>' .$challenge->getToken(). '</code></strong>');
@@ -74,6 +95,43 @@ class ChallengeController extends AbstractController
             'compo' => $compo,
             'challenge' => $request->get('challenge')
         ];
+    }
+
+    /**
+     * @Route("/delete/{challenge}", name="gamejam_compo_compo_challenges_delete")
+     * @ParamConverter("challenge", options={"mapping":{"challenge":"token"}})
+     */
+    public function deleteAction(Compo $compo, Challenge $challenge)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
+
+        if($runningCompo) {
+            /** @var Game $game */
+            $game = $challenge->getGame();
+
+            if($game->isUserAllowedToEdit($user))
+            {
+                return $this->deleteChallenge($compo, $challenge);
+            }
+        }
+
+        if ($challenge->getUser() === $user)
+        {
+            return $this->deleteChallenge($compo, $challenge);
+        }
+
+        $this->addSuccessMessage('No tienes permisos para borrar el reto');
+        return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
+    }
+
+
+    protected function deleteChallenge(Compo $compo, Challenge $challenge)
+    {
+        $this->deleteAndFlush($challenge);
+        $this->addSuccessMessage('El reto ha sido borrado con éxito');
+        return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
     }
 
     /**

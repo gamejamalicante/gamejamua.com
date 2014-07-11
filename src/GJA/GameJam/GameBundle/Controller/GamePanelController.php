@@ -12,6 +12,7 @@ use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -87,6 +88,19 @@ class GamePanelController extends AbstractController
         }
 
         return ['form' => $form->createView(), 'running_compo' => $runningCompo];
+    }
+
+    /**
+     * @Route("/image-session-token/{token}", name="gamejam_game_panel_token")
+     */
+    public function imageSessionTokenAction(Request $request, $token)
+    {
+        $configs = $request->get('configs');
+        $session = $request->getSession();
+
+        $session->set($token, $configs);
+
+        return new JsonResponse(['result' => true]);
     }
 
     /**

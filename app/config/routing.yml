@@ -58,7 +58,7 @@ _status_checker:
 
 _thrace_media_backend:
     resource: "@ThraceMediaBundle/Resources/config/routing/backend.xml"
-    prefix:   /admin
+    prefix:   /uploader/
 
 _thrace_media_frontend:
     resource: "@ThraceMediaBundle/Resources/config/routing/frontend.xml"
