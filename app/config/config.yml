@@ -122,6 +122,14 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
+            disaster_recovery:
+                driver:   "%database_driver%"
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   gamejam_dr
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         entity_managers:

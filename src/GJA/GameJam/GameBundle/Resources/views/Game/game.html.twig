@@ -158,6 +158,8 @@
                 <div class="col-md-5">
                     {% if game.image %}
                     <img src="{{ asset(game.image) | apply_filter('game_gallery_top') }}" width="370" height="110" />
+                    {% elseif game.oldUrl %}
+                    <img src="{{ game.oldUrl }}" width="370" height="110">
                     {% endif %}
                     <p class="description scrollable">{{ game.description }}</p>
                     {% if game.compo %}

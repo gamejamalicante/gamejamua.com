@@ -77,6 +77,11 @@ class Game
     protected $image;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $oldUrl;
+
+    /**
      * @ORM\ManyToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Diversifier")
      * @ORM\JoinTable(name="gamejam_games_diversifiers")
      */
@@ -662,5 +667,21 @@ class Game
     public function addChallenge(Challenge $challenge)
     {
         $this->challenges[] = $challenge;
+    }
+
+    /**
+     * @param mixed $oldUrl
+     */
+    public function setOldUrl($oldUrl)
+    {
+        $this->oldUrl = $oldUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldUrl()
+    {
+        return $this->oldUrl;
     }
 }

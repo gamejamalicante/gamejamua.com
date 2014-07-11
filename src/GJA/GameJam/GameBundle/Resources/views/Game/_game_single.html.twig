@@ -1,6 +1,6 @@
 <div class="gamelistelement{% if game.position %} {{ game.position }}{% endif %}">
     <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">
-        <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{{ asset(game.image) }}');"></div>
+        <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{% if game.image %}{{ asset(game.image) }}{% elseif game.oldUrl %}{{ game.oldUrl }}{% endif %}');"></div>
     </a>
     <div class="gamelistdescription">
         <div class="pull-right"><i class="fa fa-thumbs-up"></i> {{ game.likes }}</div>
