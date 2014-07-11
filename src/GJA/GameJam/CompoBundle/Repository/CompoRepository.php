@@ -20,7 +20,7 @@ class CompoRepository extends EntityRepository
     public function findRunningCompo()
     {
         $dql = <<<DQL
-SELECT c FROM GameJamCompoBundle:Compo c WHERE c.open = 1 AND c.startAt >= :date
+SELECT c FROM GameJamCompoBundle:Compo c WHERE c.open = 1 AND c.startAt <= :date
 DQL;
 
         try

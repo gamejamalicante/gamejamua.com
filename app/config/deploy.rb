@@ -34,8 +34,6 @@ set :composer_bin, "composer"
 set :dump_assetic_assets, true
 set :assets_install, true
 
-after "deploy", "deploy:cleanup"
-
 task :upload_parameters do
 desc 'Upload stage parameters'
 
