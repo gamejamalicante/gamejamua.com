@@ -12,7 +12,7 @@ default_run_options[:shell] = '/bin/bash'
 set :ssh_options, { :forward_agent => true }
 
 set :shared_files,      ["app/config/parameters.yml"]
-set :shared_children,     [web_path + "/uploads", web_path + "/media", app_path + "/uploads", app_path + "/logs", web_path + "/blog/app/uploads"]
+set :shared_children,     [web_path + "/uploads", app_path + "/uploads", app_path + "/logs", web_path + "/blog/app/uploads"]
 
 set :repository,  "git@github.com:gamejamalicante/gamejamua.com.git"
 set :scm,         :git

@@ -59,7 +59,7 @@ class ChallengeController extends AbstractController
 
                 $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
 
-                if($runningCompo !== null)
+                if($runningCompo === null)
                 {
                     $this->addSuccessMessage('Los retos solidarios estarán disponibles cuando empiece la GameJam :)');
                     return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
