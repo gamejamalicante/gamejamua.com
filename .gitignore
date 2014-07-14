@@ -17,9 +17,8 @@ app/sessions/*
 web/sitemap*
 /web/blog/(!wp-config.php)
 web/components
-web/media/*
 web/uploads/*
-web/media/*web/media
+web/media/*
 web/uploads
 badges/generated/*
 src/GJA/GameJam/UserBundle/Resources/badges/generated/
