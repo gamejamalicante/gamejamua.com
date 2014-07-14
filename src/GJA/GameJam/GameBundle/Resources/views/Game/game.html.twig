@@ -215,7 +215,7 @@
                                     <h4>Version {{ download.version }}</h4>
                                 {% endif %}
                                 <p class="description">{{ game.description }}</p>
-                                {% if download.size is not null %}<p><strong>Tamaño: </strong></p>{% endif %}
+                                {% if download.size is not null %}<p><strong>Tamaño: {{ download.size }}</strong></p>{% endif %}
                                 {% if download.platforms|length %}
                                     <p>
                                         <strong>Plataformas: </strong>
