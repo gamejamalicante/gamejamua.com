@@ -24,24 +24,24 @@
         // example how to integrate with a previewer
 
         var current = 0,
-                $preview = $( '#preview' ),
-                $carouselEl = $( '#carousel' ),
-                $carouselItems = $carouselEl.children(),
-                carousel = $carouselEl.elastislide( {
-                    current : current,
-                    minItems : 4,
-                    onClick : function( el, pos, evt ) {
+            $preview = $( '#preview' ),
+            $carouselEl = $( '#carousel' ),
+            $carouselItems = $carouselEl.children(),
+            carousel = $carouselEl.elastislide( {
+                current : current,
+                minItems : 4,
+                onClick : function( el, pos, evt ) {
 
-                        changeImage( el, pos );
-                        evt.preventDefault();
+                    changeImage( el, pos );
+                    evt.preventDefault();
 
-                    },
-                    onReady : function() {
+                },
+                onReady : function() {
 
-                        changeImage( $carouselItems.eq( current ), current );
+                    changeImage( $carouselItems.eq( current ), current );
 
-                    }
-                } );
+                }
+            } );
 
         function changeImage( el, pos ) {
             if(el.data('type') == 2 || el.data('type') == 3)
@@ -132,6 +132,7 @@
                     {{ form_widget(give_coins_form.coins, {'attr':{'class':'form-control'}}) }}
                 </div>
                 <button type="submit" class="btn">Dar UltraCoins</button>
+                {{ form_rest(give_coins_form) }}
             </form>
         </div>
         {% endif %}
@@ -210,12 +211,11 @@
                                 <a class="btn btn-green pull-right" href="{{ download.fileUrl }}" target="_blank"><i class="fa fa-download"></i> Descargar</a>
                                 {% if download.gamejam %}
                                     <h4>Versión GameJam</h4>
-                                    <p class="description">Esta es la versión original subida durante la GameJam</p>
-                                {% elseif game.description %}
+                                {% elseif download.version is not null %}
                                     <h4>Version {{ download.version }}</h4>
-                                    <p class="description">{{ game.description }}</p>
                                 {% endif %}
-                                {% if download.size %}<p><strong>Tamaño: </strong></p>{% endif %}
+                                <p class="description">{{ game.description }}</p>
+                                {% if download.size is not null %}<p><strong>Tamaño: </strong></p>{% endif %}
                                 {% if download.platforms|length %}
                                     <p>
                                         <strong>Plataformas: </strong>

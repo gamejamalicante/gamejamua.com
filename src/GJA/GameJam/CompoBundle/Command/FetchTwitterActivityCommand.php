@@ -86,6 +86,12 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
 
         foreach($tweets as $tweet)
         {
+            if(preg_match('/^RT.*/i', $tweet->text))
+            {
+                $output->writeln('Ignoring retweet');
+                continue;
+            }
+
             $user = $this->findUserFromTwitterUsername($tweet->user->screen_name);
 
             $activity = new Activity();

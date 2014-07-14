@@ -248,7 +248,10 @@ class Game
      */
     public function setDownloads($downloads)
     {
-        $this->downloads = $downloads;
+        foreach($downloads as $download)
+        {
+            $this->addDownload($download);
+        }
     }
 
     /**

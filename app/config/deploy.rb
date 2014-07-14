@@ -12,7 +12,7 @@ default_run_options[:shell] = '/bin/bash'
 set :ssh_options, { :forward_agent => true }
 
 set :shared_files,      ["app/config/parameters.yml"]
-set :shared_children,     [web_path + "/uploads", app_path + "/uploads", app_path + "/logs", web_path + "/blog/app/uploads"]
+set :shared_children,     [web_path + "/uploads", app_path + "/logs", web_path + "/blog/app/uploads"]
 
 set :repository,  "git@github.com:gamejamalicante/gamejamua.com.git"
 set :scm,         :git
@@ -21,6 +21,7 @@ set :keep_releases, 5
 set :deploy_via, :remote_cache
 set :use_sudo, false
 set :copy_vendors, true
+set :controllers_to_clear, ['*_dev.php']
 
 set :model_manager, "doctrine"
 set :use_composer, true
@@ -80,6 +81,7 @@ after 'deploy:setup', 'upload_parameters'
 before 'deploy', 'upload_parameters'
 before 'deploy:share_childs', 'upload_parameters'
 
+set :writable_dirs,       ["app/cache", "app/logs", "web/media"]
 set :webserver_user,      "www-data"
 set :permission_method,   :acl
 set :use_set_permissions, true

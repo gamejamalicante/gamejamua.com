@@ -124,12 +124,19 @@ class GamePanelController extends AbstractController
                 $media = $game->getMedia();
                 $image = $game->getImage();
 
-                $this->persist($image);
+                if($image !== null)
+                    $this->persist($image);
 
                 foreach($media as $mediaElement)
                 {
                     $mediaElement->setGame($game);
                     $this->persist($mediaElement);
+                }
+
+                foreach($game->getDownloads() as $download)
+                {
+                    $download->setGame($game);
+                    $this->persist($download);
                 }
 
                 $this->persist($game);

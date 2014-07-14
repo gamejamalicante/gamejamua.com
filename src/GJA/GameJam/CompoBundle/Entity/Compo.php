@@ -240,7 +240,8 @@ class Compo
      */
     public function getStartAt()
     {
-        return $this->startAt;
+        $clone = clone $this->startAt;
+        return $clone;
     }
 
     /**
@@ -538,7 +539,7 @@ class Compo
         if($this->hasStarted())
             return 0;
 
-        return $this->startAt->getTimestamp()-(new \DateTime("now"))->getTimestamp();
+        return $this->getStartAt()->getTimestamp()-(new \DateTime("now"))->getTimestamp();
     }
 
     /**

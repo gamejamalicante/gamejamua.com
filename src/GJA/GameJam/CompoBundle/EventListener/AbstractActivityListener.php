@@ -37,7 +37,7 @@ abstract class AbstractActivityListener
 
     protected function persistActivity(Activity $activity, $currentCompo = true)
     {
-        if(!$currentCompo)
+        if($currentCompo)
             $activity->setCompo($this->getCurrentCompo());
 
         $this->entityManager->persist($activity);

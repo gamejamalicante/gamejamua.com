@@ -38,7 +38,7 @@ class Download
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $gamejam;
+    protected $gamejam = false;
 
     /**
      * @ORM\Column(type="datetime")

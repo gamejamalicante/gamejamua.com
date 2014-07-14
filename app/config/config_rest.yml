@@ -32,6 +32,7 @@ snc_redis:
             dsn: redis://localhost
 
 noxlogic_rate_limit:
+    enabled: false
     storage_engine: redis
     redis_client: api_rate_limit
 

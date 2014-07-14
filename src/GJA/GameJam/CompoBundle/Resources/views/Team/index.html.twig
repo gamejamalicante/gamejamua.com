@@ -118,6 +118,7 @@
                                 </div>
                                 <div id="send-invitation-result" class="pull-right"></div>
                                 <button class="btn">Enviar invitación</button>
+                                {{ form_rest(invite_form) }}
                             </form>
                         {% endif %}<br><br>
                         {% if is_leader %}
@@ -136,6 +137,7 @@
                                 </div>
                                 <div id="send-request-result" class="pull-right"></div>
                                 <button class="btn">Enviar petición para unirse</button>
+                                {{ form_rest(request_form) }}
                             </form>
                             <br>
                             <h4>Crear un equipo</h4>

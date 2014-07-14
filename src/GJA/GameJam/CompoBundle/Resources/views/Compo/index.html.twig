@@ -203,7 +203,9 @@
                 </p>
             </div>
         </div>
-        {% if compo.open %}
+        {% if not compo.open %}
+            <h1 style="text-align: center">GameJam finalizada. ¡Muchas gracias por participar!</h1>
+        {% endif %}
         <div class="row compo-content">
             <div class="col-sm-6">
                 <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
@@ -231,6 +233,8 @@
                 <div class="application" id="team-container">
                     {% if game %}
                     <h3>{{ game }}</h3>
+                    <a class="btn btn-green" href="{{ path('gamejam_game', {game: game.nameSlug}) }}"><i class="fa fa-rocket"></i> Ver tu juego</a>
+                    <a class="btn btn-twitter" href="{{ path('gamejam_game_panel_edit', {game: game.nameSlug}) }}"><i class="fa fa-rocket"></i> Editar juego</a><br><br>
                     {% else %}
                         ¡Aún no tienes juego para esta GameJam! <a href="{{ path('gamejam_game_panel_create') }}">Pulsa aquí para crearlo</a>
                     {% endif %}
@@ -286,11 +290,6 @@
                 </div>
             </div>
         </div>
-        {% else %}
-            <div style="margin: 50px; text-align: center;">
-            <h1 style="text-align: center">GameJam finalizada. ¡Muchas gracias por participar!</h1>
-            </div>
-        {% endif %}
         {% endblock %}
     </div>
 {% endblock %}
