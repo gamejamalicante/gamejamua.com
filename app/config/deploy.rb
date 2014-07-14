@@ -81,6 +81,18 @@ after 'deploy:setup', 'upload_parameters'
 before 'deploy', 'upload_parameters'
 before 'deploy:share_childs', 'upload_parameters'
 
+task :clear_cache_and_warmup do
+desc 'Clear cache and warmup environment'
+
+    capifony_pretty_print '--> Cleaning cache and warmup'
+
+    run "cd #{release_path} ; php app/console cache:clear --env=rest_prod --warmup"
+
+    capifony_puts_ok
+end
+
+after 'symfony:cache:warmup', 'clear_cache_and_warmup'
+
 set :writable_dirs,       ["app/cache", "app/logs", "web/media"]
 set :webserver_user,      "www-data"
 set :permission_method,   :acl
