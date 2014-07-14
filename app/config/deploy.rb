@@ -86,7 +86,7 @@ desc 'Clear cache and warmup environment'
 
     capifony_pretty_print '--> Cleaning cache and warmup'
 
-    run "cd #{release_path} ; php app/console cache:clear --env=rest_prod --warmup"
+    run "cd #{release_path} ; php app/console cache:clear --env=rest_prod"
 
     capifony_puts_ok
 end
