@@ -68,7 +68,7 @@ class JuryController extends AbstractController
     {
         $ignore = $this->getRequest()->get('ignore');
         $ignoreList = array();
-        
+
         if (!is_null($ignore))
         {
             $ignoreList[] = $ignore;
