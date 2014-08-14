@@ -21,12 +21,14 @@
 
     <script type="text/javascript">
 
-        // example how to integrate with a previewer
-
         var current = 0,
             $preview = $( '#preview' ),
             $carouselEl = $( '#carousel' ),
             $carouselItems = $carouselEl.children(),
+            carousel = null;
+
+        function loadSlideshow()
+        {
             carousel = $carouselEl.elastislide( {
                 current : current,
                 minItems : 4,
@@ -41,7 +43,8 @@
                     changeImage( $carouselItems.eq( current ), current );
 
                 }
-            } );
+            } )
+        }
 
         function changeImage( el, pos ) {
             if(el.data('type') == 2 || el.data('type') == 3)
@@ -62,9 +65,11 @@
 
         }
 
-        {% block like_script %}
+
         $(document).ready(function()
         {
+            loadSlideshow();
+            {% block like_script %}
             $('#vote-up').click(function()
             {
                 {% if not app.user %}
@@ -114,8 +119,8 @@
                     }
                 })
             });
-        })
-        {% endblock %}
+            {% endblock %}
+        });
 
     </script>
 {% endblock %}
