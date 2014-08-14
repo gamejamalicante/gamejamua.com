@@ -1,0 +1,145 @@
+{% if completed %}
+<h2>Todos los juegos de esta edición ya han sido votados. ¡Gracias por tu colaboración!</h2>
+{% else %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+<div class="section">
+    <h2 style="margin-bottom: 15px;">Juego: <strong>{{ game }}</strong></h2>
+    <div class="info showcase">
+        <div class="row">
+            <div class="col-md-7" style="padding-right: 0;">
+                {% if game.media|length > 0 %}
+                    <div class="gallery">
+                        <div class="image-preview">
+                            <img id="preview" />
+                        </div>
+                        <ul id="carousel" class="elastislide-list">
+                            {% for media in game.media %}
+                                <li data-preview="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_image') }}{% endif %}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-youtube-id="{{ media.youtubeId }}{% endif %}"><a href="javascript: void(-1);"><img src="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_thumb') }}{% endif %}"></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="gallery">
+                        El usuario no ha subido ninguna imagen
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                {% if game.image %}
+                    <img src="{{ asset(game.image) | apply_filter('game_gallery_top') }}" width="370" height="110" />
+                {% elseif game.oldUrl %}
+                    <img src="{{ game.oldUrl }}" width="370" height="110">
+                {% endif %}
+                <p class="description scrollable">{{ game.description }}</p>
+                {% if game.compo %}
+                    <p><i class="fa fa-rocket"></i> <a href="{{ path('gamejam_compo_compo', {compo: game.compo.nameSlug}) }}">{{ game.compo }}</a></p>
+                    <p><i class="fa fa-magic"></i> <strong>Tema: </strong> {{ game.compo.theme }}</p>
+                    {% if game.diversifiers|length %}
+                        <p><i class="fa fa-gear"></i> <strong>Diversificadores: </strong>
+                            {% for diversifier in game.diversifiers %}
+                                {{ diversifier }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                {% endif %}
+                {% if game.team %}
+                    <p><i class="fa fa-group"></i><strong> Equipo: </strong>
+                        {% for user in game.team.users %}
+                            <a href="{{ path('gamejam_user_profile', {user: user.username}) }}">{{ user }}</a>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                {% elseif game.user %}
+                    <p><i class="fa fa-group"></i> <strong>Creador: </strong> {{ game.user }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6">
+            <h2><i class="fa fa-file"></i> Descargas</h2>
+            <div class="activity" style="margin-top: 10px;">
+                {% for download in game.downloads if download.gamejam %}
+                    <div class="item download gamejam">
+                        <a class="btn btn-green pull-right" href="{{ download.fileUrl }}" target="_blank"><i class="fa fa-download"></i> Descargar</a>
+                        <h4>Versión GameJam</h4>
+                        <p class="description">{{ game.description }}</p>
+                        {% if download.size is not null %}<p><strong>Tamaño: {{ download.size }}</strong></p>{% endif %}
+                        {% if download.platforms|length %}
+                            <p>
+                                <strong>Plataformas: </strong>
+                                {% for platform in download.platforms %}
+                                    <i class="fa fa-{{ download.platformDescription(platform).slug }}"></i> {{ download.platformDescription(platform).name }}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    El usuario de este juego no ha subido aun la versión de la GameJam
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2><i class="fa fa-thumbs-up"></i> Votaciones</h2>
+            <div class="activity" style="margin-top: 10px;">
+                {% for download in game.downloads if download.gamejam %}
+                    <div class="item download gamejam">
+                        <a class="btn btn-green pull-right" href="{{ download.fileUrl }}" target="_blank"><i class="fa fa-download"></i> Descargar</a>
+                        <h4>Versión GameJam</h4>
+                        <p class="description">{{ game.description }}</p>
+                        {% if download.size is not null %}<p><strong>Tamaño: {{ download.size }}</strong></p>{% endif %}
+                        {% if download.platforms|length %}
+                            <p>
+                                <strong>Plataformas: </strong>
+                                {% for platform in download.platforms %}
+                                    <i class="fa fa-{{ download.platformDescription(platform).slug }}"></i> {{ download.platformDescription(platform).name }}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <td>Graficos</td>
+                        <td>{{ form_widget(form.graphics) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Audio</td>
+                        <td>{{ form_widget(form.audio) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Originalidad</td>
+                        <td>{{ form_widget(form.originality) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Entretenimiento</td>
+                        <td>{{ form_widget(form.fun) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Adecuación al tema</td>
+                        <td>{{ form_widget(form.theme) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            {{ form_widget(form.comment, {'attr':{'class':'shout form-control', 'placeholder':'Escribe un breve comentario para que lo lean los creadores...'}}) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding: 25px; text-align: center">
+                            <button type="submit" id="btn-login" class="btn btn-green submit">{% block button_submit %}Enviar votaciones y continuar{% endblock %}</button>
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{% endif %}

@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
+use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
@@ -158,6 +159,11 @@ class Game
     protected $challenges;
 
     /**
+     * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Scoreboard", mappedBy="game")
+     */
+    protected $scoreboard;
+
+    /**
      * @var bool
      */
     protected $isNew = false;
@@ -183,7 +189,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Compo
      */
     public function getCompo()
     {
@@ -686,5 +692,21 @@ class Game
     public function getOldUrl()
     {
         return $this->oldUrl;
+    }
+
+    /**
+     * @param mixed $scoreboard
+     */
+    public function setScoreboard($scoreboard)
+    {
+        $this->scoreboard = $scoreboard;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScoreboard()
+    {
+        return $this->scoreboard;
     }
 }

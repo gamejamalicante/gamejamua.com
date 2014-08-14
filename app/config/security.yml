@@ -12,7 +12,7 @@ security:
         ROLE_JANITOR: [ROLE_USER, ROLE_STAFF]
         ROLE_JURY: ROLE_USER
         ROLE_COORDINATOR: [ROLE_USER, ROLE_STAFF]
-        ROLE_ADMIN: [ROLE_USER, ROLE_JANITOR]
+        ROLE_ADMIN: [ROLE_USER, ROLE_JANITOR, ROLE_JURY]
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
@@ -50,6 +50,9 @@ security:
                 always_use_default_target_path: true
                 default_target_path: /
                 use_referer: true
+            jmikola_auto_login:
+                auto_login_user_provider: gamejam.user.autologin_user_manager
+                token_param: alk
             logout:       true
             anonymous:    true
 
@@ -58,5 +61,6 @@ security:
         - { path: ^/compos/.*/(inscribirse|team|modificar-inscripcion), roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/panel, roles: ROLE_USER }
+        - { path: ^/jurado, roles: ROLE_JURY }
         - { path: ^/juegos/.*/(dar-monedas|like), roles: ROLE_USER }
         - { path: ^/monitor/health, role: ROLE_SUPER_ADMIN }

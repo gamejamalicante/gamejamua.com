@@ -1,0 +1,38 @@
+{% extends 'GameJamGameBundle:Game:game.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function reloadGame()
+        {
+            var url = '{{ path('gamejam_compo_jury_vote_game', {compo: compo.nameSlug}) }}';
+
+            $('.game').load(url);
+        }
+
+        $(document).ready(function()
+        {
+            reloadGame();
+        })
+    </script>
+{% endblock %}
+
+{% block like_script %}{% endblock %}
+
+{% block content %}
+    <div class="section inscription">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <h1>Votaciones <strong>{{ compo }}</strong></h1>
+        <div class="game"></div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

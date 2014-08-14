@@ -18,6 +18,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 use GJA\GameJam\CompoBundle\Entity\Achievement;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
+use GJA\GameJam\CompoBundle\Entity\Contributor;
 use GJA\GameJam\CompoBundle\Entity\Notification;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\Activity;
@@ -145,6 +146,11 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $presentation;
 
     /**
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\CompoBundle\Entity\Contributor", mappedBy="user")
+     */
+    protected $contributor;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $publicProfile = true;
@@ -194,6 +200,11 @@ class User extends BaseUser implements EncoderAwareInterface
      * @ORM\Column(type="string", nullable=true)
      */
     protected $lastIp;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $autologinToken;
 
     /**
      * @param mixed $achievements
@@ -854,5 +865,53 @@ class User extends BaseUser implements EncoderAwareInterface
     public function getLastIp()
     {
         return $this->lastIp;
+    }
+
+    /**
+     * @param mixed $autologinToken
+     */
+    public function setAutologinToken($autologinToken)
+    {
+        $this->autologinToken = $autologinToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAutologinToken()
+    {
+        return $this->autologinToken;
+    }
+
+    public function getJudgedCompos()
+    {
+        if (is_null($contributor = $this->getContributor()))
+            return null;
+
+        $compos = array();
+
+        foreach ($contributor->getComposJudged() as $compo)
+        {
+            if (!$compo->hasJuryVotingEnded())
+                $compos[] = $compo;
+        }
+
+        return $compos;
+    }
+
+    /**
+     * @param mixed $contributor
+     */
+    public function setContributor($contributor)
+    {
+        $this->contributor = $contributor;
+    }
+
+    /**
+     * @return Contributor
+     */
+    public function getContributor()
+    {
+        return $this->contributor;
     }
 }

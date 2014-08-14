@@ -1,0 +1,49 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block content %}
+    <div class="section inscription">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="mainbox col-md-6 col-sm-8 pull-right">
+            <div class="panel panel-primary" >
+                <div class="panel-heading">
+                    <div class="panel-title">Votaciones GameJam</div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="alert alert-warning places">Elige una edición para enviar las votaciones</div>
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th colspan="2">Edición</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for compo in compos %}
+                <tr>
+                    <td>{{ compo }}</td>
+                    <td><a class="btn" href="{{ path('gamejam_compo_jury_vote_compo', {compo: compo.nameSlug}) }}"><i class="fa fa-thumbs-up"></i> Ir a la votacion</a></td>
+                </tr>
+                {% else %}
+                    <tr>
+                        <td>No tienes acceso a ninguna edición o el período de votación ha terminado</td>
+                    </tr>
+                {% endfor %}
+                </tbody></table>
+                </div>
+            </div>
+        </div>
+        <h1>Votaciones del jurado: <strong>{{ app.user.contributor ?: app.user }}</strong></h1>
+        <p>Desde aquí puedes votar como jurado a los juegos de las ediciones a las que tengas acceso. Por favor, elige una edición del menú de la derecha para empezar la votación</p>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

@@ -43,6 +43,9 @@
                 <a href="{{ path('gamejam_compo_frontend_rules') }}" class="btn btn-gamejam"><i class="fa fa-book"></i> Normas</a>
                 <a href="{{ site.facebook.url }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
                 <a href="{{ site.twitter.url }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+                {% if app.user and is_granted("ROLE_JURY") %}
+                <a href="{{ path('gamejam_compo_jury_vote') }}" class="btn"><i class="fa fa-thumbs-up"></i> Votar juegos</a>
+                {% endif %}
             </div>
             {% if app.user and is_granted("ROLE_USER") %}
             <div class="navbar-right logged">

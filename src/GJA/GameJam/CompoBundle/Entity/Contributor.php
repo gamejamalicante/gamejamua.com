@@ -27,6 +27,11 @@ class Contributor
     protected $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     */
+    protected $user;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -70,7 +75,7 @@ class Contributor
     }
 
     /**
-     * @return mixed
+     * @return Compo[]
      */
     public function getComposJudged()
     {
@@ -197,5 +202,21 @@ class Contributor
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
