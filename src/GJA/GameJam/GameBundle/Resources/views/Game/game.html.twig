@@ -68,8 +68,8 @@
 
         $(document).ready(function()
         {
-            loadSlideshow();
             {% block like_script %}
+            loadSlideshow();
             $('#vote-up').click(function()
             {
                 {% if not app.user %}
