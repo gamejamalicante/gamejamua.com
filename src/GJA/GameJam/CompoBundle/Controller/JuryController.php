@@ -66,7 +66,15 @@ class JuryController extends AbstractController
      */
     public function voteGameAction(Compo $compo)
     {
-        $game = $this->getRepository('GameJamGameBundle:Game')->findByCompoAndNotVotedBy($this->getUser(), $compo);
+        $ignore = $this->getRequest()->get('ignore');
+        $ignoreList = array();
+        
+        if (!is_null($ignore))
+        {
+            $ignoreList[] = $ignore;
+        }
+
+        $game = $this->getRepository('GameJamGameBundle:Game')->findByCompoAndNotVotedBy($this->getUser(), $compo, $ignoreList);
 
         if (is_null($game))
         {
@@ -76,6 +84,18 @@ class JuryController extends AbstractController
         $scoreboardForm = $this->createForm(new ScoreboardType());
 
         return ['completed' => false, 'game' => $game, 'form' => $scoreboardForm->createView()];
+    }
+
+    /**
+     * @Route("/voted-games/{compo}", name="gamejam_compo_jury_voted_games")
+     * @ParamConverter("compo", options={"mapping":{"compo":"nameSlug"}})
+     * @Template()
+     */
+    public function votedGamesAction(Compo $compo)
+    {
+        $games = $this->getRepository('GameJamGameBundle:Game')->findVotedByUser($this->getUser(), $compo);
+
+        return ['games' => $games];
     }
 
     /**
@@ -109,7 +129,7 @@ class JuryController extends AbstractController
                 {
                     $scoreboard->setAdmin(true);
                 }
-                
+
                 $this->persistAndFlush($scoreboard);
 
                 $response = array('result' => true);

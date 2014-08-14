@@ -709,4 +709,15 @@ class Game
     {
         return $this->scoreboard;
     }
+
+    public function getScoreboardByVoter(User $user)
+    {
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            if ($scoreboardItem->getVoter() === $user)
+                return $scoreboardItem;
+        }
+
+        return null;
+    }
 }

@@ -5,14 +5,28 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        function reloadGame()
+        function reloadGame(ignoreGame)
         {
             var url = '{{ path('gamejam_compo_jury_vote_game', {compo: compo.nameSlug}) }}';
+
+            if (ignoreGame != null)
+            {
+                url = url + '?ignore=' + ignoreGame;
+            }
+
             $('.game').load(url, function()
             {
+                reloadVoted();
                 bindSubmitForm();
+                bindIgnoreForm();
                 loadSlideshow('#carousel', 0);
             });
+        }
+
+        function reloadVoted()
+        {
+            var url = '{{ path('gamejam_compo_jury_voted_games', {compo: compo.nameSlug}) }}';
+            $('.voted-games').load(url);
         }
 
         function bindSubmitForm()
@@ -39,6 +53,16 @@
             })
         }
 
+        function bindIgnoreForm()
+        {
+            $('#ignore-button').click(function(e)
+            {
+                console.log('juas');
+                e.preventDefault();
+                reloadGame($(this).data('game'))
+            })
+        }
+
         $(document).ready(function()
         {
             reloadGame();
@@ -50,16 +74,11 @@
 
 {% block content %}
     <div class="section inscription">
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ message|raw }}
-                </div>
-            {% endfor %}
-        {% endfor %}
         <h1>Votaciones <strong>{{ compo }}</strong></h1>
         <div class="game"></div>
+        <div class="voted-games">
+        {{ render(controller('GameJamCompoBundle:Jury:votedGames', {compo: compo.nameSlug})) }}
+        </div>
         <div class="clearfix"></div>
     </div>
 {% endblock %}

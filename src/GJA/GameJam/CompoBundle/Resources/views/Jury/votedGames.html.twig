@@ -1,0 +1,39 @@
+<hr />
+<h2>Votaciones realizadas</h2><br>
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+        <th colspan="2">Juego</th>
+        <th>Gráficos</th>
+        <th>Audio</th>
+        <th>Entretenimiento</th>
+        <th>Originalidad</th>
+        <th>Adecuación al tema</th>
+        <th>Comentario</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for game in games %}
+    {% set scoreboard = game.scoreboardByVoter(app.user) %}
+    <tr>
+        <td>
+            <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">
+                <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{% if game.image %}{{ asset(game.image) }}{% elseif game.oldUrl %}{{ game.oldUrl }}{% endif %}');"></div>
+            </a>
+        </td>
+        <td>{{ game }}</td>
+        <td>{{ scoreboard.graphics }}</td>
+        <td>{{ scoreboard.audio }}</td>
+        <td>{{ scoreboard.fun }}</td>
+        <td>{{ scoreboard.originality }}</td>
+        <td>{{ scoreboard.theme }}</td>
+        <td>{{ scoreboard.comment }}</td>
+    </tr>
+    </tbody>
+    {% else %}
+        <tr>
+            <td colspan="8">Aun no has votado a ningún juego</td>
+        </tr>
+    {% endfor %}
+    </table>
+</table>

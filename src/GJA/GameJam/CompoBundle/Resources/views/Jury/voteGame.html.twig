@@ -60,7 +60,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 25px;">
         <div class="col-md-6">
             <h2><i class="fa fa-file"></i> Descargar juego</h2>
             <div class="activity" style="margin-top: 10px;">
@@ -115,7 +115,8 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="padding: 25px; text-align: center">
-                            <button type="submit" id="btn-login" class="btn btn-green submit">{% block button_submit %}Enviar votaciones y continuar{% endblock %}</button>
+                            <button type="submit" class="btn btn-green">Enviar votaciones y continuar</button><br><br>
+                            <button type="button" class="btn btn-logout" id="ignore-button" data-game="{{ game.id }}">Ignorar y continuar (votar más tarde)</button>
                         </td>
                     </tr>
                 </table>

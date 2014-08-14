@@ -48,24 +48,32 @@ class GameRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function findByCompoAndNotVotedBy(User $user, Compo $compo)
+    public function findByCompoAndNotVotedBy(User $user, Compo $compo, $ignoreList = array())
+    {
+        $games = $this->findByCompo($compo);
+
+        foreach($games as $game)
+        {
+            if ($ignoreList && in_array($game->getId(), $ignoreList))
+                continue;
+
+            if (!$game->getScoreboardByVoter($user))
+                return $game;
+        }
+
+        return null;
+    }
+
+    public function findVotedByUser(User $user, Compo $compo)
     {
         $dql = <<<DQL
-SELECT g FROM GameJamGameBundle:Game g LEFT JOIN g.scoreboard sb WHERE g.compo = :compo AND (sb.id IS NULL OR sb.voter != :user)
+SELECT g FROM GameJamGameBundle:Game g JOIN g.scoreboard sb WHERE g.compo = :compo AND sb.voter = :user AND sb.id IS NOT NULL
 DQL;
 
-        try
-        {
-            $result = $this->getEntityManager()->createQuery($dql)
-                ->setMaxResults(1)
-                ->setParameter('user', $user)
-                ->setParameter('compo', $compo)
-                ->getSingleResult();
-        }
-        catch (NoResultException $ex)
-        {
-            return null;
-        }
+        $result = $this->getEntityManager()->createQuery($dql)
+            ->setParameter('user', $user)
+            ->setParameter('compo', $compo)
+            ->getResult();
 
         return $result;
     }
