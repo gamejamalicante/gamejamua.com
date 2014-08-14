@@ -37,7 +37,16 @@ class JuryController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        return ['compos' => $user->getJudgedCompos()];
+        if ($this->isGranted('ROLE_ADMIN'))
+        {
+            $compos = $this->getRepository('GameJamCompoBundle:Compo')->findAll();
+        }
+        else
+        {
+            $compos = $user->getJudgedCompos();
+        }
+
+        return ['compos' => $compos];
     }
 
     /**
@@ -96,6 +105,11 @@ class JuryController extends AbstractController
 
                 $this->addSuccessMessage('El juego <strong>' .$game->getName(). '</strong> ha sido votado con éxito. Continuamos con el siguiente...');
 
+                if ($this->isGranted('ROLE_ADMIN'))
+                {
+                    $scoreboard->setAdmin(true);
+                }
+                
                 $this->persistAndFlush($scoreboard);
 
                 $response = array('result' => true);

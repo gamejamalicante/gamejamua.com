@@ -27,6 +27,11 @@ class Scoreboard
     protected $public = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $admin = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
      */
     protected $voter;
@@ -224,5 +229,21 @@ class Scoreboard
     public function getVoter()
     {
         return $this->voter;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 }
