@@ -8,8 +8,34 @@
         function reloadGame()
         {
             var url = '{{ path('gamejam_compo_jury_vote_game', {compo: compo.nameSlug}) }}';
+            $('.game').load(url, function()
+            {
+                bindSubmitForm();
+            });
+        }
 
-            $('.game').load(url);
+        function bindSubmitForm()
+        {
+            $('#scoreform').submit(function(e)
+            {
+                e.preventDefault();
+
+                var form = $(this);
+                var action = form.attr('action');
+                var data = form.serialize();
+
+                $('#scoreform').html('<img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" />');
+
+                $.post(action, data, function(response)
+                {
+                    if(response.result != true)
+                    {
+                        alert('Hubo un error intentando votar este juego: ' + response.error)
+                    }
+
+                    reloadGame();
+                });
+            })
         }
 
         $(document).ready(function()

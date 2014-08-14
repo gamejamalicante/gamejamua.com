@@ -17,10 +17,11 @@ use GJA\GameJam\CompoBundle\Entity\Scoreboard;
 use GJA\GameJam\CompoBundle\Form\Type\ScoreboardType;
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\UserBundle\Entity\User;
-use JMS\Payment\CoreBundle\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/jurado")
@@ -74,9 +75,11 @@ class JuryController extends AbstractController
      */
     public function sendScoreAction(Request $request, Game $game)
     {
-        if ($game->getCompo()->getJuryVoteEndAt() > new \DateTime())
+        if($game->getCompo()->hasJuryVotingEnded())
         {
-            return array('result' => false);
+            $response = array('result' => false, 'error' => 'Plazo de votación de terminado');
+
+            return new JsonResponse($response);
         }
 
         $scoreboard = new Scoreboard();
@@ -91,12 +94,18 @@ class JuryController extends AbstractController
                 $scoreboard->setGame($game);
                 $scoreboard->setVoter($this->getUser());
 
+                $this->addSuccessMessage('El juego <strong>' .$game->getName(). '</strong> ha sido votado con éxito. Continuamos con el siguiente...');
+
                 $this->persistAndFlush($scoreboard);
 
-                return array('result' => true);
+                $response = array('result' => true);
+
+                return new JsonResponse($response);
             }
         }
 
-        return array('result' => false);
+        $response = array('result' => false, 'error' => 'Formulario inválido');
+
+        return new JsonResponse($response);
     }
 } 
