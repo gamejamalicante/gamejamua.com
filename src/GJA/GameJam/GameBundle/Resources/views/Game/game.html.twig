@@ -15,61 +15,16 @@
     {% javascripts
         'components/modernizr/modernizr.js'
         '@GameJamCompoBundle/Resources/public/js/jquery.elastislide.js'
+        '@GameJamGameBundle/Resources/public/js/game-profile.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
 
     <script type="text/javascript">
-
-        var current = 0,
-            $preview = $( '#preview' ),
-            $carouselEl = $( '#carousel' ),
-            $carouselItems = $carouselEl.children(),
-            carousel = null;
-
-        function loadSlideshow()
-        {
-            carousel = $carouselEl.elastislide( {
-                current : current,
-                minItems : 4,
-                onClick : function( el, pos, evt ) {
-
-                    changeImage( el, pos );
-                    evt.preventDefault();
-
-                },
-                onReady : function() {
-
-                    changeImage( $carouselItems.eq( current ), current );
-
-                }
-            } )
-        }
-
-        function changeImage( el, pos ) {
-            if(el.data('type') == 2 || el.data('type') == 3)
-            {
-                // youtube video
-                $('.image-preview').html('<iframe class="youtube" width="100%" height="300" src="//www.youtube.com/embed/' + el.data('youtube-id') + '" frameborder="0" allowfullscreen></iframe>');
-            }
-            else
-            {
-                var imagePreview = $('<img id="preview" />');
-                $('.image-preview').html(imagePreview);
-
-                imagePreview.attr('src', el.data('preview'));
-            }
-            $carouselItems.removeClass( 'current-img' );
-            el.addClass( 'current-img' );
-            carousel.setCurrent( pos );
-
-        }
-
-
         $(document).ready(function()
         {
             {% block like_script %}
-            loadSlideshow();
+            loadSlideshow('#carousel', 0);
             $('#vote-up').click(function()
             {
                 {% if not app.user %}
