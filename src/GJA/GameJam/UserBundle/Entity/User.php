@@ -27,10 +27,13 @@ use GJA\GameJam\GameBundle\Entity\Game;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\UserBundle\Repository\UserRepository")
- * @ORM\Table(name="gamejam_users")
+ * @ORM\Table(name="gamejam_users",
+ *      uniqueConstraints={@UniqueConstraint(name="autologin_idx", columns={"autologinToken"})}
+ * )
  * @UniqueEntity(fields={"username"}, message="Este nombre de usuario ya existe")
  * @UniqueEntity(fields={"email"}, message="El email ya está en uso")
  */
@@ -205,6 +208,11 @@ class User extends BaseUser implements EncoderAwareInterface
      * @ORM\Column(type="string", nullable=true)
      */
     protected $autologinToken;
+
+    public function __construct()
+    {
+        $this->autologinToken = sha1(time() . uniqid());
+    }
 
     /**
      * @param mixed $achievements
