@@ -62,6 +62,7 @@
 
         }
 
+        {% block like_script %}
         $(document).ready(function()
         {
             $('#vote-up').click(function()
@@ -114,6 +115,7 @@
                 })
             });
         })
+        {% endblock %}
 
     </script>
 {% endblock %}

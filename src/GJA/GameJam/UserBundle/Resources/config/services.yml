@@ -23,3 +23,7 @@ services:
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login', priority: 255 }
+
+    gamejam.user.autologin_user_manager:
+        class: GJA\GameJam\UserBundle\Security\AutoLoginUserManager
+        parent: fos_user.user_manager.default

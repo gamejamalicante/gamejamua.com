@@ -132,6 +132,11 @@ class Compo
     protected $pages;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $juryVoteEndAt;
+
+    /**
      * @param mixed $games
      */
     public function setGames($games)
@@ -608,5 +613,26 @@ class Compo
     public function getPages()
     {
         return $this->pages;
+    }
+
+    /**
+     * @param mixed $juryVoteEndAt
+     */
+    public function setJuryVoteEndAt($juryVoteEndAt)
+    {
+        $this->juryVoteEndAt = $juryVoteEndAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJuryVoteEndAt()
+    {
+        return $this->juryVoteEndAt;
+    }
+
+    public function hasJuryVotingEnded()
+    {
+        return $this->getJuryVoteEndAt() <= new \DateTime();
     }
 }

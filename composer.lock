@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1deb753e9c79d11eab6135878157493",
+    "hash": "969aa5d11a0ac3996111c1c263aec2b6",
     "packages": [
         {
             "name": "albertofem/sitestatuschecker-bundle",
@@ -2459,6 +2459,113 @@
                 "sql"
             ],
             "time": "2014-01-12 16:20:24"
+        },
+        {
+            "name": "jmikola/auto-login",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jmikola/AutoLogin.git",
+                "reference": "e60abda9864bcabc0475e5e669c12a47aeed62a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jmikola/AutoLogin/zipball/e60abda9864bcabc0475e5e669c12a47aeed62a8",
+                "reference": "e60abda9864bcabc0475e5e669c12a47aeed62a8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/event-dispatcher": "~2.1",
+                "symfony/http-kernel": "~2.1",
+                "symfony/security": "~2.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Jmikola\\AutoLogin": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Henrik Bjornskov",
+                    "email": "henrik@bjrnskov.dk",
+                    "homepage": "http://henrik.bjrnskov.dk"
+                },
+                {
+                    "name": "Jeremy Mikola",
+                    "email": "jmikola@gmail.com",
+                    "homepage": "http://jmikola.net"
+                }
+            ],
+            "description": "Faciliates automatic login via a single token for Symfony2's Security component.",
+            "homepage": "https://github.com/jmikola/AutoLogin",
+            "keywords": [
+                "Authentication",
+                "auto-login",
+                "login",
+                "security"
+            ],
+            "time": "2013-07-17 14:56:43"
+        },
+        {
+            "name": "jmikola/auto-login-bundle",
+            "version": "v1.0.3",
+            "target-dir": "Jmikola/AutoLoginBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jmikola/JmikolaAutoLoginBundle.git",
+                "reference": "fec6c37d0e2a13928d06099f64b79bcdc6141253"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jmikola/JmikolaAutoLoginBundle/zipball/fec6c37d0e2a13928d06099f64b79bcdc6141253",
+                "reference": "fec6c37d0e2a13928d06099f64b79bcdc6141253",
+                "shasum": ""
+            },
+            "require": {
+                "jmikola/auto-login": "~1.0",
+                "php": ">=5.3.2",
+                "symfony/config": "~2.1",
+                "symfony/dependency-injection": "~2.1",
+                "symfony/http-kernel": "~2.1",
+                "symfony/security-bundle": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Jmikola\\AutoLoginBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Mikola",
+                    "email": "jmikola@gmail.com",
+                    "homepage": "http://jmikola.net"
+                }
+            ],
+            "description": "Authenticate users in your Symfony2 app via a single query parameter (e.g. email and newsletter links).",
+            "homepage": "https://github.com/jmikola/JmikolaAutoLoginBundle",
+            "keywords": [
+                "Authentication",
+                "auto-login",
+                "login",
+                "security"
+            ],
+            "time": "2013-07-17 15:14:01"
         },
         {
             "name": "jms/metadata",
@@ -5142,8 +5249,12 @@
             "time": "2014-04-15 19:03:28"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "certadia/library": 20,
@@ -5177,8 +5288,11 @@
         "intervention/image": 20,
         "gregwar/image": 20
     },
+    "prefer-stable": true,
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

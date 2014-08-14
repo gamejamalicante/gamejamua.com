@@ -67,7 +67,8 @@
         "snc/redis-bundle": "@dev",
         "predis/predis": "0.8.x-dev",
         "intervention/image": "@dev",
-        "gregwar/image": "@dev"
+        "gregwar/image": "@dev",
+        "jmikola/auto-login-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [

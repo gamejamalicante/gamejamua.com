@@ -41,7 +41,8 @@ class AppKernel extends Kernel
             new \Liip\ImagineBundle\LiipImagineBundle(),
             new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
-            new \GJA\GameJam\ChallengeBundle\GameJamChallengeBundle()
+            new \GJA\GameJam\ChallengeBundle\GameJamChallengeBundle(),
+            new \Jmikola\AutoLoginBundle\JmikolaAutoLoginBundle()
         );
 
         if (in_array($this->getEnvironment(), array('rest_dev', 'rest_prod')))
