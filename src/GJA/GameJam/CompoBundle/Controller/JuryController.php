@@ -109,7 +109,7 @@ class JuryController extends AbstractController
                 {
                     $scoreboard->setAdmin(true);
                 }
-
+                
                 $this->persistAndFlush($scoreboard);
 
                 $response = array('result' => true);
