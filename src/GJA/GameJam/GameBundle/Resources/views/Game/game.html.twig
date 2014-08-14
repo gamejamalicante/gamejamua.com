@@ -20,7 +20,30 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-        function changeImage(el, pos) {
+
+        // example how to integrate with a previewer
+
+        var current = 0,
+            $preview = $( '#preview' ),
+            $carouselEl = $( '#carousel' ),
+            $carouselItems = $carouselEl.children(),
+            carousel = $carouselEl.elastislide( {
+                current : current,
+                minItems : 4,
+                onClick : function( el, pos, evt ) {
+
+                    changeImage( el, pos );
+                    evt.preventDefault();
+
+                },
+                onReady : function() {
+
+                    changeImage( $carouselItems.eq( current ), current );
+
+                }
+            } );
+
+        function changeImage( el, pos ) {
             if(el.data('type') == 2 || el.data('type') == 3)
             {
                 // youtube video
@@ -38,29 +61,6 @@
             carousel.setCurrent( pos );
 
         }
-
-        $(document).ready(function()
-        {
-            var current = 0,
-                $preview = $('#preview'),
-                $carouselEl = $('#carousel'),
-                $carouselItems = $carouselEl.children(),
-                carousel = $carouselEl.elastislide({
-                    current: current,
-                    minItems: 4,
-                    onClick: function(el, pos, evt) {
-
-                        changeImage(el, pos);
-                        evt.preventDefault();
-
-                    },
-                    onReady: function() {
-
-                        changeImage( $carouselItems.eq( current ), current );
-
-                    }
-                });
-        });
 
         {% block like_script %}
         $(document).ready(function()
