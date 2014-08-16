@@ -1,5 +1,5 @@
 <hr />
-<h2>Votaciones realizadas</h2><br>
+<h2>Listado de juegos</h2><br>
 <table class="table table-striped table-bordered">
     <thead>
     <tr>
@@ -22,12 +22,16 @@
             </a>
         </td>
         <td>{{ game }}</td>
-        <td>{{ scoreboard.graphics }}</td>
-        <td>{{ scoreboard.audio }}</td>
-        <td>{{ scoreboard.fun }}</td>
-        <td>{{ scoreboard.originality }}</td>
-        <td>{{ scoreboard.theme }}</td>
-        <td>{{ scoreboard.comment }}</td>
+        {% if scoreboard %}
+            <td>{{ scoreboard.graphics }}</td>
+            <td>{{ scoreboard.audio }}</td>
+            <td>{{ scoreboard.fun }}</td>
+            <td>{{ scoreboard.originality }}</td>
+            <td>{{ scoreboard.theme }}</td>
+            <td>{{ scoreboard.comment }}</td>
+        {% else %}
+            <td colspan="6">Juego aún no votado. <a href="#votegame" onclick="reloadGame(null, '{{ game.nameSlug }}');">Pulsa aquí para cargar la votación</a>.</td>
+        {% endif %}
     </tr>
     </tbody>
     {% else %}
@@ -35,5 +39,4 @@
             <td colspan="8">Aun no has votado a ningún juego</td>
         </tr>
     {% endfor %}
-    </table>
 </table>

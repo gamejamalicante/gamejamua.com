@@ -64,6 +64,29 @@ class GameRepository extends EntityRepository
         return null;
     }
 
+    public function findTotalByVotingStatus($voted, User $user, Compo $compo)
+    {
+        $games = $this->findByCompo($compo);
+        $total = 0;
+
+        foreach($games as $game)
+        {
+            if ($voted)
+            {
+                if ($game->getScoreboardByVoter($user))
+                {
+                    $total++;
+                }
+            }
+            else
+            {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
     public function findVotedByUser(User $user, Compo $compo)
     {
         $dql = <<<DQL

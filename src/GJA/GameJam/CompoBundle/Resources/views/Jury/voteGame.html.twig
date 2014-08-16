@@ -10,7 +10,12 @@
         {% endfor %}
     {% endfor %}
 <div class="section">
-    <h2 style="margin-bottom: 15px;">Juego: <strong>{{ game }}</strong></h2>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 135px; width: {{ progress }}%;">
+            <strong>{{ total_voted }}</strong> de {{ total_games }} juegos votados
+        </div>
+    </div>
+    <a name="votegame"></a><h2 style="margin-bottom: 15px;">Juego: <strong>{{ game }}</strong></h2>
     <div class="info showcase">
         <div class="row">
             <div class="col-md-7">

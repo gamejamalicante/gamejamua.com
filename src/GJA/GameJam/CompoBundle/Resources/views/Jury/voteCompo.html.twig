@@ -5,9 +5,17 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        function reloadGame(ignoreGame)
+        function reloadGame(ignoreGame, game)
         {
-            var url = '{{ path('gamejam_compo_jury_vote_game', {compo: compo.nameSlug}) }}';
+            var url = '';
+            if (game == null) {
+                url = '{{ path('gamejam_compo_jury_vote_game', {compo: compo.nameSlug}) }}';
+            }
+            else
+            {
+                url = '{{ path('gamejam_compo_jury_vote_game', {compo: compo.nameSlug, game: '__game'}) }}';
+                url = url.replace('__game', game);
+            }
 
             if (ignoreGame != null)
             {

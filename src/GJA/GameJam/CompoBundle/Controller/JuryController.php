@@ -60,30 +60,44 @@ class JuryController extends AbstractController
     }
 
     /**
-     * @Route("/vote-game/{compo}", name="gamejam_compo_jury_vote_game")
+     * @Route("/vote-game/{compo}/{game}", name="gamejam_compo_jury_vote_game", defaults={"game"=null})
      * @ParamConverter("compo", options={"mapping":{"compo":"nameSlug"}})
+     * @ParamConverter("game", options={"mapping":{"game":"nameSlug"}})
      * @Template
      */
-    public function voteGameAction(Compo $compo)
+    public function voteGameAction(Compo $compo, Game $game = null)
     {
-        $ignore = $this->getRequest()->get('ignore');
-        $ignoreList = array();
-
-        if (!is_null($ignore))
+        if (is_null($game))
         {
-            $ignoreList[] = $ignore;
+            $ignore = $this->getRequest()->get('ignore');
+            $ignoreList = array();
+
+            if (!is_null($ignore))
+            {
+                $ignoreList[] = $ignore;
+            }
+
+            $game = $this->getRepository('GameJamGameBundle:Game')->findByCompoAndNotVotedBy($this->getUser(), $compo, $ignoreList);
         }
 
-        $game = $this->getRepository('GameJamGameBundle:Game')->findByCompoAndNotVotedBy($this->getUser(), $compo, $ignoreList);
-
-        if (is_null($game))
+        if (is_null($game) || $game->getScoreboardByVoter($this->getUser()))
         {
             return ['completed' => true];
         }
 
+        $totalGames = $this->getRepository('GameJamGameBundle:Game')->findTotalByVotingStatus(false, $this->getUser(), $compo);
+        $totalVoted = $this->getRepository('GameJamGameBundle:Game')->findTotalByVotingStatus(true, $this->getUser(), $compo);
+        $progress = ($totalVoted * 100) / $totalGames;
+
         $scoreboardForm = $this->createForm(new ScoreboardType());
 
-        return ['completed' => false, 'game' => $game, 'form' => $scoreboardForm->createView()];
+        return [
+            'completed' => false,
+            'game' => $game, 'form' => $scoreboardForm->createView(),
+            'total_games' => $totalGames,
+            'total_voted' => $totalVoted,
+            'progress' => $progress
+        ];
     }
 
     /**
@@ -93,7 +107,12 @@ class JuryController extends AbstractController
      */
     public function votedGamesAction(Compo $compo)
     {
-        $games = $this->getRepository('GameJamGameBundle:Game')->findVotedByUser($this->getUser(), $compo);
+        $games = $this->getRepository('GameJamGameBundle:Game')->findByCompo($compo);
+
+        uasort($games, function($a)
+        {
+            return $a->getScoreboardByVoter($this->getUser()) ? 1 : -1;
+        });
 
         return ['games' => $games];
     }
