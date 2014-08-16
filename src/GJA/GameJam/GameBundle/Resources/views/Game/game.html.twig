@@ -108,7 +108,7 @@
                         </div>
                         <ul id="carousel" class="elastislide-list">
                             {% for media in game.media %}
-                                <li data-preview="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_image') }}{% endif %}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-youtube-id="{{ media.youtubeId }}{% endif %}"><a href="javascript: void(-1);"><img src="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_thumb') }}{% endif %}"></a></li>
+                                <li data-preview="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_image') }}{% endif %}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-embed="{{ media.videoEmbedCode }}{% endif %}"><a href="javascript: void(-1);"><img src="{% if media.url %}{{ media.imageUrl }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_thumb') }}{% endif %}"></a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -175,8 +175,10 @@
                                     <h4>Versión GameJam</h4>
                                 {% elseif download.version is not null %}
                                     <h4>Version {{ download.version }}</h4>
+                                {% else %}
+                                    <h4>Versión normal</h4>
                                 {% endif %}
-                                <p class="description">{{ game.description }}</p>
+                                <p class="description">{{ download.comment }}</p>
                                 {% if download.size is not null %}<p><strong>Tamaño: {{ download.size }}</strong></p>{% endif %}
                                 {% if download.platforms|length %}
                                     <p>

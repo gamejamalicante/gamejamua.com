@@ -26,7 +26,7 @@ function changeImage(carousel, element, position)
     if(element.data('type') == 2 || element.data('type') == 3)
     {
         // youtube video
-        $('.image-preview').html('<iframe class="youtube" width="100%" height="300" src="//www.youtube.com/embed/' + element.data('youtube-id') + '" frameborder="0" allowfullscreen></iframe>');
+        $('.image-preview').html(element.data('embed'));
     }
     else
     {

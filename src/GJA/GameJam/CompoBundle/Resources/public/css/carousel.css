@@ -33,6 +33,15 @@
     margin: 0 auto;
 }
 
+.gallery .image-preview iframe {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    max-height: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
 .gallery .elastislide-carousel ul li.current-img a img {
     box-shadow: 0 0 3px 2px rgba(62,235,255,0.8);
 }

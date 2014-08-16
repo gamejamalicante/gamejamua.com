@@ -7,6 +7,8 @@
 namespace GJA\GameJam\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Embera\Embera;
+use Embera\Formatter;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Thrace\MediaBundle\Entity\AbstractImage;
 
@@ -77,11 +79,6 @@ class Media extends AbstractImage
      * TODO: allow image uploads
      */
     protected $filePath;
-
-    /**
-     * @var string
-     */
-    protected $youtubeId;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -261,35 +258,39 @@ class Media extends AbstractImage
         if($this->type == self::TYPE_IMAGE)
             return $this->url;
 
-        if($youtubeId = $this->getYoutubeId())
+        if($this->type == self::TYPE_VIDEO || $this->type == self::TYPE_TIMELAPSE)
         {
-            return "http://img.youtube.com/vi/". $youtubeId. "/2.jpg";
-        }
-
-        return '';
-    }
-
-    public function getYoutubeId()
-    {
-        if(!is_null($this->youtubeId))
-            return $this->youtubeId;
-
-        if($this->type == self::TYPE_VIDEO or $this->type == self::TYPE_TIMELAPSE)
-        {
-            if(preg_match("/youtube/i", $this->url))
-            {
-                parse_str(parse_url($this->url, PHP_URL_QUERY), $youtubeVars);
-
-                if(isset($youtubeVars['v']))
-                {
-                    $this->youtubeId = $youtubeVars['v'];
-
-                    return $this->youtubeId;
-                }
-            }
+            return $this->getVideoEmbedThumbnailUrl();
         }
 
         return null;
+    }
+
+    public function getVideoEmbedCode()
+    {
+        $videoData = $this->getVideoEmbedData();
+
+        return $videoData['html'];
+    }
+
+    public function getVideoEmbedThumbnailUrl()
+    {
+        $videoData = $this->getVideoEmbedData();
+
+        return $videoData['thumbnail_url'];
+    }
+
+    protected function getVideoEmbedData()
+    {
+        $embera = new Embera();
+        $embera = new Formatter($embera);
+
+        $urlInfo = $embera->getUrlInfo($this->url);
+
+        if(empty($urlInfo))
+            return null;
+
+        return $urlInfo[$this->url];
     }
 
     protected function getUploadPath()
