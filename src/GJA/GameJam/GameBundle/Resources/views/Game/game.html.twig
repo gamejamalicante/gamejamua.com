@@ -21,10 +21,13 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
+        $(window).load(function() {
+            loadSlideshow('#carousel', 0);
+        });
+
         $(document).ready(function()
         {
             {% block like_script %}
-            loadSlideshow('#carousel', 0);
             $('#vote-up').click(function()
             {
                 {% if not app.user %}
