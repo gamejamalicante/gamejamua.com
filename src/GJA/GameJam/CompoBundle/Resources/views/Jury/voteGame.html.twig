@@ -26,7 +26,7 @@
                         </div>
                         <ul id="carousel" class="elastislide-list">
                             {% for media in game.media %}
-                                <li data-preview="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_image') }}{% endif %}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-youtube-id="{{ media.youtubeId }}{% endif %}"><a href="javascript: void(-1);"><img src="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_thumb') }}{% endif %}"></a></li>
+                                <li data-preview="{% if media.url %}{{ media.url }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_image') }}{% endif %}" data-type="{{ media.type }}"{% if media.type == 2 or media.type == 3 %} data-embed="{{ media.videoEmbedCode }}{% endif %}"><a href="javascript: void(-1);"><img src="{% if media.url %}{{ media.imageUrl }}{% else %}{{ asset(media.webPath) | apply_filter('game_gallery_thumb') }}{% endif %}"></a></li>
                             {% endfor %}
                         </ul>
                     </div>
