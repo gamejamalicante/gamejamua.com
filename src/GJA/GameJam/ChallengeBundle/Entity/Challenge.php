@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\ActivityRepository")
+ * @ORM\Entity
  * @ORM\Table(name="gamejam_challenges_challenge")
  * @ORM\HasLifecycleCallbacks
  */
@@ -73,6 +73,16 @@ class Challenge
      * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
      */
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Cause", inversedBy="challenges")
+     */
+    protected $cause;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Donation", mappedBy="challenge")
+     */
+    protected $donations;
 
     /**
      * @param mixed $completed
@@ -273,5 +283,37 @@ class Challenge
     public function complete()
     {
         $this->completions++;
+    }
+
+    /**
+     * @param mixed $cause
+     */
+    public function setCause($cause)
+    {
+        $this->cause = $cause;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCause()
+    {
+        return $this->cause;
+    }
+
+    /**
+     * @param mixed $donations
+     */
+    public function setDonations($donations)
+    {
+        $this->donations = $donations;
+    }
+
+    /**
+     * @return Donation[]
+     */
+    public function getDonations()
+    {
+        return $this->donations;
     }
 } 

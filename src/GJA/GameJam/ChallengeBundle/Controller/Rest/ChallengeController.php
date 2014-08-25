@@ -4,7 +4,9 @@ namespace GJA\GameJam\ChallengeBundle\Controller\Rest;
 
 use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
+use GJA\GameJam\ChallengeBundle\Event\ChallengeCompletedEvent;
 use GJA\GameJam\ChallengeBundle\Exception\ChallengeCompletedException;
+use GJA\GameJam\ChallengeBundle\GameJamChallengeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Noxlogic\RateLimitBundle\Annotation\RateLimit;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,6 +34,17 @@ class ChallengeController extends AbstractController
 
         $this->persistAndFlush($challenge);
 
-        return array('result' => true, 'completions' => $challenge->getCompletions());
+        $result = array('result' => true, 'completions' => $challenge->getCompletions());
+
+        if (!$challenge->getTemp() && !$challenge->isCompleted()) {
+            $event = $this->dispatchEvent(
+                GameJamChallengeEvents::CHALLENGE_COMPLETED,
+                new ChallengeCompletedEvent($challenge, $challenge->getGame())
+            );
+
+            $result['extra'] = $event->getExtra();
+        }
+
+        return $result;
     }
 }

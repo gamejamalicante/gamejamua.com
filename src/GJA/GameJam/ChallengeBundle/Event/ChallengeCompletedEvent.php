@@ -24,6 +24,11 @@ class ChallengeCompletedEvent extends Event
      */
     protected $user;
 
+    /**
+     * @var array
+     */
+    protected $extra = array();
+
     public function __construct(Challenge $challenge, Game $game, $user = null)
     {
         $this->challenge = $challenge;
@@ -77,5 +82,15 @@ class ChallengeCompletedEvent extends Event
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function addExtra($extra, $value)
+    {
+        $this->extra[$extra] = $value;
+    }
+
+    public function getExtra()
+    {
+        return $this->extra;
     }
 } 

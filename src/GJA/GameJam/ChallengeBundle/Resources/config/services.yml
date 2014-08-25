@@ -3,3 +3,13 @@ services:
         class: GJA\GameJam\ChallengeBundle\Listener\RateLimitGenerateKeyListener
         tags:
             - { name: kernel.event_listener, event: 'ratelimit.generate.key', method: 'onGenerateKey' }
+
+    gamejam.challenge.cause.juega_terapia:
+        class: GJA\GameJam\ChallengeBundle\Service\JuegaTerapiaCause
+        arguments: [@doctrine.orm.entity_manager, @request_stack]
+
+    gamejam.challenge.listener.juega_terapia:
+        class: GJA\GameJam\ChallengeBundle\Listener\JuegaTerapiaListener
+        arguments: [@gamejam.challenge.cause.juega_terapia]
+        tags:
+            - { name: kernel.event_listener, event: 'gamejam.challenge.completed', method: 'onChallengeCompleted' }
