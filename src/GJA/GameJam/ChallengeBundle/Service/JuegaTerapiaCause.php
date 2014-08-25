@@ -92,6 +92,6 @@ class JuegaTerapiaCause
 
     private function isChallengeSuitable(Challenge $challenge)
     {
-        return $challenge->getCause()->getNameSlug() == $this->getCause()->getNameSlug() && !$challenge->isCompleted() && !$challenge->getTemp();
+        return $challenge->getCause()->getNameSlug() == $this->getCause()->getNameSlug();
     }
 } 
