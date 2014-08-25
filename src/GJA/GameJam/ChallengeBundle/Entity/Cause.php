@@ -242,4 +242,9 @@ class Cause
 
         return $games;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 } 

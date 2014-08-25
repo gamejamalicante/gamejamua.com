@@ -316,4 +316,16 @@ class Challenge
     {
         return $this->donations;
     }
+
+    public function getTotalDonationAmount()
+    {
+        $total = 0;
+
+        foreach ($this->getDonations() as $donation)
+        {
+            $total += $donation->getAmount();
+        }
+
+        return $total;
+    }
 } 

@@ -1,0 +1,39 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block content %}
+    <div class="section inscription">
+        <h1>Retos Solidarios <strong>{{ cause }}</strong><span style="float: right">Bote total: {{ cause.maxAmount }} €</span></h1>
+        <p>{{ cause.description }}</p>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Juego</th>
+                <th>Retos solidarios</th>
+                <th>Cantidad donada</th>
+                <th>Descargar</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in cause.games %}
+            {% set total = 0 %}
+            {% set total_donations = 0 %}
+            <tr>
+                <td>{{ game }}</td>
+                <td>
+                {% for challenge in game.challenges %}
+                    {% set total = total + challenge.totalDonationAmount %}
+                    {% set total_donations = total_donations + challenge.donations|length %}
+                   <strong>Reto {{ loop.index }}:</strong> {{ challenge }}<br>
+                {% endfor %}
+                </td>
+                <td>{{ total }} €<br>Ha habido un total de <strong>{{ total_donations }}</strong> donaciones</td>
+                <td><a class="btn btn-logout" href="{{ game.gamejamDownload }}"><i class="fa fa-cloud-download"></i> Descargar</a><br><br><span style="font-size: 10px">¡Cada vez que juegues a este juego estarás donando!</span></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

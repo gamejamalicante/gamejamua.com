@@ -23,6 +23,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class CauseController extends AbstractController
 {
+    /**
+     * @Route("/", name="gamejam_challenge_cause")
+     * @Template
+     */
     public function indexAction(Cause $cause)
     {
         return ['cause' => $cause];
