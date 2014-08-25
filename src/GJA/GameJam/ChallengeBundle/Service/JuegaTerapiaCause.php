@@ -74,7 +74,7 @@ class JuegaTerapiaCause
 
     protected function calculateDonationAmount()
     {
-        return 0.5;
+        return $this->getCause()->getDonationPerCompletion();
     }
 
     private function isDonationDuplicated(Challenge $challenge)

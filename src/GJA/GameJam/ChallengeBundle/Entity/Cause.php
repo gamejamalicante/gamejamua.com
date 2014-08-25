@@ -71,6 +71,11 @@ class Cause
     protected $endAt;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    protected $donationPerCompletion;
+
+    /**
      * @param mixed $challenges
      */
     public function setChallenges($challenges)
@@ -248,5 +253,21 @@ class Cause
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @param mixed $donationPerCompletion
+     */
+    public function setDonationPerCompletion($donationPerCompletion)
+    {
+        $this->donationPerCompletion = $donationPerCompletion;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDonationPerCompletion()
+    {
+        return $this->donationPerCompletion;
     }
 } 
