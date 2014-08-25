@@ -34,7 +34,7 @@
                 {% endfor %}
                 </td>
                 <td>{{ total }} €<br>Ha habido un total de <strong>{{ total_donations }}</strong> donaciones</td>
-                <td><a class="btn btn-logout" href="{{ game.gamejamDownload }}"><i class="fa fa-cloud-download"></i> Descargar</a><br><br><span style="font-size: 10px">¡Cada vez que juegues a este juego estarás donando!</span></td>
+                <td><a class="btn btn-logout" href="{{ game.gamejamDownload.fileUrl }}"><i class="fa fa-cloud-download"></i> Descargar</a><br><br><span style="font-size: 10px">¡Cada vez que juegues a este juego estarás donando!</span></td>
             </tr>
             {% endfor %}
             </tbody>
