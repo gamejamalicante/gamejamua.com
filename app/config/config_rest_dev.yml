@@ -1,2 +1,5 @@
 imports:
     - { resource: config_rest.yml }
+
+noxlogic_rate_limit:
+    enabled: false
