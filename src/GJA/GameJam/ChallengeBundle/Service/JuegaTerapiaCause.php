@@ -12,6 +12,7 @@
 namespace GJA\GameJam\ChallengeBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use GJA\GameJam\ChallengeBundle\Entity\Cause;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\ChallengeBundle\Entity\Donation;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -22,6 +23,11 @@ class JuegaTerapiaCause
      * @var EntityManager
      */
     protected $entityManager;
+
+    /**
+     * @var Cause
+     */
+    protected $cause;
 
     /**
      * @var RequestStack
@@ -36,6 +42,10 @@ class JuegaTerapiaCause
 
     public function processChallengeCompletion(Challenge $challenge)
     {
+        if (!$this->isChallengeSuitable($challenge)) {
+            return 0.0;
+        }
+
         if ($this->isDonationDuplicated($challenge)) {
             return 0.0;
         }
@@ -51,6 +61,15 @@ class JuegaTerapiaCause
         $this->entityManager->flush();
 
         return $donationAmount;
+    }
+
+    protected function getCause()
+    {
+        if ($this->cause !== null) {
+            $this->cause = $this->entityManager->getRepository('GameJamChallengeBundle:Cause')->findOneByNameSlug('juegaterapia');
+        }
+
+        return $this->cause;
     }
 
     protected function calculateDonationAmount()
@@ -69,5 +88,10 @@ class JuegaTerapiaCause
         }
 
         return false;
+    }
+
+    private function isChallengeSuitable(Challenge $challenge)
+    {
+        return $challenge->getCause() === $this->getCause() && !$challenge->isCompleted() && !$challenge->getTemp();
     }
 } 
