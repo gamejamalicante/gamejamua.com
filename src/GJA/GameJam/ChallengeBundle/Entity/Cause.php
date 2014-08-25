@@ -11,6 +11,7 @@
 
 namespace GJA\GameJam\ChallengeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -233,11 +234,12 @@ class Cause
 
     public function getGames()
     {
-        $games = array();
+        $games = new ArrayCollection();
 
         foreach ($this->getChallenges() as $challenge)
         {
-            $games[] = $challenge->getGame();
+            if (!$games->contains($challenge->getGame()))
+                $games->add($challenge->getGame());
         }
 
         return $games;

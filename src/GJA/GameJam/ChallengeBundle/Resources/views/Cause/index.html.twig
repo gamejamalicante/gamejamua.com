@@ -9,7 +9,7 @@
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th>Juego</th>
+                <th colspan="2">Juego</th>
                 <th>Retos solidarios</th>
                 <th>Cantidad donada</th>
                 <th>Descargar</th>
@@ -20,7 +20,12 @@
             {% set total = 0 %}
             {% set total_donations = 0 %}
             <tr>
-                <td>{{ game }}</td>
+                <td>
+                    <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">
+                        <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{% if game.image %}{{ asset(game.image) }}{% elseif game.oldUrl %}{{ game.oldUrl }}{% endif %}');"></div>
+                    </a>
+                </td>
+                <td style="width: 120px;">{{ game }}</td>
                 <td>
                 {% for challenge in game.challenges %}
                     {% set total = total + challenge.totalDonationAmount %}
