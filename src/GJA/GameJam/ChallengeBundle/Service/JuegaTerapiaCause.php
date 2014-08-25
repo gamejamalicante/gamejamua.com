@@ -66,7 +66,7 @@ class JuegaTerapiaCause
     protected function getCause()
     {
         if ($this->cause !== null) {
-            $this->cause = $this->entityManager->getRepository('GameJamChallengeBundle:Cause')->findOneByNameSlug('juegaterapia');
+            $this->cause = $this->entityManager->getRepository('GameJamChallengeBundle:Cause')->findOneByNameSlug('juega-terapia-more-than-gamers');
         }
 
         return $this->cause;
