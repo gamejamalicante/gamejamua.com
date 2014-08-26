@@ -16,4 +16,4 @@ interface ItemInterface
     public function getAmount();
     public function getDescription();
     public function getQuantity();
-} 
+}

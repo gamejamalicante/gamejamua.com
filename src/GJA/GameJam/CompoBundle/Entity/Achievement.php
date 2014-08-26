@@ -169,7 +169,7 @@ class Achievement
         return $this->type;
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->name;
     }
@@ -193,8 +193,7 @@ class Achievement
     public function grant(Activity $activity)
     {
         /** @var GranterInterface $class */
-        if($class = $this->getGranter())
-        {
+        if ($class = $this->getGranter()) {
             return $class::grant($activity);
         }
 
@@ -241,14 +240,15 @@ class Achievement
     public function isGrantedTo($user)
     {
         if(is_null($user))
+
             return false;
 
-        foreach($user->getAchievements() as $achievement)
-        {
+        foreach ($user->getAchievements() as $achievement) {
             if($achievement->getAchievement() === $this)
+
                 return true;
         }
 
         return false;
     }
-} 
+}

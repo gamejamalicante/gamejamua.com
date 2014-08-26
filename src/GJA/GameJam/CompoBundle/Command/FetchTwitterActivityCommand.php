@@ -7,9 +7,7 @@ use Endroid\Twitter\Twitter;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Repository\ActivityRepository;
 use GJA\GameJam\CompoBundle\Service\LinkUnshortener;
-use GJA\GameJam\GameBundle\GameJamGameEvents;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -59,19 +57,16 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
             'q' => $query,
         );
 
-        if($sinceId)
-        {
+        if ($sinceId) {
             $output->writeln("Found last tweet ID: <info>" .$sinceId. "</info>");
             $parameters['since_id'] = $sinceId;
         }
 
-        try
-        {
+        try {
             $response = $twitter->query("search/tweets", "get", "json", $parameters);
-        }
-        catch(\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             $output->writeln("Failed fetching Tweets: ". $ex->getMessage());
+
             return 0x255;
         }
 
@@ -79,15 +74,12 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
 
         $tweets = $response->statuses;
 
-        if(empty($tweets))
-        {
+        if (empty($tweets)) {
             $output->writeln("No tweets fetched");
         }
 
-        foreach($tweets as $tweet)
-        {
-            if(preg_match('/^RT.*/i', $tweet->text))
-            {
+        foreach ($tweets as $tweet) {
+            if (preg_match('/^RT.*/i', $tweet->text)) {
                 $output->writeln('Ignoring retweet');
                 continue;
             }
@@ -111,8 +103,7 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
                 'id' => $tweet->id
             );
 
-            if(!$user)
-            {
+            if (!$user) {
                 // random user, save avatar and screen name
                 $content['avatar'] = $tweet->user->profile_image_url;
                 $content['screen_name'] = $tweet->user->screen_name;
@@ -132,12 +123,12 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
     protected function findUserFromTwitterUsername($username)
     {
         if(isset($this->twitterMap[$username]))
+
             return $this->twitterMap[$username];
 
         $user = $this->entityManager->getRepository("GameJamUserBundle:User")->findOneByTwitter($username);
 
-        if($user)
-        {
+        if ($user) {
             $this->twitterMap[$username] = $user;
 
             return $user;
@@ -156,8 +147,7 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
         $hashtags = $this->getContainer()->getParameter("twitter.hashtags");
         $username = "@" . $this->getContainer()->getParameter("twitter.username");
 
-        foreach($hashtags as $key => $hashtag)
-        {
+        foreach ($hashtags as $key => $hashtag) {
             $hashtags[$key] = "#" . $hashtag;
         }
 
@@ -178,9 +168,9 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
         /** @var Activity $lastInteraction */
         $lastInteraction = $activityRepository->findLastTwitterInteraction();
 
-        if($lastInteraction)
-        {
+        if ($lastInteraction) {
             if(isset($lastInteraction->getContent()['id']))
+
                 return $lastInteraction->getContent()['id'];
         }
 
@@ -191,21 +181,18 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
     {
         preg_match_all('/(?<mention>(?:#|@)(?:.*?)(?:$| ))/i', $content, $matches);
 
-        foreach($matches['mention'] as $mention)
-        {
+        foreach ($matches['mention'] as $mention) {
             $mention = trim($mention);
 
-            if($mention{0} == '@')
-            {
+            if ($mention{0} == '@') {
                 $content = str_replace($mention, '<a href="https://twitter.com/' .str_replace('@', '', $mention). '">' .$mention. '</a>', $content);
             }
 
-            if($mention{1} == '#')
-            {
+            if ($mention{1} == '#') {
                 $content = str_replace($mention, '<a href="https://twitter.com/hashtag/' .str_replace('#', '', $mention). '">' .$mention. '</a>', $content);
             }
         }
 
         return $content;
     }
-} 
+}

@@ -16,4 +16,4 @@ final class GameJamUserEvents
     const ACTIVITY_SHOUT = "gamejam.user.activity.shout";
 
     const ACTIVITY_ACHIEVEMENT = "gamejam.user.activity.achievement";
-} 
+}

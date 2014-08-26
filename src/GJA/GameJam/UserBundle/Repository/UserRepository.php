@@ -43,15 +43,12 @@ DQL;
 SELECT u FROM GameJamUserBundle:User u WHERE u.username = :username OR u.email = :username
 DQL;
 
-        try
-        {
+        try {
             return $this->getEntityManager()->createQuery($dql)
                 ->setParameter('username', $username)
                 ->getSingleResult();
-        }
-        catch(NoResultException $ex)
-        {
+        } catch (NoResultException $ex) {
             return null;
         }
     }
-} 
+}

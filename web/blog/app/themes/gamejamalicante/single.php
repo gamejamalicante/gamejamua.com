@@ -31,7 +31,7 @@ get_header(); ?>
     <div class="form-footer blog-footer">
         <div id="disqus_thread" style="margin-top: 100px"></div>
         <script type="text/javascript">
-            (function() {
+            (function () {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = '//gamejamalicante.disqus.com/embed.js';
                 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);

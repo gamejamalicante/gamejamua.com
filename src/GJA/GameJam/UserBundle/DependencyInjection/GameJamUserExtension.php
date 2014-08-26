@@ -28,8 +28,7 @@ class GameJamUserExtension extends Extension
             $config = array_replace_recursive($config, $subConfig);
         }
 
-        foreach($config['oauth_tokens'] as $account => $data)
-        {
+        foreach ($config['oauth_tokens'] as $account => $data) {
             $container->setParameter('oauth.' .$account. '', $data);
         }
 
@@ -38,4 +37,4 @@ class GameJamUserExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
-} 
+}

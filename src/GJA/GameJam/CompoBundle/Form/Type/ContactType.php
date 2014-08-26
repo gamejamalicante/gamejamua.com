@@ -28,8 +28,7 @@ class ContactType extends AbstractType
     {
         $builder->add('message', 'textarea');
 
-        if(!$this->user)
-        {
+        if (!$this->user) {
             $builder->add('email');
         }
     }
@@ -41,4 +40,4 @@ class ContactType extends AbstractType
     {
         return 'gamejam_compo_contact';
     }
-} 
+}

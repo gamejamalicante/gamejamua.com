@@ -30,4 +30,4 @@ final class GameJamCompoEvents
     const TEAM_REQUEST_CANCELLED = "gamejam.compo.team_request.cancelled";
 
     const NOTIFICATION_SENT = "gamejam.compo.notification.sent";
-} 
+}

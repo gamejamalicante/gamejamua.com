@@ -46,7 +46,7 @@ class AchievementGranted
      */
     protected $game;
 
-    function __construct()
+    public function __construct()
     {
         $this->grantedAt = new \DateTime("now");
     }
@@ -135,4 +135,4 @@ class AchievementGranted
     {
         return (string) $this->achievement;
     }
-} 
+}

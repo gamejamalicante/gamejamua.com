@@ -37,12 +37,9 @@ class JuryController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if ($this->isGranted('ROLE_ADMIN'))
-        {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $compos = $this->getRepository('GameJamCompoBundle:Compo')->findAll();
-        }
-        else
-        {
+        } else {
             $compos = $user->getJudgedCompos();
         }
 
@@ -67,21 +64,18 @@ class JuryController extends AbstractController
      */
     public function voteGameAction(Compo $compo, Game $game = null)
     {
-        if (is_null($game))
-        {
+        if (is_null($game)) {
             $ignore = $this->getRequest()->get('ignore');
             $ignoreList = array();
 
-            if (!is_null($ignore))
-            {
+            if (!is_null($ignore)) {
                 $ignoreList[] = $ignore;
             }
 
             $game = $this->getRepository('GameJamGameBundle:Game')->findByCompoAndNotVotedBy($this->getUser(), $compo, $ignoreList);
         }
 
-        if (is_null($game) || $game->getScoreboardByVoter($this->getUser()))
-        {
+        if (is_null($game) || $game->getScoreboardByVoter($this->getUser())) {
             return ['completed' => true];
         }
 
@@ -109,8 +103,7 @@ class JuryController extends AbstractController
     {
         $games = $this->getRepository('GameJamGameBundle:Game')->findByCompo($compo);
 
-        uasort($games, function($a)
-        {
+        uasort($games, function ($a) {
             return $a->getScoreboardByVoter($this->getUser()) ? 1 : -1;
         });
 
@@ -123,8 +116,7 @@ class JuryController extends AbstractController
      */
     public function sendScoreAction(Request $request, Game $game)
     {
-        if($game->getCompo()->hasJuryVotingEnded())
-        {
+        if ($game->getCompo()->hasJuryVotingEnded()) {
             $response = array('result' => false, 'error' => 'Plazo de votación de terminado');
 
             return new JsonResponse($response);
@@ -133,19 +125,16 @@ class JuryController extends AbstractController
         $scoreboard = new Scoreboard();
         $scoreboardForm = $this->createForm(new ScoreboardType(), $scoreboard);
 
-        if ($this->isPost())
-        {
+        if ($this->isPost()) {
             $scoreboardForm->submit($request);
 
-            if ($scoreboardForm->isValid())
-            {
+            if ($scoreboardForm->isValid()) {
                 $scoreboard->setGame($game);
                 $scoreboard->setVoter($this->getUser());
 
                 $this->addSuccessMessage('El juego <strong>' .$game->getName(). '</strong> ha sido votado con éxito. Continuamos con el siguiente...');
 
-                if ($this->isGranted('ROLE_ADMIN'))
-                {
+                if ($this->isGranted('ROLE_ADMIN')) {
                     $scoreboard->setAdmin(true);
                 }
 
@@ -161,4 +150,4 @@ class JuryController extends AbstractController
 
         return new JsonResponse($response);
     }
-} 
+}

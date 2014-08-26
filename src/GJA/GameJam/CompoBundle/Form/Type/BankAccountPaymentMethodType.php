@@ -10,4 +10,4 @@ class BankAccountPaymentMethodType extends AbstractType
     {
         return 'gamejam_compo_form_bank_account';
     }
-} 
+}

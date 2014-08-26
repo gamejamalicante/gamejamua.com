@@ -30,11 +30,9 @@ class AchievementListener extends AbstractActivityListener
         /** @var Achievement[] $achievements */
         $achievements = $this->entityManager->getRepository("GameJamCompoBundle:Achievement")->findGranters();
 
-        foreach($achievements as $achievement)
-        {
+        foreach ($achievements as $achievement) {
             // check if game already has achievement
-            switch($achievement->getType())
-            {
+            switch ($achievement->getType()) {
                 case Achievement::TYPE_GAME:
                     if($activity->getGame()->hasAchievement($achievement))
                         continue 2;
@@ -46,8 +44,7 @@ class AchievementListener extends AbstractActivityListener
                 break;
             }
 
-            if($grant = $achievement->grant($activity))
-            {
+            if ($grant = $achievement->grant($activity)) {
                 $grant->setAchievement($achievement);
 
                 $this->entityManager->persist($grant);
@@ -63,25 +60,21 @@ class AchievementListener extends AbstractActivityListener
         $event = null;
         $eventName = "";
 
-        if($user = $achievementGranted->getUser())
-        {
+        if ($user = $achievementGranted->getUser()) {
             $event = new UserActivityAchievementEvent();
             $event->setUser($user);
 
             $eventName = GameJamUserEvents::ACTIVITY_ACHIEVEMENT;
-        }
-        elseif($game = $achievementGranted->getGame())
-        {
+        } elseif ($game = $achievementGranted->getGame()) {
             $event = new GameActivityAchievementEvent();
             $event->setGame($game);
 
             $eventName = GameJamGameEvents::ACTIVITY_ACHIEVEMENT;
         }
 
-        if($event && !empty($eventName))
-        {
+        if ($event && !empty($eventName)) {
             $event->setAchievement($achievementGranted->getAchievement());
             $this->eventDispatcher->dispatch($eventName, $event);
         }
     }
-} 
+}

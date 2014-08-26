@@ -13,7 +13,6 @@ namespace GJA\GameJam\GameBundle\Event;
 
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\UserBundle\Entity\User;
-use GJA\GameJam\UserBundle\Event\UserActivityEvent;
 
 class GameActivityCoinsEvent extends GameActivityEvent
 {
@@ -66,4 +65,4 @@ class GameActivityCoinsEvent extends GameActivityEvent
     {
         return $this->totalCoins;
     }
-} 
+}

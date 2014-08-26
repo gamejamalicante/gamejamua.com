@@ -2,10 +2,8 @@
 
 namespace GJA\GameJam\CompoBundle\Form\Type;
 
-use GJA\GameJam\CompoBundle\Entity\Compo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TeamType extends AbstractType
@@ -26,4 +24,4 @@ class TeamType extends AbstractType
             'data_class' => 'GJA\GameJam\CompoBundle\Entity\Team'
         ]);
     }
-} 
+}

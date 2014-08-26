@@ -69,4 +69,4 @@ class NotificationBuilder
     {
         return $this->notification;
     }
-} 
+}

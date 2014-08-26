@@ -55,4 +55,4 @@ class TeamEvent extends Event
     {
         return $this->user;
     }
-} 
+}

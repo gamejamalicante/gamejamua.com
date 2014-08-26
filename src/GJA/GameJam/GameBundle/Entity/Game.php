@@ -15,7 +15,6 @@ use GJA\GameJam\CompoBundle\Entity\Diversifier;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
-use Thrace\MediaBundle\Model\ImageInterface;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\GameBundle\Repository\GameRepository")
@@ -254,8 +253,7 @@ class Game
      */
     public function setDownloads($downloads)
     {
-        foreach($downloads as $download)
-        {
+        foreach ($downloads as $download) {
             $this->addDownload($download);
         }
     }
@@ -406,7 +404,7 @@ class Game
         return $this->updatedAt;
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->name;
     }
@@ -477,9 +475,9 @@ class Game
 
     public function getGamejamDownload()
     {
-        foreach($this->getDownloads() as $download)
-        {
+        foreach ($this->getDownloads() as $download) {
             if($download->isGamejam())
+
                 return $download;
         }
 
@@ -546,8 +544,7 @@ class Game
 
     public function getPosition()
     {
-        if(!is_null($this->winner))
-        {
+        if (!is_null($this->winner)) {
             return $this->positions[$this->winner];
         }
 
@@ -557,17 +554,20 @@ class Game
     public function isUserAllowedToEdit(User $user)
     {
         if($user->hasRole('ROLE_ADMIN'))
+
             return true;
 
         if($this->user === $user)
+
             return true;
 
         if(!$this->getTeam())
+
             return false;
 
-        foreach($this->getTeam()->getUsers() as $teamMember)
-        {
+        foreach ($this->getTeam()->getUsers() as $teamMember) {
             if($teamMember === $user)
+
                 return true;
         }
 
@@ -576,14 +576,13 @@ class Game
 
     public function isUserAllowedToDelete(User $user)
     {
-        if(!$this->getTeam())
-        {
+        if (!$this->getTeam()) {
             if($user === $this->getUser())
+
                 return true;
-        }
-        else
-        {
+        } else {
             if($user === $this->getTeam()->getLeader())
+
                 return true;
         }
 
@@ -630,6 +629,7 @@ class Game
     public function like(User $user)
     {
         if($this->userLike->contains($user))
+
             return false;
 
         $this->userLike->add($user);
@@ -642,6 +642,7 @@ class Game
     public function hasUserAlreadyLiked($user)
     {
         if(is_null($user))
+
             return false;
 
         return $this->userLike->contains($user);
@@ -712,8 +713,7 @@ class Game
 
     public function getScoreboardByVoter(User $user)
     {
-        foreach($this->getScoreboard() as $scoreboardItem)
-        {
+        foreach ($this->getScoreboard() as $scoreboardItem) {
             if ($scoreboardItem->getVoter() === $user)
                 return $scoreboardItem;
         }

@@ -81,11 +81,9 @@ class MoreThanGamersDonationListener
     {
         $donation = $donationCompletedEvent->getDonation();
 
-        try
-        {
+        try {
             $this->doCompleteDonation($donation);
-        } catch(\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             $this->logger->error('MTG (Exception): ' . $ex->getMessage());
         }
     }
@@ -173,4 +171,4 @@ class MoreThanGamersDonationListener
 
         $this->logger->info('MTG (AnonChall): ' . $response->getContent(), $parameters);
     }
-} 
+}

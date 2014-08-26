@@ -19,31 +19,32 @@
  *
  * @since gamejamua 1.0
  */
-function gamejamua_custom_header_setup() {
-	$args = array(
-		// Text color and image (empty to use none).
-		'default-text-color'     => '515151',
-		'default-image'          => '',
+function gamejamua_custom_header_setup()
+{
+    $args = array(
+        // Text color and image (empty to use none).
+        'default-text-color'     => '515151',
+        'default-image'          => '',
 
-		// Set height and width, with a maximum value for the width.
-		'height'                 => 250,
-		'width'                  => 960,
-		'max-width'              => 2000,
+        // Set height and width, with a maximum value for the width.
+        'height'                 => 250,
+        'width'                  => 960,
+        'max-width'              => 2000,
 
-		// Support flexible height and width.
-		'flex-height'            => true,
-		'flex-width'             => true,
+        // Support flexible height and width.
+        'flex-height'            => true,
+        'flex-width'             => true,
 
-		// Random image rotation off by default.
-		'random-default'         => false,
+        // Random image rotation off by default.
+        'random-default'         => false,
 
-		// Callbacks for styling the header and the admin preview.
-		'wp-head-callback'       => 'gamejamua_header_style',
-		'admin-head-callback'    => 'gamejamua_admin_header_style',
-		'admin-preview-callback' => 'gamejamua_admin_header_image',
-	);
+        // Callbacks for styling the header and the admin preview.
+        'wp-head-callback'       => 'gamejamua_header_style',
+        'admin-head-callback'    => 'gamejamua_admin_header_style',
+        'admin-preview-callback' => 'gamejamua_admin_header_image',
+    );
 
-	add_theme_support( 'custom-header', $args );
+    add_theme_support( 'custom-header', $args );
 }
 add_action( 'after_setup_theme', 'gamejamua_custom_header_setup' );
 
@@ -54,10 +55,11 @@ add_action( 'after_setup_theme', 'gamejamua_custom_header_setup' );
  *
  * @return void
  */
-function gamejamua_custom_header_fonts() {
-	$font_url = gamejamua_get_font_url();
-	if ( ! empty( $font_url ) )
-		wp_enqueue_style( 'gamejamua-fonts', esc_url_raw( $font_url ), array(), null );
+function gamejamua_custom_header_fonts()
+{
+    $font_url = gamejamua_get_font_url();
+    if ( ! empty( $font_url ) )
+        wp_enqueue_style( 'gamejamua-fonts', esc_url_raw( $font_url ), array(), null );
 }
 add_action( 'admin_print_styles-appearance_page_custom-header', 'gamejamua_custom_header_fonts' );
 
@@ -68,20 +70,21 @@ add_action( 'admin_print_styles-appearance_page_custom-header', 'gamejamua_custo
  *
  * @since gamejamua 1.0
  */
-function gamejamua_header_style() {
-	$text_color = get_header_textcolor();
+function gamejamua_header_style()
+{
+    $text_color = get_header_textcolor();
 
-	// If no custom options for text are set, let's bail
-	if ( $text_color == get_theme_support( 'custom-header', 'default-text-color' ) )
-		return;
+    // If no custom options for text are set, let's bail
+    if ( $text_color == get_theme_support( 'custom-header', 'default-text-color' ) )
+        return;
 
-	// If we get this far, we have custom styles.
-	?>
+    // If we get this far, we have custom styles.
+    ?>
 	<style type="text/css" id="gamejamua-header-css">
 	<?php
-		// Has the text been hidden?
-		if ( ! display_header_text() ) :
-	?>
+        // Has the text been hidden?
+        if ( ! display_header_text() ) :
+    ?>
 		.site-title,
 		.site-description {
 			position: absolute;
@@ -89,9 +92,9 @@ function gamejamua_header_style() {
 			clip: rect(1px, 1px, 1px, 1px);
 		}
 	<?php
-		// If the user has set a custom color for the text, use that.
-		else :
-	?>
+        // If the user has set a custom color for the text, use that.
+        else :
+    ?>
 		.site-header h1 a,
 		.site-header h2 {
 			color: #<?php echo $text_color; ?>;
@@ -106,7 +109,8 @@ function gamejamua_header_style() {
  *
  * @since gamejamua 1.0
  */
-function gamejamua_admin_header_style() {
+function gamejamua_admin_header_style()
+{
 ?>
 	<style type="text/css" id="gamejamua-admin-header-css">
 	.appearance_page_custom-header #headimg {
@@ -148,19 +152,20 @@ function gamejamua_admin_header_style() {
  *
  * @since gamejamua 1.0
  */
-function gamejamua_admin_header_image() {
-	?>
+function gamejamua_admin_header_image()
+{
+    ?>
 	<div id="headimg">
 		<?php
-		if ( ! display_header_text() )
-			$style = ' style="display:none;"';
-		else
-			$style = ' style="color:#' . get_header_textcolor() . ';"';
-		?>
+        if ( ! display_header_text() )
+            $style = ' style="display:none;"';
+        else
+            $style = ' style="color:#' . get_header_textcolor() . ';"';
+        ?>
 		<h1 class="displaying-header-text"><a id="name"<?php echo $style; ?> onclick="return false;" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></h1>
 		<h2 id="desc" class="displaying-header-text"<?php echo $style; ?>><?php bloginfo( 'description' ); ?></h2>
 		<?php $header_image = get_header_image();
-		if ( ! empty( $header_image ) ) : ?>
+        if ( ! empty( $header_image ) ) : ?>
 			<img src="<?php echo esc_url( $header_image ); ?>" class="header-image" width="<?php echo get_custom_header()->width; ?>" height="<?php echo get_custom_header()->height; ?>" alt="" />
 		<?php endif; ?>
 	</div>

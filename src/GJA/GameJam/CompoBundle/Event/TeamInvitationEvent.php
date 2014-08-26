@@ -32,4 +32,4 @@ class TeamInvitationEvent extends Event
     {
         return $this->teamInvitation;
     }
-} 
+}

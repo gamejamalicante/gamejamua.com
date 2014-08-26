@@ -19,8 +19,7 @@ class DisasterRecoveryCommand extends ContainerAwareCommand
 
         $games = $connection->query("SELECT * FROM gamejam_games;")->fetchAll();
 
-        foreach($games as $game)
-        {
+        foreach ($games as $game) {
             $game = (object) $game;
 
             if(empty($game->image))
@@ -29,4 +28,4 @@ class DisasterRecoveryCommand extends ContainerAwareCommand
             $output->writeln('UPDATE gamejam_games SET oldUrl = \'' .$game->image. '\' WHERE id = ' .$game->id. '');
         }
     }
-} 
+}

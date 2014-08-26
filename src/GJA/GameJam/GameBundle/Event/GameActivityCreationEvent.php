@@ -13,4 +13,4 @@ namespace GJA\GameJam\GameBundle\Event;
 
 class GameActivityCreationEvent extends GameActivityEvent
 {
-} 
+}

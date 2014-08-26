@@ -3,7 +3,6 @@
 namespace GJA\GameJam\GameBundle\Form\Type;
 
 use GJA\GameJam\GameBundle\Entity\Media;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Thrace\MediaBundle\Form\Type\ImageUploadType;
@@ -48,4 +47,4 @@ class MediaType extends ImageUploadType
     {
         return 'thrace_image_upload';
     }
-} 
+}

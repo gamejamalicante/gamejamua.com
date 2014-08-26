@@ -44,4 +44,4 @@ class GameActivityEvent extends UserActivityEvent
     {
         return $this->game;
     }
-} 
+}

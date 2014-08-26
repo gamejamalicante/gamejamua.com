@@ -39,4 +39,4 @@ class NotificationEvent extends Event
     {
         return $this->targets;
     }
-} 
+}

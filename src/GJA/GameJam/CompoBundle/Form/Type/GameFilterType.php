@@ -28,4 +28,4 @@ class GameFilterType extends AbstractType
     {
         return 'gamejam_compo_game';
     }
-} 
+}

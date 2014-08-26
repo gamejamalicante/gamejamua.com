@@ -36,4 +36,4 @@ class ChallengeType extends AbstractType
     {
         return 'gamejam_challenge_challenge';
     }
-} 
+}

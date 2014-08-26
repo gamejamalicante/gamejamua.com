@@ -35,4 +35,4 @@ class UserActivityAchievementEvent extends UserActivityEvent
     {
         return $this->achievement;
     }
-} 
+}

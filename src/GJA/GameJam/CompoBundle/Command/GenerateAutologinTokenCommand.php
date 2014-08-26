@@ -44,8 +44,7 @@ class GenerateAutologinTokenCommand extends ContainerAwareCommand
         /** @var User[] $users */
         $users = $this->entityManager->getRepository('GameJamUserBundle:User')->findAll();
 
-        foreach($users as $user)
-        {
+        foreach ($users as $user) {
             $output->writeln('Creating new token for user: <info>' .$user->getUsername(). '</info>');
             $user->setAutologinToken(sha1($user->getId() . microtime() . uniqid()));
             $this->entityManager->persist($user);
@@ -54,4 +53,4 @@ class GenerateAutologinTokenCommand extends ContainerAwareCommand
 
         $this->entityManager->flush();
     }
-} 
+}

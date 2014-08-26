@@ -15,16 +15,16 @@
 				<h2><a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'gamejamua' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php echo get_the_date(); ?></a></h2>
 			</header>
 			<?php
-			/**
+            /**
 			 * Filter the status avatar size.
 			 *
 			 * @since gamejamua 1.0
 			 *
 			 * @param int $size The height and width of the avatar in pixels.
 			 */
-			$status_avatar = apply_filters( 'gamejamua_status_avatar', 48 );
-			echo get_avatar( get_the_author_meta( 'ID' ), $status_avatar );
-			?>
+            $status_avatar = apply_filters( 'gamejamua_status_avatar', 48 );
+            echo get_avatar( get_the_author_meta( 'ID' ), $status_avatar );
+            ?>
 		</div><!-- .entry-header -->
 
 		<div class="entry-content">

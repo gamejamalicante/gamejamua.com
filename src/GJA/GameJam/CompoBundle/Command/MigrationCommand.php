@@ -122,8 +122,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $editions = $this->connection->query("SELECT * FROM EDICIONES;")->fetchAll();
 
-        foreach($editions as $edition)
-        {
+        foreach ($editions as $edition) {
             $edition = (object) $edition;
             $this->output->writeln("Migrating compo: <info>" . $edition->titulo. "</info>");
 
@@ -147,8 +146,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $users = $this->connection->query("SELECT * FROM USUARIOS u JOIN DATOSUSUARIO d ON d.id = u.id LEFT JOIN PRIVILEGIOS p ON u.id = p.usuario;")->fetchAll();
 
-        foreach($users as $user)
-        {
+        foreach ($users as $user) {
             $user = (object) $user;
 
             $this->output->writeln("Migrating user: <info>" . $user->nombre . "</info>");
@@ -205,15 +203,13 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $posts = $this->connection->query("SELECT * FROM POSTS ORDER BY fecha ASC;")->fetchAll();
 
-        foreach($posts as $post)
-        {
+        foreach ($posts as $post) {
             $post = (object) $post;
 
             $date = new \DateTime($post->fecha);
             $compo = $this->findGameJamInDateRange($date);
 
-            if($compo)
-            {
+            if ($compo) {
                 $this->output->writeln("\tFound gamejam for post: <info>" .$compo. "</info>");
             }
 
@@ -238,8 +234,7 @@ class MigrationCommand extends ContainerAwareCommand
 
         $duplicatedDiversifiers = array();
 
-        foreach($diversifiers as $diversifier)
-        {
+        foreach ($diversifiers as $diversifier) {
             $diversifier = (object) $diversifier;
 
             if(in_array($diversifier->diversificador, array_keys($duplicatedDiversifiers)))
@@ -263,8 +258,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $games = $this->connection->query("SELECT * FROM JUEGOS;")->fetchAll();
 
-        foreach($games as $game)
-        {
+        foreach ($games as $game) {
             $game = (object) $game;
 
             if(empty($game->titulo))
@@ -285,8 +279,7 @@ class MigrationCommand extends ContainerAwareCommand
             // diversifiers
             $diversifiers = $this->connection->query("SELECT * FROM MISDIVERSIFICADORES WHERE juego = " .$game->id);
 
-            foreach($diversifiers as $diversifier)
-            {
+            foreach ($diversifiers as $diversifier) {
                 $diversifier = (object) $diversifier;
 
                 $gameEntity->addDiversifier($this->diversificadoresMap[$diversifier->diversificador]);
@@ -304,8 +297,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $gameMedia = $this->connection->query("SELECT * FROM MEDIAJUEGOS")->fetchAll();
 
-        foreach($gameMedia as $media)
-        {
+        foreach ($gameMedia as $media) {
             $media = (object) $media;
 
             $this->output->writeln("Migrating game media: <info>" .$media->url. "</info>");
@@ -343,8 +335,7 @@ class MigrationCommand extends ContainerAwareCommand
         $teams = array();
 
         $i = 1;
-        foreach($applications as $application)
-        {
+        foreach ($applications as $application) {
             $application = (object) $application;
 
             $this->output->writeln("Migrating application from user: <info>" .$application->usuario. "</info> for compo: <info>" .$application->edicion. "</info>");
@@ -382,12 +373,10 @@ class MigrationCommand extends ContainerAwareCommand
             $this->persist($compoApplication);
 
             // migrate teams
-            if(!isset($teams[$application->juego]))
-            {
+            if (!isset($teams[$application->juego])) {
                 $teamMembers = $this->connection->query("SELECT * FROM PARTICIPANTES WHERE juego = " . $application->juego)->fetchAll();
 
-                if(count($teamMembers) > 1)
-                {
+                if (count($teamMembers) > 1) {
                     // create team
                     $team = new Team();
                     $team->setCompo($compo);
@@ -395,12 +384,10 @@ class MigrationCommand extends ContainerAwareCommand
                     $team->setName("Equipo " . $i);
 
                     $j=0;
-                    foreach($teamMembers as $teamMember)
-                    {
+                    foreach ($teamMembers as $teamMember) {
                         $teamMember = (object) $teamMember;
 
-                        if($j==0)
-                        {
+                        if ($j==0) {
                             // set first member as leader
                             $team->setLeader($this->usuariosMap[$teamMember->usuario]);
                         }
@@ -417,9 +404,7 @@ class MigrationCommand extends ContainerAwareCommand
                     $this->persist($game);
 
                     $i++;
-                }
-                else
-                {
+                } else {
                     $game->setUser($user);
                 }
 
@@ -434,8 +419,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $achievements = $this->connection->query("SELECT * FROM LOGROS");
 
-        foreach($achievements as $achievement)
-        {
+        foreach ($achievements as $achievement) {
             $achievement = (object) $achievement;
 
             $this->output->writeln("Migrating achievement: <info>" .$achievement->nombre. "</info>");
@@ -456,8 +440,7 @@ class MigrationCommand extends ContainerAwareCommand
             // try to find granted date
             preg_match("/([0-9]+)\/([0-9]+)\/([0-9]+)/i", $achievement->nombre, $matches);
 
-            if(@$matches[0])
-            {
+            if (@$matches[0]) {
                 $day = $matches[1];
                 $month = $matches[2];
                 $year = $matches[3];
@@ -465,17 +448,14 @@ class MigrationCommand extends ContainerAwareCommand
                 $date = new \DateTime("now");
                 $date->setDate($year, $month, $day);
                 $date->setTime(0, 0, 0);
-            }
-            else
-            {
+            } else {
                 $date = new \DateTime("now");
             }
 
             // granted data
             $granted = $this->connection->query("SELECT * FROM PREMIADOS WHERE logro = " .$achievement->id);
 
-            foreach($granted as $grant)
-            {
+            foreach ($granted as $grant) {
                 $grant = (object) $grant;
 
                 $this->output->writeln("\tMigrating achievement grant for user: <info>" .$grant->usuario. "</info>");
@@ -497,8 +477,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $coins = $this->connection->query("SELECT juego, SUM(monedas) as monedas FROM VOTOSUSUARIOS GROUP BY juego;")->fetchAll();
 
-        foreach($coins as $coin)
-        {
+        foreach ($coins as $coin) {
             $coin = (object) $coin;
 
             $game = $this->juegosMap[$coin->juego];
@@ -514,8 +493,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $winners = $this->connection->query("SELECT * FROM GANADORES")->fetchAll();
 
-        foreach($winners as $winner)
-        {
+        foreach ($winners as $winner) {
             $winner = (object) $winner;
 
             $game = @$this->juegosMap[$winner->juego];
@@ -523,8 +501,7 @@ class MigrationCommand extends ContainerAwareCommand
             if(!$game)
                 continue;
 
-            switch($winner->puesto)
-            {
+            switch ($winner->puesto) {
                 case '1':
                     $game->setWinner(Game::WINNER_FIRST);
                 break;
@@ -568,8 +545,7 @@ class MigrationCommand extends ContainerAwareCommand
     {
         $downloads = $this->connection->query("SELECT * FROM ENLACESJUEGOS;")->fetchAll();
 
-        foreach($downloads as $download)
-        {
+        foreach ($downloads as $download) {
             $download = (object) $download;
 
             $game = @$this->juegosMap[$download->juego];
@@ -625,9 +601,9 @@ class MigrationCommand extends ContainerAwareCommand
         /** @var Compo[] $compos */
         $compos = $this->entityManager->getRepository("GameJamCompoBundle:Compo")->findAll();
 
-        foreach($compos as $compo)
-        {
+        foreach ($compos as $compo) {
             if($date >= $compo->getStartAt() and $date <= $compo->getEndAt())
+
                 return $compo;
         }
 
@@ -665,6 +641,7 @@ class MigrationCommand extends ContainerAwareCommand
     protected function findTheme($theme)
     {
         if($themeEntity = $this->find("GameJamCompoBundle:Theme", 'name', $theme))
+
             return $themeEntity;
 
         $themeEntity = new Theme();
@@ -672,4 +649,4 @@ class MigrationCommand extends ContainerAwareCommand
 
         return $themeEntity;
     }
-} 
+}

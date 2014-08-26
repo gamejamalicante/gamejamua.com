@@ -6,8 +6,6 @@ use JMS\Payment\CoreBundle\Model\FinancialTransactionInterface;
 use JMS\Payment\CoreBundle\Plugin\AbstractPlugin;
 use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
-use JMS\Payment\CoreBundle\Plugin\Exception\FunctionNotSupportedException;
-use Symfony\Component\Routing\RouterInterface;
 
 class BankAccountPlugin extends AbstractPlugin
 {
@@ -26,4 +24,4 @@ class BankAccountPlugin extends AbstractPlugin
     {
         return 'gamejam_compo_form_bank_account' === $paymentSystemName;
     }
-} 
+}

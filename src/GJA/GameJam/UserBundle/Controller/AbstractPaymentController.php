@@ -8,7 +8,6 @@
 namespace GJA\GameJam\UserBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
-use Certadia\Library\Controller\GoogleHelperTrait;
 use GJA\GameJam\UserBundle\Entity\Order;
 use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
@@ -16,17 +15,15 @@ use JMS\Payment\CoreBundle\PluginController\Result;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractPaymentController extends AbstractController
 {
     protected function createPaymentForm(Order $order, array $routes, callable $success = null)
     {
         if($order->getUser() !== $this->getUser())
-            throw new AccessDeniedException;
+            throw new AccessDeniedException();
 
-        if($order->isPaid())
-        {
+        if ($order->isPaid()) {
             return $routes['already_paid'];
         }
 
@@ -47,12 +44,10 @@ abstract class AbstractPaymentController extends AbstractController
             ),
         ));
 
-        if ($this->isPost())
-        {
+        if ($this->isPost()) {
             $form->handleRequest($this->getRequest());
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $pluginController->createPaymentInstruction($instruction = $form->getData());
 
                 $order->setPaymentInstruction($instruction);
@@ -83,24 +78,19 @@ abstract class AbstractPaymentController extends AbstractController
         /** @var Result $result */
         $result = $pluginController->approveAndDeposit($payment->getId(), $payment->getTargetAmount());
 
-        if(Result::STATUS_PENDING === $result->getStatus())
-        {
+        if (Result::STATUS_PENDING === $result->getStatus()) {
             $ex = $result->getPluginException();
 
-            if($ex instanceof ActionRequiredException)
-            {
+            if ($ex instanceof ActionRequiredException) {
                 $action = $ex->getAction();
 
-                if($action instanceof VisitUrl)
-                {
+                if ($action instanceof VisitUrl) {
                     return new RedirectResponse($action->getUrl());
                 }
 
                 throw $ex;
             }
-        }
-        elseif(Result::STATUS_SUCCESS !== $result->getStatus())
-        {
+        } elseif (Result::STATUS_SUCCESS !== $result->getStatus()) {
             return false;
         }
 
@@ -112,8 +102,7 @@ abstract class AbstractPaymentController extends AbstractController
         $paypalConfig = [];
         $number = 0;
 
-        foreach($order->getItems() as $number => $item)
-        {
+        foreach ($order->getItems() as $number => $item) {
             $paypalConfig['L_PAYMENTREQUEST_0_NAME' . $number] = $item->getDescription();
             $paypalConfig['L_PAYMENTREQUEST_0_QTY' . $number] = $item->getQuantity();
             $paypalConfig['L_PAYMENTREQUEST_0_AMT' . $number] = (string) $item->getAmount();
@@ -125,4 +114,4 @@ abstract class AbstractPaymentController extends AbstractController
 
         return $paypalConfig;
     }
-} 
+}

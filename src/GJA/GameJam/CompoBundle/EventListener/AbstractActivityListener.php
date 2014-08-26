@@ -59,4 +59,4 @@ abstract class AbstractActivityListener
     {
         return $this->entityManager->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true], ['id' => 'ASC']);
     }
-} 
+}
