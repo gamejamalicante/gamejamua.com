@@ -15,6 +15,9 @@ use Doctrine\ORM\EntityManager;
 use GJA\GameJam\ChallengeBundle\Entity\Cause;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\ChallengeBundle\Entity\Donation;
+use GJA\GameJam\ChallengeBundle\Event\DonationCompletedEvent;
+use GJA\GameJam\ChallengeBundle\GameJamChallengeEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class JuegaTerapiaCause
@@ -34,10 +37,26 @@ class JuegaTerapiaCause
      */
     protected $requestStack;
 
-    public function __construct(EntityManager $entityManager, RequestStack $requestStack)
-    {
+    /**
+     * @var \JMS\Serializer\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @var bool
+     */
+    protected $allowDuplicated = false;
+
+    public function __construct(
+        EntityManager $entityManager,
+        RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
+        $allowDuplicated = false
+    ) {
         $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->allowDuplicated = $allowDuplicated;
     }
 
     public function processChallengeCompletion(Challenge $challenge)
@@ -46,19 +65,26 @@ class JuegaTerapiaCause
             return 0.0;
         }
 
-        if ($this->isDonationDuplicated($challenge)) {
+        if (!$this->allowDuplicated && $this->isDonationDuplicated($challenge)) {
             return 0.0;
         }
 
         $donationAmount = $this->calculateDonationAmount();
 
+        $clientIp = $this->requestStack->getCurrentRequest()->getClientIp();
+
         $donation = new Donation();
         $donation->setAmount($donationAmount);
-        $donation->setUser($this->requestStack->getCurrentRequest()->getClientIp());
+        $donation->setUser($clientIp);
         $donation->setChallenge($challenge);
 
         $this->entityManager->persist($donation);
         $this->entityManager->flush();
+
+        $this->eventDispatcher->dispatch(
+            GameJamChallengeEvents::DONATION_COMPLETED,
+            new DonationCompletedEvent($donation)
+        );
 
         return $donationAmount;
     }

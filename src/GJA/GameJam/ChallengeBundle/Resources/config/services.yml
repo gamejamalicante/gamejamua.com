@@ -6,10 +6,23 @@ services:
 
     gamejam.challenge.cause.juega_terapia:
         class: GJA\GameJam\ChallengeBundle\Service\JuegaTerapiaCause
-        arguments: [@doctrine.orm.entity_manager, @request_stack]
+        arguments: [@doctrine.orm.entity_manager, @request_stack, @event_dispatcher, %challenges.donation.allow_duplicates%]
 
     gamejam.challenge.listener.juega_terapia:
         class: GJA\GameJam\ChallengeBundle\Listener\JuegaTerapiaListener
         arguments: [@gamejam.challenge.cause.juega_terapia]
         tags:
             - { name: kernel.event_listener, event: 'gamejam.challenge.completed', method: 'onChallengeCompleted' }
+
+    gamejam.challenge.listener.more_than_gamers_donation:
+        class: GJA\GameJam\ChallengeBundle\Listener\MoreThanGamersDonationListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @buzz
+            - @logger
+            - %more_than_gamers.socket_id%
+            - %more_than_gamers.socket_password%
+            - %more_than_gamers.secret%
+            - %more_than_gamers.game_id%
+        tags:
+            - { name: kernel.event_listener, event: 'gamejam.challenge.donation_completed', method: 'onDonationCompleted' }

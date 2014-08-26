@@ -42,3 +42,12 @@ parameters:
     twitter.username: ~ # Tweets from page will be published here
 
     bank_account: ESXX XXXX XXXX XXXX XXXX
+
+    site_status_token: random_token
+
+    more_than_gamers.socket_id: ~
+    more_than_gamers.socket_password: ~
+    more_than_gamers.secret: ~
+    more_than_gamers.game_id: ~
+
+    challenges.donation.allow_duplicates: true
