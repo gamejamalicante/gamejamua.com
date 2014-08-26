@@ -33,13 +33,12 @@ class NotificationController extends AbstractController
     public function markAllAsReadAction()
     {
         if(!$user = $this->getUser())
-            throw new AccessDeniedException;
+            throw new AccessDeniedException();
 
         /** @var Notification[] $notifications */
         $notifications = $this->getRepository("GameJamCompoBundle:Notification")->findByUser($this->getUser());
 
-        foreach($notifications as $notification)
-        {
+        foreach ($notifications as $notification) {
             if($notification->read($user))
                 $this->persist($notification);
         }
@@ -57,14 +56,13 @@ class NotificationController extends AbstractController
     public function viewAction(Notification $notification)
     {
         if(!$notification->canUserReadIt($this->getUser()))
-            throw new AccessDeniedException;
+            throw new AccessDeniedException();
 
-        if($user = $this->getUser())
-        {
+        if ($user = $this->getUser()) {
             if($notification->read($user))
                 $this->persistAndFlush($notification, false);
         }
 
         return ['notification' => $notification];
     }
-} 
+}

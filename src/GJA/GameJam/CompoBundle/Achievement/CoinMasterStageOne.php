@@ -17,15 +17,14 @@ use GJA\GameJam\UserBundle\Entity\AchievementGranted;
 class CoinMasterStageOne implements GranterInterface
 {
     /**
-     * @param Activity $activity
+     * @param  Activity           $activity
      * @return AchievementGranted
      */
     public static function grant(Activity $activity)
     {
         $coins = $activity->getGame()->getCoins();
 
-        if($coins >= 500)
-        {
+        if ($coins >= 500) {
             $grant = new AchievementGranted();
             $grant->setUser($activity->getUser());
 
@@ -34,4 +33,4 @@ class CoinMasterStageOne implements GranterInterface
 
         return null;
     }
-} 
+}

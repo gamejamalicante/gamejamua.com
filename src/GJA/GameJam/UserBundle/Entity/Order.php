@@ -12,13 +12,10 @@
 namespace GJA\GameJam\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use GJA\GameJam\CompoBundle\Entity\CompoApplication;
 use GJA\GameJam\CompoBundle\Order\ItemInterface;
 use JMS\Payment\CoreBundle\Entity\Payment;
 use JMS\Payment\CoreBundle\Entity\PaymentInstruction;
-use JMS\Payment\CoreBundle\Model\PaymentInstructionInterface;
-use JMS\Payment\CoreBundle\Model\PaymentInterface;
 
 /**
  * @ORM\Entity(repositoryClass="GJA\GameJam\UserBundle\Repository\UserRepository")
@@ -88,15 +85,13 @@ class Order
 
     public function getAmount()
     {
-        if(is_null($this->amount))
-        {
+        if (is_null($this->amount)) {
             if(is_null($this->items))
                 throw new \InvalidArgumentException("This order has no items!");
 
             $this->amount = 0;
 
-            foreach($this->items as $item)
-            {
+            foreach ($this->items as $item) {
                 $this->amount += $item->getAmount();
             }
         }
@@ -221,4 +216,4 @@ class Order
     {
         return $this->compoApplication;
     }
-} 
+}

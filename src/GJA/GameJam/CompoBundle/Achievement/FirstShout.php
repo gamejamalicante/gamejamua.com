@@ -17,15 +17,14 @@ use GJA\GameJam\UserBundle\Entity\AchievementGranted;
 class FirstShout implements GranterInterface
 {
     /**
-     * @param Activity $activity
+     * @param  Activity           $activity
      * @return AchievementGranted
      */
     public static function grant(Activity $activity)
     {
         $user = $activity->getUser();
 
-        if(count($user->getShouts()) >= 1)
-        {
+        if (count($user->getShouts()) >= 1) {
             $grant = new AchievementGranted();
             $grant->setUser($user);
 
@@ -34,4 +33,4 @@ class FirstShout implements GranterInterface
 
         return null;
     }
-} 
+}

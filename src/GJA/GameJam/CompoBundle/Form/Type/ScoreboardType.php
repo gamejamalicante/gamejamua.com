@@ -52,4 +52,4 @@ class ScoreboardType extends AbstractType
             'data' => 3
         );
     }
-} 
+}

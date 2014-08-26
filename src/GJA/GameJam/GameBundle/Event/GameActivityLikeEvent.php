@@ -30,4 +30,4 @@ class GameActivityLikeEvent extends GameActivityEvent
     {
         return $this->totalLikes;
     }
-} 
+}

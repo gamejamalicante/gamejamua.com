@@ -42,4 +42,4 @@ class UserActivityListener extends AbstractActivityListener
 
         return $activity;
     }
-} 
+}

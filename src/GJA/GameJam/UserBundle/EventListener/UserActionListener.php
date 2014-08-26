@@ -11,8 +11,6 @@
 
 namespace GJA\GameJam\UserBundle\EventListener;
 
-use FOS\UserBundle\Event\FormEvent;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserActionListener
@@ -26,4 +24,4 @@ class UserActionListener
     {
         $this->container = $container;
     }
-} 
+}

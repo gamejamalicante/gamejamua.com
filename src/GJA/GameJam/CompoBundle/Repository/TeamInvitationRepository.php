@@ -17,4 +17,4 @@ DQL;
             ->setParameter('user', $user)
             ->getResult();
     }
-} 
+}

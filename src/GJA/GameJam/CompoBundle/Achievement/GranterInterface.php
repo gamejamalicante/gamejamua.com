@@ -17,8 +17,8 @@ use GJA\GameJam\UserBundle\Entity\AchievementGranted;
 interface GranterInterface
 {
     /**
-     * @param Activity $activity
+     * @param  Activity           $activity
      * @return AchievementGranted
      */
     public static function grant(Activity $activity);
-} 
+}

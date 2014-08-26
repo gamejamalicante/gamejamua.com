@@ -37,7 +37,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         $username = $input->getOption('username');
         $limit = $input->getOption('limit') ?: PHP_INT_MAX;
 
-        if($username === 'all') {
+        if ($username === 'all') {
             $users = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository("GameJamUserBundle:User")->findAll();
         } else {
             $users = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository("GameJamUserBundle:User")->findBy(['username' => $username]);
@@ -50,7 +50,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
             if($badgeFilename !== false)
                 $output->writeln('Generated badge: <info>' .$badgeFilename. '</info>\\n');
 
-            if($key >= $limit) {
+            if ($key >= $limit) {
                 break;
             }
         }
@@ -61,7 +61,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         /** @var Compo $compo */
         $compo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
-        if(!$user->hasAppliedTo($compo)) {
+        if (!$user->hasAppliedTo($compo)) {
             return false;
         }
 
@@ -70,7 +70,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
 
         $fontSci = __DIR__ . '/../Resources/badges/SciFly-Sans.ttf';
 
-        if($user->hasRole('ROLE_STAFF')) {
+        if ($user->hasRole('ROLE_STAFF')) {
             $badge = $badgeOrgFile;
         } else {
             $badge = $badgeNormalFile;
@@ -125,7 +125,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
 
     protected function drawTwitter(Image $image, User $user, $fontFile)
     {
-        if($twitter = $user->getTwitter()) {
+        if ($twitter = $user->getTwitter()) {
             $image->write($fontFile, '@' . $twitter, 155, 80, 15, 0, 0x6363B0);
         }
     }
@@ -148,13 +148,10 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         curl_setopt($ch, CURLOPT_NOBODY, 1);
         curl_setopt($ch, CURLOPT_FAILONERROR, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        if(curl_exec($ch)!==FALSE)
-        {
+        if (curl_exec($ch)!==FALSE) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
-} 
+}

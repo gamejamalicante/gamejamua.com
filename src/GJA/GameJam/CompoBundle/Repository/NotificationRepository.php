@@ -27,14 +27,11 @@ DQL;
         $result = $this->getEntityManager()->createQuery($dql)
             ->setParameter('user', $user);
 
-        try
-        {
+        try {
             $result = (object) $result->getSingleResult();
 
             return $result->total - $result->readed;
-        }
-        catch(NoResultException $ex)
-        {
+        } catch (NoResultException $ex) {
             return 0;
         }
     }
@@ -60,4 +57,4 @@ DQL;
             ->setParameter('user', $user)
             ->getResult();
     }
-} 
+}

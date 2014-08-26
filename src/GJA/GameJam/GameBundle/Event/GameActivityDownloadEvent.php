@@ -44,4 +44,4 @@ class GameActivityDownloadEvent extends GameActivityEvent
     {
         return $this->download;
     }
-} 
+}

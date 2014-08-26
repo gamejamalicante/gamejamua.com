@@ -11,7 +11,6 @@
 
 namespace GJA\GameJam\UserBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType;
 
@@ -33,4 +32,4 @@ class RegisterType extends RegistrationFormType
     {
         return 'gamejam_user_register';
     }
-} 
+}

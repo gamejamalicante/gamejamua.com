@@ -162,8 +162,7 @@ class Media extends AbstractImage
      */
     public function getGame()
     {
-        switch ($this->type)
-        {
+        switch ($this->type) {
             case self::TYPE_SHOWCASE:
                 return $this->getShowcaseGame();
             break;
@@ -256,10 +255,10 @@ class Media extends AbstractImage
     public function getImageUrl()
     {
         if($this->type == self::TYPE_IMAGE)
+
             return $this->url;
 
-        if($this->type == self::TYPE_VIDEO || $this->type == self::TYPE_TIMELAPSE)
-        {
+        if ($this->type == self::TYPE_VIDEO || $this->type == self::TYPE_TIMELAPSE) {
             return $this->getVideoEmbedThumbnailUrl();
         }
 
@@ -288,6 +287,7 @@ class Media extends AbstractImage
         $urlInfo = $embera->getUrlInfo($this->url);
 
         if(empty($urlInfo))
+
             return null;
 
         return $urlInfo[$this->url];
@@ -295,8 +295,7 @@ class Media extends AbstractImage
 
     protected function getUploadPath()
     {
-        switch($this->type)
-        {
+        switch ($this->type) {
             case self::TYPE_IMAGE:
                 return 'image';
             break;
@@ -334,4 +333,4 @@ class Media extends AbstractImage
     {
         return $this->showcaseGame;
     }
-} 
+}

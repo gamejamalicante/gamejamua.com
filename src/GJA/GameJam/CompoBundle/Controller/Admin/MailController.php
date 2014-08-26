@@ -19,4 +19,4 @@ class MailController extends AbstractController
     {
         return $this->render("GameJamCompoBundle:Mail:" . $template. ".html.twig");
     }
-} 
+}

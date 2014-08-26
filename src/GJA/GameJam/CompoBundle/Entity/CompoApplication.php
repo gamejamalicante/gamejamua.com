@@ -238,9 +238,9 @@ class CompoApplication
 
     public function isOrderPending()
     {
-        if($order = $this->getOrder())
-        {
+        if ($order = $this->getOrder()) {
             if(!$order->isPaid())
+
                 return true;
         }
 
@@ -266,6 +266,7 @@ class CompoApplication
     public function isInProgress()
     {
         if(is_null($this->getLockTime()))
+
             return false;
 
         $now = new \DateTime("now");

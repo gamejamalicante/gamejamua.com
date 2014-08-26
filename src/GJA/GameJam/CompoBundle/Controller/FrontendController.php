@@ -17,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -80,25 +79,19 @@ class FrontendController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(new ContactType($user));
 
-        if($this->isPost())
-        {
+        if ($this->isPost()) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $data = $form->getData();
 
-                if($user)
-                {
+                if ($user) {
                     $replyTo = $user->getEmail();
-                }
-                else
-                {
+                } else {
                     $replyTo = $data['email'];
                 }
 
                 // TODO: send email
-
                 return $this->redirectToPath("gamejam_compo_frontend_contact", ['success' => true]);
             }
         }
@@ -184,12 +177,9 @@ class FrontendController extends AbstractController
         /** @var Compo $compo */
         $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
 
-        if($compo)
-        {
+        if ($compo) {
            $result = array('result' => true, 'seconds' => $compo->getSecondsToStartTime());
-        }
-        else
-        {
+        } else {
             $result = array('result' => false);
         }
 

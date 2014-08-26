@@ -45,4 +45,4 @@ class TeamActivityListener extends AbstractActivityListener
 
         return $activity;
     }
-} 
+}

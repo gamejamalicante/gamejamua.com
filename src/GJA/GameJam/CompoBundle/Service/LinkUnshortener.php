@@ -8,8 +8,7 @@ class LinkUnshortener
     {
         preg_match_all("/(?<url>https?\:\/\/t.co\/(?:.*?)(?:$| ))/i", $content, $matches);
 
-        foreach($matches['url'] as $url)
-        {
+        foreach ($matches['url'] as $url) {
             $content = str_replace(trim($url), $this->resolveShortedLocation($url), $content);
         }
 
@@ -31,4 +30,4 @@ class LinkUnshortener
 
         return curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
     }
-} 
+}

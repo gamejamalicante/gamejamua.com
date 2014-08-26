@@ -6,4 +6,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class GameJamChallengeBundle extends Bundle
 {
-} 
+}

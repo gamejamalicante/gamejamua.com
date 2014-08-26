@@ -2,8 +2,6 @@
 
 namespace GJA\GameJam\GameBundle\Form\Type;
 
-use GJA\GameJam\CompoBundle\Entity\Compo;
-use GJA\GameJam\GameBundle\Entity\Game;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -54,4 +52,4 @@ class GameType extends AbstractType
     {
         return 'gamejam_game_game';
     }
-} 
+}

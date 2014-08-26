@@ -77,4 +77,4 @@ class WaitingList
     {
         return $this->user;
     }
-} 
+}

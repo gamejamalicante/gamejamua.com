@@ -24,13 +24,13 @@ class AutoLoginUserManager extends UserManager
     public function loadUserByAutoLoginToken($key)
     {
         if (empty($key))
-            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException;
+            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException();
 
         $user = $this->findUserBy(array('autologinToken' => $key));
 
         if(!$user)
-            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException;
+            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException();
 
         return $user;
     }
-} 
+}

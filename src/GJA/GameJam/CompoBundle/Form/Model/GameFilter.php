@@ -99,4 +99,4 @@ class GameFilter
             self::ORDER_LIKES => "Más votados"
         ];
     }
-} 
+}

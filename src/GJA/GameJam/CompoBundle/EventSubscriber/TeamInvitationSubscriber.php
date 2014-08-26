@@ -7,7 +7,6 @@ use GJA\GameJam\CompoBundle\Event\TeamInvitationEvent;
 use GJA\GameJam\CompoBundle\GameJamCompoEvents;
 use GJA\GameJam\CompoBundle\Notifier\NotificationBuilder;
 use GJA\GameJam\CompoBundle\Notifier\Notifier;
-use GJA\GameJam\CompoBundle\Service\Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TeamInvitationSubscriber implements EventSubscriberInterface
@@ -123,4 +122,4 @@ class TeamInvitationSubscriber implements EventSubscriberInterface
 
         $this->notifier->sendNotification($notification);
     }
-} 
+}

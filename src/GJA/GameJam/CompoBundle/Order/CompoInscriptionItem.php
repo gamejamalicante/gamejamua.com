@@ -34,8 +34,7 @@ class CompoInscriptionItem implements ItemInterface
 
     public function getAmount()
     {
-        if($this->user->isMember())
-        {
+        if ($this->user->isMember()) {
             return $this->compo->getMemberFee();
         }
 
@@ -51,4 +50,4 @@ class CompoInscriptionItem implements ItemInterface
     {
         return 1;
     }
-} 
+}

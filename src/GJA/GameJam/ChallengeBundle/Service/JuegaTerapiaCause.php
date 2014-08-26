@@ -123,4 +123,4 @@ class JuegaTerapiaCause
 
         return $challenge->getCause()->getNameSlug() == $this->getCause()->getNameSlug();
     }
-} 
+}

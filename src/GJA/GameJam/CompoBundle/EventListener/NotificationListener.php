@@ -36,6 +36,7 @@ class NotificationListener
         $notification = $notificationEvent->getNotification();
 
         if($notification->isGlobal() && !$notification->getAnnounce())
+
             return;
 
         $body = $this->twig->render("GameJamCompoBundle:Notification:mailBase.html.twig", [
@@ -50,10 +51,9 @@ class NotificationListener
             ->setContentType("text/html")
             ->setReplyTo($this->replyTo);
 
-        foreach($notificationEvent->getTargets() as $target)
-        {
+        foreach ($notificationEvent->getTargets() as $target) {
             $mail->setTo($target->getEmail());
             $this->mailer->send($mail);
         }
     }
-} 
+}

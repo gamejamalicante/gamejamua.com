@@ -315,4 +315,4 @@ class Download
     {
         $this->deletedAt = $deletedAt;
     }
-} 
+}

@@ -32,4 +32,4 @@ class DownloadType extends AbstractType
             'data_class' => 'GJA\GameJam\GameBundle\Entity\Download'
         ]);
     }
-} 
+}

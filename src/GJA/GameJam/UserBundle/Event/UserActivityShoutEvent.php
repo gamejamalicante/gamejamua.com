@@ -35,4 +35,4 @@ class UserActivityShoutEvent extends UserActivityEvent
     {
         return $this->shout;
     }
-} 
+}

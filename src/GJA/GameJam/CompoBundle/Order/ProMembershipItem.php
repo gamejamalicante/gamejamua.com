@@ -29,4 +29,4 @@ class ProMembershipItem implements ItemInterface
     {
         return 1;
     }
-} 
+}

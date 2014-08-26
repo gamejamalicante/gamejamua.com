@@ -43,4 +43,4 @@ class GameActivityMediaEvent extends GameActivityEvent
     {
         return $this->media;
     }
-} 
+}
