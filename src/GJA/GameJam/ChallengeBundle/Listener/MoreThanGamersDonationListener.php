@@ -115,22 +115,22 @@ class MoreThanGamersDonationListener
     private function createNewSession($ip)
     {
         $parameters = array(
-            'game_id' => $this->gameId,
-            'secret_code' => $this->secret
+            'gameId' => $this->gameId,
+            'secretCode' => $this->secret
         );
 
         $params = http_build_query($parameters);
 
-        $response = $this->browser->post(self::SESSION_URL . '?' . $params, array(), $params);
+        $response = $this->browser->post(self::SESSION_URL, array(), $params);
 
         $this->logger->info('MTG (Session): ' .$response->getContent(), $parameters);
 
         $response = json_decode(trim($response->getContent()));
 
-        $sessionId = $response->secret_code;
+        $sessionId = $response->secretCode;
 
         $session = new MtgSession();
-        $session->setId($ip);
+        $session->setIp($ip);
         $session->setSessionId($sessionId);
 
         $this->entityManager->persist($session);
@@ -142,34 +142,34 @@ class MoreThanGamersDonationListener
     private function getChallengeToken()
     {
         $parameters = array(
-            'game_id' => $this->gameId,
-            'socket_id' => $this->socketId,
-            'socket_password' => $this->socketPassword
+            'gameId' => $this->gameId,
+            'socketId' => $this->socketId,
+            'password' => $this->socketPassword
         );
 
         $params = http_build_query($parameters);
 
-        $response = $this->browser->post(self::TOKEN_URL . '?' . $params, array(), $params);
+        $response = $this->browser->post(self::TOKEN_URL, array(), $params);
 
         $this->logger->info('MTG (Token): ' . $response->getContent(), $parameters);
 
         $response = json_decode(trim($response->getContent()));
 
-        return $response->Token_Code;
+        return $response->token;
     }
 
     private function completeAnonymousChallenge($token, $sessionId)
     {
         $parameters = array(
-            'game_id' => $this->gameId,
-            'socket_id' => $this->socketId,
+            'gameId' => $this->gameId,
+            'socketId' => $this->socketId,
             'token' => $token,
-            'sesión_id' => $sessionId
+            'sessionId' => $sessionId
         );
 
         $params = http_build_query($parameters);
 
-        $response = $this->browser->post(self::ANONYMOUS_URL . '?' . $params, array(), $params);
+        $response = $this->browser->post(self::ANONYMOUS_URL, array(), $params);
 
         $this->logger->info('MTG (AnonChall): ' . $response->getContent(), $parameters);
     }
