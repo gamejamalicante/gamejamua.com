@@ -5,10 +5,10 @@ use Symfony\Component\Debug\Debug;
 
 $webDir = __DIR__;
 
-$loader = require_once __DIR__.'/../app/bootstrap.php.cache';
+$loader = require_once __DIR__ . '/../app/bootstrap.php.cache';
 Debug::enable();
 
-require_once __DIR__.'/../app/AppKernel.php';
+require_once __DIR__ . '/../app/AppKernel.php';
 
 $kernel = new AppKernel('rest_dev', true);
 $kernel->loadClassCache();
