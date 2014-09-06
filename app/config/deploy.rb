@@ -92,6 +92,7 @@ desc 'Clear cache and warmup environment'
 end
 
 after 'symfony:cache:warmup', 'clear_cache_and_warmup'
+after "deploy", "deploy:cleanup"
 
 set :writable_dirs,       ["app/cache", "app/logs", "web/media"]
 set :webserver_user,      "www-data"
