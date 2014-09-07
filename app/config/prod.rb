@@ -1,7 +1,7 @@
-set :domain, 'lon-do-01.albertofem.com'
+set :domain, 'gamejamua.com'
 
 role :web, domain
 role :app, domain, :primary => true
 role :db,  domain, :primary => true
 
-set :deploy_to,   "/var/www/gamejamua.com"
+set :deploy_to,   "/home/devel/www/gamejamua.com"

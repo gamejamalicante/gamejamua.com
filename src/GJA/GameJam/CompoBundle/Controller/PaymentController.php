@@ -36,6 +36,11 @@ class PaymentController extends AbstractPaymentController
      */
     public function detailsAction(Request $request, Compo $compo, Order $order)
     {
+        if ($request->get('change')) {
+            $this->deleteAndFlush($order);
+            return $this->redirectToPath('gamejam_compo_compo_join', ['compo' => $compo->getNameSlug()]);
+        }
+
         if($compo->isFull())
         {
             $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");

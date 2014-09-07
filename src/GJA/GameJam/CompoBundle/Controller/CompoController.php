@@ -67,9 +67,9 @@ class CompoController extends AbstractController
     {
         if($compo->isFull())
         {
-            $this->addSuccessMessage("¡Lo sentimos! Todas las plazas para esta GameJam están completas");
+            $this->addSuccessMessage("¡Lo sentimos! Todas las plazas para esta GameJam están completas. Mientras tanto puedes apuntarte a la lista de espera");
 
-            return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
+            return $this->redirectToPath('gamejam_compo_compo_waitinglist', ['compo' => $compo->getNameSlug()]);
         }
 
         /** @var User $user */
@@ -90,7 +90,12 @@ class CompoController extends AbstractController
         $application->setUser($user);
         $application->setCompleted(false);
 
-        $form = $this->createForm(new CompoApplicationType(), $application);
+        $form = $this->createForm(new CompoApplicationType(), $application,
+            array('allow_type' => $compo->getCustomDataField('allow_type', function(Compo $compo)
+                {
+                    return $compo->getOpenPlaces(CompoApplication::TYPE_BOARD_GAME) > 0;
+                }))
+        );
 
         if($this->isPost())
         {
@@ -142,7 +147,7 @@ class CompoController extends AbstractController
             return $this->redirectToPath("gamejam_compo_payment_details", ['compo' => $compo->getNameSlug(), 'order' => $application->getOrder()->getOrderNumber()]);
         }
 
-        $applicationForm = $this->createForm(new CompoApplicationType(), $application)
+        $applicationForm = $this->createForm(new CompoApplicationType(), $application, ['allow_type' => $compo->getCustomDataField('allow_type')])
             ->remove("modality")
             ->add('edit', 'hidden');
 

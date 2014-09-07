@@ -22,6 +22,10 @@ class CompoApplicationType extends AbstractType
     {
         $builder->add('modality', 'choice', ['label' => 'Modalidad de inscripción', 'choices' => CompoApplication::getAvailableModalitites()])
             ->add('nightStay', null, ['required' => false]);
+
+        if ($options['allow_type'] == true) {
+            $builder->add('type', 'choice', ['label' => 'Tipo de videojuego que harás', 'choices' => CompoApplication::getAvailableTypes()]);
+        }
     }
 
     /**
@@ -35,7 +39,8 @@ class CompoApplicationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'GJA\GameJam\CompoBundle\Entity\CompoApplication'
+            'data_class' => 'GJA\GameJam\CompoBundle\Entity\CompoApplication',
+            'allow_type' => false
         ]);
     }
 }

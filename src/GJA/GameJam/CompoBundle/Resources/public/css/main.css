@@ -931,15 +931,26 @@ textarea.shout
 
 .section.active-compo
 {
-    background-color: #fff6c8;
+    background: url('/bundles/gamejamcompo/images/compos/bitsandglue.png');
     text-align: center;
     border: 2px solid #000;
+    height: 490px;
 }
 
 .section.active-compo h2
 {
     margin-bottom: 10px;
     text-align: center;
+    text-shadow: 0 1px 5px #FFF;
+}
+
+.section.active-compo a
+{
+    color: #000;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 0 1px 5px #FFF;
+    font-size: 20px;
 }
 
 .section.active-compo p

@@ -24,6 +24,9 @@ class CompoApplication
     const MODALITY_OUT_OF_COMPO = 2;
     const MODALITY_FREE = 3;
 
+    const TYPE_DIGITAL = 1;
+    const TYPE_BOARD_GAME = 2;
+
     const LOCK_TTL = "PT10M";
 
     /**
@@ -54,6 +57,11 @@ class CompoApplication
     protected $modality;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $type = self::TYPE_DIGITAL;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $nightStay;
@@ -78,15 +86,15 @@ class CompoApplication
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $assisted;
+    protected $assisted = false;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $dni;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $additionalData;
 
@@ -186,9 +194,22 @@ class CompoApplication
         ];
     }
 
+    public static function getAvailableTypes()
+    {
+        return [
+            self::TYPE_DIGITAL => "Videojuego normal",
+            self::TYPE_BOARD_GAME => "Juego de mesa"
+        ];
+    }
+
     public function getModalityAsString()
     {
         return self::getAvailableModalitites()[$this->modality];
+    }
+
+    public function getTypeAsString()
+    {
+        return self::getAvailableTypes()[$this->type];
     }
 
     /**
@@ -336,5 +357,21 @@ class CompoApplication
     public function getDni()
     {
         return $this->dni;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

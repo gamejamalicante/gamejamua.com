@@ -18,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Compo
 {
     const TEAM_FORMATION_PERIOD = "PT4H";
+    const MAX_APPLICATIONS_BOARD_GAME = 25;
 
     /**
      * @ORM\Id
@@ -135,6 +136,11 @@ class Compo
      * @ORM\Column(type="datetime")
      */
     protected $juryVoteEndAt;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    protected $customData = array();
 
     /**
      * @param mixed $games
@@ -504,14 +510,25 @@ class Compo
         return $this->normalFee;
     }
 
-    public function getOpenPlaces()
+    public function getOpenPlaces($type = null)
     {
         $validApplications = 0;
 
         foreach($this->getApplications() as $application)
         {
-            if(($application->isCompleted() || $application->isInProgress()) && $application->getModality() != CompoApplication::MODALITY_FREE)
+            if ($type !== null) {
+                if ($application->getType() !== $type) {
+                    continue;
+                }
+            }
+
+            if(($application->isCompleted() || $application->isInProgress()) && $application->getModality() != CompoApplication::MODALITY_FREE) {
                 $validApplications++;
+            }
+        }
+
+        if ($type === CompoApplication::TYPE_BOARD_GAME) {
+            return self::MAX_APPLICATIONS_BOARD_GAME - $validApplications;
         }
 
         return $this->maxPeople - $validApplications;
@@ -520,6 +537,11 @@ class Compo
     public function isFull()
     {
         return $this->getOpenPlaces() == 0;
+    }
+
+    public function isBoardGamesFull()
+    {
+
     }
 
     public function getCompletedApplications()
@@ -634,5 +656,36 @@ class Compo
     public function hasJuryVotingEnded()
     {
         return $this->getJuryVoteEndAt() <= new \DateTime();
+    }
+
+    /**
+     * @param mixed $customData
+     */
+    public function setCustomData($customData)
+    {
+        $this->customData = $customData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomData()
+    {
+        return $this->customData;
+    }
+
+    public function getCustomDataField($field, callable $condition = null, $default = null)
+    {
+        if (isset($this->getCustomData()[$field])) {
+            if ($condition !== null) {
+                if (!$condition($this)) {
+                    return $default;
+                }
+            }
+
+            return $this->getCustomData()[$field];
+        }
+
+        return $default;
     }
 }

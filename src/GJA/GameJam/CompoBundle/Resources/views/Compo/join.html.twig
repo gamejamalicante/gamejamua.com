@@ -46,6 +46,13 @@
                     {% endif %}
 
                     <form action="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}" method="post">
+                        {% if form.type is defined %}
+                            {{ form_label(form.type) }}
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                {{ form_widget(form.type, {'attr':{'class':'form-control modality'}}) }}
+                            </div>
+                        {% endif %}
                         {{ form_label(form.modality) }}
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
