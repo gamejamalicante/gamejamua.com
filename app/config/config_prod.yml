@@ -19,10 +19,10 @@ monolog:
 assetic:
     filters:
         uglifyjs:
-            bin: /usr/bin/uglifyjs
+            bin: /usr/local/bin/uglifyjs
             apply_to: "\.js$"
         uglifycss:
-            bin: /usr/bin/uglifycss
+            bin: /usr/local/bin/uglifycss
             apply_to: "\.css$"
 
 elao_error_notifier:
