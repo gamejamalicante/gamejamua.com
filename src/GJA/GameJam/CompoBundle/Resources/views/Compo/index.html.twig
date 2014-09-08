@@ -168,7 +168,7 @@
         <div class="pull-right">
         {% block returnback %}
             <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-users"></i> {% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %}</a>
-            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a> <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_challenges', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Retos solidarios</a>{% endif %}
+            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a> <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_challenges', {compo: compo.nameSlug}) }}" class="btn btn-green">{% endif %}
         {% endblock %}
         </div>
         <h1><strong>{{ compo }}</strong></h1>
@@ -273,10 +273,10 @@
                             <strong>¿Te quedas a dormir?:</strong> {% if user_application.nightStay %}¡Sí!{% else %}No, mejor duermo en casa{% endif %}
                         </p>
                     {% elseif compo.isFull %}
-                        ¡Todas las plazas completas!
+
                         {% if user %}
                              {% if not user.waitingListFor(compo) %}
-                                 <a href="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}">Pulsa aquí</a> si quieres entrar en la lista de espera.
+                                 ¡Aun no estás inscrito!<br><br><a href="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}">Pulsa aquí</a> para inscribirte.
                              {% else %}
                                 Estás en la lista de espera. ¡Te avisaremos si ampliamos plazas!
                              {% endif %}

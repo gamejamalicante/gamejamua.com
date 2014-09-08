@@ -18,7 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Compo
 {
     const TEAM_FORMATION_PERIOD = "PT4H";
-    const MAX_APPLICATIONS_BOARD_GAME = 25;
+    const MAX_APPLICATIONS_BOARD_GAME = 20;
 
     /**
      * @ORM\Id
