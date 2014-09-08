@@ -3,6 +3,7 @@
 {% block active_index %} class="active"{% endblock %}
 
 {% block content %}
+    {% render(controller('GameJamCompoBundle:Frontend:partialActiveCompo')) %}
     <div class="section featured">
         <div class="col-md-4">
             <a href="{{ path('gamejam_compo_frontend_about') }}">
