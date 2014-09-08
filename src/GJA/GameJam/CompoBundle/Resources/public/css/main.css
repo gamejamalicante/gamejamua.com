@@ -951,6 +951,7 @@ textarea.shout
     text-align: center;
     text-shadow: 0 1px 5px #FFF;
     font-size: 20px;
+    text-decoration: underline;
 }
 
 .section.active-compo p

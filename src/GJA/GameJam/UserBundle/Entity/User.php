@@ -211,6 +211,7 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function __construct()
     {
+        parent::__construct();
         $this->autologinToken = sha1(time() . uniqid());
     }
 
