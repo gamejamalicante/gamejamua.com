@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="gamejam_compos_teams")
- * @UniqueEntity(fields={"name"}, message="El nombre del grupo ya existe")
+ * @UniqueEntity(fields={"name", "compo"}, message="El nombre del grupo ya existe")
  * @UniqueEntity(fields={"leader", "compo"}, message="Ya eres el líder de un grupo en esta GameJam")
  */
 class Team
