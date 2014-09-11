@@ -197,7 +197,7 @@ class CompoApplication
     public static function getAvailableTypes()
     {
         return [
-            self::TYPE_DIGITAL => "Videojuego normal",
+            self::TYPE_DIGITAL => "Videojuego",
             self::TYPE_BOARD_GAME => "Juego de mesa"
         ];
     }
