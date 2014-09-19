@@ -24,16 +24,21 @@ class GenerateBadgesCommand extends ContainerAwareCommand
 {
     protected $cacheDir;
 
+    protected $force;
+
     protected function configure()
     {
         $this->setName('gamejam:user:generate-badges')
             ->addOption('username', null, InputOption::VALUE_REQUIRED, 'Pick an username', 'all')
+            ->addOption('force', 'fc', InputOption::VALUE_NONE)
             ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Limit when all');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->cacheDir = $this->getContainer()->getParameter('kernel.cache_dir');
+        $this->force = $input->getOption('force');
+
         $username = $input->getOption('username');
         $limit = $input->getOption('limit') ?: PHP_INT_MAX;
 
@@ -61,7 +66,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         /** @var Compo $compo */
         $compo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
-        if(!$user->hasAppliedTo($compo)) {
+        if(!$this->force && !$user->hasAppliedTo($compo)) {
             return false;
         }
 
