@@ -351,7 +351,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Media[]
      */
     public function getMedia()
     {

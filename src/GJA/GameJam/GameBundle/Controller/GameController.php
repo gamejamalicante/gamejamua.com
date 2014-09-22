@@ -43,7 +43,7 @@ class GameController extends AbstractController
         /** @var User $user */
         if($user = $this->getUser())
         {
-            if(!$game->isUserAllowedToEdit($user))
+            if(!$game->isUserAllowedToEdit($user) && !$user->isAdmin())
             {
                 $giveCoinsForm = $this->createForm(new GiveCoinsType());
                 $giveCoinsForm = $giveCoinsForm->createView();

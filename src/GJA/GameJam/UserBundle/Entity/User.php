@@ -923,4 +923,9 @@ class User extends BaseUser implements EncoderAwareInterface
     {
         return $this->contributor;
     }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('ROLE_ADMIN');
+    }
 }

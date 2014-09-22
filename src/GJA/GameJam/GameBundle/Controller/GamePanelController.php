@@ -4,6 +4,7 @@ namespace GJA\GameJam\GameBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\GameBundle\Entity\Game;
+use GJA\GameJam\GameBundle\Entity\Media;
 use GJA\GameJam\GameBundle\Event\GameActivityCreationEvent;
 use GJA\GameJam\GameBundle\Event\GameActivityInfoUpdateEvent;
 use GJA\GameJam\GameBundle\Form\Type\GameType;
@@ -129,8 +130,10 @@ class GamePanelController extends AbstractController
 
                 foreach($media as $mediaElement)
                 {
-                    $mediaElement->setGame($game);
-                    $this->persist($mediaElement);
+                    if ($mediaElement instanceof Media) {
+                        $mediaElement->setGame($game);
+                        $this->persist($mediaElement);
+                    }
                 }
 
                 foreach($game->getDownloads() as $download)
