@@ -1,0 +1,41 @@
+{% extends 'GameJamCompoBundle::layout.html.twig' %}
+
+{% block compo_announcement %}{% endblock %}
+
+{% block content %}
+    <div class="section inscription">
+        <h1>Votaciones del jurado: <strong>{{ compo }}</strong></h1>
+        <p>Desde aquí puedes las votaciones del jurado a vuestros juegos</p>
+
+        <table class="table table-stripped table-bordered">
+            <thead>
+            <tr>
+                <th colspan="2">Juego</th>
+                <th>Gráficos</th>
+                <th>Audio</th>
+                <th>Tema</th>
+                <th>Originalidad</th>
+                <th>Diversión</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+        {% for game in scoreboard %}
+            <tr>
+                <td style="width: 50px;">
+                    <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">
+                        <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{% if game.image %}{{ asset(game.image) }}{% elseif game.oldUrl %}{{ game.oldUrl }}{% endif %}');"></div>
+                    </a>
+                </td>
+                <td>{{ game }}<br><span style="font-size: 10px">{{ game.description|truncate(150) }}</span></td>
+                <td>{{ game.totalGraphicsPoints }}</td>
+                <td>{{ game.totalAudioPoints }}</td>
+                <td>{{ game.totalThemePoints }}</td>
+                <td>{{ game.totalOriginalityPoints }}</td>
+                <td>{{ game.totalFunPoints }}</td>
+                <td>{{ game.totalPoints }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

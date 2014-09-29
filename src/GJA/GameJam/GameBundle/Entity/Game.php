@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\Diversifier;
+use GJA\GameJam\CompoBundle\Entity\Scoreboard;
 use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,6 +34,9 @@ class Game
     const MENTION_ORIGINALITY = 3;
     const MENTION_ENTERTAINMENT = 4;
     const MENTION_THEME = 5;
+
+    const TYPE_NORMAL = 1;
+    const TYPE_BOARD = 2;
 
     /**
      * @ORM\Id
@@ -162,6 +166,11 @@ class Game
      * @ORM\OneToMany(targetEntity="GJA\GameJam\CompoBundle\Entity\Scoreboard", mappedBy="game")
      */
     protected $scoreboard;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $type = self::TYPE_NORMAL;
 
     /**
      * @var bool
@@ -703,7 +712,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Scoreboard[]
      */
     public function getScoreboard()
     {
@@ -719,5 +728,93 @@ class Game
         }
 
         return null;
+    }
+
+    public function getTotalGraphicsPoints()
+    {
+        $total = 0;
+
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            $total += $scoreboardItem->getGraphics();
+        }
+
+        return $total;
+    }
+
+    public function getTotalAudioPoints()
+    {
+        $total = 0;
+
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            $total += $scoreboardItem->getAudio();
+        }
+
+        return $total;
+    }
+
+    public function getTotalPoints()
+    {
+        $total = 0;
+
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            $total += $scoreboardItem->getTotal();
+        }
+
+        return $total;
+    }
+
+    public function getTotalFunPoints()
+    {
+        $total = 0;
+
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            $total += $scoreboardItem->getFun();
+        }
+
+        return $total;
+    }
+
+    public function getTotalThemePoints()
+    {
+        $total = 0;
+
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            $total += $scoreboardItem->getTheme();
+        }
+
+        return $total;
+    }
+
+    public function getTotalOriginalityPoints()
+    {
+        $total = 0;
+
+        foreach($this->getScoreboard() as $scoreboardItem)
+        {
+            $total += $scoreboardItem->getOriginality();
+        }
+
+        return $total;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

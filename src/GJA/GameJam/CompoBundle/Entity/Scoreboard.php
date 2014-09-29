@@ -9,7 +9,7 @@ namespace GJA\GameJam\CompoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GJA\GameJam\CompoBundle\Repository\ScoreboardRepository")
  * @ORM\Table(name="gamejam_compos_scoreboards")
  */
 class Scoreboard
@@ -245,5 +245,10 @@ class Scoreboard
     public function getAdmin()
     {
         return $this->admin;
+    }
+
+    public function getTotal()
+    {
+        return $this->graphics + $this->audio + $this->fun + $this->originality + $this->theme;
     }
 }
