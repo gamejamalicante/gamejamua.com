@@ -20,13 +20,13 @@
             </tr>
             </thead>
         {% for game in scoreboard %}
-            <tr>
+            <tr{% if app.user and game.isOwner(app.user) %} class="owner"{% endif %}>
                 <td style="width: 50px;">
                     <a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">
                         <div class="gamelisticon" id="gamelisticon12" style="background-image: url('{% if game.image %}{{ asset(game.image) }}{% elseif game.oldUrl %}{{ game.oldUrl }}{% endif %}');"></div>
                     </a>
                 </td>
-                <td>{{ game }}<br><span style="font-size: 10px">{{ game.description|truncate(150) }}</span></td>
+                <td><a href="{{ path('gamejam_game', {game: game.nameSlug}) }}" title="{{ game }}">{{ game }}</a><br><span style="font-size: 10px">{{ game.description|truncate(150) }}</span></td>
                 <td>{{ game.totalGraphicsPoints }}</td>
                 <td>{{ game.totalAudioPoints }}</td>
                 <td>{{ game.totalThemePoints }}</td>
@@ -34,6 +34,20 @@
                 <td>{{ game.totalFunPoints }}</td>
                 <td>{{ game.totalPoints }}</td>
             </tr>
+            {% if (app.user and game.isOwner(app.user)) or game.isUserAllowedToEdit(app.user) %}
+                {% for vote in game.scoreboard %}
+                    <tr class="votes">
+                        <td>{{ vote.voter }}</td>
+                        <td>{{ vote.comment }}</td>
+                        <td>{{ vote.graphics }}</td>
+                        <td>{{ vote.audio }}</td>
+                        <td>{{ vote.theme }}</td>
+                        <td>{{ vote.originality }}</td>
+                        <td>{{ vote.fun }}</td>
+                        <td>{{ vote.total }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
         </table>
         <div class="clearfix"></div>

@@ -13,6 +13,7 @@ namespace GJA\GameJam\CompoBundle\Controller;
 
 use Certadia\Library\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Compo;
+use GJA\GameJam\GameBundle\Entity\Game;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -29,6 +30,12 @@ class ScoreboardController extends AbstractController
      */
     public function indexAction(Compo $compo)
     {
+        $now = new \DateTime('now');
+
+        if ($compo->getJuryVoteEndAt() > $now) {
+            return $this->redirectToPath('gamejam_compo_frontend');
+        }
+
         $scoreboard = $this->getRepository('GameJamCompoBundle:Scoreboard')->findByCompo($compo);
 
         return ['scoreboard' => $scoreboard, 'compo' => $compo];

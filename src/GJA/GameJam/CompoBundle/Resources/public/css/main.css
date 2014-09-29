@@ -1549,3 +1549,16 @@ ul.media li.element, ul.downloads li.element
     width: 100% !important;
     margin-bottom: 15px;
 }
+
+tr.votes td
+{
+    background-color: #EBDFDB;
+    border: 1px solid #FBB9B9 !important;
+}
+
+tr.votes
+{
+    padding-bottom: 15px;
+    border-color: #003147;
+    border-bottom: 15px;
+}

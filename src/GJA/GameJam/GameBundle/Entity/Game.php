@@ -583,6 +583,21 @@ class Game
         return false;
     }
 
+    public function isOwner(User $user)
+    {
+        if(!$this->getTeam()) {
+            return $this->getUser() === $user;
+        }
+
+        foreach($this->getTeam()->getUsers() as $teamMember)
+        {
+            if($teamMember === $user)
+                return true;
+        }
+
+        return false;
+    }
+
     public function isUserAllowedToDelete(User $user)
     {
         if(!$this->getTeam())
