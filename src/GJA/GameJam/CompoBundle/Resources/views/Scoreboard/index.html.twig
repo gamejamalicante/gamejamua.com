@@ -34,7 +34,7 @@
                 <td>{{ game.totalFunPoints }}</td>
                 <td>{{ game.totalPoints }}</td>
             </tr>
-            {% if (app.user and game.isOwner(app.user)) or game.isUserAllowedToEdit(app.user) %}
+            {% if app.user and (game.isOwner(app.user) or game.isUserAllowedToEdit(app.user)) %}
                 {% for vote in game.scoreboard %}
                     <tr class="votes">
                         <td>{{ vote.voter }}</td>
