@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "969aa5d11a0ac3996111c1c263aec2b6",
+    "hash": "2e4e0fd5e8c31c3c6dd12bd22a914f07",
     "packages": [
         {
             "name": "albertofem/sitestatuschecker-bundle",
@@ -5250,7 +5250,31 @@
         }
     ],
     "packages-dev": [
-
+        {
+            "name": "trivialsense/server-infrastructure",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:trivialsense/server-infrastructure.git",
+                "reference": "0b376c9827dab42dcdbf81e9ee12005878126f44"
+            },
+            "bin": [
+                "bin/server-provision.sh",
+                "bin/site-provision.sh"
+            ],
+            "type": "library",
+            "license": [
+                "PROPIETARY"
+            ],
+            "authors": [
+                {
+                    "name": "Alberto Fernández",
+                    "email": "albertofem@gmail.com"
+                }
+            ],
+            "description": "Ansible repository with server infrastructure and configurations.",
+            "time": "2014-09-11 08:17:51"
+        }
     ],
     "aliases": [
 
@@ -5286,7 +5310,8 @@
         "snc/redis-bundle": 20,
         "predis/predis": 20,
         "intervention/image": 20,
-        "gregwar/image": 20
+        "gregwar/image": 20,
+        "trivialsense/server-infrastructure": 20
     },
     "prefer-stable": true,
     "platform": {
