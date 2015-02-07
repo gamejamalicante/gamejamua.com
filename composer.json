@@ -7,33 +7,29 @@
     },
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://ams-stag-01.certadia.net:2635"
-        },
-        {
             "type": "vcs",
             "url": "https://github.com/albertofem/media-bundle.git"
         }
     ],
     "require": {
-        "certadia/library": "@dev",
         "php": ">=5.5",
-        "symfony/symfony": "~2.5",
-        "doctrine/orm": "~2.2,>=2.2.3",
+        "symfony/symfony": "2.6.*",
+        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
+        "doctrine/dbal": "<2.5",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~3.0",
-        "sensio/framework-extra-bundle": "~3.0",
+        "sensio/distribution-bundle": "~3.0,>=3.0.12",
+        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "sensio/generator-bundle": "~2.3",
         "components/jquery": "1.*",
         "components/bootstrap": "3.*",
         "components/font-awesome": "4.*",
         "components/modernizr": "2.*",
         "components/jqueryui": "1.11.*",
-        "ivaynberg/select2": "3.*",
+        "select2/select2": "3.*",
         "sensio/buzz-bundle": "@dev",
         "mlpz/mailchimp-bundle": "@dev",
         "friendsofsymfony/user-bundle": "@dev",
@@ -41,7 +37,6 @@
         "presta/sitemap-bundle": "@dev",
         "amnl/router-unslash": "@dev",
         "egeloen/google-map-bundle": "@dev",
-        "doctrine/doctrine-migrations-bundle": "@dev",
         "stof/doctrine-extensions-bundle": "@dev",
         "avalanche123/imagine-bundle": "@dev",
         "antimattr/google-bundle": "@dev",
@@ -68,10 +63,8 @@
         "predis/predis": "0.8.x-dev",
         "intervention/image": "@dev",
         "gregwar/image": "@dev",
-        "jmikola/auto-login-bundle": "~1.0"
-    },
-    "require-dev": {
-        "trivialsense/server-infrastructure": "dev-master"
+        "jmikola/auto-login-bundle": "~1.0",
+        "trivialsense/php-framework-common": "@dev"
     },
     "scripts": {
         "post-install-cmd": [
