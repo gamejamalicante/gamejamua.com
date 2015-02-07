@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new \AMNL\RouterUnslashBundle\AMNLRouterUnslashBundle(),
             new \Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new \MZ\MailChimpBundle\MZMailChimpBundle(),
-            new \Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new \Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new \GJA\GameJam\CompoBundle\GameJamCompoBundle(),
