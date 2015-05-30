@@ -11,7 +11,7 @@
 
 namespace GJA\GameJam\ChallengeBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\ChallengeBundle\Entity\Cause;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

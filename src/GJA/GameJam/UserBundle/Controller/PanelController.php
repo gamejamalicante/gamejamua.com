@@ -11,7 +11,7 @@
 
 namespace GJA\GameJam\UserBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Service\LinkUnshortener;
 use GJA\GameJam\UserBundle\Entity\User;

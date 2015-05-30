@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "af2d059757d03d92c5156852ace8ec64",
+    "hash": "31bb4c188b31591bc83908e360a6e2f2",
     "packages": [
         {
             "name": "albertofem/sitestatuschecker-bundle",
@@ -165,7 +165,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/antimattr/GoogleBundle/zipball/f584199ddd7d99d7db22bf35035bb9219265d425",
+                "url": "https://api.github.com/repos/antimattr/GoogleBundle/zipball/06cf924dc4c71cfd5a181594b92601fa3c1675a8",
                 "reference": "f584199ddd7d99d7db22bf35035bb9219265d425",
                 "shasum": ""
             },
@@ -3165,7 +3165,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/8844cb97371d366883eb2cfe2b8bf944f701e7ae",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/c40ec57a065a29bb5da047a2397a46e342c0240d",
                 "reference": "8844cb97371d366883eb2cfe2b8bf944f701e7ae",
                 "shasum": ""
             },
@@ -3826,7 +3826,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/prestaconcept/PrestaSitemapBundle/zipball/78ea4efb369cb4c8683cd4c0a38727b8cdb560f6",
+                "url": "https://api.github.com/repos/prestaconcept/PrestaSitemapBundle/zipball/8934e45547d502922db0b785b2a81f7e6755910a",
                 "reference": "78ea4efb369cb4c8683cd4c0a38727b8cdb560f6",
                 "shasum": ""
             },
@@ -4805,7 +4805,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trivialsense/php-framework-common/zipball/88820381f0b1a5822437efb57ed6c097e86fad07",
+                "url": "https://api.github.com/repos/trivialsense/php-framework-common/zipball/a67f700fb703c8ac3e67a5326b6ac51f9a4c98b4",
                 "reference": "88820381f0b1a5822437efb57ed6c097e86fad07",
                 "shasum": ""
             },

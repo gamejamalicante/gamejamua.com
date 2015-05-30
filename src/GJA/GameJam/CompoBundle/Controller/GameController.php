@@ -2,7 +2,7 @@
 
 namespace GJA\GameJam\CompoBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Form\Model\GameFilter;
 use GJA\GameJam\CompoBundle\Form\Type\GameFilterType;
 use GJA\GameJam\GameBundle\Repository\GameRepository;

@@ -2,7 +2,7 @@
 
 namespace GJA\GameJam\ChallengeBundle\Controller\Rest;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\ChallengeBundle\Event\ChallengeCompletedEvent;
 use GJA\GameJam\ChallengeBundle\Exception\ChallengeCompletedException;

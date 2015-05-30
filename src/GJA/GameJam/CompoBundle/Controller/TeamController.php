@@ -2,7 +2,7 @@
 
 namespace GJA\GameJam\CompoBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Entity\Team;

@@ -1,14 +1,17 @@
 <?php
 
 /*
- * Copyright (c) 2013 Certadia, SL
- * All rights reserved
+ * This file is part of gamejamua.com
+ *
+ * (c) Alberto Fernández <albertofem@gmail.com>
+ *
+ * For the full copyright and license information, please read
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace GJA\GameJam\UserBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
-use Certadia\Library\Controller\GoogleHelperTrait;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\UserBundle\Entity\Order;
 use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
@@ -16,7 +19,6 @@ use JMS\Payment\CoreBundle\PluginController\Result;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractPaymentController extends AbstractController
 {
@@ -110,15 +112,12 @@ abstract class AbstractPaymentController extends AbstractController
     protected function getPaypalItemDescription(Order $order)
     {
         $paypalConfig = [];
-        $number = 0;
 
         foreach($order->getItems() as $number => $item)
         {
             $paypalConfig['L_PAYMENTREQUEST_0_NAME' . $number] = $item->getDescription();
             $paypalConfig['L_PAYMENTREQUEST_0_QTY' . $number] = $item->getQuantity();
             $paypalConfig['L_PAYMENTREQUEST_0_AMT' . $number] = (string) $item->getAmount();
-
-            $number++;
         }
 
         $paypalConfig['PAGESTYLE'] = "Gamejam";

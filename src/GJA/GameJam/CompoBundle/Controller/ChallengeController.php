@@ -11,7 +11,7 @@
 
 namespace GJA\GameJam\CompoBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\ChallengeBundle\Entity\Challenge;
 use GJA\GameJam\ChallengeBundle\Form\Type\ChallengeType;
 use GJA\GameJam\CompoBundle\Entity\Compo;

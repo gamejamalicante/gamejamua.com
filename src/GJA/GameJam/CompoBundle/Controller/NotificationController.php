@@ -2,7 +2,7 @@
 
 namespace GJA\GameJam\CompoBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Notification;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

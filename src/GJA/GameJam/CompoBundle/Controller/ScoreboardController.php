@@ -11,7 +11,7 @@
 
 namespace GJA\GameJam\CompoBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\GameBundle\Entity\Game;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

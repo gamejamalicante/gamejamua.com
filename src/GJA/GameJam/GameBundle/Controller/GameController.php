@@ -11,7 +11,7 @@
 
 namespace GJA\GameJam\GameBundle\Controller;
 
-use Certadia\Library\Controller\AbstractController;
+use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\GameJamCompoEvents;
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\GameBundle\Event\GameActivityCoinsEvent;
