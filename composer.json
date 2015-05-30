@@ -66,6 +66,9 @@
         "jmikola/auto-login-bundle": "~1.0",
         "trivialsense/php-framework-common": "@dev"
     },
+    "require-dev": {
+      "fabpot/php-cs-fixer": "@stable"
+    },
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
