@@ -47,10 +47,6 @@ class GameController extends AbstractController
 
             return array('games' => $games);
         }
-        else
-        {
-            var_dump((string)$form->getErrorsAsString());
-        }
 
         return array('games' => array());
     }
