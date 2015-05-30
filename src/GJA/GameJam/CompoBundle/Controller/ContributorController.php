@@ -26,8 +26,8 @@ class ContributorController extends AbstractController
      */
     public function indexAction()
     {
-        $sponsors = $this->getRepository("GameJamCompoBundle:Contributor")->findSponsors();
-        $juries = $this->getRepository("GameJamCompoBundle:Contributor")->findJuries();
+        $sponsors = $this->getRepository('GameJamCompoBundle:Contributor')->findSponsors();
+        $juries = $this->getRepository('GameJamCompoBundle:Contributor')->findJuries();
 
         return ['sponsors' => $sponsors, 'juries' => $juries];
     }
@@ -37,7 +37,7 @@ class ContributorController extends AbstractController
      */
     public function partialContributorsAction()
     {
-        $contributors = $this->getRepository("GameJamCompoBundle:Contributor")->findSponsors();
+        $contributors = $this->getRepository('GameJamCompoBundle:Contributor')->findSponsors();
 
         return ['contributors' => $contributors];
     }

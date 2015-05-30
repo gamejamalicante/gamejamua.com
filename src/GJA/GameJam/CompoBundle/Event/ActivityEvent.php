@@ -21,7 +21,7 @@ class ActivityEvent extends Event
      */
     protected $activity;
 
-    function __construct(Activity $activity)
+    public function __construct(Activity $activity)
     {
         $this->activity = $activity;
     }
@@ -41,4 +41,4 @@ class ActivityEvent extends Event
     {
         return $this->activity;
     }
-} 
+}

@@ -24,4 +24,4 @@ DQL;
         return $this->getEntityManager()->createQuery($dql)
             ->getResult();
     }
-} 
+}

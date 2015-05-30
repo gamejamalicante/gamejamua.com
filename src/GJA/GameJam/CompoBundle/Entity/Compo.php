@@ -6,7 +6,6 @@
 
 namespace GJA\GameJam\CompoBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GJA\GameJam\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -17,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Compo
 {
-    const TEAM_FORMATION_PERIOD = "PT4H";
+    const TEAM_FORMATION_PERIOD = 'PT4H';
     const MAX_APPLICATIONS_BOARD_GAME = 20;
 
     /**
@@ -252,6 +251,7 @@ class Compo
     public function getStartAt()
     {
         $clone = clone $this->startAt;
+
         return $clone;
     }
 
@@ -271,7 +271,7 @@ class Compo
         return $this->theme;
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->name;
     }
@@ -333,35 +333,38 @@ class Compo
     {
         $now = new \DateTime('now');
 
-        if($this->getStartAt() <= $now)
+        if ($this->getStartAt() <= $now) {
             return true;
+        }
 
         return false;
     }
 
     public function isRunning()
     {
-        if(!$this->hasStarted())
+        if (!$this->hasStarted()) {
             return false;
+        }
 
-        if($this->hasFinished())
+        if ($this->hasFinished()) {
             return false;
+        }
 
         return true;
     }
 
     public function getTimeToStart()
     {
-        if($this->hasStarted())
+        if ($this->hasStarted()) {
             return false;
+        }
 
-        return $this->getStartAt()->diff(new \DateTime("now"));
+        return $this->getStartAt()->diff(new \DateTime('now'));
     }
 
     public function getDaysToStart()
     {
-        if($daysToStart = $this->getTimeToStart())
-        {
+        if ($daysToStart = $this->getTimeToStart()) {
             return $daysToStart->days;
         }
 
@@ -416,13 +419,13 @@ class Compo
 
     public function getApplicationForUser(User $user)
     {
-        foreach($this->getApplications() as $application)
-        {
-            if($application->getUser() === $user)
+        foreach ($this->getApplications() as $application) {
+            if ($application->getUser() === $user) {
                 return $application;
+            }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -514,15 +517,14 @@ class Compo
     {
         $validApplications = 0;
 
-        foreach($this->getApplications() as $application)
-        {
+        foreach ($this->getApplications() as $application) {
             if ($type !== null) {
                 if ($application->getType() !== $type) {
                     continue;
                 }
             }
 
-            if(($application->isCompleted() || $application->isInProgress()) && $application->getModality() != CompoApplication::MODALITY_FREE) {
+            if (($application->isCompleted() || $application->isInProgress()) && $application->getModality() != CompoApplication::MODALITY_FREE) {
                 $validApplications++;
             }
         }
@@ -541,7 +543,6 @@ class Compo
 
     public function isBoardGamesFull()
     {
-
     }
 
     public function getCompletedApplications()
@@ -551,22 +552,24 @@ class Compo
 
     public function isTeamFormationOpen()
     {
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
 
         $startDate = $this->getStartAt();
 
-        if($now > $startDate->add(new \DateInterval(self::TEAM_FORMATION_PERIOD)))
+        if ($now > $startDate->add(new \DateInterval(self::TEAM_FORMATION_PERIOD))) {
             return false;
+        }
 
         return true;
     }
 
     public function getSecondsToStartTime()
     {
-        if($this->hasStarted())
+        if ($this->hasStarted()) {
             return 0;
+        }
 
-        return $this->getStartAt()->getTimestamp()-(new \DateTime("now"))->getTimestamp();
+        return $this->getStartAt()->getTimestamp() - (new \DateTime('now'))->getTimestamp();
     }
 
     /**
@@ -587,23 +590,26 @@ class Compo
 
     public function getSecondsToFinish()
     {
-        if(!$this->hasStarted())
+        if (!$this->hasStarted()) {
             return 0;
+        }
 
         $now = new \DateTime('now');
 
-        return $this->endAt()->getTimestamp()-$now->getTimestamp();
+        return $this->endAt()->getTimestamp() - $now->getTimestamp();
     }
 
     public function hasFinished()
     {
-        if(!$this->hasStarted())
+        if (!$this->hasStarted()) {
             return false;
+        }
 
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
 
-        if($now > $this->endAt())
+        if ($now > $this->endAt()) {
             return true;
+        }
 
         return false;
     }
@@ -612,10 +618,10 @@ class Compo
     {
         $members = array();
 
-        foreach($this->getApplications() as $application)
-        {
-            if($application->isCompleted())
+        foreach ($this->getApplications() as $application) {
+            if ($application->isCompleted()) {
                 $members[] = $application->getUser();
+            }
         }
 
         return $members;

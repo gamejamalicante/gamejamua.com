@@ -3,12 +3,8 @@
 namespace GJA\GameJam\CompoBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use GJA\GameJam\CompoBundle\Entity\Compo;
-use GJA\GameJam\CompoBundle\Entity\Team;
 use GJA\GameJam\CompoBundle\Entity\TeamInvitation;
 use GJA\GameJam\CompoBundle\Form\DataTransformer\TeamInvitationTargetTransformer;
-use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,7 +33,7 @@ class TeamInvitationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'GJA\GameJam\CompoBundle\Entity\TeamInvitation'
+            'data_class' => 'GJA\GameJam\CompoBundle\Entity\TeamInvitation',
         ]);
     }
 
@@ -45,4 +41,4 @@ class TeamInvitationType extends AbstractType
     {
         return 'gamejam_compo_team_invitation';
     }
-} 
+}

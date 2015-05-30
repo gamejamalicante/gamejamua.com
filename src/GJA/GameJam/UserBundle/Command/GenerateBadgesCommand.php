@@ -42,20 +42,21 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         $username = $input->getOption('username');
         $limit = $input->getOption('limit') ?: PHP_INT_MAX;
 
-        if($username === 'all') {
-            $users = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository("GameJamUserBundle:User")->findAll();
+        if ($username === 'all') {
+            $users = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamUserBundle:User')->findAll();
         } else {
-            $users = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository("GameJamUserBundle:User")->findBy(['username' => $username]);
+            $users = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamUserBundle:User')->findBy(['username' => $username]);
         }
 
         foreach ($users as $key => $user) {
-            $output->writeln('Generating badge for user: <info>' .$user. '</info>');
+            $output->writeln('Generating badge for user: <info>'.$user.'</info>');
             $badgeFilename = $this->generateBadge($user);
 
-            if($badgeFilename !== false)
-                $output->writeln('Generated badge: <info>' .$badgeFilename. '</info>\\n');
+            if ($badgeFilename !== false) {
+                $output->writeln('Generated badge: <info>'.$badgeFilename.'</info>\\n');
+            }
 
-            if($key >= $limit) {
+            if ($key >= $limit) {
                 break;
             }
         }
@@ -66,16 +67,16 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         /** @var Compo $compo */
         $compo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
-        if(!$this->force && !$user->hasAppliedTo($compo)) {
+        if (!$this->force && !$user->hasAppliedTo($compo)) {
             return false;
         }
 
-        $badgeNormalFile = __DIR__ . '/../Resources/badges/badge_normal_vacio.png';
-        $badgeOrgFile = __DIR__ . '/../Resources/badges/badge_org_vacio.png';
+        $badgeNormalFile = __DIR__.'/../Resources/badges/badge_normal_vacio.png';
+        $badgeOrgFile = __DIR__.'/../Resources/badges/badge_org_vacio.png';
 
-        $fontSci = __DIR__ . '/../Resources/badges/SciFly-Sans.ttf';
+        $fontSci = __DIR__.'/../Resources/badges/SciFly-Sans.ttf';
 
-        if($user->hasRole('ROLE_STAFF')) {
+        if ($user->hasRole('ROLE_STAFF')) {
             $badge = $badgeOrgFile;
         } else {
             $badge = $badgeNormalFile;
@@ -89,10 +90,11 @@ class GenerateBadgesCommand extends ContainerAwareCommand
         $this->drawTwitter($image, $user, $fontSci);
         $this->drawLevel($image, $user, $fontSci);
 
-        if($team = $user->getTeamForCompo($compo))
+        if ($team = $user->getTeamForCompo($compo)) {
             $this->drawTeam($image, $team->getName(), $fontSci);
+        }
 
-        $filename = __DIR__ . '/../Resources/badges/generated/' .$user->getUsername(). '.png';
+        $filename = __DIR__.'/../Resources/badges/generated/'.$user->getUsername().'.png';
 
         $image->save($filename);
 
@@ -113,7 +115,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
             if ($gravatar->exists($user->getEmail())) {
                 $avatar = $gravatar->getUrl($user->getEmail(), '120');
             } else {
-                $avatar = __DIR__ . '/../../CompoBundle/Resources/public/images/noavatar.jpg';
+                $avatar = __DIR__.'/../../CompoBundle/Resources/public/images/noavatar.jpg';
             }
         }
 
@@ -130,8 +132,8 @@ class GenerateBadgesCommand extends ContainerAwareCommand
 
     protected function drawTwitter(Image $image, User $user, $fontFile)
     {
-        if($twitter = $user->getTwitter()) {
-            $image->write($fontFile, '@' . $twitter, 155, 80, 15, 0, 0x6363B0);
+        if ($twitter = $user->getTwitter()) {
+            $image->write($fontFile, '@'.$twitter, 155, 80, 15, 0, 0x6363B0);
         }
     }
 
@@ -148,18 +150,15 @@ class GenerateBadgesCommand extends ContainerAwareCommand
     private function remoteImageExists($url)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         // don't download content
         curl_setopt($ch, CURLOPT_NOBODY, 1);
         curl_setopt($ch, CURLOPT_FAILONERROR, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        if(curl_exec($ch)!==FALSE)
-        {
+        if (curl_exec($ch) !== false) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
-} 
+}

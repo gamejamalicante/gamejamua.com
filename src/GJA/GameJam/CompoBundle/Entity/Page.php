@@ -35,4 +35,4 @@ class Page
     protected $nameSlug;
 
     protected $template;
-} 
+}

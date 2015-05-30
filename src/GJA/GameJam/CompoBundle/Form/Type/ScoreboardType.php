@@ -30,7 +30,7 @@ class ScoreboardType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GJA\GameJam\CompoBundle\Entity\Scoreboard'
+            'data_class' => 'GJA\GameJam\CompoBundle\Entity\Scoreboard',
         ));
     }
 
@@ -47,9 +47,9 @@ class ScoreboardType extends AbstractType
                 '2' => '2 - Mejorable',
                 '3' => '3 - Regular',
                 '4' => '4 - Bien',
-                '5' => '5 - Genial, ¡buen trabajo!'
+                '5' => '5 - Genial, ¡buen trabajo!',
             ),
-            'data' => 3
+            'data' => 3,
         );
     }
-} 
+}

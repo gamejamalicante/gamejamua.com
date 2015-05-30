@@ -13,4 +13,4 @@ namespace GJA\GameJam\GameBundle\Controller\Admin;
 
 class ThemeController
 {
-} 
+}

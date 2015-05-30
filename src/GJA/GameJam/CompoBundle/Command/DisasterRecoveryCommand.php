@@ -17,16 +17,16 @@ class DisasterRecoveryCommand extends ContainerAwareCommand
     {
         $connection = $this->getContainer()->get('doctrine.dbal.disaster_recovery_connection');
 
-        $games = $connection->query("SELECT * FROM gamejam_games;")->fetchAll();
+        $games = $connection->query('SELECT * FROM gamejam_games;')->fetchAll();
 
-        foreach($games as $game)
-        {
+        foreach ($games as $game) {
             $game = (object) $game;
 
-            if(empty($game->image))
+            if (empty($game->image)) {
                 continue;
+            }
 
-            $output->writeln('UPDATE gamejam_games SET oldUrl = \'' .$game->image. '\' WHERE id = ' .$game->id. '');
+            $output->writeln('UPDATE gamejam_games SET oldUrl = \''.$game->image.'\' WHERE id = '.$game->id.'');
         }
     }
-} 
+}

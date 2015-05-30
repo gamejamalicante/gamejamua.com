@@ -13,21 +13,21 @@ namespace GJA\GameJam\CompoBundle;
 
 final class GameJamCompoEvents
 {
-    const ACTIVITY = "gamejam.compo.activity";
+    const ACTIVITY = 'gamejam.compo.activity';
 
-    const TEAM_CREATION = "gamejam.compo.team_creation";
+    const TEAM_CREATION = 'gamejam.compo.team_creation';
 
-    const TEAM_INVITATION = "gamejam.compo.team_invitation";
-    const TEAM_REQUEST = "gamejam.compo.team_request";
+    const TEAM_INVITATION = 'gamejam.compo.team_invitation';
+    const TEAM_REQUEST = 'gamejam.compo.team_request';
 
-    const TEAM_INVITATION_ACCEPTED = "gamejam.compo.team_invitation.accepted";
-    const TEAM_REQUEST_ACCEPTED = "gamejam.compo.team_request.accepted";
+    const TEAM_INVITATION_ACCEPTED = 'gamejam.compo.team_invitation.accepted';
+    const TEAM_REQUEST_ACCEPTED = 'gamejam.compo.team_request.accepted';
 
-    const TEAM_INVITATION_REJECTED = "gamejam.compo.team_invitation.rejected";
-    const TEAM_REQUEST_REJECTED = "gamejam.compo.team_request.rejected";
+    const TEAM_INVITATION_REJECTED = 'gamejam.compo.team_invitation.rejected';
+    const TEAM_REQUEST_REJECTED = 'gamejam.compo.team_request.rejected';
 
-    const TEAM_INVITATION_CANCELLED = "gamejam.compo.team_invitation.cancelled";
-    const TEAM_REQUEST_CANCELLED = "gamejam.compo.team_request.cancelled";
+    const TEAM_INVITATION_CANCELLED = 'gamejam.compo.team_invitation.cancelled';
+    const TEAM_REQUEST_CANCELLED = 'gamejam.compo.team_request.cancelled';
 
-    const NOTIFICATION_SENT = "gamejam.compo.notification.sent";
-} 
+    const NOTIFICATION_SENT = 'gamejam.compo.notification.sent';
+}

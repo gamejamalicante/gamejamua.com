@@ -34,4 +34,4 @@ class JuegaTerapiaListener
 
         $challengeCompletedEvent->addExtra('donation_amount', $donationAmount);
     }
-} 
+}

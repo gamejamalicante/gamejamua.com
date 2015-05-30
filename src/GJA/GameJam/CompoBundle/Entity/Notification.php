@@ -179,7 +179,7 @@ class Notification
         return $this->users;
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->title;
     }
@@ -207,16 +207,15 @@ class Notification
 
     public function isPendingForUser($user)
     {
-        if(is_null($user))
+        if (is_null($user)) {
             return true;
+        }
 
-        if($this->isGlobal())
-        {
+        if ($this->isGlobal()) {
             return !$user->hasReadNotification($this);
         }
 
-        if($this->users->contains($user))
-        {
+        if ($this->users->contains($user)) {
             return !$user->hasReadNotification($this);
         }
 
@@ -225,17 +224,21 @@ class Notification
 
     public function canUserReadIt($user)
     {
-        if($this->isGlobal())
+        if ($this->isGlobal()) {
             return true;
+        }
 
-        if(is_null($user))
+        if (is_null($user)) {
             return false;
+        }
 
-        if($this->getType() == self::TYPE_INCLUDE_ONLY)
+        if ($this->getType() == self::TYPE_INCLUDE_ONLY) {
             return $this->users->contains($user);
+        }
 
-        if($this->getType() == self::TYPE_EXCLUDE_ONLY)
+        if ($this->getType() == self::TYPE_EXCLUDE_ONLY) {
             return !$this->users->contains($user);
+        }
 
         return false;
     }
@@ -274,8 +277,9 @@ class Notification
 
     public function read(User $user)
     {
-        if($this->usersRead->contains($user))
+        if ($this->usersRead->contains($user)) {
             return false;
+        }
 
         $this->usersRead->add($user);
 
@@ -286,4 +290,4 @@ class Notification
     {
         $this->users[] = $user;
     }
-} 
+}

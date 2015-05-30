@@ -31,9 +31,8 @@ class Notifier
         $this->entityManager->persist($notification);
         $this->entityManager->flush($notification);
 
-        if($generateEvent)
-        {
+        if ($generateEvent) {
             $this->eventDispatcher->dispatch(GameJamCompoEvents::NOTIFICATION_SENT, new NotificationEvent($notification));
         }
     }
-} 
+}

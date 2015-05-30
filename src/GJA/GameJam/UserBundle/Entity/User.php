@@ -67,6 +67,7 @@ class User extends BaseUser implements EncoderAwareInterface
 
     /**
      * @ORM\OneToMany(targetEntity="GJA\GameJam\GameBundle\Entity\Game", mappedBy="user")
+     *
      * @var Game[]
      */
     protected $games;
@@ -212,7 +213,7 @@ class User extends BaseUser implements EncoderAwareInterface
     public function __construct()
     {
         parent::__construct();
-        $this->autologinToken = sha1(time() . uniqid());
+        $this->autologinToken = sha1(time().uniqid());
     }
 
     /**
@@ -326,10 +327,8 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getGameForCompo(Compo $compo)
     {
-        foreach($this->getGames() as $game)
-        {
-            if($game->getCompo() === $compo)
-            {
+        foreach ($this->getGames() as $game) {
+            if ($game->getCompo() === $compo) {
                 return $game;
             }
         }
@@ -342,16 +341,16 @@ class User extends BaseUser implements EncoderAwareInterface
     {
         $games = new ArrayCollection();
 
-        foreach($this->getTeams() as $team)
-        {
-            if($game = $team->getGame())
-               $games->add($game);
+        foreach ($this->getTeams() as $team) {
+            if ($game = $team->getGame()) {
+                $games->add($game);
+            }
         }
 
-        foreach($this->getGames() as $game)
-        {
-            if(!$games->contains($game))
+        foreach ($this->getGames() as $game) {
+            if (!$games->contains($game)) {
                 $games->add($game);
+            }
         }
 
         return $games;
@@ -540,8 +539,7 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getShouts()
     {
-        return $this->getActivity()->filter(function(Activity $activity)
-        {
+        return $this->getActivity()->filter(function (Activity $activity) {
             return $activity->getType() == Activity::TYPE_SHOUT;
         });
     }
@@ -580,14 +578,13 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function hasAppliedTo(Compo $compo)
     {
-        foreach($this->getApplications() as $application)
-        {
-            if($compo === $application->getCompo())
-            {
-                if($application->isCompleted())
+        foreach ($this->getApplications() as $application) {
+            if ($compo === $application->getCompo()) {
+                if ($application->isCompleted()) {
                     return true;
-                else
+                } else {
                     return false;
+                }
             }
         }
 
@@ -596,38 +593,36 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getApplicationTo(Compo $compo)
     {
-        foreach($this->getApplications() as $application)
-        {
-            if($compo === $application->getCompo())
-            {
-                if($application->isCompleted())
+        foreach ($this->getApplications() as $application) {
+            if ($compo === $application->getCompo()) {
+                if ($application->isCompleted()) {
                     return $application;
+                }
             }
         }
 
-        return null;
+        return;
     }
 
     public function getOpenApplicationTo(Compo $compo)
     {
-        foreach($this->getApplications() as $application)
-        {
-            if($compo === $application->getCompo())
-            {
-                if(!$application->isCompleted())
+        foreach ($this->getApplications() as $application) {
+            if ($compo === $application->getCompo()) {
+                if (!$application->isCompleted()) {
                     return $application;
+                }
             }
         }
 
-        return null;
+        return;
     }
 
     public function hasAchievement(Achievement $achievement)
     {
-        foreach($this->getAchievements() as $achievementGranted)
-        {
-            if($achievementGranted->getAchievement() === $achievement)
+        foreach ($this->getAchievements() as $achievementGranted) {
+            if ($achievementGranted->getAchievement() === $achievement) {
                 return true;
+            }
         }
 
         return false;
@@ -635,8 +630,7 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function isMember()
     {
-        if($this->hasRole("ROLE_MEMBER"))
-        {
+        if ($this->hasRole('ROLE_MEMBER')) {
             return true;
         }
 
@@ -663,7 +657,7 @@ class User extends BaseUser implements EncoderAwareInterface
     {
         return [
             self::SEX_MALE => 'Hombre',
-            self::SEX_FEMALE => 'Mujer'
+            self::SEX_FEMALE => 'Mujer',
         ];
     }
 
@@ -700,10 +694,11 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getOauthTwitterUsername()
     {
-        if(isset($this->oauthTokens['twitter']['username']))
+        if (isset($this->oauthTokens['twitter']['username'])) {
             return $this->oauthTokens['twitter']['username'];
+        }
 
-        return null;
+        return;
     }
 
     /**
@@ -740,17 +735,18 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getEncoderName()
     {
-        if($this->legacyPassword)
+        if ($this->legacyPassword) {
             return 'legacy_encoder';
+        }
 
-        return null;
+        return;
     }
 
     public function getAge()
     {
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
 
-        return $now->diff($this->getBirthDate())->format("%Y");
+        return $now->diff($this->getBirthDate())->format('%Y');
     }
 
     public function hasReadNotification(Notification $notification)
@@ -760,17 +756,18 @@ class User extends BaseUser implements EncoderAwareInterface
 
     /**
      * @param Compo $compo
+     *
      * @return Team
      */
     public function getTeamForCompo(Compo $compo)
     {
-        foreach($this->getTeams() as $team)
-        {
-            if($team->getCompo() === $compo)
+        foreach ($this->getTeams() as $team) {
+            if ($team->getCompo() === $compo) {
                 return $team;
+            }
         }
 
-        return null;
+        return;
     }
 
     public function addToTeam(Team $team)
@@ -782,10 +779,10 @@ class User extends BaseUser implements EncoderAwareInterface
     {
         $level = 0;
 
-        foreach($this->getApplications() as $application)
-        {
-            if($application->isCompleted())
+        foreach ($this->getApplications() as $application) {
+            if ($application->isCompleted()) {
                 $level++;
+            }
         }
 
         return $level;
@@ -835,10 +832,8 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getWaitingListFor(Compo $compo)
     {
-        foreach($this->getWaitingLists() as $waitingList)
-        {
-            if($waitingList->getCompo() === $compo)
-            {
+        foreach ($this->getWaitingLists() as $waitingList) {
+            if ($waitingList->getCompo() === $compo) {
                 return $waitingList;
             }
         }
@@ -894,15 +889,16 @@ class User extends BaseUser implements EncoderAwareInterface
 
     public function getJudgedCompos()
     {
-        if (is_null($contributor = $this->getContributor()))
-            return null;
+        if (is_null($contributor = $this->getContributor())) {
+            return;
+        }
 
         $compos = array();
 
-        foreach ($contributor->getComposJudged() as $compo)
-        {
-            if (!$compo->hasJuryVotingEnded())
+        foreach ($contributor->getComposJudged() as $compo) {
+            if (!$compo->hasJuryVotingEnded()) {
                 $compos[] = $compo;
+            }
         }
 
         return $compos;

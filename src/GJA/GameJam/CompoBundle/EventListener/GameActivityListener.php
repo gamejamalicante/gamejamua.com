@@ -11,11 +11,8 @@
 
 namespace GJA\GameJam\CompoBundle\EventListener;
 
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use GJA\GameJam\CompoBundle\Entity\Activity;
-use GJA\GameJam\GameBundle\Entity\Download;
 use GJA\GameJam\GameBundle\Entity\Game;
-use GJA\GameJam\GameBundle\Entity\Media;
 use GJA\GameJam\GameBundle\Event\GameActivityAchievementEvent;
 use GJA\GameJam\GameBundle\Event\GameActivityCoinsEvent;
 use GJA\GameJam\GameBundle\Event\GameActivityCreationEvent;
@@ -63,8 +60,9 @@ class GameActivityListener extends AbstractActivityListener
 
     public function onMedia(GameActivityMediaEvent $event)
     {
-        if($event->getGame()->isNew())
+        if ($event->getGame()->isNew()) {
             return;
+        }
 
         $activity = $this->createActivity($event->getGame(), $event->getUser());
         $activity->setMedia($event->getMedia());
@@ -75,15 +73,16 @@ class GameActivityListener extends AbstractActivityListener
 
     public function onDownload(GameActivityDownloadEvent $event)
     {
-        if($event->getGame()->isNew())
+        if ($event->getGame()->isNew()) {
             return;
+        }
 
         $activity = $this->createActivity($event->getGame(), $event->getUser());
         $activity->setDownload($event->getDownload());
         $activity->setType(Activity::TYPE_DOWNLOAD);
 
         $this->persistAndDispatchActivity($activity);
-    }    
+    }
 
     public function onAchievementGranted(GameActivityAchievementEvent $event)
     {
@@ -102,4 +101,4 @@ class GameActivityListener extends AbstractActivityListener
 
         return $activity;
     }
-} 
+}

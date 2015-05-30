@@ -65,8 +65,8 @@ class Diversifier
         return $this->name;
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->name;
     }
-} 
+}

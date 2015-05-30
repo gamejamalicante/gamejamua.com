@@ -18,20 +18,20 @@ class LikeMasterStageOne implements GranterInterface
 {
     /**
      * @param Activity $activity
+     *
      * @return AchievementGranted
      */
     public static function grant(Activity $activity)
     {
         $likes = $activity->getGame()->getLikes();
 
-        if($likes >= 500)
-        {
+        if ($likes >= 500) {
             $grant = new AchievementGranted();
             $grant->setGame($activity->getGame());
 
             return $grant;
         }
 
-        return null;
+        return;
     }
-} 
+}

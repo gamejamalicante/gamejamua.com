@@ -76,7 +76,7 @@ class Media extends AbstractImage
     protected $type = self::TYPE_IMAGE;
 
     /**
-     * TODO: allow image uploads
+     * TODO: allow image uploads.
      */
     protected $filePath;
 
@@ -162,8 +162,7 @@ class Media extends AbstractImage
      */
     public function getGame()
     {
-        switch ($this->type)
-        {
+        switch ($this->type) {
             case self::TYPE_SHOWCASE:
                 return $this->getShowcaseGame();
             break;
@@ -209,16 +208,16 @@ class Media extends AbstractImage
     public static function getAvailableTypes()
     {
         return [
-            self::TYPE_IMAGE => "Imagen",
-            self::TYPE_VIDEO => "Vídeo",
-            self::TYPE_TIMELAPSE => "Timelapse",
-            self::TYPE_OTHER => "Otro (Blender, PSD, etc.)"
+            self::TYPE_IMAGE => 'Imagen',
+            self::TYPE_VIDEO => 'Vídeo',
+            self::TYPE_TIMELAPSE => 'Timelapse',
+            self::TYPE_OTHER => 'Otro (Blender, PSD, etc.)',
         ];
     }
 
     public function getWebPath()
     {
-        return 'uploads' . $this->getUploadDir() . '/' . $this->getName();
+        return 'uploads'.$this->getUploadDir().'/'.$this->getName();
     }
 
     /**
@@ -255,15 +254,15 @@ class Media extends AbstractImage
 
     public function getImageUrl()
     {
-        if($this->type == self::TYPE_IMAGE)
+        if ($this->type == self::TYPE_IMAGE) {
             return $this->url;
+        }
 
-        if($this->type == self::TYPE_VIDEO || $this->type == self::TYPE_TIMELAPSE)
-        {
+        if ($this->type == self::TYPE_VIDEO || $this->type == self::TYPE_TIMELAPSE) {
             return $this->getVideoEmbedThumbnailUrl();
         }
 
-        return null;
+        return;
     }
 
     public function getVideoEmbedCode()
@@ -287,16 +286,16 @@ class Media extends AbstractImage
 
         $urlInfo = $embera->getUrlInfo($this->url);
 
-        if(empty($urlInfo))
-            return null;
+        if (empty($urlInfo)) {
+            return;
+        }
 
         return $urlInfo[$this->url];
     }
 
     protected function getUploadPath()
     {
-        switch($this->type)
-        {
+        switch ($this->type) {
             case self::TYPE_IMAGE:
                 return 'image';
             break;
@@ -311,7 +310,7 @@ class Media extends AbstractImage
     {
         $game = $this->getGame();
 
-        return '/game/' . $game->getId() . '/' .$this->getUploadPath();
+        return '/game/'.$game->getId().'/'.$this->getUploadPath();
     }
 
     public function __toString()
@@ -334,4 +333,4 @@ class Media extends AbstractImage
     {
         return $this->showcaseGame;
     }
-} 
+}

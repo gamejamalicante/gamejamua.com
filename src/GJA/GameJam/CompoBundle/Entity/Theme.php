@@ -7,7 +7,6 @@
 namespace GJA\GameJam\CompoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -80,8 +79,8 @@ class Theme
         return $this->name;
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->name;
     }
-} 
+}

@@ -29,4 +29,4 @@ class MembershipItem implements ItemInterface
     {
         return 1;
     }
-} 
+}

@@ -25,4 +25,4 @@ class ShoutType extends AbstractType
     {
         return 'gamejam_user_shout';
     }
-} 
+}

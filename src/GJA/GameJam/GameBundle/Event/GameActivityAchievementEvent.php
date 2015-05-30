@@ -35,4 +35,4 @@ class GameActivityAchievementEvent extends GameActivityEvent
     {
         return $this->achievement;
     }
-} 
+}

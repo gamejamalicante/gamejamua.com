@@ -32,15 +32,15 @@ class GamePanelController extends AbstractController
         $user = $this->getUser();
         $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
 
-        if($runningCompo !== null) {
+        if ($runningCompo !== null) {
             // check if he is competing
             $competing = $user->hasAppliedTo($runningCompo);
 
-            if($competing) {
+            if ($competing) {
                 // check if solo or team
                 $team = $user->getTeamForCompo($runningCompo);
 
-                if(is_null($team)) {
+                if (is_null($team)) {
                     // user is solo, check game created
                     /** @var Game $game */
                     $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'user' => $user]);
@@ -48,8 +48,9 @@ class GamePanelController extends AbstractController
                     $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'team' => $team]);
                 }
 
-                if(!is_null($game)) {
+                if (!is_null($game)) {
                     $this->addSuccessMessage('¡Ya tenemos registrado un juego para la competición! Desde aquí puedes editarlo');
+
                     return $this->redirectToPath('gamejam_game_panel_edit', ['game' => $game->getNameSlug()]);
                 }
             }
@@ -61,17 +62,15 @@ class GamePanelController extends AbstractController
 
         $form = $this->createForm(new GameType(), $game);
 
-        if($request->isMethod("POST"))
-        {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
-                if($runningCompo !== null) {
-                    if($competing) {
+            if ($form->isValid()) {
+                if ($runningCompo !== null) {
+                    if ($competing) {
                         $game->setCompo($runningCompo);
 
-                        if(!is_null($team)) {
+                        if (!is_null($team)) {
                             $game->setTeam($team);
                         } else {
                             $game->setUser($user);
@@ -111,33 +110,31 @@ class GamePanelController extends AbstractController
      */
     public function editAction(Request $request, Game $game)
     {
-        if(!$game->isUserAllowedToEdit($this->getUser()))
-            throw new AccessDeniedException;
+        if (!$game->isUserAllowedToEdit($this->getUser())) {
+            throw new AccessDeniedException();
+        }
 
         $form = $this->createForm(new GameType(), $game);
 
-        if($request->isMethod("POST"))
-        {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $media = $game->getMedia();
                 $image = $game->getImage();
 
-                if($image !== null)
+                if ($image !== null) {
                     $this->persist($image);
+                }
 
-                foreach($media as $mediaElement)
-                {
+                foreach ($media as $mediaElement) {
                     if ($mediaElement instanceof Media) {
                         $mediaElement->setGame($game);
                         $this->persist($mediaElement);
                     }
                 }
 
-                foreach($game->getDownloads() as $download)
-                {
+                foreach ($game->getDownloads() as $download) {
                     $download->setGame($game);
                     $this->persist($download);
                 }
@@ -145,7 +142,7 @@ class GamePanelController extends AbstractController
                 $this->persist($game);
                 $this->flush();
 
-                $this->addSuccessMessage("Cambios en el juego guardados");
+                $this->addSuccessMessage('Cambios en el juego guardados');
 
                 // game creation event
                 $this->dispatchEvent(GameJamGameEvents::ACTIVITY_INFO_UPDATE, new GameActivityInfoUpdateEvent($this->getUser(), $game));
@@ -163,27 +160,23 @@ class GamePanelController extends AbstractController
      */
     public function deleteAction(Game $game)
     {
-        if(!$game->isUserAllowedToDelete($this->getUser()))
-        {
-            $this->addSuccessMessage("<strong>Error:</strong> no puedes eliminar este juego ya que pertenece a tu equipo. Por favor, contacta con el líder del equipo.");
+        if (!$game->isUserAllowedToDelete($this->getUser())) {
+            $this->addSuccessMessage('<strong>Error:</strong> no puedes eliminar este juego ya que pertenece a tu equipo. Por favor, contacta con el líder del equipo.');
 
             return $this->redirectToPath('gamejam_game_panel_edit', ['game' => $game->getNameSlug()]);
         }
 
-        if($game->getCompo())
-        {
+        if ($game->getCompo()) {
             // game from compo, softdelete
             $this->deleteAndFlush($game);
-        }
-        else
-        {
+        } else {
             // not from compo, hard delete
-            $this->getEntityManager()->getFilters()->disable("softdeleteable");
+            $this->getEntityManager()->getFilters()->disable('softdeleteable');
 
             $this->deleteAndFlush($game);
         }
 
-        $this->addSuccessMessage("Hemos eliminado el juego con éxito");
+        $this->addSuccessMessage('Hemos eliminado el juego con éxito');
 
         return $this->redirectToPath('gamejam_game_panel_create');
     }

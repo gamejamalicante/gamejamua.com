@@ -27,4 +27,4 @@ class DonationCompletedEvent extends Event
     {
         return $this->donation;
     }
-} 
+}

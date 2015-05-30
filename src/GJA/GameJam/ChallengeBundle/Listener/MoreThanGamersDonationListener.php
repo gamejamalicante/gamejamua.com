@@ -81,12 +81,10 @@ class MoreThanGamersDonationListener
     {
         $donation = $donationCompletedEvent->getDonation();
 
-        try
-        {
+        try {
             $this->doCompleteDonation($donation);
-        } catch(\Exception $ex)
-        {
-            $this->logger->error('MTG (Exception): ' . $ex->getMessage());
+        } catch (\Exception $ex) {
+            $this->logger->error('MTG (Exception): '.$ex->getMessage());
         }
     }
 
@@ -110,20 +108,21 @@ class MoreThanGamersDonationListener
 
     /**
      * @param $ip
+     *
      * @return MtgSession
      */
     private function createNewSession($ip)
     {
         $parameters = array(
             'gameId' => $this->gameId,
-            'secretCode' => $this->secret
+            'secretCode' => $this->secret,
         );
 
         $params = http_build_query($parameters);
 
         $response = $this->browser->post(self::SESSION_URL, array(), $params);
 
-        $this->logger->info('MTG (Session): ' .$response->getContent(), $parameters);
+        $this->logger->info('MTG (Session): '.$response->getContent(), $parameters);
 
         $response = json_decode(trim($response->getContent()));
 
@@ -144,14 +143,14 @@ class MoreThanGamersDonationListener
         $parameters = array(
             'gameId' => $this->gameId,
             'socketId' => $this->socketId,
-            'password' => $this->socketPassword
+            'password' => $this->socketPassword,
         );
 
         $params = http_build_query($parameters);
 
         $response = $this->browser->post(self::TOKEN_URL, array(), $params);
 
-        $this->logger->info('MTG (Token): ' . $response->getContent(), $parameters);
+        $this->logger->info('MTG (Token): '.$response->getContent(), $parameters);
 
         $response = json_decode(trim($response->getContent()));
 
@@ -164,13 +163,13 @@ class MoreThanGamersDonationListener
             'gameId' => $this->gameId,
             'socketId' => $this->socketId,
             'token' => $token,
-            'sessionId' => $sessionId
+            'sessionId' => $sessionId,
         );
 
         $params = http_build_query($parameters);
 
         $response = $this->browser->post(self::ANONYMOUS_URL, array(), $params);
 
-        $this->logger->info('MTG (AnonChall): ' . $response->getContent(), $parameters);
+        $this->logger->info('MTG (AnonChall): '.$response->getContent(), $parameters);
     }
-} 
+}

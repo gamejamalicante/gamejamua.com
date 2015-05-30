@@ -5,7 +5,6 @@ namespace GJA\GameJam\CompoBundle\Form\DataTransformer;
 use Doctrine\ORM\EntityManager;
 use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class TeamInvitationTargetTransformer implements DataTransformerInterface
 {
@@ -21,24 +20,25 @@ class TeamInvitationTargetTransformer implements DataTransformerInterface
 
     public function transform($value)
     {
-        if(empty($value))
-            return null;
+        if (empty($value)) {
+            return;
+        }
 
-        if($value instanceof User)
-        {
+        if ($value instanceof User) {
             return $value->getUsername();
         }
 
-        return null;
+        return;
     }
 
     public function reverseTransform($value)
     {
-        if(empty($value))
+        if (empty($value)) {
             return '';
+        }
 
-        $user = $this->entityManager->getRepository("GameJamUserBundle:User")->findOneByUsernameOrEmail($value);
+        $user = $this->entityManager->getRepository('GameJamUserBundle:User')->findOneByUsernameOrEmail($value);
 
         return $user;
     }
-} 
+}

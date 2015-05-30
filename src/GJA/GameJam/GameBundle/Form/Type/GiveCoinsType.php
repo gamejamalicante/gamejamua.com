@@ -16,4 +16,4 @@ class GiveCoinsType extends AbstractType
     {
         return 'gamejam_game_give_coins';
     }
-} 
+}

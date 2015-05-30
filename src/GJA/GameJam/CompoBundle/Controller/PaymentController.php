@@ -15,7 +15,6 @@ use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Order\CompoInscriptionItem;
 use GJA\GameJam\UserBundle\Controller\AbstractPaymentController;
 use GJA\GameJam\UserBundle\Entity\Order;
-use JMS\Payment\CoreBundle\Model\FinancialTransactionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -38,30 +37,31 @@ class PaymentController extends AbstractPaymentController
     {
         if ($request->get('change')) {
             $this->deleteAndFlush($order);
+
             return $this->redirectToPath('gamejam_compo_compo_join', ['compo' => $compo->getNameSlug()]);
         }
 
-        if($compo->isFull())
-        {
-            $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");
+        if ($compo->isFull()) {
+            $this->addSuccessMessage('<strong>Error:</strong> ¡Todas las plazas cubiertas!');
 
-            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+            return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
         }
 
         $order = $this->processOrderDetails($compo, $order);
 
         $routes = [
-            'already_paid' => $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]),
-            'payment_complete' => $this->redirectToPath("gamejam_compo_payment_complete", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()]),
-            'paypal_success' => $this->generateUrl("gamejam_compo_payment_complete", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()], true),
-            'paypal_cancel' => $this->generateUrl("gamejam_compo_payment_details", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => true], true),
-            'bank_account_details_route' => $this->generateUrl("gamejam_compo_bank_account_details", ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()])
+            'already_paid' => $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]),
+            'payment_complete' => $this->redirectToPath('gamejam_compo_payment_complete', ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()]),
+            'paypal_success' => $this->generateUrl('gamejam_compo_payment_complete', ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()], true),
+            'paypal_cancel' => $this->generateUrl('gamejam_compo_payment_details', ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => true], true),
+            'bank_account_details_route' => $this->generateUrl('gamejam_compo_bank_account_details', ['order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug()]),
         ];
 
         $form = $this->createPaymentForm($order, $routes);
 
-        if($form instanceof RedirectResponse)
+        if ($form instanceof RedirectResponse) {
             return $form;
+        }
 
         return ['form' => $form->createView(), 'order' => $order, 'compo' => $compo, 'error' => $request->get('error')];
     }
@@ -73,27 +73,23 @@ class PaymentController extends AbstractPaymentController
      */
     public function completeAction(Compo $compo, Order $order)
     {
-        if($compo->isFull())
-        {
-            $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");
+        if ($compo->isFull()) {
+            $this->addSuccessMessage('<strong>Error:</strong> ¡Todas las plazas cubiertas!');
 
-            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+            return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
         }
 
         $result = $this->processInternalPayment($order);
         $compoApplication = $order->getCompoApplication();
 
-        if($result instanceof Response)
-        {
+        if ($result instanceof Response) {
             // lock application
-            $compoApplication->setLockTime(new \DateTime("now"));
+            $compoApplication->setLockTime(new \DateTime('now'));
 
             $this->persistAndFlush($order->getCompoApplication());
 
             return $result;
-        }
-        elseif($result == true)
-        {
+        } elseif ($result == true) {
             $compoApplication->setLockTime(null);
             $compoApplication->setCompleted(true);
 
@@ -102,17 +98,17 @@ class PaymentController extends AbstractPaymentController
 
             $this->flush();
 
-            $this->addSuccessMessage("¡Pago realizado! Ya estás inscrito en la GameJam, ¡a disfrutar!");
+            $this->addSuccessMessage('¡Pago realizado! Ya estás inscrito en la GameJam, ¡a disfrutar!');
 
-            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+            return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
         }
 
         $compoApplication->setLockTime(null);
         $this->persistAndFlush($compoApplication);
 
-        $this->addSuccessMessage("Ha habido un error procesando este pago. Por favor, vuelve a intentarlo");
+        $this->addSuccessMessage('Ha habido un error procesando este pago. Por favor, vuelve a intentarlo');
 
-        return $this->redirectToPath("gamejam_compo_payment_details", array('order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => 1));
+        return $this->redirectToPath('gamejam_compo_payment_details', array('order' => $order->getOrderNumber(), 'compo' => $compo->getNameSlug(), 'error' => 1));
     }
 
     /**
@@ -122,11 +118,10 @@ class PaymentController extends AbstractPaymentController
      */
     public function bankAccountDetailsAction(Compo $compo, Order $order)
     {
-        if($compo->isFull())
-        {
-            $this->addSuccessMessage("<strong>Error:</strong> ¡Todas las plazas cubiertas!");
+        if ($compo->isFull()) {
+            $this->addSuccessMessage('<strong>Error:</strong> ¡Todas las plazas cubiertas!');
 
-            return $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+            return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
         }
 
         return ['compo' => $compo, 'order' => $order];
@@ -140,4 +135,4 @@ class PaymentController extends AbstractPaymentController
 
         return $order;
     }
-} 
+}

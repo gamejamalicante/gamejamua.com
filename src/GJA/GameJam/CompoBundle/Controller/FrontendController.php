@@ -19,9 +19,7 @@ use GJA\GameJam\CompoBundle\Repository\ActivityRepository;
 use GJA\GameJam\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -37,21 +35,21 @@ class FrontendController extends AbstractController
     public function indexAction()
     {
         /** @var ActivityRepository $activityRepository */
-        $activityRepository = $this->getRepository("GameJamCompoBundle:Activity");
+        $activityRepository = $this->getRepository('GameJamCompoBundle:Activity');
 
-        $news = $this->getRepository("GameJamCompoBundle:Notification")->findBy(['type' => 1], ['date' => 'DESC']);
+        $news = $this->getRepository('GameJamCompoBundle:Notification')->findBy(['type' => 1], ['date' => 'DESC']);
         $activity = $activityRepository->findOnlyActivity(5);
         $messages = $activityRepository->findOnlyMessages(10);
         $twitterMentions = $activityRepository->findTwitterMentions(8);
 
-        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
+        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
         return [
             'news' => $news,
             'activity' => $activity,
             'messages' => $messages,
             'twitter_mentions' => $twitterMentions,
-            'compo' => $compo
+            'compo' => $compo,
         ];
     }
 
@@ -84,26 +82,21 @@ class FrontendController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(new ContactType($user));
 
-        if($this->isPost())
-        {
+        if ($this->isPost()) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $data = $form->getData();
 
-                if($user)
-                {
+                if ($user) {
                     $replyTo = $user->getEmail();
-                }
-                else
-                {
+                } else {
                     $replyTo = $data['email'];
                 }
 
                 // TODO: send email
 
-                return $this->redirectToPath("gamejam_compo_frontend_contact", ['success' => true]);
+                return $this->redirectToPath('gamejam_compo_frontend_contact', ['success' => true]);
             }
         }
 
@@ -124,7 +117,7 @@ class FrontendController extends AbstractController
      */
     public function staffAction()
     {
-        $staff = $this->getRepository("GameJamUserBundle:User")->findStaff();
+        $staff = $this->getRepository('GameJamUserBundle:User')->findStaff();
 
         return ['staff' => $staff];
     }
@@ -135,12 +128,13 @@ class FrontendController extends AbstractController
     public function currentCompoAction()
     {
         /** @var Compo $compo */
-        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy([], ['id' => 'DESC']);
+        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy([], ['id' => 'DESC']);
 
-        if(!$compo)
-            throw new NotFoundHttpException("No compos found!");
+        if (!$compo) {
+            throw new NotFoundHttpException('No compos found!');
+        }
 
-        $response = $this->redirectToPath("gamejam_compo_compo", ['compo' => $compo->getNameSlug()]);
+        $response = $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
         $response->setStatusCode(302);
 
         return $response;
@@ -165,7 +159,7 @@ class FrontendController extends AbstractController
      */
     public function partialNotificationsAction()
     {
-        $pendingNotifications = $this->getRepository("GameJamCompoBundle:Notification")->findTotalPendingByUser($this->getUser());
+        $pendingNotifications = $this->getRepository('GameJamCompoBundle:Notification')->findTotalPendingByUser($this->getUser());
 
         return ['pending' => $pendingNotifications];
     }
@@ -175,7 +169,7 @@ class FrontendController extends AbstractController
      */
     public function partialActiveCompoAction()
     {
-        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
+        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
         return ['compo' => $compo, 'user' => $this->getUser()];
     }
@@ -186,14 +180,11 @@ class FrontendController extends AbstractController
     public function timeToNextCompoAction()
     {
         /** @var Compo $compo */
-        $compo = $this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true]);
+        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true]);
 
-        if($compo)
-        {
-           $result = array('result' => true, 'seconds' => $compo->getSecondsToStartTime());
-        }
-        else
-        {
+        if ($compo) {
+            $result = array('result' => true, 'seconds' => $compo->getSecondsToStartTime());
+        } else {
             $result = array('result' => false);
         }
 

@@ -14,4 +14,4 @@ class GameJamUserBundle extends Bundle
     {
         return 'FOSUserBundle';
     }
-} 
+}

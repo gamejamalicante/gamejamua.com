@@ -12,7 +12,6 @@
 namespace GJA\GameJam\GameBundle\Controller;
 
 use TrivialSense\FrameworkCommon\Controller\AbstractController;
-use GJA\GameJam\CompoBundle\GameJamCompoEvents;
 use GJA\GameJam\GameBundle\Entity\Game;
 use GJA\GameJam\GameBundle\Event\GameActivityCoinsEvent;
 use GJA\GameJam\GameBundle\Event\GameActivityLikeEvent;
@@ -41,10 +40,8 @@ class GameController extends AbstractController
         $giveCoinsForm = null;
 
         /** @var User $user */
-        if($user = $this->getUser())
-        {
-            if(!$game->isUserAllowedToEdit($user) && !$user->isAdmin())
-            {
+        if ($user = $this->getUser()) {
+            if (!$game->isUserAllowedToEdit($user) && !$user->isAdmin()) {
                 $giveCoinsForm = $this->createForm(new GiveCoinsType());
                 $giveCoinsForm = $giveCoinsForm->createView();
             }
@@ -62,19 +59,20 @@ class GameController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if($game->isUserAllowedToEdit($user))
+        if ($game->isUserAllowedToEdit($user)) {
             return new JsonResponse(['result' => false, 'coins' => $game->getCoins()]);
+        }
 
         $giveCoinsForm = $this->createForm(new GiveCoinsType());
 
         $giveCoinsForm->handleRequest($request);
 
-        if($giveCoinsForm->isValid())
-        {
+        if ($giveCoinsForm->isValid()) {
             $coins = (int) $giveCoinsForm->getData()['coins'];
 
-            if($user->getCoins()-$coins < 0)
+            if ($user->getCoins() - $coins < 0) {
                 return new JsonResponse(['result' => false, 'coins' => $game->getCoins(), 'error' => 'No tienes monedas suficientes :(']);
+            }
 
             $game->giveCoins($coins);
             $user->substractCoins($coins);
@@ -101,13 +99,13 @@ class GameController extends AbstractController
     {
         $user = $this->getUser();
 
-        if($game->isUserAllowedToEdit($user))
+        if ($game->isUserAllowedToEdit($user)) {
             return new JsonResponse(['result' => false, 'likes' => $game->getLikes()]);
+        }
 
         $result = $game->like($user);
 
-        if($result)
-        {
+        if ($result) {
             // dispatch event
             $this->dispatchEvent(GameJamGameEvents::ACTIVITY_LIKES, new GameActivityLikeEvent($user, $game));
 
@@ -116,4 +114,4 @@ class GameController extends AbstractController
 
         return new JsonResponse(['result' => $result, 'likes' => $game->getLikes()]);
     }
-} 
+}

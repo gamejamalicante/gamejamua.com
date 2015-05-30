@@ -226,10 +226,8 @@ class Cause
     {
         $donations = array();
 
-        foreach ($this->getChallenges() as $challenge)
-        {
-            foreach ($challenge->getDonations() as $donation)
-            {
+        foreach ($this->getChallenges() as $challenge) {
+            foreach ($challenge->getDonations() as $donation) {
                 $donations[] = $donation;
             }
         }
@@ -241,10 +239,10 @@ class Cause
     {
         $games = new ArrayCollection();
 
-        foreach ($this->getChallenges() as $challenge)
-        {
-            if (!$games->contains($challenge->getGame()))
+        foreach ($this->getChallenges() as $challenge) {
+            if (!$games->contains($challenge->getGame())) {
                 $games->add($challenge->getGame());
+            }
         }
 
         return $games;
@@ -270,4 +268,4 @@ class Cause
     {
         return $this->donationPerCompletion;
     }
-} 
+}

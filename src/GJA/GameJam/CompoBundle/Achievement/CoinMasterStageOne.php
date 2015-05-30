@@ -18,20 +18,20 @@ class CoinMasterStageOne implements GranterInterface
 {
     /**
      * @param Activity $activity
+     *
      * @return AchievementGranted
      */
     public static function grant(Activity $activity)
     {
         $coins = $activity->getGame()->getCoins();
 
-        if($coins >= 500)
-        {
+        if ($coins >= 500) {
             $grant = new AchievementGranted();
             $grant->setUser($activity->getUser());
 
             return $grant;
         }
 
-        return null;
+        return;
     }
-} 
+}

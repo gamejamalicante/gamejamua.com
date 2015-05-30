@@ -13,7 +13,6 @@ namespace GJA\GameJam\CompoBundle\Controller;
 
 use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use GJA\GameJam\CompoBundle\Entity\Compo;
-use GJA\GameJam\GameBundle\Entity\Game;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

@@ -14,7 +14,6 @@ DQL;
 
         return $this->getEntityManager()->createQuery($dql)
             ->getResult();
-
     }
 
     public function findJuries()
@@ -26,4 +25,4 @@ DQL;
         return $this->getEntityManager()->createQuery($dql)
             ->getResult();
     }
-} 
+}

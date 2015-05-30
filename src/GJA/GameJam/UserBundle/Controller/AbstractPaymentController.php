@@ -24,11 +24,11 @@ abstract class AbstractPaymentController extends AbstractController
 {
     protected function createPaymentForm(Order $order, array $routes, callable $success = null)
     {
-        if($order->getUser() !== $this->getUser())
-            throw new AccessDeniedException;
+        if ($order->getUser() !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
 
-        if($order->isPaid())
-        {
+        if ($order->isPaid()) {
             return $routes['already_paid'];
         }
 
@@ -49,18 +49,17 @@ abstract class AbstractPaymentController extends AbstractController
             ),
         ));
 
-        if ($this->isPost())
-        {
+        if ($this->isPost()) {
             $form->handleRequest($this->getRequest());
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $pluginController->createPaymentInstruction($instruction = $form->getData());
 
                 $order->setPaymentInstruction($instruction);
 
-                if($success)
+                if ($success) {
                     $success($order);
+                }
 
                 $this->persistAndFlush($order);
 
@@ -85,24 +84,19 @@ abstract class AbstractPaymentController extends AbstractController
         /** @var Result $result */
         $result = $pluginController->approveAndDeposit($payment->getId(), $payment->getTargetAmount());
 
-        if(Result::STATUS_PENDING === $result->getStatus())
-        {
+        if (Result::STATUS_PENDING === $result->getStatus()) {
             $ex = $result->getPluginException();
 
-            if($ex instanceof ActionRequiredException)
-            {
+            if ($ex instanceof ActionRequiredException) {
                 $action = $ex->getAction();
 
-                if($action instanceof VisitUrl)
-                {
+                if ($action instanceof VisitUrl) {
                     return new RedirectResponse($action->getUrl());
                 }
 
                 throw $ex;
             }
-        }
-        elseif(Result::STATUS_SUCCESS !== $result->getStatus())
-        {
+        } elseif (Result::STATUS_SUCCESS !== $result->getStatus()) {
             return false;
         }
 
@@ -113,15 +107,14 @@ abstract class AbstractPaymentController extends AbstractController
     {
         $paypalConfig = [];
 
-        foreach($order->getItems() as $number => $item)
-        {
-            $paypalConfig['L_PAYMENTREQUEST_0_NAME' . $number] = $item->getDescription();
-            $paypalConfig['L_PAYMENTREQUEST_0_QTY' . $number] = $item->getQuantity();
-            $paypalConfig['L_PAYMENTREQUEST_0_AMT' . $number] = (string) $item->getAmount();
+        foreach ($order->getItems() as $number => $item) {
+            $paypalConfig['L_PAYMENTREQUEST_0_NAME'.$number] = $item->getDescription();
+            $paypalConfig['L_PAYMENTREQUEST_0_QTY'.$number] = $item->getQuantity();
+            $paypalConfig['L_PAYMENTREQUEST_0_AMT'.$number] = (string) $item->getAmount();
         }
 
-        $paypalConfig['PAGESTYLE'] = "Gamejam";
+        $paypalConfig['PAGESTYLE'] = 'Gamejam';
 
         return $paypalConfig;
     }
-} 
+}

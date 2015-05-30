@@ -89,7 +89,7 @@ class Activity
 
     public function __construct()
     {
-        $this->date = new \DateTime("now");
+        $this->date = new \DateTime('now');
     }
 
     /**
@@ -187,11 +187,10 @@ class Activity
     {
         return $this->user;
     }
-    
+
     public function getTypeName()
     {
-        switch($this->type)
-        {
+        switch ($this->type) {
             case self::TYPE_MEDIA:
                 return 'media';
             break;
@@ -321,15 +320,15 @@ class Activity
 
     public function getEmbeddedContent()
     {
-        if(isset($this->getContent()['content']))
-        {
+        if (isset($this->getContent()['content'])) {
             $embera = new Embera();
             $embera = new Formatter($embera);
 
             $urlInfo = $embera->getUrlInfo($this->getShoutContent());
 
-            if(empty($urlInfo))
+            if (empty($urlInfo)) {
                 return '';
+            }
 
             $urlContent = array_slice(array_keys($urlInfo), 0, 1);
 

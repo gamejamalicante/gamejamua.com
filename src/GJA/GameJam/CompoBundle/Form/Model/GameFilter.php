@@ -4,12 +4,12 @@ namespace GJA\GameJam\CompoBundle\Form\Model;
 
 class GameFilter
 {
-    const FILTER_ALL = "all";
-    const FILTER_WINNER = "winner";
-    const FILTER_OUT_OF_COMPO = "out_of_compo";
+    const FILTER_ALL = 'all';
+    const FILTER_WINNER = 'winner';
+    const FILTER_OUT_OF_COMPO = 'out_of_compo';
 
-    const ORDER_ALPHA = "alpha";
-    const ORDER_LIKES = "likes";
+    const ORDER_ALPHA = 'alpha';
+    const ORDER_LIKES = 'likes';
 
     protected $filterType;
 
@@ -86,17 +86,17 @@ class GameFilter
     public static function getAvailableFilterTypes()
     {
         return [
-            self::FILTER_ALL => "Todos los juegos",
-            self::FILTER_WINNER => "Premiados",
-            self::FILTER_OUT_OF_COMPO => "Fuera de competición"
+            self::FILTER_ALL => 'Todos los juegos',
+            self::FILTER_WINNER => 'Premiados',
+            self::FILTER_OUT_OF_COMPO => 'Fuera de competición',
         ];
     }
 
     public static function getAvailableOrder()
     {
         return [
-            self::ORDER_ALPHA => "Order alfabético",
-            self::ORDER_LIKES => "Más votados"
+            self::ORDER_ALPHA => 'Order alfabético',
+            self::ORDER_LIKES => 'Más votados',
         ];
     }
-} 
+}

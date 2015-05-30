@@ -3,47 +3,43 @@
 namespace GJA\GameJam\GameBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use GJA\GameJam\CompoBundle\Form\Model\GameFilter;
-use GJA\GameJam\GameBundle\Entity\Media;
 use GJA\GameJam\UserBundle\Entity\User;
 
 class GameRepository extends EntityRepository
 {
     public function findByFilter(GameFilter $filter)
     {
-        $queryBuilder = $this->createQueryBuilder("g");
+        $queryBuilder = $this->createQueryBuilder('g');
 
-        if($filter->getFilterType() == GameFilter::FILTER_WINNER)
-        {
-            $queryBuilder->andWhere("g.winner IS NOT NULL")
-                ->addOrderBy("g.winner", "ASC");
+        if ($filter->getFilterType() == GameFilter::FILTER_WINNER) {
+            $queryBuilder->andWhere('g.winner IS NOT NULL')
+                ->addOrderBy('g.winner', 'ASC');
         }
 
-        if($filter->getFilterType() == GameFilter::FILTER_OUT_OF_COMPO)
-        {
-            $queryBuilder->andWhere("g.compo IS NULL");
+        if ($filter->getFilterType() == GameFilter::FILTER_OUT_OF_COMPO) {
+            $queryBuilder->andWhere('g.compo IS NULL');
         }
 
-        if($compo = $filter->getCompo())
-        {
+        if ($compo = $filter->getCompo()) {
             $queryBuilder->andWhere('g.compo = :compo')
                 ->setParameter('compo', $compo);
         }
 
-        if($diversifier = $filter->getDiversifier())
-        {
+        if ($diversifier = $filter->getDiversifier()) {
             $queryBuilder->join('g.diversifiers', 'diversifiers')
                 ->andWhere('diversifiers IN(:diversifier)')
                 ->setParameter('diversifier', $diversifier);
         }
 
-        if($filter->getOrder() == 'alpha')
+        if ($filter->getOrder() == 'alpha') {
             $queryBuilder->addOrderBy('g.name', 'ASC');
+        }
 
-        if($filter->getOrder() == 'likes')
+        if ($filter->getOrder() == 'likes') {
             $queryBuilder->addOrderBy('g.likes', 'DESC');
+        }
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -52,16 +48,17 @@ class GameRepository extends EntityRepository
     {
         $games = $this->findByCompo($compo);
 
-        foreach($games as $game)
-        {
-            if ($ignoreList && in_array($game->getId(), $ignoreList))
+        foreach ($games as $game) {
+            if ($ignoreList && in_array($game->getId(), $ignoreList)) {
                 continue;
+            }
 
-            if (!$game->getScoreboardByVoter($user))
+            if (!$game->getScoreboardByVoter($user)) {
                 return $game;
+            }
         }
 
-        return null;
+        return;
     }
 
     public function findTotalByVotingStatus($voted, User $user, Compo $compo)
@@ -69,17 +66,12 @@ class GameRepository extends EntityRepository
         $games = $this->findByCompo($compo);
         $total = 0;
 
-        foreach($games as $game)
-        {
-            if ($voted)
-            {
-                if ($game->getScoreboardByVoter($user))
-                {
+        foreach ($games as $game) {
+            if ($voted) {
+                if ($game->getScoreboardByVoter($user)) {
                     $total++;
                 }
-            }
-            else
-            {
+            } else {
                 $total++;
             }
         }
@@ -100,4 +92,4 @@ DQL;
 
         return $result;
     }
-} 
+}

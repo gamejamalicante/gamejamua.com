@@ -23,17 +23,16 @@ class CompoRepository extends EntityRepository
 SELECT c FROM GameJamCompoBundle:Compo c WHERE c.open = 1 AND c.startAt <= :date
 DQL;
 
-        try
-        {
+        try {
             $result = $this->getEntityManager()->createQuery($dql)
                 ->setParameter('date', new \DateTime('now'))
                 ->getSingleResult();
         } catch (NonUniqueResultException $ex) {
-            return null;
+            return;
         } catch (NoResultException $ex) {
-            return null;
+            return;
         }
 
         return $result;
     }
-} 
+}

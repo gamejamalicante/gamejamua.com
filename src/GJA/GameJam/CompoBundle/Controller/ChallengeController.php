@@ -38,8 +38,7 @@ class ChallengeController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if(!$user->hasAppliedTo($compo))
-        {
+        if (!$user->hasAppliedTo($compo)) {
             $this->addSuccessMessage('No puedes acceder a los retos solidarios ya que no formas parte de la GameJam :(');
 
             return $this->redirectToPath('gamejam_compo_compo', ['compo' => $compo->getNameSlug()]);
@@ -47,27 +46,25 @@ class ChallengeController extends AbstractController
 
         $form = $this->createForm(new ChallengeType());
 
-        if($this->isPost())
-        {
+        if ($this->isPost()) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 /** @var Challenge $challenge */
                 $challenge = $form->getData();
                 $challenge->setUser($user);
 
                 $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
 
-                if($runningCompo === null)
-                {
+                if ($runningCompo === null) {
                     $this->addSuccessMessage('Los retos solidarios estarán disponibles cuando empiece la GameJam :)');
+
                     return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
                 }
 
                 $team = $user->getTeamForCompo($runningCompo);
 
-                if(is_null($team)) {
+                if (is_null($team)) {
                     // user is solo, check game created
                     /** @var Game $game */
                     $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'user' => $user]);
@@ -75,17 +72,18 @@ class ChallengeController extends AbstractController
                     $game = $this->getRepository('GameJamGameBundle:Game')->findOneBy(['compo' => $runningCompo, 'team' => $team]);
                 }
 
-                if(!is_null($game)) {
+                if (!is_null($game)) {
                     $challenge->setGame($game);
                 } else {
                     $createGameRoute = $this->generateUrl('gamejam_game_panel_create');
-                    $this->addSuccessMessage('Para crear retos necesitas primero crear un juego. <a href="' .$createGameRoute. '">Pulsa aquí para crearlo</a>');
+                    $this->addSuccessMessage('Para crear retos necesitas primero crear un juego. <a href="'.$createGameRoute.'">Pulsa aquí para crearlo</a>');
+
                     return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
                 }
 
                 $this->persistAndFlush($challenge);
 
-                $this->addSuccessMessage('¡Reto creado con éxito! El token del reto es: <strong><code>' .$challenge->getToken(). '</code></strong>');
+                $this->addSuccessMessage('¡Reto creado con éxito! El token del reto es: <strong><code>'.$challenge->getToken().'</code></strong>');
 
                 return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug(), 'challenge' => $challenge->getToken()]);
             }
@@ -99,7 +97,7 @@ class ChallengeController extends AbstractController
             'form' => $form->createView(),
             'challenges' => $challenges,
             'compo' => $compo,
-            'challenge' => $request->get('challenge')
+            'challenge' => $request->get('challenge'),
         ];
     }
 
@@ -113,30 +111,29 @@ class ChallengeController extends AbstractController
         $user = $this->getUser();
         $runningCompo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
 
-        if($runningCompo) {
+        if ($runningCompo) {
             /** @var Game $game */
             $game = $challenge->getGame();
 
-            if($game->isUserAllowedToEdit($user))
-            {
+            if ($game->isUserAllowedToEdit($user)) {
                 return $this->deleteChallenge($compo, $challenge);
             }
         }
 
-        if ($challenge->getUser() === $user)
-        {
+        if ($challenge->getUser() === $user) {
             return $this->deleteChallenge($compo, $challenge);
         }
 
         $this->addSuccessMessage('No tienes permisos para borrar el reto');
+
         return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
     }
-
 
     protected function deleteChallenge(Compo $compo, Challenge $challenge)
     {
         $this->deleteAndFlush($challenge);
         $this->addSuccessMessage('El reto ha sido borrado con éxito');
+
         return $this->redirectToPath('gamejam_compo_compo_challenges', ['compo' => $compo->getNameSlug()]);
     }
 
@@ -151,4 +148,4 @@ class ChallengeController extends AbstractController
 
         return ['challenge' => $challenge, 'endpoint' => $endPoint];
     }
-} 
+}

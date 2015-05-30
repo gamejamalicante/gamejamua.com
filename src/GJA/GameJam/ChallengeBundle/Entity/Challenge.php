@@ -1,6 +1,5 @@
 <?php
 
-
 namespace GJA\GameJam\ChallengeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -275,7 +274,7 @@ class Challenge
      */
     public function onPrePersist()
     {
-        $token = substr(sha1($this->getUser()->getId() . uniqid()), 0, 15);
+        $token = substr(sha1($this->getUser()->getId().uniqid()), 0, 15);
 
         $this->token = $token;
     }
@@ -321,11 +320,10 @@ class Challenge
     {
         $total = 0;
 
-        foreach ($this->getDonations() as $donation)
-        {
+        foreach ($this->getDonations() as $donation) {
             $total += $donation->getAmount();
         }
 
         return $total;
     }
-} 
+}

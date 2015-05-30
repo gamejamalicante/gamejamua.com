@@ -25,7 +25,7 @@ class ChallengeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GJA\GameJam\ChallengeBundle\Entity\Challenge'
+            'data_class' => 'GJA\GameJam\ChallengeBundle\Entity\Challenge',
         ));
     }
 
@@ -36,4 +36,4 @@ class ChallengeType extends AbstractType
     {
         return 'gamejam_challenge_challenge';
     }
-} 
+}

@@ -182,9 +182,8 @@ class TeamInvitation
      */
     public function onPrePersist()
     {
-        if(is_null($this->hash))
-        {
-            $this->hash = sha1($this->getTarget()->getId() . mt_rand(1, 9999) . uniqid());
+        if (is_null($this->hash)) {
+            $this->hash = sha1($this->getTarget()->getId().mt_rand(1, 9999).uniqid());
         }
     }
 
@@ -206,12 +205,14 @@ class TeamInvitation
 
     public function isUserAbleToCancel(User $user)
     {
-        if($this->getSender() === $user)
+        if ($this->getSender() === $user) {
             return true;
+        }
 
-        if($this->getTarget() === $user)
+        if ($this->getTarget() === $user) {
             return true;
+        }
 
         return false;
     }
-} 
+}

@@ -20,7 +20,7 @@ class GameFilterType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GJA\GameJam\CompoBundle\Form\Model\GameFilter'
+            'data_class' => 'GJA\GameJam\CompoBundle\Form\Model\GameFilter',
         ));
     }
 
@@ -28,4 +28,4 @@ class GameFilterType extends AbstractType
     {
         return 'gamejam_compo_game';
     }
-} 
+}

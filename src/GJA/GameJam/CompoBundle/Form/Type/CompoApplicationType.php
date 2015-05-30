@@ -40,7 +40,7 @@ class CompoApplicationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'GJA\GameJam\CompoBundle\Entity\CompoApplication',
-            'allow_type' => false
+            'allow_type' => false,
         ]);
     }
 }

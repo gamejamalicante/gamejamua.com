@@ -27,7 +27,7 @@ class CompoApplication
     const TYPE_DIGITAL = 1;
     const TYPE_BOARD_GAME = 2;
 
-    const LOCK_TTL = "PT10M";
+    const LOCK_TTL = 'PT10M';
 
     /**
      * @ORM\Id
@@ -74,6 +74,7 @@ class CompoApplication
     /**
      * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\Order", cascade={"persist"}, inversedBy="compoApplication")
      * @ORM\JoinColumn(onDelete="CASCADE")
+     *
      * @var Order
      */
     protected $order;
@@ -102,7 +103,7 @@ class CompoApplication
 
     public function __construct()
     {
-        $this->date = new \DateTime("now");
+        $this->date = new \DateTime('now');
     }
 
     /**
@@ -188,17 +189,17 @@ class CompoApplication
     public static function getAvailableModalitites()
     {
         return [
-            self::MODALITY_NORMAL => "Participar en el concurso",
-            self::MODALITY_OUT_OF_COMPO => "Participar fuera de concurso",
-            self::MODALITY_FREE => "Participar de forma libre"
+            self::MODALITY_NORMAL => 'Participar en el concurso',
+            self::MODALITY_OUT_OF_COMPO => 'Participar fuera de concurso',
+            self::MODALITY_FREE => 'Participar de forma libre',
         ];
     }
 
     public static function getAvailableTypes()
     {
         return [
-            self::TYPE_DIGITAL => "Videojuego",
-            self::TYPE_BOARD_GAME => "Juego de mesa"
+            self::TYPE_DIGITAL => 'Videojuego',
+            self::TYPE_BOARD_GAME => 'Juego de mesa',
         ];
     }
 
@@ -259,10 +260,10 @@ class CompoApplication
 
     public function isOrderPending()
     {
-        if($order = $this->getOrder())
-        {
-            if(!$order->isPaid())
+        if ($order = $this->getOrder()) {
+            if (!$order->isPaid()) {
                 return true;
+            }
         }
 
         return false;
@@ -286,10 +287,11 @@ class CompoApplication
 
     public function isInProgress()
     {
-        if(is_null($this->getLockTime()))
+        if (is_null($this->getLockTime())) {
             return false;
+        }
 
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
         $lockTime = clone $this->getLockTime();
 
         return ($lockTime->add(new \DateInterval(self::LOCK_TTL)) > $now);

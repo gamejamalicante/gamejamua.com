@@ -93,4 +93,4 @@ class ChallengeCompletedEvent extends Event
     {
         return $this->extra;
     }
-} 
+}

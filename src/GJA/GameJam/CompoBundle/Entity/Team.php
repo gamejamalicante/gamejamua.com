@@ -218,8 +218,9 @@ class Team
 
     public function isFull()
     {
-        if(count($this->users) >= $this->compo->getMaxTeamMembers())
+        if (count($this->users) >= $this->compo->getMaxTeamMembers()) {
             return true;
+        }
 
         return false;
     }
@@ -238,4 +239,4 @@ class Team
     {
         $this->users->removeElement($user);
     }
-} 
+}

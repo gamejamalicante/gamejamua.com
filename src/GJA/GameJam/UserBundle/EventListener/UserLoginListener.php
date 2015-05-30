@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace GJA\GameJam\UserBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
@@ -32,4 +30,4 @@ class UserLoginListener
         $this->entityManager->persist($user);
         $this->entityManager->flush($user);
     }
-} 
+}

@@ -18,7 +18,8 @@ interface GranterInterface
 {
     /**
      * @param Activity $activity
+     *
      * @return AchievementGranted
      */
     public static function grant(Activity $activity);
-} 
+}

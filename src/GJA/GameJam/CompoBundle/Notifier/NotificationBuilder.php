@@ -26,7 +26,7 @@ class NotificationBuilder
     {
         $notification = new Notification();
         $notification->setAnnounce(true);
-        $notification->setDate(new \DateTime("now"));
+        $notification->setDate(new \DateTime('now'));
         $notification->setType($type);
 
         $this->notification = $notification;
@@ -36,8 +36,9 @@ class NotificationBuilder
 
     public function setRenderedTitle($template, $vars = array())
     {
-        if(!$this->notification)
-            throw new \InvalidArgumentException("Must create notification first");
+        if (!$this->notification) {
+            throw new \InvalidArgumentException('Must create notification first');
+        }
 
         $title = $this->twig->render($template, $vars);
 
@@ -48,8 +49,9 @@ class NotificationBuilder
 
     public function setRenderedContent($template, $vars = array())
     {
-        if(!$this->notification)
-            throw new \InvalidArgumentException("Must create notification first");
+        if (!$this->notification) {
+            throw new \InvalidArgumentException('Must create notification first');
+        }
 
         $content = $this->twig->render($template, $vars);
 
@@ -69,4 +71,4 @@ class NotificationBuilder
     {
         return $this->notification;
     }
-} 
+}

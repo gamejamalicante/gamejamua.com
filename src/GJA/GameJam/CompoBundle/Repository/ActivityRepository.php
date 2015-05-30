@@ -12,7 +12,6 @@
 namespace GJA\GameJam\CompoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
 use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 
@@ -20,23 +19,24 @@ class ActivityRepository extends EntityRepository
 {
     public function findAllSince(\DateTime $since, Compo $compo = null)
     {
-        $query = $this->createQueryBuilder("a")
-            ->andWhere("a.date >= :since")
-            ->orderBy("a.date", "DESC")
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.date >= :since')
+            ->orderBy('a.date', 'DESC')
             ->setMaxResults(30)
             ->setParameter('since', $since);
 
-        if($compo)
-            $query->andWhere("a.compo = :compo")
+        if ($compo) {
+            $query->andWhere('a.compo = :compo')
                 ->setParameter('compo', $compo);
+        }
 
         return $query->getQuery()->getResult();
     }
 
     public function findOnlyActivity($limit = 10)
     {
-        $query = $this->createQueryBuilder("a")
-            ->andWhere("a.type IN (:types)")
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.type IN (:types)')
             ->setParameter('types', [
                 Activity::TYPE_ACHIEVEMENT,
                 Activity::TYPE_COINS,
@@ -45,9 +45,9 @@ class ActivityRepository extends EntityRepository
                 Activity::TYPE_LIKES,
                 Activity::TYPE_MEDIA,
                 Activity::TYPE_TEAM_CREATION,
-                Activity::TYPE_TEAM_JOIN
+                Activity::TYPE_TEAM_JOIN,
             ])
-        ->addOrderBy("a.date", "DESC")
+        ->addOrderBy('a.date', 'DESC')
         ->setMaxResults($limit);
 
         return $query->getQuery()->getResult();
@@ -55,14 +55,14 @@ class ActivityRepository extends EntityRepository
 
     public function findOnlyMessages($limit = 10)
     {
-        $query = $this->createQueryBuilder("a")
-            ->andWhere("a.type IN (:types)")
-            ->andWhere("a.user IS NOT NULL")
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.type IN (:types)')
+            ->andWhere('a.user IS NOT NULL')
             ->setParameter('types', [
                 Activity::TYPE_SHOUT,
-                Activity::TYPE_TWITTER
+                Activity::TYPE_TWITTER,
             ])
-            ->addOrderBy("a.date", "DESC")
+            ->addOrderBy('a.date', 'DESC')
             ->setMaxResults($limit);
 
         return $query->getQuery()->getResult();
@@ -70,9 +70,9 @@ class ActivityRepository extends EntityRepository
 
     public function findTwitterMentions($limit = 10)
     {
-        $query = $this->createQueryBuilder("a")
-            ->andWhere("a.type = :type")
-            ->andWhere("a.user IS NULL")
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.type = :type')
+            ->andWhere('a.user IS NULL')
             ->setParameter('type', Activity::TYPE_TWITTER)
             ->setMaxResults($limit);
 
@@ -81,6 +81,6 @@ class ActivityRepository extends EntityRepository
 
     public function findLastTwitterInteraction()
     {
-        return $this->findOneBy(['type' => Activity::TYPE_TWITTER], ['date' => "DESC"]);
+        return $this->findOneBy(['type' => Activity::TYPE_TWITTER], ['date' => 'DESC']);
     }
-} 
+}

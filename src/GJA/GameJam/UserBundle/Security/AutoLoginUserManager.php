@@ -12,7 +12,6 @@
 namespace GJA\GameJam\UserBundle\Security;
 
 use FOS\UserBundle\Doctrine\UserManager;
-use Jmikola\AutoLogin\User\AutoLoginTokenNotFoundException;
 use Jmikola\AutoLogin\User\AutoLoginUserProviderInterface;
 
 class AutoLoginUserManager extends UserManager
@@ -23,14 +22,16 @@ class AutoLoginUserManager extends UserManager
      */
     public function loadUserByAutoLoginToken($key)
     {
-        if (empty($key))
-            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException;
+        if (empty($key)) {
+            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException();
+        }
 
         $user = $this->findUserBy(array('autologinToken' => $key));
 
-        if(!$user)
-            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException;
+        if (!$user) {
+            throw new \Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException();
+        }
 
         return $user;
     }
-} 
+}

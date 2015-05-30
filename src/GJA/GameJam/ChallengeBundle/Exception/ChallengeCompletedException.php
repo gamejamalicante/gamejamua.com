@@ -6,4 +6,4 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ChallengeCompletedException extends BadRequestHttpException
 {
-} 
+}

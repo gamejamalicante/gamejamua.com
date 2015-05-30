@@ -30,7 +30,7 @@ class UserActivityListener extends AbstractActivityListener
         $activity->setType(Activity::TYPE_ACHIEVEMENT);
 
         // add to seconds to display it after the achievement granter event :)
-        $activity->getDate()->add(new \DateInterval("PT2S"));
+        $activity->getDate()->add(new \DateInterval('PT2S'));
 
         $this->persistActivity($activity);
     }
@@ -42,4 +42,4 @@ class UserActivityListener extends AbstractActivityListener
 
         return $activity;
     }
-} 
+}

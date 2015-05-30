@@ -12,7 +12,6 @@
 namespace GJA\GameJam\ChallengeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -132,4 +131,4 @@ class Donation
     {
         return $this->user;
     }
-} 
+}

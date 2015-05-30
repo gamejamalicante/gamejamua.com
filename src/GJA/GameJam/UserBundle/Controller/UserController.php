@@ -12,14 +12,10 @@
 namespace GJA\GameJam\UserBundle\Controller;
 
 use TrivialSense\FrameworkCommon\Controller\AbstractController;
-use GJA\GameJam\CompoBundle\Entity\Activity;
 use GJA\GameJam\UserBundle\Entity\User;
-use GJA\GameJam\UserBundle\Form\Type\ShoutType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/")
@@ -35,4 +31,4 @@ class UserController extends AbstractController
     {
         return ['user' => $user];
     }
-} 
+}

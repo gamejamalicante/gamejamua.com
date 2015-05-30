@@ -41,4 +41,4 @@ abstract class UserActivityEvent extends Event
     {
         return $this->user;
     }
-} 
+}

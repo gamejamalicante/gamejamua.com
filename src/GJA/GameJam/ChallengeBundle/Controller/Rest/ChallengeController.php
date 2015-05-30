@@ -25,8 +25,7 @@ class ChallengeController extends AbstractController
      */
     public function completeAction(Challenge $challenge)
     {
-        if($challenge->isCompleted())
-        {
+        if ($challenge->isCompleted()) {
             throw new ChallengeCompletedException('Challenge is already completed');
         }
 

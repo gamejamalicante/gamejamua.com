@@ -29,8 +29,7 @@ DQL;
             ->setParameter('compo', $compo)
             ->getResult();
 
-        uasort($ranking, function(Game $left, Game $right)
-        {
+        uasort($ranking, function (Game $left, Game $right) {
             return $this->getGameTotalPoints($left) < $this->getGameTotalPoints($right);
         });
 

@@ -16,7 +16,7 @@ class WaitingListType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'GJA\GameJam\CompoBundle\Entity\WaitingList'
+            'data_class' => 'GJA\GameJam\CompoBundle\Entity\WaitingList',
         ]);
     }
 

@@ -21,7 +21,6 @@ use GJA\GameJam\UserBundle\Form\Type\ShoutType;
 use GJA\GameJam\UserBundle\GameJamUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -49,17 +48,15 @@ class PanelController extends AbstractController
 
         $form = $this->createForm(new ProfileType(), $user);
 
-        if($request->isMethod("POST"))
-        {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 $this->persistAndFlush($user);
 
-                $this->addSuccessMessage("¡Perfil actualizado!");
+                $this->addSuccessMessage('¡Perfil actualizado!');
 
-                $this->redirectToPath("gamejam_user_panel_edit", ['success' => true]);
+                $this->redirectToPath('gamejam_user_panel_edit', ['success' => true]);
             }
         }
 
@@ -77,12 +74,10 @@ class PanelController extends AbstractController
 
         $form = $this->createForm(new ShoutType(), $activity);
 
-        if($request->isMethod("POST"))
-        {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if ($form->isValid()) {
                 /** @var LinkUnshortener $linkUnshortener */
                 $linkUnshortener = $this->get('gamejam.compo.link_unshortener');
 
@@ -90,7 +85,7 @@ class PanelController extends AbstractController
 
                 $activity->setContent(['content' => $content]);
                 $activity->setUser($this->getUser());
-                $activity->setCompo($this->getRepository("GameJamCompoBundle:Compo")->findOneBy(['open' => true], ['id' => 'ASC']));
+                $activity->setCompo($this->getRepository('GameJamCompoBundle:Compo')->findOneBy(['open' => true], ['id' => 'ASC']));
 
                 $this->persistAndFlush($activity);
 
@@ -109,4 +104,4 @@ class PanelController extends AbstractController
 
         return ['form' => $form->createView()];
     }
-} 
+}

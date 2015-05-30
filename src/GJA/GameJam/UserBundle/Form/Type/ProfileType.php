@@ -12,7 +12,7 @@ class ProfileType extends AbstractType
     {
         $builder->add('nickname', null, ['required' => false])
             ->add('avatarUrl', 'text', ['required' => false])
-            ->add('birthDate', null, ['required' => false, 'years' => range(date("Y") - 50, date("Y")-12)])
+            ->add('birthDate', null, ['required' => false, 'years' => range(date('Y') - 50, date('Y') - 12)])
             ->add('sex', 'choice', ['required' => false, 'choices' => User::getAvailableSexes(), 'expanded' => false, 'multiple' => false])
             ->add('siteUrl', null, ['required' => false])
             ->add('city', null, ['required' => false])

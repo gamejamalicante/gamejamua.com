@@ -8,7 +8,6 @@ use GJA\GameJam\CompoBundle\Form\Type\GameFilterType;
 use GJA\GameJam\GameBundle\Repository\GameRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -38,10 +37,9 @@ class GameController extends AbstractController
 
         $form->submit($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             /** @var GameRepository $gameRepository */
-            $gameRepository = $this->getRepository("GameJamGameBundle:Game");
+            $gameRepository = $this->getRepository('GameJamGameBundle:Game');
 
             $games = $gameRepository->findByFilter($filter);
 
@@ -50,4 +48,4 @@ class GameController extends AbstractController
 
         return array('games' => array());
     }
-} 
+}

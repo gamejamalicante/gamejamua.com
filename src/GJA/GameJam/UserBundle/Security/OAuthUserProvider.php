@@ -7,8 +7,6 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use GJA\GameJam\UserBundle\Entity\User;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseUserProvider;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class OAuthUserProvider extends BaseUserProvider
@@ -45,8 +43,7 @@ class OAuthUserProvider extends BaseUserProvider
 
         $user = $this->userManager->findUserByUsernameOrEmail($username);
 
-        if(!is_null($user))
-        {
+        if (!is_null($user)) {
             $this->setUserServiceParameters($user, $username, $response->getAccessToken(), $service);
         }
 
@@ -67,10 +64,11 @@ class OAuthUserProvider extends BaseUserProvider
 
             $user->setUsername($username);
 
-            if($email = $response->getEmail())
+            if ($email = $response->getEmail()) {
                 $user->setEmail($email);
-            else
-                $user->setEmail("nomail-YnnjNn7i0IO6V5BAnPUh@gamejamua.com"); // TODO: put this in config
+            } else {
+                $user->setEmail('nomail-YnnjNn7i0IO6V5BAnPUh@gamejamua.com');
+            } // TODO: put this in config
 
             $user->setPassword(null);
             $user->setEnabled(true);

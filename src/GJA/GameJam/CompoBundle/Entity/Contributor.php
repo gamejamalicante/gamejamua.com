@@ -148,7 +148,7 @@ class Contributor
 
     public function getImageWebPath()
     {
-        return 'bundles/gamejamcompo/images/contributors/' . $this->nameSlug. '.png';
+        return 'bundles/gamejamcompo/images/contributors/'.$this->nameSlug.'.png';
     }
 
     public function __toString()

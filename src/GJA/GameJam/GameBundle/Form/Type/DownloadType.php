@@ -29,7 +29,7 @@ class DownloadType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'GJA\GameJam\GameBundle\Entity\Download'
+            'data_class' => 'GJA\GameJam\GameBundle\Entity\Download',
         ]);
     }
-} 
+}

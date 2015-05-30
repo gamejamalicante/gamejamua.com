@@ -20,18 +20,15 @@ class AvatarExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction("user_avatar", array($this, "getUserAvatar"))
+            new \Twig_SimpleFunction('user_avatar', array($this, 'getUserAvatar')),
         );
     }
 
     public function getUserAvatar(User $user, $size = 20)
     {
-        if($avatarUrl = $user->getAvatarUrl())
-        {
+        if ($avatarUrl = $user->getAvatarUrl()) {
             return $avatarUrl;
-        }
-        elseif($gravatarUrl = $this->gravatarHelper->exists($user->getEmail()))
-        {
+        } elseif ($gravatarUrl = $this->gravatarHelper->exists($user->getEmail())) {
             return $this->gravatarHelper->getUrl($user->getEmail(), $size);
         }
 
@@ -42,4 +39,4 @@ class AvatarExtension extends \Twig_Extension
     {
         return 'gamejam_user_avatar';
     }
-} 
+}

@@ -19,6 +19,5 @@ class Mailer
 
     public function sendTeamInvitationMail(User $from, Team $to, $message)
     {
-
     }
-} 
+}

@@ -89,33 +89,33 @@ class Download
 
     /**
      * @var array
-     * TODO: move this to it's entity
+     *            TODO: move this to it's entity
      */
     protected $platformMap = array(
         self::PLATFORM_IOS => array(
             'slug' => 'ios',
-            'name' => 'iOS (iPhone/iPad)'
+            'name' => 'iOS (iPhone/iPad)',
         ),
         self::PLATFORM_WEB => array(
             'slug' => 'web',
-            'name' => 'Web (HTML5/Javascript)'
+            'name' => 'Web (HTML5/Javascript)',
         ),
         self::PLATFORM_ANDROID => array(
             'slug' => 'android',
-            'name' => 'Android'
+            'name' => 'Android',
         ),
         self::PLATFORM_LINUX => array(
             'slug' => 'linux',
-            'name' => 'GNU/Linux'
+            'name' => 'GNU/Linux',
         ),
         self::PLATFORM_MAC => array(
             'slug' => 'mac',
-            'name' => 'Mac'
+            'name' => 'Mac',
         ),
         self::PLATFORM_WINDOWS => array(
             'slug' => 'windows',
-            'name' => 'Windows (7/8)'
-        )
+            'name' => 'Windows (7/8)',
+        ),
     );
 
     /**
@@ -274,7 +274,7 @@ class Download
             self::PLATFORM_MAC => 'Mac',
             self::PLATFORM_LINUX => 'GNU/Linux',
             self::PLATFORM_ANDROID => 'Android',
-            self::PLATFORM_WEB => 'HTML5'
+            self::PLATFORM_WEB => 'HTML5',
         ];
     }
 
@@ -315,4 +315,4 @@ class Download
     {
         $this->deletedAt = $deletedAt;
     }
-} 
+}

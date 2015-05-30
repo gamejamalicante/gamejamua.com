@@ -7,7 +7,7 @@ use GJA\GameJam\CompoBundle\Service\Mailer;
 
 class NotificationListener
 {
-    const MAIL_PREFIX = "[GameJam Alicante]";
+    const MAIL_PREFIX = '[GameJam Alicante]';
 
     /**
      * @var \Swift_Mailer
@@ -35,25 +35,25 @@ class NotificationListener
     {
         $notification = $notificationEvent->getNotification();
 
-        if($notification->isGlobal() && !$notification->getAnnounce())
+        if ($notification->isGlobal() && !$notification->getAnnounce()) {
             return;
+        }
 
-        $body = $this->twig->render("GameJamCompoBundle:Notification:mailBase.html.twig", [
+        $body = $this->twig->render('GameJamCompoBundle:Notification:mailBase.html.twig', [
             'title' => $notification->getTitle(),
-            'content' => $notification->getContent()
+            'content' => $notification->getContent(),
         ]);
 
         $mail = \Swift_Message::newInstance()
-            ->setSubject(self::MAIL_PREFIX . " " .$notification->getTitle())
+            ->setSubject(self::MAIL_PREFIX.' '.$notification->getTitle())
             ->setBody($body)
             ->setFrom($this->replyTo)
-            ->setContentType("text/html")
+            ->setContentType('text/html')
             ->setReplyTo($this->replyTo);
 
-        foreach($notificationEvent->getTargets() as $target)
-        {
+        foreach ($notificationEvent->getTargets() as $target) {
             $mail->setTo($target->getEmail());
             $this->mailer->send($mail);
         }
     }
-} 
+}

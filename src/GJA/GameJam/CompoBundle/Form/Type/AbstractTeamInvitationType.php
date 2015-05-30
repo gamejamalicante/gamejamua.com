@@ -3,9 +3,7 @@
 namespace GJA\GameJam\CompoBundle\Form\Type;
 
 use GJA\GameJam\CompoBundle\Entity\Compo;
-use GJA\GameJam\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 
 abstract class AbstractTeamInvitationType extends AbstractType
 {
@@ -18,4 +16,4 @@ abstract class AbstractTeamInvitationType extends AbstractType
     {
         $this->compo = $compo;
     }
-} 
+}
