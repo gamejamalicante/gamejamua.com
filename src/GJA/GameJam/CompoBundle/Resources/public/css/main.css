@@ -222,6 +222,7 @@ body
     bottom: -1px;
     margin-bottom: 0;
     padding-left: 0;
+    right: 0px;
 }
 
 .layout header .menu li
@@ -931,7 +932,7 @@ textarea.shout
 
 .section.active-compo
 {
-    background: url('/bundles/gamejamcompo/images/compos/bitsandglue.jpg');
+    background: url('/bundles/gamejamcompo/images/compos/vibg.jpg');
     text-align: center;
     border: 2px solid #000;
     height: 490px;
@@ -941,15 +942,16 @@ textarea.shout
 {
     margin-bottom: 10px;
     text-align: center;
-    text-shadow: 0 1px 5px #FFF;
+    text-shadow: 0 1px 5px #000;
+    color: #FFF
 }
 
 .section.active-compo a
 {
-    color: #000;
+    color: #6dbbff;
     margin-bottom: 10px;
     text-align: center;
-    text-shadow: 0 1px 5px #FFF;
+    text-shadow: 0 1px 5px #000;
     font-size: 20px;
     text-decoration: underline;
 }
@@ -957,6 +959,7 @@ textarea.shout
 .section.active-compo p
 {
     font-size: 16px;
+    color: #FFF
 }
 
 .section.compo #countdown-container

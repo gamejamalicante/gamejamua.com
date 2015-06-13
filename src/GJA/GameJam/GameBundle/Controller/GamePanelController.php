@@ -66,6 +66,8 @@ class GamePanelController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                $this->handleMediaFormData($game);
+
                 if ($runningCompo !== null) {
                     if ($competing) {
                         $game->setCompo($runningCompo);
@@ -120,24 +122,7 @@ class GamePanelController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $media = $game->getMedia();
-                $image = $game->getImage();
-
-                if ($image !== null) {
-                    $this->persist($image);
-                }
-
-                foreach ($media as $mediaElement) {
-                    if ($mediaElement instanceof Media) {
-                        $mediaElement->setGame($game);
-                        $this->persist($mediaElement);
-                    }
-                }
-
-                foreach ($game->getDownloads() as $download) {
-                    $download->setGame($game);
-                    $this->persist($download);
-                }
+                $this->handleMediaFormData($game);
 
                 $this->persist($game);
                 $this->flush();
@@ -179,5 +164,27 @@ class GamePanelController extends AbstractController
         $this->addSuccessMessage('Hemos eliminado el juego con éxito');
 
         return $this->redirectToPath('gamejam_game_panel_create');
+    }
+
+    private function handleMediaFormData(Game $game)
+    {
+        $media = $game->getMedia();
+        $image = $game->getImage();
+
+        if ($image !== null) {
+            $this->persist($image);
+        }
+
+        foreach ($media as $mediaElement) {
+            if ($mediaElement instanceof Media) {
+                $mediaElement->setGame($game);
+                $this->persist($mediaElement);
+            }
+        }
+
+        foreach ($game->getDownloads() as $download) {
+            $download->setGame($game);
+            $this->persist($download);
+        }
     }
 }

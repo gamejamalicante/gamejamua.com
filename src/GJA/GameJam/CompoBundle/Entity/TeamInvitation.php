@@ -41,12 +41,12 @@ class TeamInvitation
     protected $sentAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="teamInvitationsSent")
      */
     protected $sender;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="teamInvitationsReceived")
      */
     protected $target;
 

@@ -27,7 +27,7 @@ class TeamRequestType extends AbstractTeamInvitationType
                 // TODO: add Having to limit per max user team members
 
                 return $builder;
-            }, ])
+            }])
             ->add('type', 'hidden', ['data' => TeamInvitation::TYPE_REQUEST]);
     }
 

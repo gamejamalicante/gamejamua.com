@@ -3,12 +3,12 @@
         {% if compo.hasStarted %}
         <div class="section active-compo">
             <h2><i class="fa fa-rocket"></i> ¡Estás en plena competición para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-            <p><a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ir a la página de la competición con noticias, actividad de los participantes, etc...</a></p>
+            <p><a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ir a la página de la competición</a></p>
         </div>
         {% else %}
         <div class="section active-compo">
             <h2><i class="fa fa-rocket"></i> ¡Estás apuntado para participar en la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-            <p>La competición empieza en <strong>{{ compo.getDaysToStart }}</strong> días. <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí para ver la página de competición con noticias, actividad, etc.</a></p>
+            <p>La competición empieza en <strong>{{ compo.getDaysToStart }}</strong> días. <a href="{{ path('gamejam_compo_compo', {compo: compo.nameSlug}) }}">Pulsa aquí ir a la competición</a></p>
         </div>
         {% endif %}
     {% elseif compo.isFull %}
@@ -19,14 +19,14 @@
             </div>
         {% else %}
             <div class="section active-compo">
-                <h2><i class="fa fa-rocket"></i> ¡Ya están abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
+                <h2><i class="fa fa-rocket"></i> ¡Abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
                 <p><a href="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a></p>
             </div>
             {% endif %}
         {% else %}
     <div class="section active-compo">
-        <h2><i class="fa fa-rocket"></i> ¡Ya están abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-        <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a> ¡Rapido que las plazas se agotan!</p>
+        <h2><i class="fa fa-rocket"></i> ¡Abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
+        <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para inscribirte!{% endif %}</a> ¡Rapido que las plazas se agotan!</p>
     </div>
     {% endif %}
 {% endif %}

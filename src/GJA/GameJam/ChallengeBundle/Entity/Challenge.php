@@ -48,7 +48,7 @@ class Challenge
     protected $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game", inversedBy="challenges")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $game;

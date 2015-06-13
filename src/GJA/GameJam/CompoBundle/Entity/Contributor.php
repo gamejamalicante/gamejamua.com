@@ -27,7 +27,7 @@ class Contributor
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="GJA\GameJam\UserBundle\Entity\User", inversedBy="contributor")
      */
     protected $user;
 

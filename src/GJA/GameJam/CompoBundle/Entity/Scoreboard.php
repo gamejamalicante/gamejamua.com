@@ -37,7 +37,7 @@ class Scoreboard
     protected $voter;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game")
+     * @ORM\ManyToOne(targetEntity="GJA\GameJam\GameBundle\Entity\Game", inversedBy="scoreboard")
      */
     protected $game;
 

@@ -48,7 +48,7 @@ class User extends BaseUser implements EncoderAwareInterface
     protected $username;
 
     /**
-     * @Assert\Regex(pattern="/^(([a-zA-Z]+\d+)|(\d+[a-zA-Z]+))[a-zA-Z0-9]*$/", message="La contraseña es muy insegura")
+     * @Assert\Regex(pattern="/^^(?=.*\d).{5,100}$$/", message="La contraseña es muy insegura")
      */
     protected $plainPassword;
 

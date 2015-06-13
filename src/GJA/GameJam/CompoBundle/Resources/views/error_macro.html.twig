@@ -1,16 +1,13 @@
 {% macro display_error(form) %}
+    <br>
     {% import _self as forms %}
-    <ul>
         {% for child in form if not child.vars.valid %}
-            <li>
-                {% if child.vars.compound and not child.vars.valid %}
-                    {{ forms.display_error(child) }}
-                {% else %}
-                    {% for error in child.vars.errors %}
-                        {{ error.message }}
-                    {% endfor %}
-                {% endif %}
-            </li>
+            {% if child.vars.compound and not child.vars.valid %}
+                {{ forms.display_error(child) }}
+            {% else %}
+                {% for error in child.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            {% endif %}
         {% endfor %}
-    </ul>
 {% endmacro %}
