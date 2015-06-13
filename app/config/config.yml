@@ -243,7 +243,6 @@ endroid_twitter:
 liip_monitor:
     enable_controller: true
     checks:
-        php_extensions: [apc]
         doctrine_dbal: default
         writable_directory: [%kernel.root_dir%/../web/uploads, %kernel.root_dir%/../web/media]
 
