@@ -18,7 +18,7 @@ monolog:
 
 assetic:
     filters:
-        uglifyjs:
+        uglifyjs2:
             bin: /usr/bin/uglifyjs
             apply_to: "\.js$"
         uglifycss:

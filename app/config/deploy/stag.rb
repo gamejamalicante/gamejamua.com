@@ -1,1 +1,1 @@
-set :domain, 'lon-do-01.albertofem.com'
+set :domain, 'gamejamua.com'
