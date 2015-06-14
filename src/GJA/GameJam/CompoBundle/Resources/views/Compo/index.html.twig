@@ -21,11 +21,7 @@
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
 
-    {% if compo.open %}
     <script type="text/javascript">
-
-        var lastUpdate = Math.round(+new Date()/1000);
-
         function reloadActivity(target, showEffect, callback, last)
         {
             $('.loading').fadeIn();
@@ -74,13 +70,21 @@
             });
         }
 
+        $(document).ready(function() {
+            reloadActivity('.activity', true, null, true);
+        });
+    </script>
+
+    {% if compo.open %}
+    <script type="text/javascript">
+
+        var lastUpdate = Math.round(+new Date()/1000);
+
         var pendingShoutRequest = false;
         var refreshId = 0;
 
         $(document).ready(function()
         {
-            reloadActivity('.activity', true, null, true);
-
             $('.shoutbox .shout-form').submit(function(e)
             {
                 e.preventDefault();
