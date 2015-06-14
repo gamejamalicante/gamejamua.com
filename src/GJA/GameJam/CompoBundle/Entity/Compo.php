@@ -78,7 +78,7 @@ class Compo
     protected $applicationEndAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Theme", inversedBy="compo", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Theme", inversedBy="compo", cascade={"persist"}, fetch="EAGER")
      */
     protected $theme;
 

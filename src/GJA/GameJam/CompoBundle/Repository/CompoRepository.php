@@ -14,6 +14,8 @@ namespace GJA\GameJam\CompoBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
+use GJA\GameJam\CompoBundle\Entity\Compo;
 
 class CompoRepository extends EntityRepository
 {
@@ -32,6 +34,19 @@ DQL;
         } catch (NoResultException $ex) {
             return;
         }
+
+        return $result;
+    }
+
+    public function findJoinedMembers(Compo $compo)
+    {
+        $dql = <<<DQL
+SELECT u FROM GameJamUserBundle:User u JOIN u.applications ap WHERE ap.completed = true AND ap.compo = :compo
+DQL;
+
+        $result = $this->getEntityManager()->createQuery($dql)
+            ->setParameter('compo', $compo)
+            ->getArrayResult();
 
         return $result;
     }

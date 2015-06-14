@@ -26,12 +26,18 @@
 
         var lastUpdate = Math.round(+new Date()/1000);
 
-        function reloadActivity(target, showEffect, callback)
+        function reloadActivity(target, showEffect, callback, last)
         {
             $('.loading').fadeIn();
 
-            var targetUrl = '{{ path('gamejam_compo_compo_activity', {compo: compo.nameSlug, since: '__since'}) }}'
-                    .replace('__since', "@" + lastUpdate);
+            var targetUrl;
+
+            if (!last) {
+                targetUrl = '{{ path('gamejam_compo_compo_activity', {compo: compo.nameSlug, since: '__since'}) }}'
+                        .replace('__since', "@" + lastUpdate);
+            } else {
+                targetUrl = '{{ path('gamejam_compo_compo_last_activity', {compo: compo.nameSlug}) }}';
+            }
 
             $.get(targetUrl, function(content)
             {
@@ -73,6 +79,8 @@
 
         $(document).ready(function()
         {
+            reloadActivity('.activity', true, null, true);
+
             $('.shoutbox .shout-form').submit(function(e)
             {
                 e.preventDefault();
@@ -145,6 +153,8 @@
 
             $(this).data("prevType", e.type);
         });
+
+
     </script>
     {% endif %}
 {% endblock %}
@@ -210,7 +220,7 @@
             <div class="col-sm-6">
                 <span class="pull-right loading"><img src="{{ asset('bundles/gamejamcompo/images/loading.gif') }}" /></span>
                 <h2><i class="fa fa-comment-o"></i> Actividad de los participantes</h2>
-                <div class="activity">{{ render(controller("GameJamCompoBundle:Compo:partialLastActivity", {compo: compo.nameSlug})) }}</div>
+                <div class="activity"></div>
             </div>
             <div class="col-sm-6">
                 {% if user %}
@@ -287,8 +297,8 @@
                 </div><br><br>
                 <h2><i class="fa fa-pencil"></i> Miembros inscritos</h2>
                 <div class="application">
-                {% for member in compo.joinedMembers %}
-                        <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member }}</a><br>
+                {% for member in joined_members %}
+                        <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member.username }}</a><br>
                 {% endfor %}
                 </div>
             </div>

@@ -24,12 +24,20 @@ class AvatarExtension extends \Twig_Extension
         );
     }
 
-    public function getUserAvatar(User $user, $size = 20)
+    public function getUserAvatar($user, $size = 20)
     {
-        if ($avatarUrl = $user->getAvatarUrl()) {
+        if ($user instanceof User) {
+            $avatarUrl = $user->getAvatarUrl();
+            $email = $user->getEmail();
+        } else {
+            $avatarUrl = $user['avatarUrl'];
+            $email = $user['email'];
+        }
+
+        if (!is_null($avatarUrl)) {
             return $avatarUrl;
-        } elseif ($gravatarUrl = $this->gravatarHelper->exists($user->getEmail())) {
-            return $this->gravatarHelper->getUrl($user->getEmail(), $size);
+        } elseif ($gravatarUrl = $this->gravatarHelper->exists($email)) {
+            return $this->gravatarHelper->getUrl($email, $size);
         }
 
         return '/bundles/gamejamcompo/images/noavatar.jpg';

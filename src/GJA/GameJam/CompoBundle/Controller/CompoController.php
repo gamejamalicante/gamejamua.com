@@ -50,6 +50,7 @@ class CompoController extends AbstractController
             'team' => $team,
             'open_formation' => $compo->isTeamFormationOpen(),
             'game' => $game,
+            'joined_members' => $this->getRepository('GameJamCompoBundle:Compo')->findJoinedMembers($compo)
         ];
     }
 
@@ -191,7 +192,7 @@ class CompoController extends AbstractController
     }
 
     /**
-     * @Route("/_activity", name="gamejam_compo_compo_activity")
+     * @Route("/_activity", name="gamejam_compo_compo_last_activity")
      * @Template("GameJamCompoBundle:Compo:_activity.html.twig")
      */
     public function partialLastActivityAction(Compo $compo)
