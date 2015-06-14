@@ -33,3 +33,9 @@ elao_error_notifier:
     handlePHPErrors: true
     handlePHPWarnings: false
     repeatTimeout: 3600
+
+doctrine:
+    orm:
+        metadata_cache_driver: apc
+        query_cache_driver: apc
+        result_cache_driver: apc
