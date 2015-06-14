@@ -51,3 +51,5 @@ parameters:
     more_than_gamers.game_id: ~
 
     challenges.donation.allow_duplicates: true
+
+    google_site_verification

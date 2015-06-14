@@ -30,6 +30,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         site:
+            google_verification: %google_site_verification%
             bank_account: %bank_account%
             main_email: %main_email%
             irc:
