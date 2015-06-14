@@ -38,6 +38,21 @@ DQL;
         return $result;
     }
 
+    public function findLastCompo()
+    {
+        $dql = <<<DQL
+SELECT c FROM GameJamCompoBundle:Compo c WHERE c.applicationEndAt < :date
+DQL;
+
+        try {
+            return $this->getEntityManager()->createQuery($dql)
+                ->setParameter('date', new \DateTime("now"))
+                ->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findJoinedMembers(Compo $compo)
     {
         $dql = <<<DQL
