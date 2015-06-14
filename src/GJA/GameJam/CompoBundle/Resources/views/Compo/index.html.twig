@@ -302,7 +302,7 @@
                 <h2><i class="fa fa-pencil"></i> Miembros inscritos</h2>
                 <div class="application">
                 {% for member in joined_members %}
-                        <img class="avatar" src="{{ user_avatar(member, 20) }}" style="width: 20px;" /> <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member.username }}</a><br>
+                        <a href="{{ path('gamejam_user_profile', {user: member.username}) }}">{{ member.username }}</a><br>
                 {% endfor %}
                 </div>
             </div>
