@@ -128,7 +128,7 @@ class FrontendController extends AbstractController
     public function currentCompoAction()
     {
         /** @var Compo $compo */
-        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy([], ['id' => 'DESC', 'open' => true]);
+        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy([], ['id' => 'DESC']);
 
         if (!$compo) {
             throw new NotFoundHttpException('No compos found!');
