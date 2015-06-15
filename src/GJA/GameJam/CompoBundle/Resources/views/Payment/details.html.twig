@@ -37,7 +37,10 @@
                         <div class="input-group">
                             <div class="checkbox">
                                 <label>
-                                    {{ form_widget(form.method.0, {'attr':{'selected':'selected'}}) }} Pago con PayPal <img src="{{ asset('bundles/gamejamcompo/images/paypal.png') }}"> <img src="{{ asset('bundles/gamejamcompo/images/visa.png') }}"> <img src="{{ asset('bundles/gamejamcompo/images/mastercard.png') }}"><br>
+                                    {{ form_widget(form.method.1, {'attr':{'selected':'selected'}}) }} Pago con PayPal <img src="{{ asset('bundles/gamejamcompo/images/paypal.png') }}"> <img src="{{ asset('bundles/gamejamcompo/images/visa.png') }}"> <img src="{{ asset('bundles/gamejamcompo/images/mastercard.png') }}"><br>
+                                </label>
+                                 <label>
+                                    {{ form_widget(form.method.0) }} Pago con cuenta bancaria
                                 </label><br>
                             </div>
                         </div>
