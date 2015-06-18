@@ -20,13 +20,13 @@
         {% else %}
             <div class="section active-compo">
                 <h2><i class="fa fa-rocket"></i> ¡Abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-                <p><a href="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a></p>
+                <p><a href="{{ path('gamejam_compo_compo_waitinglist', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para registrarte e inscribirte!{% endif %}</a> ¡Sólo quedan <strong>{{ compo.openPlaces }}</strong> plazas disponibles!</p>
             </div>
             {% endif %}
         {% else %}
     <div class="section active-compo">
         <h2><i class="fa fa-rocket"></i> ¡Abiertas las inscripciones para la <strong>{{ compo }}</strong>! <i class="fa fa-rocket"></i></h2>
-        <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para inscribirte!{% endif %}</a> ¡Rapido que las plazas se agotan!</p>
+        <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para inscribirte!{% endif %}</a> ¡Sólo quedan <strong>{{ compo.openPlaces }}</strong> plazas disponibles!</p>
     </div>
     {% endif %}
 {% endif %}
