@@ -86,11 +86,14 @@ class FetchTwitterActivityCommand extends ContainerAwareCommand
 
             $user = $this->findUserFromTwitterUsername($tweet->user->screen_name);
 
+            $publicationDate = new \DateTime($tweet->created_at);
+            $publicationDate->setTimezone(new \DateTimeZone("Europe/Madrid"));
+
             $activity = new Activity();
             $activity->setType(Activity::TYPE_TWITTER);
             $activity->setUser($user);
             $activity->setCompo($this->getCurrentCompo());
-            $activity->setDate(new \DateTime($tweet->created_at));
+            $activity->setDate($publicationDate);
 
             /** @var LinkUnshortener $linkUnshortener */
             $linkUnshortener = $this->getContainer()->get('gamejam.compo.link_unshortener');
