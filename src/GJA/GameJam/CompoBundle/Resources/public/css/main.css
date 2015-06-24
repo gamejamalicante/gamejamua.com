@@ -987,6 +987,17 @@ textarea.shout
     margin-top: 15px;
 }
 
+.section.compo .description.compo
+{
+    background-color: rgb(70, 103, 131);
+    color: #FFF;
+}
+
+.section.compo .description.compo h2
+{
+    color: #FFF;
+}
+
 .section.compo .application .avatar
 {
     width: 80px;
