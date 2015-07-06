@@ -14,6 +14,7 @@ namespace GJA\GameJam\UserBundle\Controller;
 use GJA\GameJam\CompoBundle\Entity\Compo;
 use Gregwar\Image\Image;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use TrivialSense\FrameworkCommon\Controller\AbstractController;
@@ -41,13 +42,15 @@ class UserController extends AbstractController
      * @Route("/{user}/ticket", name="gamejam_user_profile_ticket")
      * @ParamConverter("user", options={"mapping":{"user":"username"}})
      */
-    public function ticketAction(User $user)
+    public function ticketAction(User $user, Request $request)
     {
-        if (!$this->isGrantedRole("ROLE_ADMIN") && $user !== $this->getUser()) {
+        $token = $request->get('token');
+
+        if (!$this->isGrantedRole("ROLE_ADMIN") || $user->getAutologinToken() != $token) {
             throw new AccessDeniedException;
         }
 
-        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findRunningCompo();
+        $compo = $this->getRepository('GameJamCompoBundle:Compo')->findOneBy([], ['id' => 'DESC']);
 
         if (is_null($compo) || !$user->hasAppliedTo($compo)) {
             return new JsonResponse();
@@ -62,11 +65,14 @@ class UserController extends AbstractController
      */
     public function singlePdfAction(User $user)
     {
-        if (!$this->isGrantedRole("ROLE_ADMIN") && $user !== $this->getUser()) {
+        if (!$this->isGrantedRole("ROLE_ADMIN") || $user !== $this->getUser()) {
             throw new AccessDeniedException;
         }
 
-        $pageUrl = $this->generateUrl('gamejam_user_profile_ticket', ['user' => $user->getUsername()], true);
+        $pageUrl = $this->generateUrl('gamejam_user_profile_ticket', [
+            'user' => $user->getUsername(),
+            'token' => $user->getAutologinToken()
+        ], true);
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutput($pageUrl),
