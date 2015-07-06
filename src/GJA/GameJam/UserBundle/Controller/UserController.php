@@ -46,7 +46,7 @@ class UserController extends AbstractController
     {
         $token = $request->get('token');
 
-        if (!$this->isGrantedRole("ROLE_ADMIN") || $user->getAutologinToken() != $token) {
+        if (!$this->isGrantedRole("ROLE_ADMIN") && $user->getAutologinToken() != $token) {
             throw new AccessDeniedException;
         }
 
@@ -65,7 +65,7 @@ class UserController extends AbstractController
      */
     public function singlePdfAction(User $user)
     {
-        if (!$this->isGrantedRole("ROLE_ADMIN") || $user !== $this->getUser()) {
+        if (!$this->isGrantedRole("ROLE_ADMIN") && $user !== $this->getUser()) {
             throw new AccessDeniedException;
         }
 
