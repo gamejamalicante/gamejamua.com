@@ -39,6 +39,27 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/{user}/ticket/show", name="gamejam_user_profile_ticket_show")
+     * @ParamConverter("user", options={"mapping":{"user":"username"}})
+     * @Template
+     */
+    public function ticketShowAction(User $user, Request $request)
+    {
+        $token = $request->get('token');
+
+        if (!$this->isGrantedRole("ROLE_ADMIN") && $user->getAutologinToken() != $token) {
+            throw new AccessDeniedException;
+        }
+
+        $imageUrl = $this->generateUrl('gamejam_user_profile_ticket', [
+            'user' => $user->getUsername(),
+            'token' => $user->getAutologinToken()
+        ], true);
+
+        return array('image' => $imageUrl);
+    }
+
+    /**
      * @Route("/{user}/ticket", name="gamejam_user_profile_ticket")
      * @ParamConverter("user", options={"mapping":{"user":"username"}})
      */
