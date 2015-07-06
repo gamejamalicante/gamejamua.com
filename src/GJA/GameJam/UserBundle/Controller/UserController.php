@@ -90,7 +90,7 @@ class UserController extends AbstractController
             throw new AccessDeniedException;
         }
 
-        $pageUrl = $this->generateUrl('gamejam_user_profile_ticket', [
+        $pageUrl = $this->generateUrl('gamejam_user_profile_ticket_show', [
             'user' => $user->getUsername(),
             'token' => $user->getAutologinToken()
         ], true);

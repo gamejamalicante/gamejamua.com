@@ -476,6 +476,18 @@ footer .sponsors img.sponsor, .frontend-sponsor img.sponsor
     margin-right: 10px;
 }
 
+.frontend-sponsor img.sponsor
+{
+    max-height: 90px;
+    margin-right: 10px;
+}
+
+.frontend-sponsor
+{
+    padding: 20px;
+    text-align: center;
+}
+
 footer .sponsors img.sponsor.featured, .frontend-sponsor .sponsors img.sponsor.featured
 {
     max-height: 130px;

@@ -49,4 +49,14 @@ class ContributorController extends AbstractController
 
         return ['contributors' => $contributors];
     }
+
+    /**
+     * @Template("GameJamCompoBundle:Contributor:_contributors.html.twig")
+     */
+    public function partialSponsorsAction()
+    {
+        $contributors = $this->getRepository('GameJamCompoBundle:Contributor')->findSponsors();
+
+        return ['contributors' => $contributors];
+    }
 }
