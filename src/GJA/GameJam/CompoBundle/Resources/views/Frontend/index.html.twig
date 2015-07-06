@@ -44,6 +44,9 @@
                 </div>
             {% endif %}
         </div>
+        <div class="col-md-4 frontend-sponsor">
+            {% render(controller('GameJamCompoBundle:Contributor:partialContributors')) %}
+        </div>
         <div class="col-md-4">
             <a href="{{ path('gamejam_compo_games') }}">
                 <div class="box games">

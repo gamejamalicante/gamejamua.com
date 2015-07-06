@@ -43,6 +43,7 @@ class AppKernel extends Kernel
             new \GJA\GameJam\ChallengeBundle\GameJamChallengeBundle(),
             new \Jmikola\AutoLoginBundle\JmikolaAutoLoginBundle(),
             new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('rest_dev', 'rest_prod')))

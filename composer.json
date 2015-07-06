@@ -64,7 +64,8 @@
         "intervention/image": "@dev",
         "gregwar/image": "@dev",
         "jmikola/auto-login-bundle": "~1.0",
-        "trivialsense/php-framework-common": "@dev"
+        "trivialsense/php-framework-common": "@dev",
+        "knplabs/knp-snappy-bundle": "@dev"
     },
     "require-dev": {
       "fabpot/php-cs-fixer": "@stable"

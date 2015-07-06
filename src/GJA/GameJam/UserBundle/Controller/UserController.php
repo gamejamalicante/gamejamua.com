@@ -38,7 +38,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{user}/ticket", name="gamejam_user_profile")
+     * @Route("/{user}/ticket", name="gamejam_user_profile_ticket")
      * @ParamConverter("user", options={"mapping":{"user":"username"}})
      */
     public function ticketAction(User $user)
@@ -54,6 +54,28 @@ class UserController extends AbstractController
         }
 
         return $this->generateTicket($user, $compo);
+    }
+
+    /**
+     * @Route("/{user}/ticket/pdf", name="gamejam_user_profile_ticket_pdf")
+     * @ParamConverter("user", options={"mapping":{"user":"username"}})
+     */
+    public function singlePdfAction(User $user)
+    {
+        if (!$this->isGrantedRole("ROLE_ADMIN") && $user !== $this->getUser()) {
+            throw new AccessDeniedException;
+        }
+
+        $pageUrl = $this->generateUrl('gamejam_user_profile_ticket', ['user' => $user->getUsername()], true);
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' .$user->getUsername(). '.pdf""'
+            ]
+        );
     }
 
     protected function generateTicket(User $user, Compo $compo)

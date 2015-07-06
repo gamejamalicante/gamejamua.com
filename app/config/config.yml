@@ -272,6 +272,12 @@ thrace_media:
     plupload:
         max_upload_size: 8000000
 
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/bin/wkhtmltopdf
+        options:    []
+
 #liip_cache_control:
 #    varnish:
 #        host: http://%domain%
