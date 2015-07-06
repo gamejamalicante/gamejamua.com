@@ -11,6 +11,7 @@
 
 namespace GJA\GameJam\CompoBundle\Controller;
 
+use GJA\GameJam\CompoBundle\Entity\Contributor;
 use TrivialSense\FrameworkCommon\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,6 +39,13 @@ class ContributorController extends AbstractController
     public function partialContributorsAction()
     {
         $contributors = $this->getRepository('GameJamCompoBundle:Contributor')->findSponsors();
+
+        $geekyGames = new Contributor();
+        $geekyGames->setUrl('https://geekyjuegos.com/');
+        $geekyGames->setName('Geeky Games');
+        $geekyGames->setNameSlug('geeky');
+
+        $contributors[] = $geekyGames;
 
         return ['contributors' => $contributors];
     }
