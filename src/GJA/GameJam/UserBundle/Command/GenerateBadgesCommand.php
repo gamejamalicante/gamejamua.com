@@ -53,7 +53,7 @@ class GenerateBadgesCommand extends ContainerAwareCommand
             $badgeFilename = $this->generateBadge($user);
 
             if ($badgeFilename !== false) {
-                $output->writeln('Generated badge: <info>'.$badgeFilename.'</info>\\n');
+                $output->writeln('Generated badge: <info>'.$badgeFilename.'</info>');
             }
 
             if ($key >= $limit) {
@@ -119,10 +119,10 @@ class GenerateBadgesCommand extends ContainerAwareCommand
             }
         }
 
-        $avatarImage = new Image($avatar, 120, 120);
-        $avatarImage->cropResize(120, 120);
+        $avatarImage = new Image($avatar, 122, 122);
+        $avatarImage->cropResize(122, 122);
 
-        $image->merge($avatarImage, 20, 33, 120, 120);
+        $image->merge($avatarImage, 20, 37, 126, 119, 122);
     }
 
     protected function drawUsername(Image $image, User $user, $fontFile)
@@ -133,18 +133,18 @@ class GenerateBadgesCommand extends ContainerAwareCommand
     protected function drawTwitter(Image $image, User $user, $fontFile)
     {
         if ($twitter = $user->getTwitter()) {
-            $image->write($fontFile, '@'.$twitter, 155, 80, 15, 0, 0x6363B0);
+            $image->write($fontFile, '@'.$twitter, 158, 85, 15, 0, 0x6363B0);
         }
     }
 
     private function drawLevel(Image $image, User $user, $fontSci)
     {
-        $image->write($fontSci, $user->getLevel() ?: 0, 40, 172, 14);
+        $image->write($fontSci, $user->getLevel() ?: 0, 50, 180, 14);
     }
 
     private function drawTeam(Image $image, $team, $fontSci)
     {
-        $image->write($fontSci, $team, 20, 192, 14);
+        $image->write($fontSci, $team, 20, 202, 14);
     }
 
     private function remoteImageExists($url)

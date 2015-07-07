@@ -3,7 +3,7 @@ imports:
     - { resource: security.yml }
 
 parameters:
-    twitter.hashtags: ['GameJamAlicante', 'GameJamUA', 'GJUA']
+    twitter.hashtags: ['GameJamAlicante', 'GameJamUA', 'GJUA', 'GameJamUAVI']
     twitter.username: gamejamua
 
 framework:
