@@ -128,7 +128,7 @@ class UserController extends AbstractController
         $image->useFallback(false);
 
         try {
-            $price = $application->getOrder()->getAmount();
+            $price = $application->getOrder() ? $application->getOrder()->getAmount() : 6;
         } catch (\InvalidArgumentException $e) {
             $price = 6;
         }
