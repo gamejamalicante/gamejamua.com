@@ -8,7 +8,7 @@ framework:
     profiler: { only_exceptions: false }
 
 swiftmailer:
-    disable_delivery: true
+    disable_delivery: false
 
 web_profiler:
     toolbar: true
