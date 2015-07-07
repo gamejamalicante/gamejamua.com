@@ -614,6 +614,9 @@ class Compo
         return false;
     }
 
+    /**
+     * @return CompoApp
+     */
     public function getJoinedMembers()
     {
         $members = array();
@@ -625,6 +628,22 @@ class Compo
         }
 
         return $members;
+    }
+
+    /**
+     * @return CompoApplication[]
+     */
+    public function getClosedApplications()
+    {
+        $applications = array();
+
+        foreach($this->getApplications() as $application) {
+            if ($application->isCompleted()) {
+                $applications[] = $application;
+            }
+        }
+
+        return $applications;
     }
 
     /**

@@ -101,6 +101,11 @@ class CompoApplication
 
     protected $edit;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $ticketSent = false;
+
     public function __construct()
     {
         $this->date = new \DateTime('now');
@@ -375,5 +380,15 @@ class CompoApplication
     public function getType()
     {
         return $this->type;
+    }
+
+    public function isTicketSent()
+    {
+        return $this->ticketSent;
+    }
+
+    public function markTicketAsSent()
+    {
+        $this->ticketSent = true;
     }
 }

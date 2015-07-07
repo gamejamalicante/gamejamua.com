@@ -84,9 +84,11 @@ class UserController extends AbstractController
      * @Route("/{user}/ticket/pdf", name="gamejam_user_profile_ticket_pdf")
      * @ParamConverter("user", options={"mapping":{"user":"username"}})
      */
-    public function singlePdfAction(User $user)
+    public function singlePdfAction(User $user, Request $request)
     {
-        if (!$this->isGrantedRole("ROLE_ADMIN") && $user !== $this->getUser()) {
+        $token = $request->get('token');
+
+        if ($user->getAutologinToken() != $token && $user != $this->getUser()) {
             throw new AccessDeniedException;
         }
 
@@ -113,11 +115,21 @@ class UserController extends AbstractController
 
         $application = $compo->getApplicationForUser($user);
 
+        $members = $compo->getJoinedMembers();
+        $memberNumber = null;
+
+        foreach ($members as $key => $member) {
+            if ($member == $user) {
+                $memberNumber = str_pad($key+1, 3, '0', STR_PAD_LEFT);
+            }
+        }
+
         $image = new Image($ticketFile);
         $image->useFallback(false);
 
         $this->drawUsername($image, $user, $fontName);
         $this->drawPrice($image, $user, $fontIdPrice, $application->getOrder()->getAmount());
+        $this->drawNumber($image, $memberNumber, $fontIdPrice);
 
         $imageData = $image->get('jpg', 100);
 
@@ -138,5 +150,11 @@ class UserController extends AbstractController
     protected function drawPrice(Image $image, User $user, $fontFile, $price)
     {
         $image->write($fontFile, $price, 2290, 488, 60, 0, 0x000000, 'right');
+    }
+
+    protected function drawNumber(Image $image, $memberNumber, $fontFile)
+    {
+        $image->write($fontFile, '#' . $memberNumber, 3400, 128, 80, 0, 0xFFFFFF, 'right');
+        $image->write($fontFile, '#' . $memberNumber, 290, 1390, 80, 0, 0xFFFFFF, 'right');
     }
 }
