@@ -182,7 +182,7 @@
         <div class="pull-right">
         {% block returnback %}
             <a href="{{ path('gamejam_compo_team', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-users"></i> {% if open_formation %}Gestionar mi equipo{% else %}Ver equipos{% endif %}</a>
-            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a>{% endif %}
+            {% if user_application and user_application.isCompleted %} <a style="margin-left: 5px;" href="{{ path('gamejam_compo_compo_modify_inscription', {compo: compo.nameSlug}) }}" class="btn btn-green"><i class="fa fa-edit"></i> Modificar mi inscripción</a> <a style="margin-left: 5px;" href="{{ path('gamejam_user_profile_ticket_pdf', {user: user.username}) }}" class="btn btn-blue"><i class="fa fa-download"></i> Descargar entrada</a>{% endif %}
         {% endblock %}
         </div>
         <h1><strong>{{ compo }}</strong></h1>
