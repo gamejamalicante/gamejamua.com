@@ -127,8 +127,14 @@ class UserController extends AbstractController
         $image = new Image($ticketFile);
         $image->useFallback(false);
 
+        try {
+            $price = $application->getOrder()->getAmount();
+        } catch (\InvalidArgumentException $e) {
+            $price = 6;
+        }
+
         $this->drawUsername($image, $user, $fontName);
-        $this->drawPrice($image, $user, $fontIdPrice, $application->getOrder()->getAmount());
+        $this->drawPrice($image, $user, $fontIdPrice, $price);
         $this->drawNumber($image, $memberNumber, $fontIdPrice);
 
         $imageData = $image->get('jpg', 100);

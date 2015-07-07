@@ -77,7 +77,6 @@ class SendTicketCommand extends ContainerAwareCommand
             $ticketUrl =
                 'http://'.
                 $this->getContainer()->getParameter('domain') .
-
                 $this->getContainer()->get('router')->generate(
                 'gamejam_user_profile_ticket_pdf',
                 array(
