@@ -197,6 +197,11 @@
         <div class="row description compo">
             <div class="col-md-6">
                 <p>{{ compo.description|raw }}</p>
+                <p>
+                    <button onclick="$('#minimap').fadeToggle()" type="button" class="btn">
+                        <i class="fa fa-map-marker"></i> Ver mapa de localización
+                    </button>
+                </p>
             </div>
             <div class="col-md-6">
                 <h2><i class="fa fa-rocket"></i> Tema elegido: <strong>{% if compo.theme %}{{ compo.theme }}{% else %}¡Aún no hay tema!{% endif %}</strong></h2>
@@ -216,6 +221,9 @@
                     {% endfor %}
                 </p>
             </div>
+        </div>
+        <div class="row" id="minimap" style="display: none;">
+            <img src="{{ asset('bundles/gamejamcompo/images/compos/minimapa.png') }}" style="width: 100%;">
         </div>
         {% if not compo.open %}
             <h1 style="text-align: center">GameJam finalizada. ¡Muchas gracias por participar!</h1>
