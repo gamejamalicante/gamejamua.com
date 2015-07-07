@@ -74,6 +74,8 @@ class SendTicketCommand extends ContainerAwareCommand
                 continue;
             }
 
+            $output->writeln("User: <info>" .$application->getUser()->getUsername(). "</info>");
+
             $ticketUrl =
                 'http://'.
                 $this->getContainer()->getParameter('domain') .
