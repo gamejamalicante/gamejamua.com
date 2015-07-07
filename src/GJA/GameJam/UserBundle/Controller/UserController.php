@@ -120,7 +120,7 @@ class UserController extends AbstractController
 
         foreach ($members as $key => $member) {
             if ($member == $user) {
-                $memberNumber = str_pad(57, 3, '0', STR_PAD_LEFT);
+                $memberNumber = str_pad($key+1, 3, '0', STR_PAD_LEFT);
             }
         }
 
