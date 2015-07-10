@@ -29,4 +29,5 @@
         <p><a href="{{ path('gamejam_compo_compo_join', {compo: compo.nameSlug}) }}">{% if app.user %}¡Pulsa aquí para inscribirte!{% else %}¡Pulsa aquí para inscribirte!{% endif %}</a> ¡Sólo quedan <strong>{{ compo.openPlaces }}</strong> plazas disponibles!</p>
     </div>
     {% endif %}
+    {% include 'GameJamCompoBundle:Frontend:_streaming.html.twig' %}
 {% endif %}

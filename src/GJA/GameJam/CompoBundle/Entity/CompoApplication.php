@@ -186,7 +186,7 @@ class CompoApplication
     /**
      * @return mixed
      */
-    public function getUser()
+    public function OgetUser()
     {
         return $this->user;
     }

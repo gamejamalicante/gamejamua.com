@@ -576,7 +576,7 @@ class User extends BaseUser implements EncoderAwareInterface
         return $this->applications;
     }
 
-    public function hasAppliedTo(Compo $compo)
+    public function     hasAppliedTo(Compo $compo)
     {
         foreach ($this->getApplications() as $application) {
             if ($compo === $application->getCompo()) {
