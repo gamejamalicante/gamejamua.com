@@ -30,4 +30,7 @@
     </div>
     {% endif %}
     {% include 'GameJamCompoBundle:Frontend:_streaming.html.twig' %}
+    <div class="col-md-12 frontend-sponsor">
+        {% render(controller('GameJamCompoBundle:Contributor:partialSponsors')) %}
+    </div>
 {% endif %}

@@ -4,9 +4,6 @@
 
 {% block content %}
     {% render(controller('GameJamCompoBundle:Frontend:partialActiveCompo')) %}
-    <div class="col-md-12 frontend-sponsor">
-        {% render(controller('GameJamCompoBundle:Contributor:partialSponsors')) %}
-    </div>
     <div class="section featured">
         <div class="col-md-4">
             <a href="{{ path('gamejam_compo_frontend_about') }}">
