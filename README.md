@@ -1,7 +1,9 @@
 GameJam Alicante
 ========================
 
-This is the source code of GameJam Alicante, a site dedicated to hold GameJam local contests. URL: http://gamejamua.com
+**This version of this site is no longer online, so this repository is no longer mantained**
+
+This is the source code for the of GameJam Alicante, a site dedicated to hold GameJam local contests.
 
 License
 --------
